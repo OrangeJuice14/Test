@@ -1,0 +1,347 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        if (x == null || x == undefined) {
+            return 0;
+        }
+        else {
+            x = x.toFixed(0);//làm tròn lương
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+        }
+    }
+    function numberFormat(x) {
+        if (x == null || x == undefined) {
+            return 0;
+        }
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date) {
+        return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+
+        self.loaiChungTuList = ko.observableArray();
+        self.loaiChungTuSelected = ko.observable();
+
+        self.data = ko.observable();
+        self.ThongTinCanBo = ko.observable();
+        self.TongHopLuong = ko.observable();
+        self.TongThuNhapTuLuong = ko.observable();
+        self.DetailData = ko.observableArray();
+        self.ChiTietLuong_PhuCap = ko.observableArray();
+        self.ChiTietLuong_KhenThuongPhucLoi = ko.observableArray();
+        self.ChiTietLuong_ThuNhapKhac = ko.observableArray();
+        self.ChiTietLuong_KhauTru = ko.observableArray();
+
+        self.ThueTNCN = ko.observable();
+
+        self.BangThueSuat = ko.observableArray([
+            { Bac: 1, ThuNhap: "Đến 5 trđ", ThueSuat: "5%", Cach1: "0 trđ + 5% TNTT", Cach2: "5% TNTT" },
+            { Bac: 2, ThuNhap: "Trên 5 trđ đến 10 trđ", ThueSuat: "10%", Cach1: "0,25 trđ + 10% TNTT trên 5 trđ", Cach2: "10% TNTT – 0,25 trđ" },
+            { Bac: 3, ThuNhap: "Trên 10 trđ đến 18 trđ", ThueSuat: "15%", Cach1: "0,75 trđ + 15% TNTT trên 10 trđ", Cach2: "15% TNTT – 0,75 trđ" },
+            { Bac: 4, ThuNhap: "Trên 18 trđ đến 32 trđ", ThueSuat: "20%", Cach1: "1,95 trđ + 20% TNTT trên 18 trđ", Cach2: "20% TNTT – 1,65 trđ" },
+            { Bac: 5, ThuNhap: "Trên 32 trđ đến 52 trđ", ThueSuat: "25%", Cach1: "4,75 trđ + 25% TNTT trên 32 trđ", Cach2: "25% TNTT – 3,25 trđ" },
+            { Bac: 6, ThuNhap: "Trên 52 trđ đến 80 trđ", ThueSuat: "30%", Cach1: "9,75 trđ + 30% TNTT trên 52 trđ", Cach2: "30% TNTT – 5,85 trđ" },
+            { Bac: 7, ThuNhap: "Trên 80 trđ", ThueSuat: "35%", Cach1: "18,15 trđ + 35% TNTT trên 80 trđ", Cach2: "35% TNTT – 9,85 trđ" }
+        ]);
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.BangLuongSelected.subscribe(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/GetSoChungTuByKyTinhLuong',
+                data: ko.toJSON({
+                    kyTinhLuong: self.BangLuongSelected()
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.loaiChungTuList(data);
+                }
+            });
+        });
+        self.search = function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/TongHopTienGiangVaThuNhapKhac',
+                data: ko.toJSON({
+                    nhanVien: session.Id,
+                    kyTinhLuong: self.BangLuongSelected(),
+                    soChungTu: self.loaiChungTuSelected()
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.ThongTinCanBo(data.ThongTinCanBo);
+                    self.TongHopLuong(data.TongHopLuong);
+                    self.TongThuNhapTuLuong(self.TongHopLuong().LuongNgachBac + self.TongHopLuong().CacKhoanPhuCap + self.TongHopLuong().ThuNhapTangThem + self.TongHopLuong().KhenThuong + self.TongHopLuong().ThuNhapKhac + self.TongHopLuong().TruyLinh)
+                    self.ChiTietLuong_PhuCap(data.ChiTietLuong_PhuCap);
+                    self.ChiTietLuong_KhenThuongPhucLoi(data.ChiTietLuong_KhenThuongPhucLoi);
+                    self.ChiTietLuong_ThuNhapKhac(data.ChiTietLuong_ThuNhapKhac);
+                    self.ChiTietLuong_KhauTru(data.ChiTietLuong_KhauTru);
+                    self.data(data);
+                }
+            });
+        }
+        self.detail = function (chiTiet) {
+            var title = "";
+            var url = '/app/views/chamcong/BangLuong/Detail.html';
+            if (chiTiet == 1) {
+                title = "Chi tiết các khoản phụ cấp";
+                self.DetailData(self.ChiTietLuong_PhuCap);
+            } else if (chiTiet == 2) {
+                title = "Chi tiết khen thưởng, phúc lợi";
+                self.DetailData(self.ChiTietLuong_KhenThuongPhucLoi);
+            } else if (chiTiet == 3) {
+                title = "Chi tiết thu nhập khác";
+                self.DetailData(self.ChiTietLuong_ThuNhapKhac);
+            } else if (chiTiet == 4) {
+                url = '/app/views/chamcong/BangLuong/DetailKhauTru.html';
+                title = "Chi tiết các khoản khấu trừ";
+                self.DetailData(self.ChiTietLuong_KhauTru);
+            }
+            $.get(url, function (data) {
+                $('#popupWindowBangLuongDetail').html(data);
+                ko.cleanNode($('#popupWindowBangLuongDetail')[0]);
+                $('#popupWindowBangLuongDetail').kendoWindow({
+                    width: "60%",
+                    actions: [
+                        "Close"
+                    ],
+                    modal: true,
+                    close: function (e) {
+                        $(this.element).empty();
+                    }
+                });
+                $('#popupWindowBangLuongDetail').data("kendoWindow").title(title).center().open();
+                ko.applyBindings(self, document.getElementById('popupWindowBangLuongDetail'));
+            });
+        }
+        self.detailThueTNCN = function () {
+            $.get('/app/views/chamcong/BangLuong/DetailThueTNCN.html', function (data) {
+                $('#popupWindowBangLuongDetail').html(data);
+                ko.cleanNode($('#popupWindowBangLuongDetail')[0]);
+                $('#popupWindowBangLuongDetail').kendoWindow({
+                    width: "60%",
+                    actions: [
+                        "Close"
+                    ],
+                    modal: true,
+                    close: function (e) {
+                        $(this.element).empty();
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    async: false,
+                    url: '/WebServices/TongHopThueTNCNTrongThang',
+                    data: ko.toJSON({
+                        nhanVien: session.Id,
+                        kyTinhLuong: self.BangLuongSelected(),
+                        soChungTu: self.loaiChungTuSelected()
+                    }),
+                    success: function (result) {
+                        var data = result;
+                        self.ThueTNCN(data);
+                    }
+                });
+                $('#popupWindowBangLuongDetail').data("kendoWindow").title("Chi tiết thuế TNCN").center().open();
+                ko.applyBindings(self, document.getElementById('popupWindowBangLuongDetail'));
+            });
+        }
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<style type="text/css">
+    .headertext {
+        width: 100%;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .italictext {
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: normal;
+        font-family: 'Times New Roman';
+    }
+
+    .righttext {
+        font-size: 12pt;
+        text-align: right;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .padding10boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-left: 10px;
+    }
+</style>
+<div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Bảng lương : </a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>
+        <a href="#">Loại chứng từ : </a>
+        <select data-bind="options: loaiChungTuList, optionsText: 'Name', optionsValue: 'Id', value: loaiChungTuSelected" style="height:32px"></select>
+        <a href="#" class="btn btn-labeled btn-blue" style="width: auto;" data-bind="click: search">
+            <i class="btn-label glyphicon glyphicon-search"></i>Tìm
+        </a>
+        <!-- ko if: data -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <p style="font-weight:bold;">A. Thông tin cán bộ, giảng viên:</p>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: center">Nội dung</th>
+                        <th style="text-align: center">Thông tin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="2">- Họ tên</td><td style="text-align: right" data-bind="text: ThongTinCanBo().HoTen"></td></tr>
+                    <tr><td colspan="2">- Đơn vị</td><td style="text-align: right" data-bind='text: ThongTinCanBo().DonVi'></td></tr>
+                    <tr><td colspan="2">- Mã số thuế</td><td style="text-align: right" data-bind='text: ThongTinCanBo().MaSoThue'></td></tr>
+                    <tr><td colspan="2">- Mã ngạch</td><td style="text-align: right" data-bind='text: ThongTinCanBo().NgachLuong'></td></tr>
+                    <tr><td colspan="2">- Hệ số lương</td><td style="text-align: right" data-bind='text: ThongTinCanBo().HeSoLuong'></td></tr>
+                    <tr><td colspan="2">- Hệ số chức vụ</td><td style="text-align: right" data-bind='text: ThongTinCanBo().HeSoPhuCapChucVu'></td></tr>
+                    <tr><td colspan="2">- Mức lương cơ sở</td><td style="text-align: right" data-bind='text: numberFormat(ThongTinCanBo().LuongCoBan)'></td></tr>
+                    <tr><td colspan="2">- Xếp loại</td><td style="text-align: right" data-bind='text: ThongTinCanBo().XepLoai'></td></tr>
+                    <tr><td colspan="2">- Hệ số TNTT</td><td style="text-align: right" data-bind='text: ThongTinCanBo().HeSoTNTT'></td></tr>
+                    <tr><td colspan="2">- Tỷ lệ hưởng lương (100%, 85%, 40%)</td><td style="text-align: right" data-bind='text: ThongTinCanBo().TyLeHuongLuong'></td></tr>
+                    <tr><td colspan="2">- Số người phụ thuộc</td><td style="text-align: right" data-bind='text: ThongTinCanBo().SoNguoiPhuThuoc'></td></tr>
+                    <tr><td colspan="2">- Mức giảm trừ người phụ thuộc (đ/ người phụ thuộc)</td><td style="text-align: right" data-bind='text: numberFormat(ThongTinCanBo().MucGiamTru)'></td></tr>
+                    <tr><td colspan="2">- Số tài khoản ngân hàng</td><td style="text-align: right" data-bind='text: ThongTinCanBo().NganHang'></td></tr>
+                </tbody>
+            </table>
+            <br />
+            <p style="font-weight:bold;">B. Tổng hợp lương:</p>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th style="text-align: center">Nội dung</th>
+                        <th style="text-align: center">Số tiền</th>
+                        <th style="text-align: center">Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold;text-align: center">I</td>
+                        <td style="font-weight:bold">Tổng thu nhập từ lương</td>
+                        <td style="text-align: right" data-bind="text: numberFormat(TongThuNhapTuLuong())"></td>
+                        <td style="font-weight:bold">I = 1.1 + 1.2 + 1.3 + 1.4 + 1.5 + 1.6</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.1</td>
+                        <td>Tiền lương ngạch bậc</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().LuongNgachBac)'></td>
+                        <td>1.1 = Hệ số lương * Mức lương cơ sở</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.2</td>
+                        <td>Các khoản phụ cấp</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().CacKhoanPhuCap)'></td>
+                        <td><a href="#" data-bind="click: detail.bind($data, 1)">Ấn vào để xem chi tiết</a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.3</td>
+                        <td>Thu nhập tăng thêm</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().ThuNhapTangThem)'></td>
+                        <td>1.3 = (HS lương + HS chức vụ) * Mức lương cơ sở * Hệ số TNTT</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.4</td>
+                        <td>Khen thưởng - Phúc lợi</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().KhenThuong)'></td>
+                        <td><a href="#" data-bind="click: detail.bind($data, 2)">Ấn vào để xem chi tiết</a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.5</td>
+                        <td>Thu nhập khác</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().ThuNhapKhac)'></td>
+                        <td><a href="#" data-bind="click: detail.bind($data, 3)">Ấn vào để xem chi tiết</a></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">1.6</td>
+                        <td>Truy lĩnh lương</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().TruyLinh)'></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;text-align: center">II</td>
+                        <td style="font-weight:bold">Các khoản khấu trừ</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().CacKhoanKhauTru)'></td>
+                        <td><a href="#" data-bind="click: detail.bind($data, 4)">Ấn vào để xem chi tiết</a></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;text-align: center">III</td>
+                        <td style="font-weight:bold">Thuế TNCN phải nộp</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopLuong().ThueTNCN)'></td>
+                        <td><a href="#" data-bind="click: detailThueTNCN">Ấn vào để xem chi tiết</a></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold;text-align: center">IV</td>
+                        <td style="font-weight:bold">Số tiền thực nhận</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongThuNhapTuLuong() - TongHopLuong().CacKhoanKhauTru - TongHopLuong().ThueTNCN)'></td>
+                        <td>IV = I - II - III</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: !data -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Không có bảng lương tháng này!</div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<div id="popupWindowBangLuongDetail"></div>

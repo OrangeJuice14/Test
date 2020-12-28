@@ -1,0 +1,564 @@
+﻿<!--<style>
+    .planManageDetail-dialog .modal-dialog {
+        min-width: 800px;
+    }
+    .supervisorRated {
+        color: red;
+    }
+</style>-->
+
+<form name="departmentDetailForm" role="form" class="form-horizontal" novalidate>
+    <!--<div class="modal-header">
+        <h3 class="modal-title">Chọn kế hoạch</h3>
+    </div>-->
+    <div class="modal-body">
+        <h4 ng-if="userPlanKPIList.length<=0">Bạn không có kế hoạch</h4>
+        <table class="table table-striped table-bordered" ng-if="userPlanKPIList.length>0">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Kế hoạch</th>
+                    <th style="text-align:center">Đối tượng</th>
+                    <th style="text-align:center">Đánh giá</th>
+                    <th style="text-align:center">Kết quả KPI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pl in userPlanKPIList">
+                    <td>
+                        <a ng-if="pl.AgentObjectTypeId==5" href="/#/kpi/facultyManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==6" href="/#/kpi/subjectManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==2" href="/#/kpi/plankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}} </a>
+                        <a ng-if="pl.AgentObjectTypeId==3" href="/#/kpi/departmentManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==1" href="/#/kpi/professorPlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==7" href="/#/kpi/subDepartmentPlankpiDetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==8" href="/#/kpi/subFacultyManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==9" href="/#/kpi/subSubjectManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==10" href="/#/kpi/principalPlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==11" href="/#/kpi/vicePrincipalPlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==12" href="/#/kpi/subjectManagePlankpidetail/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}/{{pl.DepartmentId}}/{{0}}" ng-click="cancel()">{{pl.Name}}</a>
+                    </td>
+                    <td>{{pl.AgentObjectName}}</td>
+                    <td style="text-align:center">
+                        <a ng-if="(pl.AgentObjectTypeId==1) && (canRating || freeRating)" href="/#/kpi/professorRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==5 && (canRating || freeRating)" href="/#/kpi/facultyRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==6 && (canRating || freeRating)" href="/#/kpi/subjectRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <p ng-if="pl.AgentObjectTypeId==2" style="text-align:left">
+                            <a ng-if="pl.AgentObjectTypeId==2  && (canRating || freeRating)" href="/#/kpi/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">Đánh giá Kỳ 1: tháng 9-10-11 </a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==2  && (canRating || freeRating)" href="/#/kpi/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{2}}" ng-click="cancel()">Đánh giá Kỳ 2: tháng 12-1-2</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==2  && (canRating || freeRating)" href="/#/kpi/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{3}}" ng-click="cancel()">Đánh giá Kỳ 3: tháng 3-4-5</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==2  && (canRating || freeRating)" href="/#/kpi/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{4}}" ng-click="cancel()">Đánh giá Kỳ 4: tháng 6-7-8</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==2  && (canRating || freeRating)" href="/#/kpi/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá năm</a>
+                        </p>
+                        <p ng-if="pl.AgentObjectTypeId==3" style="text-align:left">
+                            <a ng-if="pl.AgentObjectTypeId==3  && (canRating || freeRating)" href="/#/kpi/departmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">Đánh giá Kỳ 1: tháng 9-10-11 </a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==3  && (canRating || freeRating)" href="/#/kpi/departmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{2}}" ng-click="cancel()">Đánh giá Kỳ 2: tháng 12-1-2</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==3  && (canRating || freeRating)" href="/#/kpi/departmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{3}}" ng-click="cancel()">Đánh giá Kỳ 3: tháng 3-4-5</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==3  && (canRating || freeRating)" href="/#/kpi/departmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{4}}" ng-click="cancel()">Đánh giá Kỳ 4: tháng 6-7-8</a> </br>
+                            <a ng-if="pl.AgentObjectTypeId==3 && (canRating || freeRating)" href="/#/kpi/departmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá cả năm</a>
+                        </p>
+
+                        <a ng-if="pl.AgentObjectTypeId==7 && (canRating || freeRating)" href="/#/kpi/subDepartmentRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==8 && (canRating || freeRating)" href="/#/kpi/subFacultyRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==9 && (canRating || freeRating)" href="/#/kpi/subjectRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==10 && (canRating || freeRating)" href="/#/kpi/principalRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==11 && (canRating || freeRating)" href="/#/kpi/vicePrincipalRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <a ng-if="pl.AgentObjectTypeId==12 && (canRating || freeRating)" href="/#/kpi/subjectRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{''}}/{{''}}/{{pl.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        <span ng-if="!(canRating || freeRating)">Chưa có đợt đánh giá</span>
+                    </td>
+                    <td style="text-align:center">
+                        <a href="/#/kpi/departmentResult/{{pl.Id}}/{{pl.AgentObjectId}}" ng-click="cancel()">Xem kết quả</a>
+                        <!--<a ng-if="pl.AgentObjectTypeId==6" href="/#/result/{{pl.Id}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==2 || pl.AgentObjectTypeId==3" href="/#/result/{{pl.Id}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==1" href="/#/result/{{pl.Id}}" ng-click="cancel()">{{pl.Name}}</a>
+                        <a ng-if="pl.AgentObjectTypeId==7" href="/#/result/{{pl.Id}}" ng-click="cancel()">{{pl.Name}}</a>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <div>
+
+            <div ng-if="agentObjectTypeId==10">
+                <h5>Danh sách Phó Hiệu trưởng: </h5>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in vicePrincipalStaffPlanKPIList">
+                            <td>
+                                <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/vicePrincipalPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/vicePrincipalPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td style="text-align:center">
+                                <a href="/#/kpi/vicePrincipalRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="agentObjectTypeId==3 && planId != undefined">
+                <h5>Danh sách Phó Phòng Ban: </h5>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in viceDepartmentStaffPlanKPIList">
+                            <td>
+                                <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/subDepartmentPlankpiDetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/subDepartmentPlankpiDetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td style="text-align:left">
+                                <a href="/#/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">Đánh giá Kỳ 1: tháng 9-10-11</a></br>
+                                <a href="/#/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{2}}" ng-click="cancel()">Đánh giá Kỳ 2: tháng 12-1-2</a></br>
+                                <a href="/#/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{3}}" ng-click="cancel()">Đánh giá quý Kỳ 3: tháng 3-4-5</a></br>
+                                <a href="/#/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{4}}" ng-click="cancel()">Đánh giá Kỳ 4: tháng 6-7-8</a></br>
+
+                                <a href="/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá cả năm</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="agentObjectTypeId==5 && planId != undefined">
+                <h5 ng-if="viceDepartmentStaffPlanKPIList.length > 0">Danh sách Phó khoa</h5>
+                <table class="table table-striped table-bordered" ng-if="viceDepartmentStaffPlanKPIList.length > 0">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in viceDepartmentStaffPlanKPIList">
+                            <td>
+                                <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/subFacultyManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/subFacultyManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td style="text-align:center">
+                                <a href="/#/kpi/subFacultyRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h5 ng-if="subjectStaffList.length > 0">Danh sách Trưởng bộ môn</h5>
+                <table class="table table-striped table-bordered" ng-if="subjectStaffList.length > 0">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in subjectStaffList">
+                            <td>
+                                <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/subjectManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/subjectManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td style="text-align:center">
+                                <a href="/#/kpi/subjectRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="(agentObjectTypeId==3 && planId != undefined)">
+                <h5>Danh sách Nhân viên tại đơn vị</h5>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in staffPlanKPIList">
+                            <td>
+                                <a ng-if="staff.IsSupervisorRated" style="color:red" ng-href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="!staff.IsSupervisorRated" ng-href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td style="text-align:left">
+                                <p>
+                                    <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{1}}" ng-click="cancel()">Đánh giá Kỳ 1: tháng 9-10-11</a></br>
+                                    <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{2}}" ng-click="cancel()">Đánh giá Kỳ 2: tháng 12-1-2</a></br>
+                                    <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{3}}" ng-click="cancel()">Đánh giá quý Kỳ 3: tháng 3-4-5</a></br>
+                                    <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{4}}" ng-click="cancel()">Đánh giá Kỳ 4: tháng 6-7-8</a></br>
+                                    <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}/{{0}}" ng-click="cancel()">Đánh giá cả năm</a>
+                                </p>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-if="(agentObjectTypeId==6 || agentObjectTypeId==12) && (planType==2 || planType==1) && subjectProfessor.length > 0">
+            <h5>Danh sách Giảng viên tại đơn vị</h5>
+            <table class="table table-striped table-bordered" ng-if="subjectProfessor.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <th style="text-align:center; width:14%; vertical-align:middle">Đánh giá</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        <th style="text-align:center; width:100px;" ng-if="planType==1">Chế độ làm việc của GV</th>
+                        <th style="text-align:center; width:90px;" ng-if="planType==1">Duyệt chế độ làm việc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in subjectProfessor">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                        </td>
+                        <td style="text-align:center">
+                            <a href="/#/kpi/professorRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                        <td style="text-align:center;" ng-if="planType==1">
+                            <span>{{staff.WorkingModeName}}</span>
+                        </td>
+                        <td style="text-align:center;" ng-if="planType==1">
+                            <div ng-if="!staff.IsWorkingModeLocked">
+                                <button ng-if="staff.WorkingModeName!=null" ng-click="LockWorkingModeProfessor(staff.PlanStaffId)" class="btn btn-primary">Duyệt</button>
+                            </div>
+                            <div ng-if="staff.WorkingModeName!=null && staff.IsWorkingModeLocked">
+                                <img src="/Images/TT_yes.png" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="(agentObjectTypeId==6 || agentObjectTypeId==12) && planType==3 && subjectStaff.length > 0">
+            <h5 ng-if="subjectStaff.length > 0">Danh sách nhân viên tại đơn vị</h5>
+            <table class="table table-striped table-bordered" ng-if="subjectStaff.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <th style="text-align:center; vertical-align:middle">Đánh giá</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in subjectStaff">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                        </td>
+                        <td style="text-align:center">
+                            <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="agentObjectTypeId==5 && (planType==2 || planType==1) && (professorListSubjectNull.length > 0 || professorListHasSubject.length > 0)"> <!--trưởng khoa xem kế hoạch giảng viên tại đơn vị-->
+            <h5>Danh sách giảng viên tại đơn vị</h5>
+            <!-- danh sách giảng viên không thuộc bộ môn nào, trưởng khoa được quyền đánh giá -->
+            <table class="table table-striped table-bordered" ng-if="professorListSubjectNull.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <th style="text-align:center; width:14%; vertical-align:middle">Đánh giá</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                        <th style="text-align:center; width:100px;" ng-if="planType==1">Chế độ làm việc của GV</th>
+                        <th style="text-align:center; width:90px;" ng-if="planType==1">Duyệt chế độ làm việc</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in professorListSubjectNull">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                        </td>
+                        <td style="text-align:center">
+                            <a href="/#/kpi/professorRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                        <td style="text-align:center;" ng-if="planType==1">
+                            <span>{{staff.WorkingModeName}}</span>
+                        </td>
+                        <td style="text-align:center;" ng-if="planType==1">
+                            <div ng-if="!staff.IsWorkingModeLocked">
+                                <button ng-if="staff.WorkingModeName!=null" ng-click="LockWorkingModeProfessor(staff.PlanStaffId)" class="btn btn-primary">Duyệt</button>
+                            </div>
+                            <div ng-if="staff.WorkingModeName!=null && staff.IsWorkingModeLocked">
+                                <img src="/Images/TT_yes.png" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- danh sách giảng viên có bộ môn, trưởng khoa chỉ xem không được đánh giá -->
+            <table class="table table-striped table-bordered" ng-if="professorListHasSubject.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <!--<th style="text-align:center">Đánh giá</th>-->
+                        <th style="text-align:center; width:200px; vertical-align:middle">Bộ môn</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in professorListHasSubject">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{2}}" ng-click="setSupervisor2()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{2}}" ng-click="setSupervisor2()">{{staff.Name}}</a>
+                        </td>
+                        <!--<td style="text-align:center">
+                            <a href="/#/kpi/professorRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>-->
+                        <td style="text-align:center;">
+                            <span>{{staff.Subject.Name}}</span>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="agentObjectTypeId==5 && (staffListSubjectNull.length > 0 || staffListHasSubject.length > 0)">
+            <h5>Danh sách nhân viên tại đơn vị</h5>
+            <!-- danh sách nhân viên không thuộc bộ môn nào -->
+            <table class="table table-striped table-bordered" ng-if="staffListSubjectNull.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <th style="text-align:center; width:200px; vertical-align:middle">Đánh giá</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in staffListSubjectNull">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                        </td>
+                        <td style="text-align:center">
+                            <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- danh sách nhân viên có bộ môn (trưởng khoa chỉ xem) -->
+            <table class="table table-striped table-bordered" ng-if="staffListHasSubject.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                        <!--<th style="text-align:center">Đánh giá</th>-->
+                        <th style="text-align:center; width:200px; vertical-align:middle">Bộ môn</th>
+                        <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                        <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in staffListHasSubject">
+                        <td>
+                            <a ng-if="staff.IsSupervisorRated" style="color:red" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{2}}/{{0}}" ng-click="setSupervisor2()">{{staff.Name}}</a>
+                            <a ng-if="!staff.IsSupervisorRated" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{2}}/{{0}}" ng-click="setSupervisor2()">{{staff.Name}}</a>
+                        </td>
+                        <!--<td style="text-align:center">
+                            <a href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>-->
+                        <td style="text-align:center;">
+                            <span>{{staff.Subject.Name}}</span>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div ng-if="staffListInSubPosition.length > 0">
+            <div ng-repeat="department in staffListInSubPosition">
+                <h5>Danh sách cá nhân thuộc đơn vị kiêm nhiệm {{department.DepartmentName}}</h5>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; vertical-align:middle">Kế hoạch</th>
+                            <th style="text-align:center; vertical-align:middle" ng-if="department.HasPosition">Chức vụ</th>
+                            <th style="text-align:center; width:90px; vertical-align:middle">Đánh giá</th>
+                            <th style="text-align:center; width:90px;">Kế hoạch được duyệt</th>
+                            <th style="text-align:center; width:90px;">Cá nhân đã đánh giá</th>
+                            <th style="text-align:center; width:108px;">Trưởng đơn vị đã đánh giá</th>
+                            <th style="text-align:center; width:100px;" ng-if="planType==1 && department.HasProfessor">Chế độ làm việc của GV</th>
+                            <th style="text-align:center; width:90px;" ng-if="planType==1 && department.HasProfessor">Duyệt chế độ làm việc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="staff in department.StaffList">
+                            <td>
+                                <a ng-if="staff.AgentObjectTypeId==7" ng-class="{'supervisorRated' : staff.IsSupervisorRated}" href="/#/kpi/subDepartmentPlankpiDetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="staff.AgentObjectTypeId==8" ng-class="{'supervisorRated' : staff.IsSupervisorRated}" href="/#/kpi/subFacultyManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="staff.AgentObjectTypeId==6" ng-class="{'supervisorRated' : staff.IsSupervisorRated}" href="/#/kpi/subjectManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="staff.AgentObjectTypeId==2" ng-class="{'supervisorRated' : staff.IsSupervisorRated}" href="/#/kpi/plankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                                <a ng-if="staff.AgentObjectTypeId==1" ng-class="{'supervisorRated' : staff.IsSupervisorRated}" href="/#/kpi/professorPlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}" ng-click="setSupervisor()">{{staff.Name}}</a>
+                            </td>
+                            <td ng-if="department.HasPosition">
+                                <span>{{staff.PositionName}}</span>
+                            </td>
+                            <td style="text-align:center">
+                                <a ng-if="staff.AgentObjectTypeId==7" href="/#/kpi/subDepartmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                                <a ng-if="staff.AgentObjectTypeId==8" href="/#/kpi/subFacultyRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                                <a ng-if="staff.AgentObjectTypeId==6" href="/#/kpi/subjectRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                                <a ng-if="staff.AgentObjectTypeId==2" href="/#/kpi/ratingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                                <a ng-if="staff.AgentObjectTypeId==1" href="/#/kpi/professorRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                            </td>
+                            <td style="text-align:center;" ng-if="planType==1 && department.HasProfessor">
+                                <span>{{staff.WorkingModeName}}</span>
+                            </td>
+                            <td style="text-align:center;" ng-if="planType==1 && department.HasProfessor">
+                                <div ng-if="!staff.IsWorkingModeLocked">
+                                    <button ng-if="staff.WorkingModeName!=null" ng-click="LockWorkingModeProfessor(staff.PlanStaffId)" class="btn btn-primary">Duyệt</button>
+                                </div>
+                                <div ng-if="staff.WorkingModeName!=null && staff.IsWorkingModeLocked">
+                                    <img src="/Images/TT_yes.png" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--<div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>-->
+</form>

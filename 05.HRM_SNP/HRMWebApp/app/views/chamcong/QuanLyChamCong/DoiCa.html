@@ -1,0 +1,314 @@
+﻿
+<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var conditionArr = [
+            { Id: -1, Name: "Tất cả trạng thái" },
+            { Id: 0, Name: "Chưa chấm công" },
+            { Id: 1, Name: "Đã chấm công" }
+        ];
+        var diHocArr = [
+            { Id: null, Name: "Tất cả trạng thái" },
+            { Id: false, Name: "Làm việc" },
+            { Id: true, Name: "Đi học" }
+        ];
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.condition = ko.observableArray(conditionArr);
+        self.conditionSelected = ko.observable(-1);
+        self.diHoc = ko.observableArray(diHocArr);
+        self.diHocSelected = ko.observable(null);
+        self.name = ko.observable("");
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.loaiNhanSu = ko.observableArray();
+        self.loaiNhanSuSelected = ko.observable();
+        self.caChamCong = ko.observableArray();
+        self.caChamCongSelected = ko.observable();
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+                self.departmentSelected(obj[0].Oid);
+            }
+        });
+        self.checkChot = function (month, year) {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_CheckChot',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: month,
+                    nam: year,
+                    boPhanId: self.departmentSelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_LoaiNhanSu',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.loaiNhanSu(obj);
+                //self.loaiNhanSuSelected(obj[0].Oid);
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_CaChamCong',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.caChamCong(obj);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'MaNhanSu', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'TenCa', type: 'string' },
+                { name: 'Ngay', type: 'date' },
+                { name: 'DaChamCong', type: 'bool' }
+            ],
+            id: 'Id',
+            sortcolumn: 'HoTen',
+            sortdirection: 'asc',
+            url: "/WebServices/QuanLyChamCong_Find",
+            formatdata: function (data) {
+                return {
+                    ngay: self.day(),
+                    thang: self.month(),
+                    nam: self.year(),
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    trangthaichamcong: self.conditionSelected(),
+                    diHoc: self.diHocSelected(),
+                    maNhanSu: self.name(),
+                    webUserId: session.UserId,
+                    idLoaiNhanSu: self.loaiNhanSuSelected() == undefined ? null : self.loaiNhanSuSelected(),
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                editable: true,
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 5,
+                sortable: true,
+                filterable: true,
+                rowsheight: 80,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:30px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'MaNhanSu', width: 120, align: 'center', cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', align: 'center', editable: false
+                    },
+                    {
+                        text: 'Ngày', datafield: 'Ngay', width: 100, align: 'center', cellsformat: 'd/M/yyyy', cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Phòng ban', datafield: 'TenPhongBan', width: 200, align: 'center', editable: false
+                    },
+                    {
+                        text: 'Ca', datafield: 'TenCa', width: 100, align: 'center', editable: false
+                    },
+                    {
+                        text: 'Chấm công', datafield: 'DaChamCong', align: 'center', columntype: 'checkbox', width: 100, editable: false
+                    }
+
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        doica: function () {
+            var self = this;
+            var selectedRecords = new Array();
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            for (var i = 0, l = rows.length; i < l ; i++) {
+                var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                selectedRecords.push({
+                    Oid: row.Oid
+                });
+            }
+            if (selectedRecords.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+
+            if (selectedRecords.length > 0) {
+                if (self.checkChot(self.month(), self.year())) {
+                    alert('Tháng này đã chốt chấm công rồi !!');
+                    return;
+                }
+                else
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyChamCong_DoiCaChamCong',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            userList: selectedRecords,
+                            caChamCongId: self.caChamCongSelected() == undefined ? null : self.caChamCongSelected()
+                        }),
+                        success: function (result) {
+                            alert("Lưu thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+
+                        }
+                    });
+                }
+            }
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlychamcong")[0]);
+    });
+</script>
+<div id="quanlychamcong">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: doica">
+                            <i class="btn-label glyphicon glyphicon-ok"></i>Đổi ca
+                        </a>
+                    </div>   
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="javascript:history.back()" class="btn btn-labeled btn-blue" style="width: 158px;">
+                            <i class="btn-label fa fa-pencil"></i>Trở về
+                        </a>
+                    </div>               
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" placeholder="ngày" data-bind="value:day" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+        -
+        <input type="text" placeholder="tháng" data-bind="value:month" style="width: 50px; height:32px;text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value:year" style="width: 50px; height:32px;text-align: center" maxlength="4" />
+        <select style="width: 150px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <select data-bind="options:condition, optionsText: 'Name', optionsValue: 'Id',value:conditionSelected"></select>
+        <select hidden data-bind="options:diHoc, optionsText: 'Name', optionsValue: 'Id',value:diHocSelected"></select>
+        <select data-bind="options:loaiNhanSu, optionsText: 'TenLoaiNhanSu', optionsValue: 'Oid',value:loaiNhanSuSelected,optionsCaption:'Tất cả'"></select>
+        <select data-bind="options:caChamCong, optionsText: 'TenCa', optionsValue: 'Oid',value:caChamCongSelected,optionsCaption:'Chọn ca'"></select>
+        <input type="text" placeholder="Mã nhân sự" data-bind="value:name" style="width: 110px;padding-left:5px; height:32px;" />
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_LogTieuChi, HRMWebApp.KPI.DB" table="ABC_LogTieuChi">
+    <id name="Id" column="Oid"></id>
+    <property name="ChiMuc" column="ChiMuc"></property>
+    <property name="STT" column="STT"></property>
+    <property name="NoiDung" column="NoiDung"></property>
+    <property name="DiemToiDa" column="DiemToiDa"></property>
+    <property name="DiemTru" column="DiemTru"></property>
+    <property name="ListDiem" column="ListDiem"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+    <property name="DeleteUserId" column="DeleteUserId"></property>
+    <property name="DeleteTime" column="DeleteTime"></property>
+    <property name="LastEditUserId" column="LastEditUserId"></property>
+    <property name="LastEditTime" column="LastEditTime"></property>
+    <property name="AddUserId" column="AddUserId"></property>
+    <property name="AddTime" column="AddTime"></property>
+    <property name="TimeLog" column="TimeLog"></property>
+    <property name="ParentId" column="ParentId"></property>
+    <property name="BoTieuChiId" column="BoTieuChiId"></property>
+    <property name="TieuChiId" column="TieuChiId"></property>
+    <property name="ChildSelectOne" column="ChildSelectOne"></property>
+    <property name="IsDiemDanhGiaCongTac" column="IsDiemDanhGiaCongTac"></property>
+    <property name="IsDiemThuong" column="IsDiemThuong"></property>
+  </class>
+</hibernate-mapping>

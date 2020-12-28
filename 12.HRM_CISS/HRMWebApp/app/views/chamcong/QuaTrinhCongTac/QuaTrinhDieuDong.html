@@ -1,0 +1,30 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_DIEU_DONG.SO_QUYET_DINH">Số quyết định</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_DIEU_DONG.NGAY_QUYET_DINH">Ngày quyết định</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_DIEU_DONG.DON_VI_CU">Đơn vị cũ</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_DIEU_DONG.DON_VI_MOI">Đơn vị mới</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_DIEU_DONG.NGAY_DIEU_CHUYEN">Ngày điều chuyển</span></th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuaTrinhDieuDong">
+                    <tr>
+                        <td data-bind="text: SoQuyetDinh" class="textToCenter"></td>
+                        <td data-bind="text: NgayQuyetDinh == null ? '' : formatDate(new Date(NgayQuyetDinh))" class="textToCenter"></td>
+                        <td data-bind="text: DonViCu" class="textToCenter"></td>
+                        <td data-bind="text: DonViMoi" class="textToCenter"></td>
+                        <td data-bind="text: NgayDieuChuyen == null ? '' : formatDate(new Date(NgayDieuChuyen))" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

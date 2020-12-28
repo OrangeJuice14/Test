@@ -1,0 +1,302 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.name = ko.observable("");
+        self.isEdit = ko.observable(false);
+        self.isNormalUser = ko.observable(false);
+        self.isAdmin = ko.observable(false);
+        self.duocChotPhep = ko.observable(false);
+        if (session.WebGroupId.toUpperCase() == '53D57298-1933-4E4B-B4C8-98AFED036E21') {
+            self.isNormalUser(true);
+        }
+        if (session.WebGroupId.toUpperCase() == '00000000-0000-0000-0000-000000000001' || session.WebGroupId.toUpperCase() == '05A1BF24-BD1C-455F-96F6-7C4237F4659E') {
+            self.isAdmin(true);
+        }
+        if (session.WebGroupId.toUpperCase() == '00000000-0000-0000-0000-000000000001' || session.WebGroupId.toUpperCase() == '05A1BF24-BD1C-455F-96F6-7C4237F4659E' || session.WebGroupId.toUpperCase() == '00000000-0000-0000-0000-000000000007') {
+            self.duocChotPhep(true);
+        }
+
+        self.checkExits = function () {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyNghiPhep_CheckExists',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nam: self.year()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                if (obj.length > 1)
+                    obj.unshift({ Oid: undefined, TenBoPhan: 'Tất cả đơn vị' });
+                self.department(obj);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'TongSoNgayPhep', type: 'string' },
+                { name: 'SoNgayPhepDaNghi', type: 'string' },
+                { name: 'SoNgayPhepConLai', type: 'string' },
+                { name: 'SoNgayPhepCongThem', type: 'string' },
+                { name: 'TruNgayDiDuong', type: 'bool' },
+                { name: 'GhiChu', type: 'string' }
+            ],
+            id: 'Id',
+            url: "/WebServices/QuanLyNghiPhep_Find",
+            formatdata: function (data) {
+                return {
+                    nam: self.year(),
+                    bophan: (session.WebGroupId.toUpperCase() == '00000000-0000-0000-0000-000000000004' || session.WebGroupId.toUpperCase() == '00000000-0000-0000-0000-000000000005') ? session.DepartmentId : self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    maNhanSu: session.WebGroupId.toUpperCase() == '53D57298-1933-4E4B-B4C8-98AFED036E21' ? session.Id : self.name(),
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 90, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', width: 140, align: 'center'
+                    },
+                    {
+                        text: 'Đơn vị', datafield: 'TenPhongBan', width: 150, align: 'center'
+                    },
+                    {
+                        text: 'Tổng phép', datafield: 'TongSoNgayPhep', width: 90, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Đã nghỉ', datafield: 'SoNgayPhepDaNghi', width: 70, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Còn lại', datafield: 'SoNgayPhepConLai', width: 70, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Trừ ngày đi đường', datafield: 'TruNgayDiDuong', width: 130, align: 'center', cellsalign: "middle", cellsrenderer: function (row, column, value, defaulthtml) {
+                            if (value) {
+                                return "<div style='text-align:center;margin-top:15px;'><input type='checkbox' disabled='disabled' checked /></div>";
+                            } else {
+                                return "<div style='text-align:center;margin-top:15px;'><input type='checkbox' disabled='disabled' /></div>";
+                            }
+                        }
+                    },
+                    {
+                        text: 'Ghi chú', datafield: 'GhiChu', minwidth: 200, align: 'center'
+                    }
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        save: function () {
+            var self = this;
+            //if (self.checkExits(self.year())) {
+            //    alert('Đã tạo quản lý nghỉ phép !!');
+            //    return;
+            //}
+            //else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyNghiPhep_Create',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        nam: self.year()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        alert("Thành công!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                });
+            //}
+        },
+        edit: function () {
+            var self = this;
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            if (getselectedrowindexes.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            if (getselectedrowindexes.length > 1) {
+                alert("Chỉ được chọn 1 dòng !!");
+                return;
+            }
+            
+            $.get('/app/views/chamcong/QuanLyChamCong/QuanLyNghiPhep_Detail.html', function (data) {
+                $('#popupWindowQuanLyNghiPhepDetail').html(data);
+                ko.cleanNode($('#popupWindowQuanLyNghiPhepDetail')[0]);
+                $('#popupWindowQuanLyNghiPhepDetail').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/GetThongTinNghiPhep',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({ Oid: selectedrow.Oid }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        $("#TongSoNgayPhep").val(obj.TongSoNgayPhep);
+                        $("#SoNgayPhepCongThem").val(obj.SoNgayPhepCongThem);
+                        $("#SoNgayPhepDaNghi").val(obj.SoNgayPhepDaNghi);
+                        $("#SoNgayPhepConLai").val(obj.SoNgayPhepConLai);
+                        $("#GhiChu").val(obj.GhiChu);
+                    }
+                });
+                $('#popupWindowQuanLyNghiPhepDetail').data("kendoWindow").open();
+                ko.applyBindings(self, document.getElementById('popupWindowQuanLyNghiPhepDetail'));
+            });
+        },
+        update: function () {
+            var self = this;
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ThongTinNghiPhep_Save',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    Oid: selectedrow.Oid,
+                    tongSoNgayPhep: $("#TongSoNgayPhep").val(),
+                    soNgayPhepCongThem: $("#SoNgayPhepCongThem").val(),
+                    soNgayPhepDaNghi: $("#SoNgayPhepDaNghi").val(),
+                    soNgayPhepConLai: $("#SoNgayPhepConLai").val(),
+                    ghiChu: $("#GhiChu").val()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    alert("Lưu thành công !!");
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                    $("#popupWindowQuanLyNghiPhepDetail").data("kendoWindow").close();
+                }
+            });
+        },
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#ChamCongNgayNghi")[0]);
+    });
+</script>
+<div id="ChamCongNgayNghi">   
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>QUẢN LÝ NGHỈ PHÉP</h4></div>
+    <div class="row">
+        <div class="col-md-12" style="text-align:center">
+            <!-- ko if: duocChotPhep() -->
+            <a href="#" class="btn btn-labeled btn-palegreen" style="width: 170px;" data-bind="click: save">
+                <i class="btn-label glyphicon glyphicon-tags"></i>Chốt phép đầu năm
+            </a>
+            <!-- /ko -->
+            <!-- ko if: isAdmin() -->
+            <a href="#" class="btn btn-labeled btn-palegreen" style="width: 170px; display: none;" data-bind="click: edit">
+                <i class="btn-label glyphicon glyphicon-tags"></i>Chỉnh sửa
+            </a>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px; height: 32px; text-align: center" maxlength="4" />
+        <!-- ko if: !isNormalUser() -->
+        <select style="width: 150px" data-bind="options: department, optionsText: function (type) { return type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <input type="text" placeholder="Mã nhân sự" data-bind="value:name" style="width: 110px;padding-left:5px; height:32px;" />
+        <!-- /ko -->
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="popupWindowQuanLyNghiPhepDetail"></div>
+</div>
+

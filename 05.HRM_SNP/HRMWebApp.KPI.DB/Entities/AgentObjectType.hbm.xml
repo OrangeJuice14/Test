@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.AgentObjectType, HRMWebApp.KPI.DB" table="KPI_AgentObjectType">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <many-to-one name="ParentAgentObjectType" class="HRMWebApp.KPI.DB.Entities.AgentObjectType" column="ParentId"/>
+    <bag name="AgentObjects" table="KPI_AgentObject"  >
+      <key column="AgentObjectTypeId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.AgentObject"/>
+    </bag>
+    <bag name="Positions" table="ChucVu" inverse="true" >
+      <key column="AgentObjectTypeId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.Position"/>
+    </bag>
+    <bag name="PlanTypes" table="KPI_PlanType_AgentObjectType">
+      <key column="AgentObjectTypeId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.PlanType" column="PlanTypeId"/>
+    </bag>
+    <bag name="Roles" table="KPI_AgentObjectType_Role">
+      <key column="AgentObjectTypeId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.Role" column="RoleId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

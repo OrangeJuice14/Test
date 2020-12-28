@@ -1,0 +1,40 @@
+﻿<html>
+<head runat="server">
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 1000px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 40px;">
+                    <th class="textToCenter" style="width: 80px">Ngày QĐ</th>
+                    <th class="textToCenter" style="width: 80px">Số QĐ</th>
+                    <th class="textToCenter" style="width: 200px">Nội dung</th>
+                    <th style="width: 80px" class="textToCenter">Từ ngày</th>
+                    <th style="width: 80px" class="textToCenter">Đến ngày</th>
+                    <th class="textToCenter">Ngạch lương</th>
+                    <th class="textToCenter">Bậc lương</th>
+                    <th class="textToCenter">Lương CB</th>
+                    <th class="textToCenter">Lương KD</th>
+                    <th class="textToCenter">Tổng PC</th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_DienBienLuong">
+                    <tr>
+                        <td data-bind="text: NgayQuyetDinh == null ? '' : formatDate(new Date(NgayQuyetDinh))" class="textToCenter"></td>
+                        <td data-bind="text: SoQuyetDinh" class="textToCenter"></td>
+                        <td data-bind="text: NoiDung" class="textToCenter"></td>
+                        <td data-bind="text: TuNgay == null ? '' : formatDate(new Date(TuNgay))" class="textToCenter"></td>
+                        <td data-bind="text: DenNgay == null ? '' : formatDate(new Date(DenNgay))" class="textToCenter"></td>
+                        <td data-bind="text: NgachLuong" class="textToCenter"></td>
+                        <td data-bind="text: BacLuong" class="textToCenter"></td>
+                        <td data-bind="text: LuongCoBan" class="textToCenter"></td>
+                        <td data-bind="text: LuongKinhDoanh" class="textToCenter"></td>
+                        <td data-bind="text: TongPhuCap" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

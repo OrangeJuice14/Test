@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EDEF1F28-70A4-45C3-B32D-E477789A4D84}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMWebApp.KPI.DB</RootNamespace>
+    <AssemblyName>HRMWebApp.KPI.DB</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate">
+      <HintPath>..\HRMWebApp\dll\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AgentObject.cs" />
+    <Compile Include="Entities\AgentObjectDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\AgentObjectType.cs" />
+    <Compile Include="Entities\Criterion.cs" />
+    <Compile Include="Entities\CriterionDictionary.cs" />
+    <Compile Include="Entities\CriterionType.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\EOfficeHRMDepartment.cs" />
+    <Compile Include="Entities\ESurveyData.cs" />
+    <Compile Include="Entities\FileAttachment.cs" />
+    <Compile Include="Entities\KPIConfiguration.cs" />
+    <Compile Include="Entities\KyTinhLuong_Nh.cs" />
+    <Compile Include="Entities\ManageCode.cs" />
+    <Compile Include="Entities\MeasureUnit.cs" />
+    <Compile Include="Entities\Method.cs" />
+    <Compile Include="Entities\MethodDetail.cs" />
+    <Compile Include="Entities\OtherActivityData.cs" />
+    <Compile Include="Entities\PlanKPI.cs" />
+    <Compile Include="Entities\PlanKPIDetail.cs" />
+    <Compile Include="Entities\PlanKPIDetail_KPI.cs" />
+    <Compile Include="Entities\PlanStaff.cs" />
+    <Compile Include="Entities\PlanType.cs" />
+    <Compile Include="Entities\PMSData.cs" />
+    <Compile Include="Entities\Position.cs" />
+    <Compile Include="Entities\ProfessorCriterion.cs" />
+    <Compile Include="Entities\ProfessorOtherActivity.cs" />
+    <Compile Include="Entities\RatingManage.cs" />
+    <Compile Include="Entities\Result.cs" />
+    <Compile Include="Entities\ResultDetail.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\ScienceResearch.cs" />
+    <Compile Include="Entities\ScienceResearchData.cs" />
+    <Compile Include="Entities\Staff.cs" />
+    <Compile Include="Entities\StaffInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\StaffProfile.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Entities\StaffRole.cs" />
+    <Compile Include="Entities\StaffStatus.cs" />
+    <Compile Include="Entities\StaffType.cs" />
+    <Compile Include="Entities\TargetGroup.cs" />
+    <Compile Include="Entities\TargetGroupDetail.cs" />
+    <Compile Include="Entities\TargetGroupDetailType.cs" />
+    <Compile Include="Entities\TaskKPI.cs" />
+    <Compile Include="Entities\ThongTinTruong_Nh.cs" />
+    <Compile Include="Entities\WebGroup.cs" />
+    <Compile Include="Entities\WebMenu.cs" />
+    <Compile Include="Entities\WebUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\AgentObject.hbm.xml" />
+    <EmbeddedResource Include="Entities\AgentObjectDetail.hbm.xml" />
+    <EmbeddedResource Include="Entities\AgentObjectType.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\Criterion.hbm.xml" />
+    <EmbeddedResource Include="Entities\CriterionDictionary.hbm.xml" />
+    <EmbeddedResource Include="Entities\CriterionType.hbm.xml" />
+    <EmbeddedResource Include="Entities\Department.hbm.xml" />
+    <EmbeddedResource Include="Entities\EOfficeHRMDepartment.hbm.xml" />
+    <EmbeddedResource Include="Entities\ESurveyData.hbm.xml" />
+    <EmbeddedResource Include="Entities\FileAttachment.hbm.xml" />
+    <EmbeddedResource Include="Entities\KPIConfiguration.hbm.xml" />
+    <EmbeddedResource Include="Entities\KyTinhLuong_Nh.hbm.xml" />
+    <EmbeddedResource Include="Entities\ManageCode.hbm.xml" />
+    <EmbeddedResource Include="Entities\MeasureUnit.hbm.xml" />
+    <EmbeddedResource Include="Entities\Method.hbm.xml" />
+    <EmbeddedResource Include="Entities\MethodDetail.hbm.xml" />
+    <EmbeddedResource Include="Entities\OtherActivityData.hbm.xml" />
+    <EmbeddedResource Include="Entities\PlanKPI.hbm.xml" />
+    <EmbeddedResource Include="Entities\PlanKPIDetail.hbm.xml" />
+    <EmbeddedResource Include="Entities\PlanKPIDetail_KPI.hbm.xml" />
+    <EmbeddedResource Include="Entities\PlanStaff.hbm.xml" />
+    <EmbeddedResource Include="Entities\PMSData.hbm.xml" />
+    <EmbeddedResource Include="Entities\Position.hbm.xml" />
+    <EmbeddedResource Include="Entities\ProfessorCriterion.hbm.xml" />
+    <EmbeddedResource Include="Entities\ProfessorOtherActivity.hbm.xml" />
+    <EmbeddedResource Include="Entities\RatingManage.hbm.xml" />
+    <EmbeddedResource Include="Entities\Result.hbm.xml" />
+    <EmbeddedResource Include="Entities\ResultDetail.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\ScienceResearch.hbm.xml" />
+    <EmbeddedResource Include="Entities\ScienceResearchData.hbm.xml" />
+    <EmbeddedResource Include="Entities\Staff.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffInfo.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\StaffProfile.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffRole.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffStatus.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffType.hbm.xml" />
+    <EmbeddedResource Include="Entities\TargetGroupDetail.hbm.xml" />
+    <EmbeddedResource Include="Entities\TargetGroupDetailType.hbm.xml" />
+    <EmbeddedResource Include="Entities\TaskKPI.hbm.xml" />
+    <EmbeddedResource Include="Entities\ThongTinTruong_Nh.hbm.xml" />
+    <EmbeddedResource Include="Entities\WebGroup.hbm.xml" />
+    <EmbeddedResource Include="Entities\WebMenu.hbm.xml" />
+    <EmbeddedResource Include="Entities\WebUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\PlanType.hbm.xml" />
+    <EmbeddedResource Include="Entities\Role.hbm.xml" />
+    <Content Include="Entities\TargetGroup.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

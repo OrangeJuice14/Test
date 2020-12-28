@@ -1,0 +1,365 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        if (x == null || x == undefined)
+            return "";
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+    function formatDate(date)
+    {
+        return date.getDate() + "/" + parseInt(date.getMonth() +1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+        self.CoBangLuong = ko.observable();
+        self.HoTen = ko.observable();
+        self.DonVi = ko.observable();
+        self.LuongCoBan = ko.observable(0);
+        self.HeSoLuong = ko.observable();
+        self.PhanTramHuongLuong = ko.observable();
+        self.HSPCKhuVuc = ko.observable();
+        self.MucHuongPhuCapLamDem = ko.observable();
+        self.HeSoBaoHiem = ko.observable();
+        self.HeSoChenhLechBaoLuu = ko.observable();
+        self.HSPCChucVu = ko.observable();
+        self.HeSoTo = ko.observable();
+        self.HSPCDocHai = ko.observable();
+        self.HSPCVuotKhung = ko.observable();
+        self.HSPCThamNien = ko.observable();
+        self.LuongTamUng = ko.observable(0);
+        self.LuongChinh = ko.observable(0);
+        self.PhuCapChucVu = ko.observable(0);
+        self.PhuCapThamNienVuotKhung = ko.observable(0);
+        self.PhuCapCLBaoLuu = ko.observable(0);
+        self.LuongThamNien = ko.observable(0);
+        self.BHXH = ko.observable(0);
+        self.BHYT = ko.observable(0);
+        self.BHTN = ko.observable(0);
+        self.LuongSanPham = ko.observable(0);
+        self.LuongNangSuat = ko.observable(0);
+        self.LuongCangTra = ko.observable(0);
+        self.LuongSuaChua = ko.observable(0);
+        self.LuongDieuTiet = ko.observable(0);
+        self.LuongLamLe = ko.observable(0);
+        self.LuongNghiLe = ko.observable(0);
+        self.LuongThoiGian = ko.observable(0);
+        self.PhuCapTienAn = ko.observable(0);
+        self.PhuCapLamDem = ko.observable(0);
+        self.PhuCapDocHai = ko.observable(0);
+        self.TongThuNhapLuongKy1 = ko.observable(0);
+        self.TongThuNhapLuongKy2 = ko.observable(0);
+        self.TongKhauTru = ko.observable(0);
+        self.ThucLanh = ko.observable(0);
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                }).OrderBy(function (value) {
+                    return value.Nam;
+                }).ThenBy(function (value) {
+                    return value.Thang;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.BangLuongSelected.subscribe(function (newvalue) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ThongTinNhanSu_BANGLUONG',
+                data: ko.toJSON({
+                    webUserId: session.Id,
+                    kyTinhLuong: newvalue
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.CoBangLuong(false);
+                    if (data.ChiTietThuNhapCaNhan != null) {
+                        self.CoBangLuong(true);
+                        self.HoTen(data.ChiTietThuNhapCaNhan.HoTen);                        
+                        self.DonVi(data.ChiTietThuNhapCaNhan.TenBoPhan);
+                        self.LuongCoBan(data.ChiTietThuNhapCaNhan.LuongCoBan);
+                        self.HeSoLuong(data.ChiTietThuNhapCaNhan.HeSoLuong);
+                        self.PhanTramHuongLuong(data.ChiTietThuNhapCaNhan.PhanTramHuongLuong);
+                        self.HSPCKhuVuc(data.ChiTietThuNhapCaNhan.HSPCKhuVuc);
+                        self.MucHuongPhuCapLamDem(data.ChiTietThuNhapCaNhan.MucHuongPhuCapLamDem);
+                        self.HeSoBaoHiem(data.ChiTietThuNhapCaNhan.HeSoBaoHiem);
+                        self.HeSoChenhLechBaoLuu(data.ChiTietThuNhapCaNhan.HeSoChenhLechBaoLuu);
+                        self.HSPCChucVu(data.ChiTietThuNhapCaNhan.HSPCChucVu);
+                        self.HeSoTo(data.ChiTietThuNhapCaNhan.HeSoTo);
+                        self.HSPCDocHai(data.ChiTietThuNhapCaNhan.HSPCDocHai);
+                        self.HSPCVuotKhung(data.ChiTietThuNhapCaNhan.HSPCVuotKhung);
+                        self.HSPCThamNien(data.ChiTietThuNhapCaNhan.HSPCThamNien);
+                        self.LuongTamUng(data.ChiTietThuNhapCaNhan.LuongTamUng);
+                        self.LuongChinh(data.ChiTietThuNhapCaNhan.LuongChinh);
+                        self.PhuCapChucVu(data.ChiTietThuNhapCaNhan.PhuCapChucVu);
+                        self.PhuCapThamNienVuotKhung(data.ChiTietThuNhapCaNhan.PhuCapThamNienVuotKhung);
+                        self.PhuCapCLBaoLuu(data.ChiTietThuNhapCaNhan.PhuCapCLBaoLuu);
+                        self.LuongThamNien(data.ChiTietThuNhapCaNhan.LuongThamNien);
+                        self.BHXH(data.ChiTietThuNhapCaNhan.BHXH);
+                        self.BHYT(data.ChiTietThuNhapCaNhan.BHYT);
+                        self.BHTN(data.ChiTietThuNhapCaNhan.BHTN);
+                        self.LuongSanPham(data.ChiTietThuNhapCaNhan.LuongSanPham);
+                        self.LuongNangSuat(data.ChiTietThuNhapCaNhan.LuongNangSuat);
+                        self.LuongCangTra(data.ChiTietThuNhapCaNhan.LuongCangTra);
+                        self.LuongSuaChua(data.ChiTietThuNhapCaNhan.LuongSuaChua);
+                        self.LuongDieuTiet(data.ChiTietThuNhapCaNhan.LuongDieuTiet);
+                        self.LuongLamLe(data.ChiTietThuNhapCaNhan.LuongLamLe);
+                        self.LuongNghiLe(data.ChiTietThuNhapCaNhan.LuongNghiLe);
+                        self.LuongThoiGian(data.ChiTietThuNhapCaNhan.LuongThoiGian);
+                        self.PhuCapTienAn(data.ChiTietThuNhapCaNhan.PhuCapTienAn);
+                        self.PhuCapLamDem(data.ChiTietThuNhapCaNhan.PhuCapLamDem);
+                        self.PhuCapDocHai(data.ChiTietThuNhapCaNhan.PhuCapDocHai);
+                        self.TongThuNhapLuongKy1(data.ChiTietThuNhapCaNhan.TongThuNhapLuongKy1);
+                        self.TongThuNhapLuongKy2(data.ChiTietThuNhapCaNhan.TongThuNhapLuongKy2);
+                        self.TongKhauTru(data.ChiTietThuNhapCaNhan.TongKhauTru);
+                        self.ThucLanh(data.ChiTietThuNhapCaNhan.ThucLanh);
+                    }
+                }
+            });
+        });
+
+        self.Sum_SoTien = function (value, arr) {
+            if (arr() == undefined || arr().length == 0)
+                return "";
+            return $.Enumerable.From(arr()).Sum(function(x){
+                return x.SoTien;
+            });
+        };
+        self.Sum_KhongTinhThue= function(value, arr)
+        {
+            if (arr() == undefined || arr().length == 0)
+                return "";
+            return $.Enumerable.From(arr()).Sum(function (x) {
+                return x.KhongTinhThue;
+            });
+        };
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<style type="text/css">
+        .boldText {
+            font-weight: bold;
+        }
+
+        .textToCenter {
+            text-align: center;
+        }
+
+        .textToRight {
+            text-align: right;
+        }
+        .backGroundTitle {
+            background: darkgray;
+        }
+        .tableBangLuong>tbody>tr>td{
+            padding: 8px;
+            vertical-align: top;
+        }
+        .headertext {
+            width: 100%;
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            font-family: 'Times New Roman';
+        }
+    </style>
+<div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Bảng lương và phụ cấp : </a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected, optionsCaption: '-- Chọn bảng lương --'"></select>
+    </div>
+    
+    <div data-bind="visible: BangLuongSelected() != undefined">
+        <!-- ko if: CoBangLuong -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <p style="padding: 10px 0px 10px 0px;">
+                Họ và tên: <b data-bind="text: HoTen"></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đơn vị: <b data-bind="text: DonVi"></b>
+            </p>
+            <table style="border-collapse: collapse; width: 100%" class="tableBangLuong table-bordered" border="1">
+                <tr>
+                    <td colspan="3" class="boldText">Lương cơ bản</td>
+                    <td width="200px" data-bind="text: numberWithCommas(LuongCoBan())" class="textToRight"></td>
+                </tr>
+                <tr>
+                    <td rowspan="4" class="boldText" width="300px">Thông tin lương doanh nghiệp</td>
+                    <td colspan="2">Hệ số lương</td>
+                    <td data-bind="text: HeSoLuong"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Phần trăm hưởng lương</td>
+                    <td data-bind="text: PhanTramHuongLuong"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">HSPC khu vực</td>
+                    <td data-bind="text: HSPCKhuVuc"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Mức hưởng phụ cấp làm đêm</td>
+                    <td data-bind="text: MucHuongPhuCapLamDem"></td>
+                </tr>
+                <tr>
+                    <td rowspan="7" class="boldText">Thông tin lương bảo hiểm</td>
+                    <td colspan="2">Hệ số bảo hiểm</td>
+                    <td data-bind="text: HeSoBaoHiem"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Hệ số chênh lệch bảo lưu</td>
+                    <td data-bind="text: HeSoChenhLechBaoLuu"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">HSPC chức vụ</td>
+                    <td data-bind="text: HSPCChucVu"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Hệ số tổ</td>
+                    <td data-bind="text: HeSoTo"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">HSPC độc hại</td>
+                    <td data-bind="text: HSPCDocHai"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">HSPC vượt khung</td>
+                    <td data-bind="text: HSPCVuotKhung"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">HSPC thâm niên</td>
+                    <td data-bind="text: HSPCThamNien"></td>
+                </tr>
+                <tr>
+                    <td rowspan="9" class="boldText">Lương kỳ 1</td>
+                    <td colspan="2">Lương tạm ứng</td>
+                    <td data-bind="text: numberWithCommas(LuongTamUng())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td rowspan="5">Lương thu BHXH</td>
+                    <td>Lương chính</td>
+                    <td data-bind="text: numberWithCommas(LuongChinh())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Phụ cấp chức vụ</td>
+                    <td data-bind="text: numberWithCommas(PhuCapChucVu())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Phụ cấp thâm niên vượt khung</td>
+                    <td data-bind="text: numberWithCommas(PhuCapThamNienVuotKhung())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Phụ cấp chênh lệch bảo lưu</td>
+                    <td data-bind="text: numberWithCommas(PhuCapCLBaoLuu())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương thâm niên</td>
+                    <td data-bind="text: numberWithCommas(LuongThamNien())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Các khoản trừ vào lương</td>
+                    <td>BHXH</td>
+                    <td data-bind="text: numberWithCommas(BHXH())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>BHYT</td>
+                    <td data-bind="text: numberWithCommas(BHYT())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>BHTN</td>
+                    <td data-bind="text: numberWithCommas(BHTN())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td rowspan="11" class="boldText">Lương kỳ 2</td>
+                    <td rowspan="8">Lương doanh nghiệp</td>
+                    <td>Lương sản phẩm</td>
+                    <td data-bind="text: numberWithCommas(LuongSanPham())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương năng suất</td>
+                    <td data-bind="text: numberWithCommas(LuongNangSuat())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương cảng trả</td>
+                    <td data-bind="text: numberWithCommas(LuongCangTra())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương sửa chữa</td>
+                    <td data-bind="text: numberWithCommas(LuongSuaChua())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương điều tiết</td>
+                    <td data-bind="text: numberWithCommas(LuongDieuTiet())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương làm lễ</td>
+                    <td data-bind="text: numberWithCommas(LuongLamLe())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương nghỉ lễ</td>
+                    <td data-bind="text: numberWithCommas(LuongNghiLe())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Lương thời gian</td>
+                    <td data-bind="text: numberWithCommas(LuongThoiGian())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Các loại phụ cấp khác</td>
+                    <td>Phụ cấp tiền ăn</td>
+                    <td data-bind="text: numberWithCommas(PhuCapTienAn())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Phụ cấp làm đêm</td>
+                    <td data-bind="text: numberWithCommas(PhuCapLamDem())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td>Phụ cấp độc hại</td>
+                    <td data-bind="text: numberWithCommas(PhuCapDocHai())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="boldText">Tổng thu nhập lương kỳ 1</td>
+                    <td data-bind="text: numberWithCommas(TongThuNhapLuongKy1())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="boldText">Tổng thu nhập lương kỳ 2</td>
+                    <td data-bind="text: numberWithCommas(TongThuNhapLuongKy2())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="boldText">Tổng khấu trừ</td>
+                    <td data-bind="text: numberWithCommas(TongKhauTru())" class="textToRight">></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="boldText">Thực lãnh</td>
+                    <td data-bind="text: numberWithCommas(ThucLanh())" class="textToRight">></td>
+                </tr>
+            </table>
+        </div>        
+        <!-- /ko -->
+        <!-- ko if: CoBangLuong()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Không có bảng lương tháng này!</div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

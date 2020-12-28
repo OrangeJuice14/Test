@@ -1,0 +1,223 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterLUH.Master.cs" Inherits="HRMChamCong.MasterLUH" %>
+
+<%@ Import Namespace="HRMChamCong.Helper" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="/CSS/style.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/Components/jqwidgets/jqx-all.js" type="text/javascript"></script>
+    <link href="/Components/jqwidgets/jqx.base.css" rel="stylesheet" />
+    <link href="/Components/jqwidgets/jqx.darkBlue.css" rel="stylesheet" />
+    <script src="/Scripts/knockout-3.2.0.js"></script>
+    <script type="text/javascript" src="/Components/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/Components/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="/Components/jqwidgets/jqxmenu.js"></script>
+
+    <script src="/Scripts/helper.js"></script>
+    <script src="/Scripts/jquery.linq.min.js"></script>
+    <script type="text/javascript">
+        function logout() {
+            $.ajax({
+                type: 'POST',
+                url: '/Services/ChamCongService.asmx/LogOut_WebUser',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    window.location = "/Login.aspx";
+                }
+            });
+        }
+
+        var masterPageFunc = function () {
+            var self = this;
+            self.items = ko.observableArray();
+        };
+        $(function () {
+            var master = new masterPageFunc();
+            $.ajax({
+                type: 'POST',
+                url: '/Services/ChamCongService.asmx/WebMenu_GetListBy_WebUserId',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    webUserId: '<%#HttpContext.Current.Session[SessionKey.UserId.ToString()]%>'
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var data = $.parseJSON(result.d);
+                    master.items(data);
+                }
+            });
+            ko.applyBindings(master, $("#jqxWidget_menu")[0]);
+            var source_menu =
+               {
+                   datatype: "json",
+                   datafields: [
+                       { name: 'Oid' },
+                       { name: 'ParentId' },
+                       { name: 'Name' },
+                       { name: 'Url' }
+                   ],
+                   id: 'Oid',
+
+                   localdata: master.items()
+               };
+            var dataAdapter_menu = new $.jqx.dataAdapter(source_menu);
+            dataAdapter_menu.dataBind();
+            var records1 = dataAdapter_menu.getRecordsHierarchy('Oid', 'ParentId', 'items', [{ name: 'Name', map: 'label' }, { name: 'Oid', map: 'id' }]);
+            $('#jqxWidget_menu').jqxMenu({ source: records1, width: '218', mode: 'vertical' });
+            $("#jqxWidget_menu").on('itemclick', function (event) {
+                window.location = dataAdapter_menu.recordids[event.args.id].Url;
+            });
+            $("#jqxWidget_menu ul").append("<li class='jqx-item jqx-menu-item-top jqx-rc-all ' role='menuitem' onclick='logout()'>Thoát</li>");
+        });
+    </script>
+    <style type="text/css">
+        .jqx-menu-vertical {
+          
+            border: none;
+        }
+
+        .mn_left .menu ul li {
+            overflow: initial;
+      
+        }
+        .jqx-menu .jqx-fill-state-pressed {
+            background: #2b316d !important;
+        }
+
+         .jqx-menu .jqx-fill-state-hover {
+            background: #2b316d;
+            color: #fff;
+        }
+
+         .jqx-menu-dropdown .jqx-fill-state-hover {
+            background: #2b316d;
+            color: #fff;
+        }
+     
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="top_chamcong">
+        <img src="/Images/logo_UIH(1).png">
+        <img src="/Images/name_schoolLUH.png">
+    </div>
+    <div class="content_chamcong">
+        <div class="mn_left">
+            <div class="user_dn">
+                <img src="/Images/user.png">
+                <a href="/Views/User/AccountInfo.aspx"><%#HttpContext.Current.Session[SessionKey.UserName.ToString()]%></a>
+            </div>
+            <div id="jqxWidget_menu" class="menu" style="  background: #363e88;">
+            </div>
+            <%--<ul>
+                <li><a href="#">
+                    <img src="Images/arrow.png">    
+                    Thông tin nhân sự</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Quản lý User</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Quản lý chấm công</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Chốt chấm công tháng</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Xem thông tin chấm công</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Chấm công nhanh</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Đổ dữ liệu chấm công tháng</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Quản lý xét ABC</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Kiểm tra phòng ban xét ABC</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Thống kê xét ABC theo tháng</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Thống kê xét ABC theo năm</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Chấm công ngày nghỉ</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Thông tin tài khoản</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Quản lý khai báo công tác</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Khai báo công tác cá nhân</a></li>
+                <li><a href="#">
+                    <img src="Images/arrow.png">
+                    Thoát</a></li>
+            </ul>--%>
+        </div>
+        <!--End mn_left-->
+
+        <div class="primary">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <!--End main_chamcong-->
+
+        <div class="footer_chamcong">
+            <div class="L_footer">
+                <p>Copyright &copy; 2015 | <b>Trường Đại học Luật TPHCM</b></p>
+                <p>Số 12 Nguyễn Văn Bảo , P.4 , Q.Gò Vấp, TP.HCM - Tel: (08) 3 89 40 390 - Fax: (08) 3 894 62 68</p>
+            </div>
+            <div class="R_footer">
+                <p><span>Website PSC HRM</span></p>
+                <p>Phần mềm được phát triển bởi <a href="#">PSC</a></p>
+            </div>
+        </div>
+        <!--End footer_chamcong-->
+    </div>
+    <!--End content chamcong-->
+    <%--    <div class="wrapper">
+        <div class="top">
+            <img src="/Images/logo_UIH.png" />
+            <div class="name_school">
+                <img src="/Images/name_school.png" />
+            </div>
+        </div>
+        <div class="content">
+            <div class="sidebar">
+                <div class="user">
+                    <img src="/Images/user.png"><a href="/Views/User/AccountInfo.aspx"><%#HttpContext.Current.Session[SessionKey.UserName.ToString()]%></a>
+                </div>
+                <div id="jqxWidget_menu" class="menu">
+                </div>
+            </div>
+            <div class="primary">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+        <div class="name_soft">
+            <h3 style="font-style: italic; padding: 13px 10px; text-align: right; color: white;">Website chấm công - PSC HRM</h3>
+        </div>
+        <div class="footer">
+            <p>Trường Đại Học Công Nghiệp TPHCM</p>
+            <p>Phần mềm được phát triển bởi <a href="#">PSC</a></p>
+        </div>
+    </div>--%>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿<form name="departmentDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <button style="float:right;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+    </div>
+    <div class="modal-body">      
+        <div class="form-group">          
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>      
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="cancel()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

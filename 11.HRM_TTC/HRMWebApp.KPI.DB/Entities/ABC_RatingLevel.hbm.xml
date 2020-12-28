@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_RatingLevel, HRMWebApp.KPI.DB" table="ABC_RatingLevel">
+    <id name="Id" column="Oid"></id>
+    <property name="Name" column="Name"></property>
+    <property name="Color" column="Color"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <bag name="ABC_Criterions" table="ABC_Criterion_RatingLevel">
+      <key column="RatingLevelId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.ABC_Criterion" column="CriterionId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,169 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+
+    function ViewModel() {
+        var self = this;
+        self.caChamCong = ko.observableArray();
+        self.caChamCongSelected = ko.observable();
+        self.kyDangKy = ko.observableArray();
+        self.tenKyDangKy = ko.observable("");
+        self.kyDangKySelected = ko.observable();
+        self.DuLieuDaDangKy = ko.observable("");
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/DangKyKhungGio_GetDuLieuDaDangKy',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: ko.toJSON({
+                nhanvien: session.Id
+            }),
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.DuLieuDaDangKy(obj);
+            }
+        });
+        //
+        self.kyDangKySelected.subscribe(function (newValue) {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetKyDangKy',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({
+                    id: newValue
+                }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.tenKyDangKy(obj.NgayString);
+                }
+            });
+        });
+        self.checkChot = function () {
+            var check;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/DangKyKhungGio_CheckChot',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_CaChamCong',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.caChamCong(obj);
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_KyDangKy',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.kyDangKy(obj);
+            }
+        });
+    }
+    ViewModel.prototype = {
+        save: function () {
+            var self = this;
+            if (!self.checkChot()) {
+                alert('Đã quá thời gian đăng ký !!');
+                return;
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/DangKyKhungGioLamViec_Save',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        obj:
+                        {
+                            ThongTinNhanVien: session.Id,
+                            CaChamCong: self.caChamCongSelected(),
+                            KyDangKy: self.kyDangKySelected()
+                        }
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        alert("Lưu thành công !!");
+                        //
+                        $.ajax({
+                            type: 'POST',
+                            url: '/WebServices/DangKyKhungGio_GetDuLieuDaDangKy',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: ko.toJSON({
+                                nhanvien: session.Id
+                            }),
+                            async: false,
+                            success: function (result) {
+                                var obj = result;
+                                self.DuLieuDaDangKy(obj);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    };
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#ChamCongNgayNghi")[0]);
+    });
+</script>
+
+<div id="ChamCongNgayNghi">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4>ĐĂNG KÝ KHUNG GIỜ LÀM VIỆC</h4></div>
+    <div class="row">
+        <div class="col-sm-2">Kỳ đăng ký:</div>
+        <div class="col-sm-10">
+            <select data-bind="options:kyDangKy, optionsText: 'TenKy', optionsValue: 'Oid',value:kyDangKySelected, optionsCaption: '-- Chọn Kỳ đăng ký --'"></select>
+            <span data-bind="text:tenKyDangKy"></span>
+        </div>
+    </div>
+    <br /><div style="height:5px;"></div>
+    <div class="row">
+        <div class="col-sm-2">Khung giờ:</div>
+        <div class="col-sm-10">
+            <select data-bind="options:caChamCong, optionsText: 'TenCa', optionsValue: 'Oid',value:caChamCongSelected, optionsCaption: '-- Chọn khung giờ --'"></select>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <a href="#" class="btn btn-info" style="width: 158px;left:15px;" data-bind="click: save">
+            <i class="btn-label glyphicon glyphicon-ok"></i>Đăng ký
+        </a>
+    <span style="padding-left:30px;color:crimson;font-weight:bold" data-bind="text: DuLieuDaDangKy"></span>
+        </div>
+</div>
+

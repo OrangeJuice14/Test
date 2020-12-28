@@ -1,0 +1,161 @@
+﻿<style type="text/css">
+    .title {
+        font-family: 'Times New Roman';
+        font-weight: bold !important;
+        margin-top: 10px !important;
+    }
+
+    .overlay {
+        display: table;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        z-index: 2;
+    }
+
+    th, td {
+        border: 1px solid !important;
+    }
+
+        td > table td {
+            border-right: 0 !important;
+        }
+
+    .inner {
+        font-family: sans-serif;
+        font-size: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    textarea {
+        padding: 0;
+        margin: 5px 0 0 0;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+
+    </div>
+
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <h3 class="title">BẢNG ĐÁNH GIÁ XẾP LOẠI</h3>
+            <h4 class="title">THÁNG {{obj.Month}} NĂM {{obj.Year}}</h4>
+            <h5 class="title" ng-if="obj.IsSupervisor && !obj.IsRated" style="color:red">(Cấp dưới chưa khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="obj.IsSupervisor && obj.SupervisorType == 1 && obj.IsRatedSecond" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="obj.IsSupervisor && obj.SupervisorType == 2 && obj.IsRatedThird" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="!obj.IsSupervisor && obj.IsRated" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="obj.IsRatingLocked" style="color:red">(Đơn vị đã bị khóa đánh giá)</h5>
+        </div>
+        <form name="planDetailKPIForm" role="form" class="form-horizontal" novalidate>
+            <div style="font-family:'Times New Roman';font-size:12pt; margin-left:20px;">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">Họ và tên</div>
+                    <div class="col-md-9 col-sm-9">{{obj.StaffName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">Chức vụ</div>
+                    <div class="col-md-9 col-sm-9">{{obj.StaffPosition}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">Đơn vị công tác</div>
+                    <div class="col-md-9 col-sm-9">{{obj.DepartmentName}}</div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <table style="width:100%;background-color:white; text-align:center; vertical-align:middle; font-family:'Times New Roman';font-size:12pt; border-right:1px solid;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Cá nhân</th>
+                            <th ng-if="isSupervisor != 1" style="text-align: center;">Trưởng đơn vị</th>
+                            <th ng-if="isSupervisor != 1" style="text-align: center;">Ghi chú Trưởng đơn vị</th>
+                            <th style="text-align: center;">BGH</th>
+                            <th style="text-align: center;">Ghi chú BGH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div ng-if="obj.IsSupervisor || obj.IsRated || obj.IsRatedSecond || obj.IsRatedThird">{{obj.Classification || 'Chưa đánh giá'}}</div>
+                                <div ng-if="!obj.IsSupervisor && !obj.IsRated && !obj.IsRatedSecond && !obj.IsRatedThird">
+                                    <select ng-model="obj.Classification" ng-init="obj.Classification = 'A'">
+                                        <option value="" selected disabled hidden>-- Chọn xếp loại --</option>
+                                        <option value="A">A</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <span class="error" style="color: red" ng-show="obj.Classification == null">
+                                    </span>
+                                </div>
+                            </td>
+                            <td ng-if="isSupervisor != 1">
+                                <div ng-if="obj.SupervisorType != 1 || obj.IsRatedSecond">{{obj.ClassificationSecond || 'Chưa đánh giá'}}</div>
+                                <div ng-if="obj.SupervisorType == 1 && !obj.IsRatedSecond">
+                                    <select ng-model="obj.ClassificationSecond" ng-init="obj.ClassificationSecond = 'A'">
+                                        <option value="" selected disabled hidden>-- Chọn xếp loại --</option>
+                                        <option value="A">A</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <span class="error" style="color: red" ng-show="obj.ClassificationSecond == null">
+                                    </span>
+                                </div>
+                            </td>
+                            <td ng-if="isSupervisor != 1">
+                                <div ng-if="obj.SupervisorType != 1 || obj.IsRatedSecond">{{obj.NoteSecond}}</div>
+                                <div ng-if="obj.SupervisorType == 1 && !obj.IsRatedSecond">
+                                    <textarea ng-if="isSupervisor != 1" cols="25" rows="4" ng-model="obj.NoteSecond"></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-if="obj.SupervisorType != 2 || obj.IsRatedThird">{{obj.ClassificationThird || 'Chưa đánh giá'}}</div>
+                                <div ng-if="obj.SupervisorType == 2 && !obj.IsRatedThird">
+                                    <select ng-model="obj.ClassificationThird" ng-init="obj.ClassificationThird = 'A'">
+                                        <option value="" selected disabled hidden>-- Chọn xếp loại --</option>
+                                        <option value="A">A</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                    <span class="error" style="color: red" ng-show="obj.ClassificationThird == null">
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-if="obj.SupervisorType != 2 || obj.IsRatedThird">{{obj.NoteThird}}</div>
+                                <div ng-if="obj.SupervisorType == 2 && !obj.IsRatedThird">
+                                    <textarea cols="25" rows="4" ng-model="obj.NoteThird"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div class="row">
+                <div style="float: right; margin-right: 30px;">
+                    <div ng-if="checkLockVisible()">
+                        <button class="btn btn-danger" ng-click="lock()">Khóa</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

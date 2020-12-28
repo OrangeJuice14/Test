@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ThongTinDanhGia, HRMWebApp.KPI.DB" table="ThongTinDanhGia">
+    <id name="Id" column="Oid"></id>
+    <many-to-one name="StaffInfo" class="HRMWebApp.KPI.DB.Entities.StaffInfo" column="ThongTinNhanVien" />
+    <property name="DanhGia" column="DanhGia"></property>
+    <many-to-one name="ABC_RatingType" class="HRMWebApp.KPI.DB.Entities.ABC_RatingType" column="DoiTuongDanhGia"/>
+    <property name="MaDoiTuongDanhGia" column="MaDoiTuongDanhGia"></property>
+    <many-to-one name="ABC_EvaluationBoard" class="HRMWebApp.KPI.DB.Entities.ABC_EvaluationBoard" column="ABC_EvaluationBoard"  />
+  </class>
+</hibernate-mapping>

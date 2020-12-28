@@ -1,0 +1,187 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content">
+            <div class="hrm_subtitle">
+                <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.HOP_DONG_HIEN_TAI">Hợp đồng hiện tại</span>
+            </div>
+            <div class="hrm_line">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.SO_HOP_DONG">Số hợp đồng</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: SoHopDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.LOAI_HOP_DONG">Loại hợp đồng</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LoaiHopDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.NGAY_KY">Ngày ký</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayKy == null ? NgayKy : formatDate(new Date(NgayKy))">
+                </div>
+            </div>
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.CHUC_VU_NGUOI_KY">Chức vụ người ký</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucVuNguoiKy">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.NGUOI_KY">Người ký</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NguoiKy">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.TU_NGAY">Từ ngày</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TuNgay == null ? '' : formatDate(new Date(TuNgay))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.DEN_NGAY">Đến ngày</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DenNgay == null ? '' : formatDate(new Date(DenNgay))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <!--<div class="hrm_box">
+                <div class="hrm_left">
+                    % mức lương được hưởng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: MucLuongDuocHuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Chức danh chuyên môn:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucDanhChuyenMon">
+                </div>
+            </div>-->
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Mã ngạch lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: MaNgachLuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tên ngạch lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenNgachLuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Bậc lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: BacLuong">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.LUONG_CHINH">Lương chính</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LuongCoBan">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.HOP_DONG_HIEN_TAI.LUONG_BO_SUNG">Lương bổ sung (bao gồm các khoản hỗ trợ)</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LuongKinhDoanh">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div>
+                <div class="hrm_subtitle">
+                    <span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.DANH_SACH_CAC_HOP_DONG_DA_KY">Danh sách các hợp đồng đã ký</span>
+                </div>
+                <div class="hrm_line">
+                </div>
+                <div>
+                    <table width="100%" border="1" style="border-collapse: collapse">
+                        <tr class="backGroundTitle" style="height: 40px;">
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.SO_HOP_DONG">Số hợp đồng</span></th>
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.LOAI_HOP_DONG">Loại hợp đồng</span></th>
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.NGAY_KY">Ngày ký</span></th>
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.NGUOI_KY">Người ký</span></th>
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.TU_NGAY">Từ ngày</span></th>
+                            <th class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.HOP_DONG_LAO_DONG.DANH_SACH_CAC_HOP_DONG_DA_KY.DEN_NGAY">Đến ngày</span></th>
+                        </tr>
+                        <tbody data-bind="foreach: DanhSach_HopDongDaKy">
+                            <tr>
+                                <td data-bind="text: SoHopDong" class="textToCenter"></td>
+                                <td data-bind="text: LoaiHopDong" class="textToCenter"></td>
+                                <td data-bind="text: formatDate(new Date(NgayKy))" class="textToCenter"></td>
+                                <td data-bind="text: NguoiKy" class="textToCenter"></td>
+                                <td data-bind="text: TuNgay == null ? '' :formatDate(new Date(TuNgay))" class="textToCenter"></td>
+                                <td data-bind="text: DenNgay ==null ? '' :formatDate(new Date(DenNgay))" class="textToCenter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

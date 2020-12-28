@@ -1,0 +1,73 @@
+﻿<form class="form-horizontal" name="ResearchForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body" ng-if="criterionTypeId != 5">
+        <!--<div class="form-group" ng-class="{'has-error': ResearchForm.ExecuteMethod.$invalid}">
+            <label for="ExecuteMethod" class="col-md-4 control-label">Phương pháp thực hiện</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="ExecuteMethod" placeholder="" ng-model="obj.ExecuteMethod" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': ResearchForm.BasicResource.$invalid}">
+            <label for="BasicResource" class="col-md-4 control-label">Nguồn lực cần có</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="BasicResource" placeholder="" ng-model="obj.BasicResource" rows="4"></textarea>
+            </div>
+        </div>-->
+        <div class="form-group" ng-class="{'has-error': ResearchForm.NumberOfResearch.$invalid}">
+            <label for="NumberOfResearch" class="col-md-4 control-label">Số lượng</label>
+            <div class="col-md-6">
+                <input name="NumberOfResearch" kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfResearch" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" ng-if="criterionTypeId == 5">
+        <div class="form-group" ng-class="{'has-error': ResearchForm.OrderNumber.$invalid}">
+            <label for="STT" class="col-md-4 control-label">STT</label>
+            <div class="col-md-6">
+                <input name="OrderNumber" required kendo-numeric-text-box k-options="orders" k-ng-model="obj.OrderNumber" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="ResearchForm.OrderNumber.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': ResearchForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="name" placeholder="Enter name here ..." required ng-model="obj.Name" rows="10"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="ResearchForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <!--<div class="form-group" ng-class="{'has-error': ResearchForm.ExecuteMethod.$invalid}">
+            <label for="ExecuteMethod" class="col-md-4 control-label">Phương pháp thực hiện</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="ExecuteMethod" placeholder="" ng-model="obj.ExecuteMethod" rows="4"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': ResearchForm.BasicResource.$invalid}">
+            <label for="BasicResource" class="col-md-4 control-label">Nguồn lực cần có</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="BasicResource" placeholder="" ng-model="obj.BasicResource" rows="4"></textarea>
+            </div>
+        </div>-->
+        <div class="form-group" ng-class="{'has-error': ResearchForm.NumberOfResearch.$invalid}">
+            <label for="NumberOfResearch" class="col-md-4 control-label">Số tiết</label>
+            <div class="col-md-6">
+                <input name="NumberOfResearch" kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfHour" />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': ResearchForm.NumberOfResearch.$invalid}">
+            <label for="NumberOfResearch" class="col-md-4 control-label">Số lượng</label>
+            <div class="col-md-6">
+                <input name="NumberOfResearch" kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfResearch" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="Save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,62 @@
+﻿<!--<ul>
+    <li ng-repeat="item in array">
+        <span>{{item.id + ' - ' + item.name}}</span>
+        <button ng-click="test(item.id)">Click</button>
+    </li>
+</ul>-->
+<!--<select ng-model="so" ng-options="item.id as item.name for item in array"></select>
+<button ng-click="test()">Click</button>-->
+
+<div class="widget">
+    <div class="widget-header ">
+        <span class="widget-caption">Đối tượng KPI</span>
+        <button style="float:right;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+        <div class="widget-buttons">
+            <a href="#" data-toggle="maximize">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a href="#" data-toggle="collapse">
+                <i class="fa fa-minus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="widget-body">
+        <div class="row">
+            <div class="col-md-2">
+                </div>
+                <div class="col-md-3" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}">
+                    <select class="form-control" name="selectAngentObject" required ng-change="selectedChangeAgentObject()" ng-model="obj.AgentObject" ng-options="listobj.Id as listobj.Name for listobj in agentObjecs"></select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="selectGroup" required ng-model="TargetGroupDetailId" ng-options="listobj.Id as listobj.Name for listobj in targetGroupDetails"></select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" name="selectStudyYear" required ng-model="StudyYear" ng-options="list.Id as list.Name for list in studyyear"></select>
+                </div>
+                <!--<div class="col-md-4" ng-class="{'has-error': CriterionDetailForm.selectDepart.$invalid}">
+             <select class="form-control" name="selectDepart" required ng-model="obj.Department" ng-options="listobj.Id as listobj.Name for listobj in departments">
+             </select>
+             <select kendo-combo-box
+                     k-placeholder="'Chọn phòng ban'"
+                     k-data-text-field="'Name'"
+                     k-data-value-field="'Id'"
+                     k-filter="'contains'"
+                     k-data-source="customOptions"
+                     k-ng-model="obj.Department"
+                     style="width: 100%;height:26px; border-color:#dbdbdb; border-bottom:solid 1px ">
+             </select>
+        </div>-->
+                <div class="col-md-2">
+                    <button ng-click="Search()" class="btn btn-primary" ng-disabled="CriterionForm.$invalid"><i class="fa fa-search"></i> </button>
+                </div>
+            <div class="col-md-2">
+            </div>
+            </div>
+        <!--<jqx-grid jqx-settings="gridSettings" jqx-instance="grid" jqx-create="createWidget"></jqx-grid>-->
+        <br />
+        <div>
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,34 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div class="hrm_clear">
+    </div>
+    <div class="hrm_content" style="width: 900px !important">
+        <table width="110%" border="1" style="border-collapse: collapse">
+            <tr class="backGroundTitle" style="height: 25px;">
+                <th style="width: 50px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.STT">STT</span></th>
+                <th style="width: 150px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.LOAI_QD">Loại QĐ</span></th>
+                <th style="width: 80px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.SO_QD">Số QĐ</span></th>
+                <th style="width: 80px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.NGAY_QD">Ngày QĐ</span></th>
+                <th style="width: 80px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.NGAY_BH">Ngày BH</span></th>
+                <th style="width: 80px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.TU_NAM">Từ năm</span></th>
+                <th style="width: 80px" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.DEN_NAM">Đến năm</span></th>
+                <th style="width: 350px"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_CONG_TAC.NOI_DUNG">Nội dung</span></th>
+            </tr>
+            <tbody data-bind="foreach: DanhSach_QuaTrinhCongTac">
+                <tr>
+                    <td data-bind="text: STT" class="textToCenter"></td>
+                    <td data-bind="text: LoaiQuyetDinh" class="textToCenter"></td>
+                    <td data-bind="text: SoQuyetDinh" class="textToCenter"></td>
+                    <td data-bind="text: NgayQuyetDinh == null ? '' : formatDate(new Date(NgayQuyetDinh))" class="textToCenter"></td>
+                    <td data-bind="text: NgayBanHanh == null ? '' : formatDate(new Date(NgayBanHanh))" class="textToCenter"></td>
+                    <td data-bind="text: TuNam" class="textToCenter"></td>
+                    <td data-bind="text: DenNam" class="textToCenter"></td>
+                    <td data-bind="text: NoiDung"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

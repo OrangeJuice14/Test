@@ -1,0 +1,303 @@
+﻿
+<script type="text/javascript">
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+
+        function ViewModel_UpdateHoSoNhanVien() {
+            var self = this;
+
+            self.ThongTinNhanVien = session.Id;
+            self.TonGiao = null;
+            self.ChieuCao = null;
+            self.CanNang = null;
+            self.TinhTrangHonNhan = null;
+            self.CMND = null;
+            self.NgayCap = null;
+            self.NoiCap = null;
+            self.DienThoaiDiDong = null;
+            //
+            self.data_tongiao = ko.observableArray();
+            self.data_tinhtranghonnhan = ko.observableArray();
+            self.data_tinhthanh = ko.observableArray();
+
+            //Lấy dữ liệu của nhân viên hiện tại set mặc định
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVien_GetByNhanVien',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ nhanVienId: self.ThongTinNhanVien }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.TonGiao = obj.TonGiao;
+                    self.ChieuCao = obj.ChieuCao;
+                    self.CanNang = obj.CanNang;
+                    self.TinhTrangHonNhan = obj.TinhTrangHonNhan;
+                    self.TenTinhTrangHonNhan = obj.TenTinhTrangHonNhan;
+                    self.CMND = obj.CMND != null ? obj.CMND.trim() : "";
+                    self.NgayCap = obj.NgayCap;
+                    self.NoiCap = obj.NoiCap;
+                    self.TenNoiCap = obj.TenNoiCap;
+                    self.DienThoaiDiDong = obj.DienThoaiDiDong != null ? obj.DienThoaiDiDong.trim() : "";
+
+                    //Khởi tạo các control
+                    $("#jqxNgayCap").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: new Date(self.NgayCap) });
+
+                }
+            });
+
+            ////Get dữ liệu Danh mục
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetDanhMucUpDateHoSoNhanVienAll',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    self.data_tinhthanh(result["TinhThanh"]);
+                    self.data_tongiao(result["TonGiao"]);
+                    self.data_tinhtranghonnhan(result["TinhTrangHonNhan"]);
+                }
+            });
+
+
+            //////////////////////////////Đưa dữ liệu vào Combobox ///////////////////////////////
+            //Tôn giáo
+            var serializedArr = JSON.stringify(eval("(" + self.data_tongiao() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTonGiao").kendoComboBox({
+                dataTextField: "TenTonGiao",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTonGiao,
+                value: self.TonGiao
+            });
+            function onSelectTonGiao(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TonGiao = dataItem.Oid;
+            };
+
+            //Tình trạng hôn nhân
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhtranghonnhan() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhTrangHonNhan").kendoComboBox({
+                dataTextField: "TenTinhTrangHonNhan",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhTrangHonNhan,
+                value: self.TinhTrangHonNhan
+            });
+            function onSelectTinhTrangHonNhan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhTrangHonNhan = dataItem.Oid;
+            };
+
+            //Nơi cấp CMND
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxNoiCap").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectNoiCap,
+                value: self.NoiCap
+            });
+            function onSelectNoiCap(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.NoiCap = dataItem.Oid;
+            };
+        }
+
+        ViewModel_UpdateHoSoNhanVien.prototype = {
+
+            validate: function () {
+                var self = this;
+                if ($("#jqxNgayCap").val() == '') {
+                    alert('Ngày cấp không hợp lệ');
+                    return true;
+                }
+                return false;
+            },
+            Save: function () {
+                var self = this;
+                if (self.validate()) {
+                    return;
+                }
+                else {
+                    var ngaycap = $("#jqxNgayCap").val();
+
+                    var ngaycapArray = ngaycap.split("/");
+                    var ngaycapDate = ngaycapArray[2] + '/' + ngaycapArray[1] + '/' + ngaycapArray[0];
+                    self.NgayCap = ngaycapDate;
+
+                    //Tiến hành lưu dữ liệu
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/HoSoNhanVien_CapNhat',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            oid: self.ThongTinNhanVien,
+                            tonGiao: self.TonGiao,
+                            chieuCao: self.ChieuCao,
+                            canNang: self.CanNang,
+                            tinhTrangHonNhan: self.TinhTrangHonNhan,
+                            cMND: self.CMND ,
+                            ngayCap: self.NgayCap,
+                            noiCap: self.NoiCap,
+                            dienThoaiDiDong: self.DienThoaiDiDong
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.success == 'success') {
+                                alert("Lưu thành công !!");
+                                var close = $("#popupWindowUpdateHoSoNhanvien").data("kendoWindow");
+                                close.center().close();
+                                //
+                                ko.cleanNode($('#popupWindowUpdateHoSoNhanvien')[0]);
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 200);
+                            }
+                            else {
+                                alert("Lưu thất bại !!");
+                            }
+                        }
+                    });
+                    return;
+                }
+            },
+            Cancel: function () {
+
+                var close = $("#popupWindowUpdateHoSoNhanvien").data("kendoWindow");
+                close.center().close();
+                //
+                ko.cleanNode($('#popupWindowUpdateHoSoNhanvien')[0]);
+            },
+        }
+
+</script>
+
+<div id="updatehosonhanvien">
+    <div class="form-group">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center; font-weight:bold">CẬP NHẬT THÔNG TIN HỒ SƠ</div>
+    </div>
+    <div class="col-lg-12 col-xs-12 col-sm-12" style="float:left;width:400px">
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right"></label>
+            <div class="col-sm-6">
+            </div>
+        </div>
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Chiều cao:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: ChieuCao" />
+                    <label>cm</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Cân nặng:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: CanNang" />
+                    <label>kg</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Tôn giáo:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxTonGiao" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Tình trạng hôn nhân:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxTinhTrangHonNhan" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xs-12 col-sm-12" style="float:right;width:400px;">
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right"></label>
+            <div class="col-sm-6">
+            </div>
+        </div>
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">CMND:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: CMND" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Ngày cấp:</label>
+                <div class="col-sm-6">
+                    <div data-bind="value: NgayCap" id="jqxNgayCap"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Nơi cấp:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxNoiCap" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Điện thoại di động:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: DienThoaiDiDong" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Cancel">
+                    <i class="btn-label glyphicon glyphicon-log-out"></i>Thoát
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

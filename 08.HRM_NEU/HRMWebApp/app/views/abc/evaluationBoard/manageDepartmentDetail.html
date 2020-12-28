@@ -1,0 +1,46 @@
+﻿<form name="departmentDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Chọn kế hoạch</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <h5>Danh sách Đơn vị</h5>
+            <!--<a class="btn btn-labeled btn-darkorange" ng-click="DepartmentSyntheticEvaluation()">
+                <i class="btn-label glyphicon glyphicon-edit"></i>Đánh giá tổng hợp
+            </a>-->
+            <table class="table table-striped table-bordered" style="margin-top:10px">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Đơn vị</th>
+                        <th style="text-align:center; vertical-align:middle">Trưởng đơn vị</th>
+                        <!--<th style="text-align:center">Chức vụ</th>-->
+                        <th style="text-align:center; width:90px; vertical-align:middle">Trưởng đơn vị đánh giá</th>
+                        <th style="text-align:center; width:108px; vertical-align:middle">Cấp quản lý đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in staffList">
+                        <td>{{staff.DepartmentName}}</td>
+                        <td>
+                            <a href="/#/kpi/ABC_RatingDetail/{{staff.EvaluationId}}/{{staff.StaffId}}/{{supervisorId}}/{{staff.DepartmentId}}/{{1}}" ng-if="staff.IsRated && staff.StaffType==2" ng-click="cancel()">{{staff.StaffName}}</a>
+                            <a href="/#/kpi/ABC_RatingDetailProfessor/{{staff.EvaluationId}}/{{staff.StaffId}}/{{supervisorId}}/{{staff.DepartmentId}}/{{1}}" ng-if="staff.IsRated && staff.StaffType==1" ng-click="cancel()">{{staff.StaffName}}</a>
+                            <a href="#" ng-if="staff.IsRated && staff.StaffType==0" ng-click="alert()">{{staff.StaffName}}</a>
+                            <span ng-if="!staff.IsRated">{{staff.StaffName}}</span>
+                        </td>
+                        <!--<td>{{staff.PositionName}}</td>-->
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,55 @@
+﻿<div>
+    <form class="form-horizontal" name="BoTieuChiRoleForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Phân quyền đánh giá</h3>
+        </div>
+        <div class="modal-body" style="display:flow-root">
+            <div>
+                <div>Tên bộ tiêu chí: </div>
+                <input type="text" class="k-textbox" style="width:100%" placeholder="Tên ..." name="name" ng-model="objBoTieuChiRole.BoTieuChiName" ng-disabled="true" />
+            </div>
+            <div class="" style="margin-top: 5px" ng-repeat="tempBoTieuChiRole in objBoTieuChiRole.ListRole track by $index+1">
+                <fieldset>
+                    <legend>Phân quyền</legend>
+                    <div style="display: flow-root;">
+                        <button class="btn btn-danger" style="width:40px; padding:0px 5px; vertical-align:middle; float:right" ng-click="DelRow(tempBoTieuChiRole)"><i class="fa fa-times" style='margin-right: 0px;'></i></button>
+                        <button class="btn btn-success" style="width:40px; padding:0px 5px; vertical-align:middle; float:right; margin:0 5px;" ng-click="AddNewRow()" ng-show="$index == 0"><i class="fa fa-plus" style='margin-right: 0px;vertical-align:middle'></i></button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div>Tự đánh giá: </div>
+                            <select kendo-drop-down-list
+                                    k-options="ListGroupTuDanhGiaOption"
+                                    style="width:100%;background-color:lightblue"
+                                    k-data-text-field="'Name'"
+                                    k-data-value-field="'Id'"
+                                    k-filter="'contains'"
+                                    k-ng-model="tempBoTieuChiRole.GroupTuDanhGiaId">
+                            </select>
+                            <div style="margin-top: 5px">
+                                <label class="checkbox-inline" style="vertical-align:middle">
+                                    <input type="checkbox" ng-model="tempBoTieuChiRole.UserDanhGiaNgangHang">
+                                    Nhóm cấp trên đánh giá ngang hàng
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div>Cấp trên đánh giá: </div>
+                            <select kendo-multi-select
+                                    k-options="ListGroupDanhGiaOption"
+                                    style="        background-color: lightblue"
+                                    k-data-text-field="'Name'"
+                                    k-data-value-field="'Id'"
+                                    k-filter="'contains'"
+                                    k-ng-model="tempBoTieuChiRole.ListGroupDanhGiaId"></select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="Save()" ng-disabled="BoTieuChiRoleForm.$invalid">Lưu</button>
+            <button class="btn btn-warning" style="cursor:pointer" ng-click="$dismiss()">Thoát</button>
+        </div>
+    </form>
+</div>

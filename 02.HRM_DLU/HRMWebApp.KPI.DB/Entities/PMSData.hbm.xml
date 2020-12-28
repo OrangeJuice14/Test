@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.PMSData, HRMWebApp.KPI.DB" table="KPI_DuLieuGiangDayPMS">
+    <id name="Id" column="ID"></id>
+    <property name="StaffId" column="HRMID"></property>
+    <property name="NumberOfLesson" column="TietQuyDoi"></property>
+    <property name="PercentShortage" column="PhanTramThieu"></property>
+    <property name="StudyTerm" column="StudyTerm"></property>
+    <property name="StudyYear" column="StudyYear"></property>
+  </class>
+</hibernate-mapping>
+
+
+

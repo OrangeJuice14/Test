@@ -1,0 +1,1572 @@
+﻿{
+  "LOGIN": {
+    "WEBSITE_HRM_CHAM_CONG": "Website HRM - Attendance report",
+    "TEN_DANG_NHAP": "Username",
+    "MAT_KHAU": "Password",
+    "NHAP_MA_CAPTCHA": "Enter captcha",
+    "DANG_NHAP": "Login",
+    "DANG_NHAP_EMAIL": "Login by Email",
+    "ALERT": {
+      "VUI_LONG_NHAP_TEN_NGUOI_DUNG_VA_MAT_KHAU": "Please enter username and password",
+      "TEN_DANG_NHAP_HOAC_MAT_KHAU_KHONG_HOP_LE": "Username or password is invalid."
+    }
+  },
+  "SHELL": {
+    "WEBSITE_HRM_CHAM_CONG": "Website HRM - Attendance report",
+    "DOI_MAT_KHAU": "Change password",
+    "DANG_XUAT": "Logout",
+    "DOI_NGON_NGU": "Tiếng Việt"
+  },
+  "BANG_LUONG": {
+    "BANG_LUONG_VA_PHU_CAP": "Payroll and allowances:",
+    "BANG_LUONG_THANG": "Monthly payroll ",
+    "IN": "Print",
+    "PHIEU_THANH_TOAN_LUONG": "PAYSLIP",
+    "THANG": "",
+    "NAM": "",
+    "DON_VI": "DEPARTMENT:",
+    "TABLE": {
+      "HO_TEN": "Full name:",
+      "MA_NHAN_VIEN": "Employee code:",
+      "NGAY_CONG_CHUAN": "Standard working days:",
+      "CHUC_VU": "Position:",
+      "NGAY_NGHI_KHONG_HUONG_LUONG": "Unpaid days:",
+      "NGAY_LAM_VIEC_THUC_TE": "Actual working days:",
+      "NOI_DUNG": "Category",
+      "SO_TIEN_VND": "Amount in VND",
+      "GHI_CHU": "Remarks",
+      "LUONG_HOP_DONG": "Contract Salary",
+      "PHU_CAP": "Allowance",
+      "LUONG_DONG_BAO_HIEM": "Salary for SHUI Contribution",
+      "LUONG_THANG_NAY": "Salary this month",
+      "DIEU_CHINH_LUONG_CAC_KHOAN_KHAC": "Adjustment Salary / Others",
+      "LUONG_THANG_13_KHAC": "13th Salary / Others",
+      "PHU_CAP_CHIU_THUE": "Taxable Allowance",
+      "LUONG_TANG_CA_CHIU_THUE": "Taxable Overtime Salary",
+      "TONG_CAC_KHOAN_CHIU_THUE_NGOAI_LUONG": "Total Taxable",
+      "PHU_CAP_MIEN_THUE": "Non-taxable Allowance",
+      "LUONG_TANG_CA_MIEN_THUE": "Non-taxable Overtime Salary",
+      "TONG_CAC_KHOAN_MIEN_THUE_NGOAI_LUONG": "Total Non-Taxable",
+      "THU_NHAP_CHIU_THUE": "Taxable income",
+      "MUC_DONG_BHXH": "SI Contribution (8%)",
+      "MUC_DONG_BHYT": "HI Contribution (1.5%)",
+      "MUC_DONG_BHTN": "UI Contribution (1%)",
+      "MUC_DONG_CONG_DOAN": "Trade Union Contribution",
+      "TONG_MUC_DONG_BAO_HIEM": "Total SHUI Contribution (10.5%)",
+      "TONG_GIAM_TRU": "Total Deduction (Personal – Dependent)",
+      "TONG_GIAM_TRU_GHI_CHU": "(11)=Personal: 9.000.000 + Number of Dependents*3.600.000",
+      "THUE_TNCN": "Personal income tax",
+      "CAC_KHOAN_DIEU_CHINH_SAU_THUE": "After Tax Adjustment",
+      "LUONG_THUC_NHAN": "Net take home"
+    },
+    "THANG_DA_CHON_KHONG_CO_DU_LIEU_LUONG": "The selected month has no salary data!"
+  },
+  "HO_SO_NHAN_SU": {
+    "SO_YEU_LI_LICH": {
+      "SO_YEU_LI_LICH": "Curriculum vitae",
+      "HO_SO_CA_NHAN": {
+        "HO_SO_CA_NHAN": "Personal records",
+        "MA_QUAN_LY": "Employee code",
+        "HO_VA_TEN": "Full name",
+        "TEN_GOI_KHAC": "Alias name",
+        "GIOI_TINH": "Gender",
+        "NGAY_SINH": "Date of birth",
+        "NOI_SINH": "Place of birth",
+        "DAN_TOC": "Ethnicity",
+        "TON_GIAO": "Religion",
+        "DIA_CHI_THUONG_TRU": "Permanent address",
+        "NOI_O_HIEN_NAY": "Current address",
+        "SO_CMND": "ID card number",
+        "NGAY_CAP": "Issue date",
+        "NOI_CAP": "Place of issue",
+        "QUOC_TICH": "Nationality",
+        "TINH_TRANG_HON_NHAN": "Marital status",
+        "DIEN_THOAI_DI_DONG": "Mobile Phones",
+        "EMAIL": "Email",
+        "EMAIL_NOI_BO": "Internal Email"
+      },
+      "CONG_VIEC": {
+        "CONG_VIEC": "Job Description",
+        "CHUC_DANH": "Job title",
+        "DON_VI_CONG_TAC": "Unit/School",
+        "CHUC_VU_HIEN_TAI": "Current position",
+        "NGAY_BO_NHIEM": "Appointment date",
+        "CHUC_VU_KIEM_NHIEM": "Concurrently position",
+        "NGAY_VAO_TRUONG": "Commencement date",
+        "CONG_VIEC_HIEN_NAY": "Current job"
+      }
+    },
+    "THONG_TIN_LUONG": {
+      "THONG_TIN_LUONG": "Salary information",
+      "THONG_TIN_NGACH_BAC": {
+        "THONG_TIN_NGACH_BAC": "Salary Information",
+        "TONG_THU_NHAP": "Total income",
+        "LUONG_CHINH": "Main salary",
+        "LUONG_BO_SUNG": "Additional wages",
+        "NGAY_HUONG_LUONG": "Starting date of salary",
+        "MOC_NANG_LUONG_LAN_SAU": "The next salary increase landmark",
+        "%_MUC_LUONG_DUOC_HUONG": "% of salary level received"
+      },
+      "THUE_TNCN": {
+        "THUE_TNCN": "Personal Income Tax",
+        "MA_SO_THUE": "Tax identification number",
+        "NGAY_CAP": "Issue date",
+        "SO_NGUOI_PHU_THUOC": "Number of dependents",
+        "SO_THANG_GIAM_TRU": "Number of months deducted"
+      },
+      "TAI_KHOAN_NGAN_HANG": {
+        "TAI_KHOAN_NGAN_HANG": "Bank account",
+        "SO_TAI_KHOAN": "Account number",
+        "NGAN_HANG": "Bank",
+        "TAI_KHOAN_CHINH": "Main account"
+      },
+      "DANH_SACH_NGUOI_PHU_THUOC": {
+        "DANH_SACH_NGUOI_PHU_THUOC": "Dependents list",
+        "HO_TEN": "Full name",
+        "QUAN_HE": "Relationship",
+        "TU_NGAY": "From date",
+        "DEN_NGAY": "To date"
+      }
+    },
+    "TRINH_DO_CHUYEN_MON": {
+      "TRINH_DO_CHUYEN_MON": "Qualifications",
+      "TRINH_DO": {
+        "TRINH_DO": "Level of education",
+        "TRINH_DO_VAN_HOA": "Education",
+        "TRINH_DO_TIN_HOC": "IT qualifications"
+      },
+      "CHUYEN_MON_CAO_NHAT": {
+        "CHUYEN_MON_CAO_NHAT": "Highest Qualification",
+        "HOC_HAM": "Academic title",
+        "TRINH_DO_CHUYEN_MON": "Qualifications",
+        "CHUYEN_NGANH": "Major",
+        "TRUONG_DAO_TAO": "School of Education",
+        "HINH_THUC_DAO_TAO": "Type of training ",
+        "NAM_TOT_NGHIEP": "Graduation year",
+        "NGOAI_NGU_CHINH": "Primary foreign language",
+        "TRINH_DO_NGOAI_NGU_CHINH": "Primary foreign language level"
+      },
+      "DANH_SACH_VAN_BANG": {
+        "DANH_SACH_VAN_BANG": "List of degrees",
+        "TRINH_DO_CHUYEN_MON": "Qualifications",
+        "CHUYEN_NGANH_DAO_TAO": "Specialized training",
+        "TRUONG_DAO_TAO": "Training School",
+        "NAM_TOT_NGHIEP": "Graduation year",
+        "HINH_THUC_DAO_TAO": "Forms of training",
+        "XEP_LOAI": "Classification",
+        "DIEM_TRUNG_BINH": "Average score"
+      },
+      "DANH_SACH_CHUNG_CHI": {
+        "DANH_SACH_CHUNG_CHI": "Certificate list",
+        "LOAI_CHUNG_CHI": "Certificate type",
+        "TRINH_DO": "Level",
+        "XEP_LOAI": "Classification",
+        "DIEM": "Score",
+        "NGAY_CAP": "Issue date",
+        "NOI_CAP": "Issued by"
+      },
+      "DANH_SACH_CHUNG_CHI_NGOAI_NGU": {
+        "DANH_SACH_CHUNG_CHI_NGOAI_NGU": "List of foreign language certificates",
+        "NGOAI_NGU": "Foreign Language",
+        "TRINH_DO": "Level",
+        "XEP_LOAI": "Classification",
+        "DIEM": "Score",
+        "NGAY_CAP": "Issue date"
+      }
+    },
+    "HOP_DONG_LAO_DONG": {
+      "HOP_DONG_LAO_DONG": "Labor contract",
+      "HOP_DONG_HIEN_TAI": {
+        "HOP_DONG_HIEN_TAI": "Current contract",
+        "SO_HOP_DONG": "Contract number",
+        "LOAI_HOP_DONG": "Type of contract",
+        "NGAY_KY": "Signed day",
+        "CHUC_VU_NGUOI_KY": "Position of the signatory",
+        "NGUOI_KY": "Signer",
+        "TU_NGAY": "Since",
+        "DEN_NGAY": "To date",
+        "LUONG_CHINH": "Salary",
+        "LUONG_BO_SUNG": "Additional wages"
+      },
+      "DANH_SACH_CAC_HOP_DONG_DA_KY": {
+        "DANH_SACH_CAC_HOP_DONG_DA_KY": "List of signed contracts",
+        "SO_HOP_DONG": "Contract number",
+        "LOAI_HOP_DONG": "Type of contract",
+        "NGAY_KY": "Signed day",
+        "NGUOI_KY": "Signer",
+        "TU_NGAY": "Since",
+        "DEN_NGAY": "To date"
+      }
+    },
+    "QUAN_HE_GIA_DINH": {
+      "QUAN_HE_GIA_DINH": "Family relationship",
+      "TEN_NGUOI_THAN": "Name of relative",
+      "NAM_SINH": "Year of Birth",
+      "QUAN_HE": "Relationship",
+      "NOI_O_HIEN_NAY": "Current address",
+      "NGHE_NGHIEP": "Job",
+      "NOI_LAM_VIEC": "Workplace",
+      "TINH_TRANG": "Status",
+      "DIEN_THOAI": "Phone"
+    },
+    "GIAY_TO_HO_SO": {
+      "GIAY_TO_HO_SO": "Documentation records",
+      "STT": "Num.",
+      "TEN_LOAI_GIAY_TO": "Doc. Type",
+      "TEN_GIAY_TO": "Doc. Name",
+      "NGAY_TAO": "Created Date"
+    }
+  },
+  "CAC_QUA_TRINH": {
+    "LICH_SU_BAN_THAN": {
+      "LICH_SU_BAN_THAN": "Personal history",
+      "TU_NAM": "From year",
+      "DEN_NAM": "To year",
+      "NOI_DUNG": "Content"
+    },
+    "DIEN_BIEN_LUONG": {
+      "DIEN_BIEN_LUONG": "Salary changes",
+      "NGAY_QD": "Date of Decision",
+      "SO_QD": "Decision number",
+      "NOI_DUNG": "Content",
+      "TU_NGAY": "Since",
+      "DEN_NGAY": "To date",
+      "NGACH_LUONG": "Glone",
+      "BAC_LUONG": "Salary level",
+      "LUONG_CB": "Base salary",
+      "LUONG_KD": "Sales Salary",
+      "TONG_PC": "Total Allowances"
+    },
+    "QUA_TRINH_CONG_TAC": {
+      "QUA_TRINH_CONG_TAC": "Working process",
+      "STT": "Num.",
+      "LOAI_QD": "Decision type",
+      "SO_QD": "Decision number",
+      "NGAY_QD": "Date of Decision",
+      "NGAY_BH": "Issued date",
+      "TU_NAM": "From year",
+      "DEN_NAM": "To year",
+      "NOI_DUNG": "Content"
+    },
+    "QUA_TRINH_DIEU_DONG": {
+      "QUA_TRINH_DIEU_DONG": "Maneuvering process",
+      "SO_QUYET_DINH": "Decision number",
+      "NGAY_QUYET_DINH": "Date of decision",
+      "DON_VI_CU": "Old unit",
+      "DON_VI_MOI": "New unit",
+      "NGAY_DIEU_CHUYEN": "Date of transfer"
+    },
+    "QUA_TRINH_BO_NHIEM": {
+      "QUA_TRINH_BO_NHIEM": "The appointment process",
+      "SO_QUYET_DINH": "Decision number",
+      "TU_NAM": "From year",
+      "DEN_NAM": "To year",
+      "CHUC_VU": "Position",
+      "PHU_CAP_CHUC_VU": "Position allowance",
+      "NGAY_HUONG_CHUC_VU": "Date of position"
+    },
+    "QUA_TRINH_KIEM_NHIEM": {
+      "QUA_TRINH_KIEM_NHIEM": "Concurrent process",
+      "SO_QUYET_DINH": "Decision number",
+      "TU_NAM": "From year",
+      "DEN_NAM": "To year",
+      "CHUC_VU": "Position",
+      "PHU_CAP_CHUC_VU": "Position allowance",
+      "NGAY_HUONG_CHUC_VU": "Date of position"
+    }
+  },
+  "QUAN_LY_NGHI_PHEP_NAM": {
+    "QUAN_LY_NGHI_PHEP_NAM": "ANNUAL LEAVE MANAGEMENT",
+    "KET_CHUYEN": "Carry forward",
+    "HUY": "Cancel",
+    "TINH_NGAY_PHEP": "Leave calculation",
+    "CAP_NHAT": "Update",
+    "XUAT_EXCEL": "Export to Excel",
+    "TIM": "Search",
+    "TEN_BO_PHAN_TAT_CA": "All",
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "HO_TEN": "Full name",
+      "DON_VI": "Department",
+      "SO_NGAY_NAM_TRUOC": "Number of the previous year annual leave",
+      "SO_NGAY_HIEN_TAI": "Number of current year annual leave",
+      "SO_NGAY_CONG_THEM": "Number of plus annual leave",
+      "TONG_SO_NGAY_PHEP": "Total annual leave",
+      "SO_NGAY_DA_NGHI": "Total annual leave took",
+      "SO_NGAY_CON_LAI": "Total annual leave left",
+      "SO_NGAY_PHEP_DA_NGHI_QUI_1": "Total leave in first quarter",
+      "TONG_SO_NGAY_BU": "Total days off in lieu",
+      "SO_NGAY_BU_DA_NGHI": "Total days off in lieu took",
+      "SO_NGAY_BU_CON_LAI": "Total days off in lieu left",
+      "SO_NGAY_BU_NAM_HIEN_TAI": "Total current year days off in lieu",
+      "SO_NGAY_BU_NAM_TRUOC": "Total previous year days off in lieu"
+    },
+    "ALERT": {
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "CHI_DUOC_KET_CHUYEN_NAM_HOC": "Only be carried forward the school year [{{TenNamHoc}}] !!!",
+      "KET_CHUYEN_THANH_CONG": "Carry forward successfully !!",
+      "KET_CHUYEN_THAT_BAI": "Carry forward failed !!",
+      "CHUA_KET_CHUYEN_NGAY_NGHI_DAU_NAM": "New year's leave have not carried forward !!!",
+      "CHI_DUOC_HUY_NAM_HOC": "Only be canceled the school year [{{TenNamHoc}}] !!!",
+      "NAM_KHONG_HOP_LE2": "Year {{TenNamHoc}} is not valid!!!",
+      "HUY_THANH_CONG": "Cancel successfully !!",
+      "HUY_THAT_BAI": "Cancel failed !!",
+      "CHI_DUOC_TINH_NAM_HOC": "Calculated in school year only {{TenNamHoc}} !!!",
+      "CAP_NHAT_THANH_CONG": "Update successfully !!",
+      "CAP_NHAT_THAT_BAI": "Update failed !!",
+      "CHI_DUOC_CAP_NHAT_NAM_HOC": "Updated in the school year only [{{TenNamHoc}}] !!!",
+      "CHUA_HET_PHEP_KHONG_THE_TAM_UNG": "Not yet leave, cannot advance !!!",
+      "VUI_LONG_CHON_NIEN_DO_TAI_CHINH": "Year is invalid",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected",
+      "CHON_QUA_NHIEU_DONG": "Select too many rows"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_TAO_HAY_KHONG": "Are you sure you want to create?",
+      "BAN_CO_CHAC_HUY_HAY_KHONG": "Are you sure you want to cancel?",
+      "BAN_CO_CHAC_CAP_NHAT_HAY_KHONG": "Are you sure you want to update?"
+    },
+    "UPDATE_HTML": {
+      "CAP_NHAT_THONG_TIN_NGAY_PHEP_NAM": "Annual Leave update",
+      "SO_NGAY_PHEP_NAM_TRUOC": "Number of previous year annual leave:",
+      "SO_NGAY_DA_NGHI_QUY_I": "Number of annual leave in Quarter 1:",
+      "SO_NGAY_NAM_HIEN_TAI": "Number of annual leave in this year:",
+      "SO_NGAY_CONG_THEM": "Plus annual leave:",
+      "SO_NGAY_TAM_UNG_NAM_TRUOC": "Number of annual leave advance in the previous year:",
+      "TONG_SO_NGAY_PHEP_NAM": "Total annual leave:",
+      "SO_NGAY_DA_NGHI": "Total annual leave took:",
+      "SO_NGAY_TAM_UNG_HIEN_TAI": "Number of annual leave advance in this year:",
+      "SO_NGAY_CON_LAI": "Number of annual Leave left:",
+      "SO_NGAY_BU_NAM_HIEN_TAI": "Total current year days off in lieu",
+      "LUU": "Save"
+    }
+  },
+  "DANG_KY_NGAY_NGHI": {
+    "DANG_KY_NGAY_NGHI": "Leave registration",
+    "TAO_MOI": "Create new",
+    "XOA": "Delete",
+    "IN": "Print",
+    "TU_NGAY": "From day",
+    "DEN_NGAY": "To day",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "TRUONG_PHONG": "Head of Department",
+      "HIEU_TRUONG": "Leadership",
+      "HDQT": "Directors",
+      "NGAY_NGHI": "Day off",
+      "NGAY_NGHI_TU_NGAY": "From day",
+      "NGAY_NGHI_DEN_NGAY": "To day",
+      "BUOI": "Session",
+      "SO_NGAY": "Number of leave",
+      "HINH_THUC_NGHI": "Leave type",
+      "NOI_DUNG": "Content",
+      "NGAY_TAO": "Date created",
+      "NHAN_VIEN": "Employee",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline",
+      "PHAN_HOI_TP": "Head of Department feedback",
+      "PHAN_HOI_HT": "Leadership feedback",
+      "PHAN_HOI_HDQT": "Directors feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_NGHI_PHEP": "REGULATIONS ON REGISTRATION OF LEAVE",
+      "QUY_DINH_1": "1. Competence to approve leave:",
+      "QUY_DINH_1_1": "- The Head / Manager / Leadership team approves for staff.\n- For Director and Head of Department, leave shall be approved by the Deputy General Director.\n- For the Deputy General Director, leave shall be approved by the General Director / Chair of Board of Directors.",
+      "QUY_DINH_2": "2. The notice time before leave:",
+      "QUY_DINH_2_1": "- The number of leave days is less than 02 days: the notice time before leave is at least 02 days.\n- The number of leave days from 02 days to less than 04 days: the notice time before leave is at least 01 week.\n- The number of leave days from 04 days or more: at least 02 weeks before leave.",
+      "QUY_DINH_3": "3. Annual leave regulations:",
+      "QUY_DINH_3_1": "- Employees can only take annual leave when they have passed the probationary period.\n- Employees are allowed to take leave only according to the annual leave based on the actual number of working months at the Company. However, in some cases, the Employee may apply the annual leave in advance but not more than 03 days and the total taken leave has not exceeded his/her total annual leave in regulations.\n- For example:\n     • If you are on probation, your leave will be unpaid.\n     • If the probationary period is 02 months, at the 3rd month, the employee will have 03 annual leave days.\n     • If the total number of working months in a year is 03 months, in some cases, the employee can apply for the 03-day advance permit -> The total valid annual leave is 06 days. If working until the 4th month, if the employee quit his/her job, the number of days he / she has paid before will be deducted.\n- If there is an unexpected need for a leave, it must notify the Head / Manager / Leadership team at least 01 hour in advance. After that, it is required to register additional day offs within 03 days from that day off.\n- By the end of the fiscal year, annual leave that employees have not taken full yet shall be reserved until the end of the first quarter of the subsequent year. From the first day of the second quarter of the next year, the number of remaining days of the previous year (if any) of the employees will automatically expire.\n- Fingerprint attendance should be taken seriously because it will directly affect the monthly attendance data of each employee.",
+      "LUU_Y": "Note: The registration of leave is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "JS": {
+      "CA_NGAY": "All day",
+      "SANG": "Morning",
+      "CHIEU": "Afternoon",
+      "TAT_CA": "All",
+      "CHO_XET": "Awaiting",
+      "KHONG_CHAP_NHAN": "Decline",
+      "CHAP_NHAN": "Accept",
+      "DON_XIN_NGHI": "Application for leave",
+      "DON_XIN_NGHI_VIEC_RIENG": "Individual leave applications",
+      "NGAY_THANG_NAM": "{{ngay}}/{{thang}}/{{nam}}"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Invalid month",
+      "NAM_KHONG_HOP_LE": "Invalid year",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Duplicate registration time!!!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "XOA_THAT_BAI": "Fail to delete !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Invalid day offs: "
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Are you sure you want to delete?"
+    },
+    "TAO_MOI_MODAL": {
+      "DANG_KY_NGAY_NGHI": "Leave Registration",
+      "HINH_THUC_NGHI": "Leave type",
+      "BUOI": "Session",
+      "SO_NGAY_HOP_LE": "Total valid days",
+      "TU_NGAY": "From day",
+      "DEN_NGAY": "To day",
+      "NGUOI_NHAN_BAN_GIAO": "Handover receiver",
+      "NOI_DUNG": "Content",
+      "SAVE": "Save"
+    }
+  },
+  "DANG_KY_NGOAI_GIO": {
+    "DANG_KY_NGOAI_GIO": "Overtime registration",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "THANG": "Month",
+    "NAM": "Year",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "TRUONG_PHONG": "Head of Department",
+      "BGH": "Leadership",
+      "HDQT": "Administrator",
+      "NGAY": "Date",
+      "TU_GIO_DK": "From (registration)",
+      "DEN_GIO_DK": "To (registration)",
+      "TU_GIO_TT": "From (Actual)",
+      "DEN_GIO_TT": "To (Actual)",
+      "SO_GIO_DK": "Total registration hours",
+      "SO_GIO_TT": "Total actual hours",
+      "LY_DO": "Reason",
+      "LOAI_NGAY": "Type of date",
+      "NGAY_TAO": "Date created",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline",
+      "PHAN_HOI_TP": "Head of Department feedback",
+      "PHAN_HOI_BGH": "Leadership feedback",
+      "PHAN_HOI_ADMIN": "Administrator feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_LAM_NGOAI_GIO": "OVERTIME REGISTRATION REGULATIONS",
+      "QUY_DINH_1": "1. The overtime calculation is only performed for overtime work according to the request of the Head / Manager / Leadership team and certified by the Head / Manager / Leadership team; does not charge overtime for overtime work to complete daily or work duties as planned, assigned projects, or for employees of work nature who regularly work overtime be assigned to the salary, or to the level of the Head of the department or higher.",
+      "QUY_DINH_2": "2. The Head / Manager / Leadership team is responsible for sending \"Overtime Plan\" / \"Overtime Proposal Form\" which is approved by the Board of Directors for Human Resources Department to verify the valid of overtime registration.",
+      "QUY_DINH_3": "3. Employees must perform fingerprint attendance when working overtime, except for overtime work outside the School/Company. This case must be verified by the Manager / Manager / Leadership team.",
+      "QUY_DINH_4": "4. Head / Manager / Leadership team has the final responsibility in verifying the accuracy and compliance with the work requirements of the overtime working days / hours of employees under their management.",
+      "QUY_DINH_5": "5. The registration for overtime work is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Month invalid",
+      "NAM_KHONG_HOP_LE": "Year invalid",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "GIO_KHONG_HOP_LE": "Invalid hours!",
+      "GIO_PHUT_KHONG_HOP_LE": "Invalid time!",
+      "PHUT_KHONG_HOP_LE": "Invalid minutes!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "KHONG_THANH_CONG": "Unsuccessful",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete successfully !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Are you sure you want to delete?"
+    },
+    "TAO_MOI_MODAL": {
+      "DANG_KY_CHAM_CONG_NGOAI_GIO": "Overtime attendance registration",
+      "THU": "Days of week:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "GIO_BAT_DAU": "Start time:",
+      "GIO_KET_THUC": "End time:",
+      "LY_DO": "Reason:",
+      "LUU": "Save"
+    }
+  },
+  "DANG_KY_CONG_TAC": {
+    "DANG_KY_CONG_TAC": "Business trip registration",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "IN": "Print",
+    "TU_NGAY": "From date",
+    "DEN_NGAY": "To date",
+    "TIM": "Search",
+    "CHO_XET": "Awaiting",
+    "CHAP_NHAN": "Accept",
+    "KHONG_CHAP_NHAN": "Decline",
+    "CONFIRM": "Are you sure you want to delete ?",
+    "ALERT": {
+      "CHUA_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "THANG_KHONG_HOP_LE": "Invalid month",
+      "NAM_KHONG_HOP_LE": "Invalid year",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Registration time is the same!!!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Saved failed !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete success !!",
+      "XOA_THAT_BAI": "Fail to delete !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Some holidays Invalid: ",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "You can not delete it as your manager was approved."
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "NGAY_CONG_TAC": "Date of business trip",
+      "NGAY_CONG_TAC_TU_NGAY": "Since",
+      "NGAY_CONG_TAC_DEN_NGAY": "To date",
+      "SO_NGAY": "Number of leave",
+      "BUOI": "Session",
+      "NOI_DUNG": "Content",
+      "DIA_DIEM": "Business trip location",
+      "NGAY_TAO": "Date created",
+      "TRANG_THAI": "Status",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline",
+      "NHAN_VIEN": "Employee",
+      "PHAN_HOI": "Feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_DI_CONG_TAC": "BUSINESS TRIP REGISTRATION REGULATIONS",
+      "QUY_DINH_1": "1. The registration for business trip is only done when it is required to handle the work for the Company (Not applicable for personal paperwork) and must be approved by the Head / Manager / Leadership team.",
+      "QUY_DINH_2": "2. Competence to approve for business trip registration: Board of Directors / Head / Manager / Leadership team of the unit under his/her management.",
+      "QUY_DINH_3": "3. The registration for business trip is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "NEW": {
+      "KHAI_BAO_CONG_TAC": "Business trip registration ",
+      "CA_NGAY": "All day",
+      "BUOI_SANG": "Morning",
+      "BUOI_CHIEU": "Afternoon",
+      "DIA_DIEM": "Business trip location",
+      "BUOI": "Session",
+      "TU_NGAY": "From date",
+      "DEN_NGAY": "To date",
+      "MUC_DICH": "Purpose",
+      "LUU": "Save"
+    }
+  },
+  "QUAN_LY_BO_SUNG_CONG": {
+    "QUAN_LY_BO_SUNG_CONG": "Attendance report adjustment management",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "CHAP_NHAN": "Accept",
+    "KHONG_CHAP_NHAN": "Decline",
+    "XUAT_EXCEL": "Export to Excel",
+    "TU_NGAY": "From date:",
+    "DEN_NGAY": "To date:",
+    "TAT_CA_DON_CHUA_DUYET": "All leave forms have not been approved",
+    "TRUONG": "School",
+    "DON_VI": "Department",
+    "MA_NHAN_SU": "Employee code",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "HO_TEN": "Full name",
+      "MA_NHAN_SU": "Employee code",
+      "NGAY_DANG_KY": "Registration date",
+      "NGAY_DANG_KY_TU_NGAY": "From date",
+      "NGAY_DANG_KY_DEN_NGAY": "To date",
+      "BUOI": "Session",
+      "LY_DO": "Reason",
+      "NGAY_TAO": "Date created",
+      "NHAN_VIEN": "Employee",
+      "TRANG_THAI": "Status",
+      "PHAN_HOI": "Feedback",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_BO_SUNG_CONG": "ADDITIONAL WORKDAYS MANAGEMENT",
+      "QUY_DINH_1": "1. The additional workday is only performed in case of not being able to press the fingerprint due to a system error or forget to press the fingerprint.",
+      "QUY_DINH_2": "2. Competency to approve for additional workdays: Board of Directors / Head / Manager / Leadership team of their management units.",
+      "QUY_DINH_3": "3. If you forget to press the fingerprint 4 or more times per month, you will be reminded and reviewed during the KPIs evaluation process.",
+      "QUY_DINH_4": "4. Days without fingerprinting but not confirmed by the Head / Manager / Leadership team will be considered unpaid leave on that days.",
+      "QUY_DINH_5": "5. If you arrive late from 2 to 4 hours without a valid reason, it will be considered a half-day of unpaid leave.",
+      "QUY_DINH_6": "6. Public supplementation is only performed during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "JS": {
+      "CA_NGAY": "All day",
+      "SANG": "Morning",
+      "CHIEU": "Afternoon",
+      "TAT_CA": "All",
+      "CHO_XET": "Awaiting",
+      "KHONG_CHAP_NHAN": "Decline",
+      "CHAP_NHAN": "Accept",
+      "TEN_BO_PHAN_TAT_CA": "All"
+    },
+    "TAO_MOI_MODAL": {
+      "BO_SUNG_CONG": "Registration",
+      "DON_VI": "Department:",
+      "CA_NHAN": "Employee:",
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name",
+      "BUOI": "Session:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "LY_DO": "Reason:",
+      "LUU": "Save",
+      "HUY": "Cancel"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Month invalid",
+      "NAM_KHONG_HOP_LE": "Year invalid",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "KHONG_DUOC_TRUNG_HOAC_GIAO_NGAY_VOI_DU_LIEU_TRUOC": "Do not duplicate with the previous data !!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "XOA_THAT_BAI": "Fail to delete !!",
+      "CHAP_NHAN_THANH_CONG": "Accept successfully !",
+      "THANH_CONG": "Successful !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Are you sure you want to delete ?"
+    }
+  },
+  "XEM_THONG_TIN_CHAM_CONG": {
+    "XEM_THONG_TIN_CHAM_CONG": "View attendance report",
+    "IN": "Print",
+    "BIEU_DO": "Chart",
+    "IN_TAT_CA": "Print all",
+    "MA_NHAN_SU": "Employee code",
+    "TIM": "Search",
+    "NGAY": "Day",
+    "THANG": "Month",
+    "NAM": "Year",
+    "TABLE": {
+      "STT": "Num.",
+      "HO_TEN": "Full name",
+      "TEN_DON_VI": "Department",
+      "NGAY_TRONG_THANG": "Day in month"
+    },
+    "JS": {
+      "CHI_TIET_CHAM_CONG": "Details of attendance report"
+    },
+    "ALERT": {
+      "VUI_LONG_CHON_PHONG_BAN": "Please select the department !!"
+    },
+    "GHI_CHU": "Notes:",
+    "CHART": {
+      "NHAN_VIEN": "Employee: ",
+      "THOI_GIAN_VAO": "Time in: ",
+      "THOI_GIAN_RA": "Time out: ",
+      "THONG_KE_GIO_DI_LAM": "Summary of working hours - ",
+      "GIO": "Hours [h]",
+      "THOI_GIAN_CHAM_CONG": "Attendance time",
+      "CHUA_QUET_VAN_TAY": " No fingerprint scanning yet"
+    }
+  },
+  "CAU_HINH_CHAM_CONG": {
+    "CAU_HINH_CHAM_CONG": "Attendance report configuration",
+    "TRUONG": "School:",
+    "SO_NGAY_NGHI_PHEP": "Total annual leave",
+    "HIEU_TRUONG_DUYET_KHI_NGHI_TREN_NGAY": "Principal will approve for leave than ... days:",
+    "DANG_KY_NGOAI_GIO_TRUOC": "Register for overtime by:",
+    "CAU_HINH_GUI_EMAIL": "CONFIGURATION OF SENDING EMAIL",
+    "Email": "Email:",
+    "Password": "Password:",
+    "LUU": "Save",
+    "ALERT": {
+      "EMAIL_KHONG_HOP_LE": "Invalid Email.",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "THOI_GIAN_KHONG_HOP_LE_VUI_LONG_KIEM_TRA_LAI": "Invalid time. Please check again.",
+      "LAY_DU_LIEU_THANH_CONG": "Data retrieval successfully !!",
+      "LAY_DU_LIEU_THAT_BAI": "Fail to retrieve data !!",
+      "CHOT_DU_LIEU_THANH_CONG": "Finalize data successfully  !!",
+      "CHOT_DU_LIEU_THAT_BAI": "Fail to finalize data !!",
+      "HUY_CHOT_DU_LIEU_THANH_CONG": "Cancel to finalize data successfully  !!",
+      "HUY_CHOT_DU_LIEU_THAT_BAI": "Fail to cancel finalize data !!"
+    }
+  },
+  "QUAN_LY_PHEP_HE": {
+    "QUAN_LY_PHEP_HE": "Summer leave management",
+    "CHOT_PHEP_HE": "Lock summer leave",
+    "XUAT_EXCEL": "Export to Excel",
+    "TEN_BO_PHAN_TAT_CA": "All",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "HO_TEN": "Full name",
+      "DON_VI": "Department",
+      "NGAY_VAO_CO_QUAN": "Joining Date",
+      "SO_PHEP_HE": "Total summer leave"
+    },
+    "ALERT": {
+      "THANH_CONG": "Successful !!",
+      "THAT_BAI": "Failed !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHOT_HAY_KHONG": "Are you sure you want to lock ?"
+    }
+  },
+  "DO_DU_LIEU_CHAM_CONG_THANG": {
+    "DO_DU_LIEU_CHAM_CONG_THANG": "Import attendance data",
+    "TRUONG": "School:",
+    "THANG": "Month",
+    "COMBOBOX_THANG": {
+      "THANG": "---Month---",
+      "THANG_1": "January",
+      "THANG_2": "February",
+      "THANG_3": "March",
+      "THANG_4": "April",
+      "THANG_5": "May",
+      "THANG_6": "June",
+      "THANG_7": "July",
+      "THANG_8": "August",
+      "THANG_9": "September",
+      "THANG_10": "October",
+      "THANG_11": "November",
+      "THANG_12": "December"
+    },
+    "NAM": "Year",
+    "TRANG_THAI": "Status",
+    "LUU": "Save",
+    "HUY": "Cancel",
+    "DANG_XU_LY_VUI_LONG_CHO": "Please wait ..........",
+    "ALERT": {
+      "VUI_LONG_CHON_THANG": "Please select month !!",
+      "VUI_LONG_NHAP_NAM": "Please enter year !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "KY_CHAM_CONG_THANG_CHUA_TAO": "Period of attendance report {{thang}}/{{nam}} not create yet.",
+      "DO_DU_LIEU_CHAM_CONG_THANH_CONG": "Import attendance data successful !!",
+      "XOA_DU_LIEU_CHAM_CONG_THANH_CONG": "Delete attendance data successful !!"
+    }
+  },
+  "QUAN_LY_CHAM_CONG": {
+    "QUAN_LY_CHAM_CONG": "Attendance report Management",
+    "LUU": "Save",
+    "HUY_CHAM_CONG": "Cancel",
+    "BIEU_DO": "Chart",
+    "CHAM_CONG_THANG": "Attendance report",
+    "CHI_TIET": "Details",
+    "IN_BANG_CONG": "Print",
+    "DOI_KHUNG_GIO_CA_THANG": "Changed the time duration for the whole month",
+    "DOI_KHUNG_GIO_THEO_NGAY": "Change the time duration by day",
+    "NGAY": "day",
+    "THANG": "month",
+    "NAM": "year",
+    "MA_NHAN_SU": "Employee code",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "HO_TEN": "Full name",
+      "NGAY": "Date",
+      "PHONG_BAN": "Department",
+      "KHUNG_GIO": "Time duration",
+      "HINH_THUC_NGHI": "Leave type",
+      "CHAM_CONG": "Attendance report"
+    },
+    "JS": {
+      "TRANG_THAI_CHAM_CONG_ARRAY": {
+        "TAT_CA_TRANG_THAI": "All status",
+        "CHUA_CHAM_CONG": "Attendance report has not done yet",
+        "DA_CHAM_CONG": "Attendance report has done already"
+      },
+      "DI_HOC_ARRAY": {
+        "TAT_CA_TRANG_THAI": "All status",
+        "LAM_VIEC": "Working",
+        "DI_HOC": "Studying"
+      }
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Day is invalid !!",
+      "THANG_KHONG_HOP_LE": "Month is invalid !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "CHUA_CO_DU_LIEU_NAO_THAY_DOI": "No data changes !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Attendance report has been locked for this month !!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "HUY_THANH_CONG": "Cancel successfully !!",
+      "VUI_LONG_CHON_PHONG_BAN": "Please choose department !!",
+      "KY_HIEU_KHONG_HOP_LE": "Symbol is invalid: ",
+      "CHUA_DANG_KY_KHUNG_GIO_LAM_VIEC": "Unregistered time duration !!",
+      "THANH_CONG": "Successful !!",
+      "CHON_QUA_NHIEU_DONG": "Select too many rows !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_HUY_HAY_KHONG": "Are you sure you want to cancel ?",
+      "BAN_CO_MUON_CAP_NHAT_KHUNG_GIO_LAM_VIEC_CHO_CA_THANG_HAY_KHONG": "Would you like to update the time duration for an entire month?",
+      "BAN_CO_MUON_CAP_NHAT_KHUNG_GIO_LAM_VIEC_CHO_HOM_NAY_HAY_KHONG": "Would you like to update the time duration for today?"
+    },
+    "UPDATE_HTML": {
+      "BANG_CHAM_CONG": "Attendance report",
+      "THANG": "Month:",
+      "NAM": "Year:",
+      "ALERT": {
+        "CHUA_CO_KY_CHAM_CONG_THANG_NAY": "There is no period of attendance report for this month!",
+        "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Attendance report has been locked for this month !!",
+        "HINH_THUC_NGHI_KHONG_HOP_LE": "Type of leave is invalid",
+        "LUU_THANH_CONG": "Save successfully !!",
+        "THANG_NAY_DA_KHOA_CHAM_CONG_ROI": "Attendance report has been locked for this month !!",
+        "KHOA_CHAM_CONG_THANH_CONG": "Lock Attendance report successfully !!",
+        "DA_KHOA_CHAM_CONG_TREN_PHAM_MEM_HRM": "Locked attendance report on HRM software!!",
+        "MO_KHOA_CHAM_CONG_THANH_CONG": "Unlock attendance report successfully !!",
+        "CHUA_CO_DU_LIEU_DE_MO_KHOA_CHAM_CONG": "There is no data to unlock attendance report !!"
+      },
+      "TABLE": {
+        "STT": "Num.",
+        "HO_TEN": "Full name",
+        "NGAY_TRONG_THANG": "Day in month",
+        "TONG": "Total",
+        "THANG_NAY_DA_KHOA_CHAM_CONG": "(*)This month has been locked!!",
+        "LUU": "Save",
+        "CHAM_NHANH": "Fast attendance report",
+        "KHOA": "Lock",
+        "MO_KHOA": "Unlock",
+        "GHI_CHU": "Notes"
+      }
+    },
+    "DETAIL_HTML": {
+      "BANG_CHAM_CONG": "Attendance report",
+      "THANG": "Month:",
+      "NAM": "Year:",
+      "TABLE": {
+        "STT": "Num.",
+        "HO_TEN": "Full name",
+        "NGAY_TRONG_THANG": "Day in month",
+        "TONG": "Total",
+        "VI_PHAM": "- Violation: ",
+        "THOI_GIAN_TRE": "- Late time: ",
+        "THOI_GIAN_SOM": "- Early time: ",
+        "PHUT": " minutes",
+        "NGUOI_CHAM_CONG": "Person doing attendance report",
+        "PHU_TRACH_BO_PHAN": "Head of department",
+        "NGUOI_DUYET": "Approved by",
+        "KY_HO_TEN": "(Signature, full name)",
+        "GHI_CHU": "Notes"
+      }
+    },
+    "CHART_HTML": {
+      "NHAN_VIEN": "Employee: ",
+      "THOI_GIAN": "Time: ",
+      "THOI_GIAN_VAO": "Time in: ",
+      "THOI_GIAN_RA": "Time out: ",
+      "THONG_KE_GIO_DI_LAM": "Summary of working hours - ",
+      "GIO": "Hours [h]",
+      "THOI_GIAN_CHAM_CONG": "Timekeeping time",
+      "CHUA_QUET_VAN_TAY": " No fingerprint scanning yet"
+    }
+  },
+  "QUAN_LY_NGAY_NGHI": {
+    "QUAN_LY_CHAM_CONG_NGAY_NGHI": "Leave management",
+    "TAO_MOI": "Create",
+    "HIEU_CHINH": "Adjustment",
+    "XOA": "Delete",
+    "CHAP_NHAN": "Accept",
+    "KHONG_CHAP_NHAN": "Decline",
+    "IN": "Print",
+    "XUAT_EXCEL": "Export to Excel",
+    "TU_NGAY": "From date",
+    "DEN_NGAY": "To date",
+    "TAT_CA_DON_CHUA_DUYET": "All leave forms have not been approved",
+    "TRUONG": "School",
+    "DON_VI": "Department",
+    "MA_NHAN_SU": "Employee code",
+    "TIM": "Search",
+    "JS": {
+      "BUOI_ARRAY": {
+        "CA_NGAY": "All day",
+        "SANG": "Morning",
+        "CHIEU": "Afternoon"
+      },
+      "TRANG_THAI_ARRAY": {
+        "TAT_CA": "All",
+        "CHO_XET": "Awaiting",
+        "KHONG_CHAP_NHAN": "Decline",
+        "CHAP_NHAN": "Approve"
+      },
+      "NGAY_THANG_NAM": "{{ngay}}/{{thang}}/{{nam}}",
+      "TEN_BO_PHAN_TAT_CA": "All"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Day is invalid !!",
+      "THANG_KHONG_HOP_LE": "Month is invalid !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Attendance report has been locked for this month !!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Duplicate registration time!!!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "XOA_THAT_BAI": "Fail to delete !!",
+      "THANH_CONG": "Successful !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Invalid day offs: "
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Are you sure you want to delete ?",
+      "BAN_CO_MUON_DUYET_HAY_KHONG": "Are you sure you want to accept ?",
+      "BAN_CO_MUON_KHONG_CHAP_NHAN_HAY_KHONG": "Are you sure you want to decline ?"
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "TRUONG_DON_VI": "Head of Department",
+      "HIEU_TRUONG": "Leadership",
+      "HDQT": "Directors",
+      "MA_NHAN_SU": "Employee code",
+      "HO_TEN": "Full name",
+      "PHONG_BAN": "Department",
+      "NGAY_NGHI": "Day off",
+      "TU_NGAY": "From date",
+      "DEN_NGAY": "To date",
+      "BUOI": "Session",
+      "SO_NGAY": "Number of leave",
+      "HINH_THUC_NGHI": "Leave type",
+      "NOI_DUNG": "Content",
+      "NGAY_TAO": "Date created",
+      "NHAN_VIEN": "Employee",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline",
+      "PHAN_HOI_TP": "Head of Department feedback",
+      "PHAN_HOI_HT": "Leadership feedback",
+      "PHAN_HOI_HDQT": "Directors feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_NGHI_PHEP": "REGULATIONS ON REGISTRATION OF LEAVE",
+      "QUY_DINH_1": "1. Competence to approve leave:",
+      "QUY_DINH_1_1": "- The Head / Manager / Leadership team approves for staff.\n- For Director and Head of Department, leave shall be approved by the Deputy General Director.\n- For the Deputy General Director, leave shall be approved by the General Director / Chair of Board of Directors.",
+      "QUY_DINH_2": "2. The notice time before leave:",
+      "QUY_DINH_2_1": "- The number of leave days is less than 02 days: the notice time before leave is at least 02 days.\n- The number of leave days from 02 days to less than 04 days: the notice time before leave is at least 01 week.\n- The number of leave days from 04 days or more: at least 02 weeks before leave.",
+      "QUY_DINH_3": "3. Annual leave regulations:",
+      "QUY_DINH_3_1": "- Employees can only take annual leave when they have passed the probationary period.\n- Employees are allowed to take leave only according to the annual leave based on the actual number of working months at the Company. However, in some cases, the Employee may apply the annual leave in advance but not more than 03 days and the total taken leave has not exceeded his/her total annual leave in regulations.\n- For example:\n     • If you are on probation, your leave will be unpaid.\n     • If the probationary period is 02 months, at the 3rd month, the employee will have 03 annual leave days.\n     • If the total number of working months in a year is 03 months, in some cases, the employee can apply for the 03-day advance permit -> The total valid annual leave is 06 days. If working until the 4th month, if the employee quit his/her job, the number of days he / she has paid before will be deducted.\n- If there is an unexpected need for a leave, it must notify the Head / Manager / Leadership team at least 01 hour in advance. After that, it is required to register additional day offs within 03 days from that day off.\n- By the end of the fiscal year, annual leave that employees have not taken full yet shall be reserved until the end of the first quarter of the subsequent year. From the first day of the second quarter of the next year, the number of remaining days of the previous year (if any) of the employees will automatically expire.\n- Fingerprint attendance should be taken seriously because it will directly affect the monthly attendance data of each employee.",
+      "LUU_Y": "Note: The registration of leave is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "TAO_MOI_MODAL": {
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name",
+      "TEN": "Name",
+      "THONG_TIN_CHAM_CONG_NGAY_NGHI": "Leave information",
+      "PHONG_BAN": "Department:",
+      "NHAN_VIEN": "Employee:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "BUOI": "Session",
+      "HINH_THUC_NGHI": "Leave type",
+      "SO_NGAY_HOP_LE": "Total valid days:",
+      "NGUOI_NHAN_BAN_GIAO": "Handover receiver:",
+      "NOI_DUNG": "Content:",
+      "NOI_NGHI": "Accommodation:",
+      "DIA_CHI_LIEN_HE": "Contact address:",
+      "LUU": "Save",
+      "TRO_VE": "Back"
+    },
+    "HIEU_CHINH_MODAL": {
+      "MA_QUAN_LY": "Employee code",
+      "HO": "Last name",
+      "TEN": "First name",
+      "THONG_TIN_CHAM_CONG_NGAY_NGHI": "Leave information",
+      "PHONG_BAN": "Department:",
+      "NHAN_VIEN": "Employee:",
+      "NOI_DUNG": "Content:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "HINH_THUC_NGHI": "Leave type",
+      "LUU": "Save",
+      "TRO_VE": "Back"
+    }
+  },
+  "QUAN_LY_NGOAI_GIO": {
+    "QUAN_LY_NGOAI_GIO": "Overtime management",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "DUYET": "Accept",
+    "HUY_DUYET": "Decline",
+    "CAP_NHAT": "Update",
+    "XUAT_EXCEL": "Export to Excel",
+    "NGAY": "day",
+    "THANG": "month",
+    "NAM": "year",
+    "TAT_CA_DON_CHUA_DUYET": "All leave forms have not been approved",
+    "TRUONG": "School",
+    "DON_VI": "Department",
+    "TIM": "Search",
+    "JS": {
+      "TRANG_THAI_ARRAY": {
+        "TAT_CA": "All",
+        "CHO_DUYET": "Awaiting",
+        "CHAP_NHAN": "Accept",
+        "KHONG_CHAP_NHAN": "Decline"
+      },
+      "TEN_BO_PHAN_TAT_CA": "All"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Day is invalid !!",
+      "THANG_KHONG_HOP_LE": "Month is invalid !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "THANH_CONG": "Successful !!",
+      "CAP_CAO_HON_DA_DUYET": "Higher level has been approved.",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "NHAN_VIEN_KHONG_DUOC_TRONG": "Employee must not be empty !!!",
+      "THOI_GIAN_DANG_KY_KHONG_HOP_LE": "Invalid registration time !!!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "CHUA_CO_DU_LIEU_NAO_THAY_DOI": "No data changes !!",
+      "CAP_NHAT_THANH_CONG": "Update successfully!!!",
+      "CAP_NHAT_THAT_BAI": "Update failed!!!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Are you sure you want to delete ?",
+      "BAN_CO_MUON_DUYET_HAY_KHONG": "Are you sure you want to accept ?",
+      "BAN_CO_MUON_KHONG_CHAP_NHAN_HAY_KHONG": "Are you sure you want to decline ?"
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "TRANG_THAI_TP": "Head of Department",
+      "TRANG_THAI_BGH": "Leadership",
+      "TRANG_THAI_ADMIN": "Administrator",
+      "HO_TEN": "Full name",
+      "MA_NHAN_VIEN": "Employee code",
+      "DON_VI": "Department",
+      "NGAY": "Date",
+      "TU_GIO_DK": "From (registration)",
+      "DEN_GIO_DK": "To (registration)",
+      "TU_GIO_TT": "From (Actual)",
+      "DEN_GIO_TT": "To (Actual)",
+      "SO_GIO_DK": "Total registration hours",
+      "SO_GIO_TT": "Total actual hours",
+      "LOAI_NGAY": "Type of date",
+      "LY_DO": "Reason",
+      "NGAY_TAO": "Date created",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline",
+      "PHAN_HOI_TP": "Head of Department feedback",
+      "PHAN_HOI_BGH": "Leadership feedback",
+      "PHAN_HOI_ADMIN": "Administrator feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_LAM_NGOAI_GIO": "OVERTIME REGISTRATION REGULATIONS",
+      "QUY_DINH_1": "1. The overtime calculation is only performed for overtime work according to the request of the Head / Manager / Leadership team and certified by the Head / Manager / Leadership team; does not charge overtime for overtime work to complete daily or work duties as planned, assigned projects, or for employees of work nature who regularly work overtime be assigned to the salary, or to the level of the Head of the department or higher.",
+      "QUY_DINH_2": "2. The Head / Manager / Leadership team is responsible for sending \"Overtime Plan\" / \"Overtime Proposal Form\" which is approved by the Board of Directors for Human Resources Department to verify the valid of overtime registration.",
+      "QUY_DINH_3": "3. Employees must perform fingerprint attendance when working overtime, except for overtime work outside the School/Company. This case must be verified by the Manager / Manager / Leadership team.",
+      "QUY_DINH_4": "4. Head / Manager / Leadership team has the final responsibility in verifying the accuracy and compliance with the work requirements of the overtime working days / hours of employees under their management.",
+      "QUY_DINH_5": "5. The registration for overtime work is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "TAO_MOI_MODAL": {
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name",
+      "TEN": "Name",
+      "DANG_KY_CHAM_CONG_NGOAI_GIO": "Overtime attendance registration",
+      "THU": "Days of week:",
+      "PHONG_BAN": "Department:",
+      "NHAN_VIEN": "Employee:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "GIO_BAT_DAU": "Start time:",
+      "GIO_KET_THUC": "End time:",
+      "LY_DO": "Reason",
+      "LUU": "Save"
+    }
+  },
+  "QUAN_LY_VI_PHAM": {
+    "QUAN_LY_VI_PHAM": "Violation management",
+    "NGAY": "day",
+    "THANG": "month",
+    "NAM": "year",
+    "TIM": "Search",
+    "XUAT_EXCEL": "Export to Excel",
+    "JS": {
+      "TEN_BO_PHAN_TAT_CA": "All"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Day is invalid !!",
+      "THANG_KHONG_HOP_LE": "Month is invalid !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!"
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "HO_TEN": "Full name",
+      "DON_VI": "Department",
+      "NGAY": "Date",
+      "HINH_THUC_VI_PHAM": "Type of violation",
+      "TG_VAO_SANG_QUY_DINH": "Time in by regulations",
+      "TG_VAO_SANG": "Time in (morning shift)",
+      "TG_RA_CHIEU_QUY_DINH": "Time out by regulations",
+      "TG_RA_CHIEU": "Time out (afternoon shift)",
+      "TG_VAO_TRE": "Check in late",
+      "TG_RA_SOM": "Check out soon"
+    }
+  },
+  "DANG_KY_BO_SUNG_CONG": {
+    "DANG_KY_BO_SUNG_CONG": "Additional attendance registration",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "TU_NGAY": "From date",
+    "DEN_NGAY": "To date",
+    "TIM": "Search",
+    "JS": {
+      "TRANG_THAI_ARRAY": {
+        "CHO_XET": "Awaiting",
+        "KHONG_CHAP_NHAN": "Decline",
+        "CHAP_NHAN": "Accept"
+      },
+      "BUOI_ARRAY": {
+        "CA_NGAY": "All day",
+        "SANG": "Morning",
+        "CHIEU": "Afternoon"
+      }
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Day is invalid !!",
+      "THANG_KHONG_HOP_LE": "Month is invalid !!",
+      "NAM_KHONG_HOP_LE": "Year is invalid !!",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Save failed !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "You can not delete it as your manager was approved.",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "XOA_THAT_BAI": "Fail to delete !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Are you sure you want to delete ?"
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "NGAY_DANG_KY": "Registration date",
+      "TU_NGAY": "From date",
+      "DEN_NGAY": "To date",
+      "BUOI": "Session",
+      "LY_DO": "Reason",
+      "NGAY_TAO": "Date created",
+      "NHAN_VIEN": "Employee",
+      "TRANG_THAI": "Status",
+      "PHAN_HOI": "Feedback",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_BO_SUNG_CONG": "ADDITIONAL WORKDAYS MANAGEMENT",
+      "QUY_DINH_1": "1. The additional workday is only performed in case of not being able to press the fingerprint due to a system error or forget to press the fingerprint.",
+      "QUY_DINH_2": "2. Competency to approve for additional workdays: Board of Directors / Head / Manager / Leadership team of their management units.",
+      "QUY_DINH_3": "3. If you forget to press the fingerprint 4 or more times per month, you will be reminded and reviewed during the KPIs evaluation process.",
+      "QUY_DINH_4": "4. Days without fingerprinting but not confirmed by the Head / Manager / Leadership team will be considered unpaid leave on that days.",
+      "QUY_DINH_5": "5. If you arrive late from 2 to 4 hours without a valid reason, it will be considered a half-day of unpaid leave.",
+      "QUY_DINH_6": "6. Public supplementation is only performed during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "TAO_MOI_MODAL": {
+      "BO_SUNG_CONG": "Registration",
+      "BUOI": "Session:",
+      "TU_NGAY": "From date:",
+      "DEN_NGAY": "To date:",
+      "LY_DO": "Reason:",
+      "LUU": "Save"
+    }
+  },
+  "QUAN_LY_KHAI_BAO_CONG_TAC": {
+    "QUAN_LY_KHAI_BAO_CONG_TAC": "Attendance registration management",
+    "TAO_MOI": "Create",
+    "XOA": "Delete",
+    "IN": "Print",
+    "CHO_XET": "Awaiting",
+    "CHAP_NHAN": "Accept",
+    "KHONG_CHAP_NHAN": "Decline",
+    "BUTON_CHAP_NHAN": "Accept",
+    "BUTON_KHONG_CHAP_NHAN": "Decline",
+    "XUAT_EXCEL": "Export to Excel",
+    "TU_NGAY": "From date",
+    "DEN_NGAY": "To date",
+    "DON_VI": "Department",
+    "TIM": "Search",
+    "TAT_CA_DON_CHUA_DUYET": "All leave forms have not been approved",
+    "TRUONG": "School",
+    "MA_NHAN_SU": "Employee code",
+    "DANH_SACH_TAP_TIN": "List of files",
+    "CONFIRM": "Are you sure you want to delete ?",
+    "ALERT": {
+      "CHUA_DONG_NAO_DUOC_CHON": "No lines selected !!",
+      "THANG_KHONG_HOP_LE": "Invalid month",
+      "NAM_KHONG_HOP_LE": "Invalid year",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Invalid from date and to date!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Registration time is the same!!!",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "LUU_THAT_BAI": "Saved failed !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No rows selected !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "The approved attendance report is not deleted.",
+      "XOA_THANH_CONG": "Delete success !!",
+      "XOA_THAT_BAI": "Fail to delete !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Some holidays Invalid: ",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "You can not delete it as your manager was approved.",
+      "CHAP_NHAN_THANH_CONG": "Accept successfully !!",
+      "THANH_CONG": "Success"
+    },
+    "TABLE": {
+      "STT": "Num.",
+      "HO_TEN": "Full name",
+      "MA_NHAN_SU": "Employee code",
+      "NGAY_CONG_TAC": "Date of business trip",
+      "TU_NGAY": "From date",
+      "DEN_NGAY": "To date",
+      "SO_NGAY": "Number of leave",
+      "BUOI": "Session",
+      "NOI_DUNG": "Content",
+      "DIA_DIEM": "Business trip location",
+      "NGAY_TAO": "Date created",
+      "NHAN_VIEN": "Employee",
+      "TRANG_THAI": "Status",
+      "PHAN_HOI": "Feedback"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_DI_CONG_TAC": "BUSINESS TRIP REGISTRATION REGULATIONS",
+      "QUY_DINH_1": "1. The registration for business trip is only done when it is required to handle the work for the Company (Not applicable for personal paperwork) and must be approved by the Head / Manager / Leadership team.",
+      "QUY_DINH_2": "2. Competence to approve for business trip registration: Board of Directors / Head / Manager / Leadership team of the unit under his/her management.",
+      "QUY_DINH_3": "3. The registration for business trip is only done during the attendance period, when the time is closed, no registration is allowed."
+    },
+    "NEW": {
+      "KHAI_BAO_CONG_TAC": "Business trip registration  ",
+      "DON_VI": "Department",
+      "CA_NHAN": "Employee",
+      "DIA_DIEM": "Business trip location",
+      "BUOI": "Session",
+      "CA_NGAY": "All day",
+      "BUOI_SANG": "Morning",
+      "BUOI_CHIEU": "Afternoon",
+      "TU_NGAY": "From date",
+      "DEN_NGAY": "To date",
+      "MUC_DICH": "Purpose",
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name"
+    },
+    "TRANG_THAI": {
+      "TT_TAT_CA": "All",
+      "TT_CHO_XET": "Awaiting",
+      "TT_CHAP_NHAN": "Accept",
+      "TT_KHONG_CHAP_NHAN": "Decline"
+    }
+  },
+  "CHOT_CHAM_CONG_THANG": {
+    "CHOT_CHAM_CONG_THANG": "LOCK ATTENDANCE REPORT FOR THIS MONTH",
+    "THANG": {
+      "THANG": "Month:",
+      "THANG1": "January",
+      "THANG2": "February",
+      "THANG3": "March",
+      "THANG4": "April",
+      "THANG5": "May",
+      "THANG6": "June",
+      "THANG7": "July",
+      "THANG8": "August",
+      "THANG9": "September",
+      "THANG10": "October",
+      "THANG11": "November",
+      "THANG12": "December"
+    },
+    "NAM": "Year:",
+    "DON_VI": "Department:",
+    "TRANG_THAI": "Status:",
+    "CHOT_CONG": "Lock Attendance report",
+    "HUY_CHOT": "Cancel to lock Attendance report",
+    "CONG_HANH_CHINH": "Normal working day",
+    "CONG_NGOAI_GIO": "Overtime",
+    "TRUONG": "School",
+    "DANG_XU_LY_VUI_LONG_CHO": "Please wait...",
+    "TAT_CA": "All",
+    "DON_VI_BOX": "Department",
+    "ALERT": {
+      "VUI_LONG_CHON_THANG": "Please select month !!",
+      "VUI_LONG_NHAP_NAM": "Please enter year !!",
+      "KY_CHAM_CONG_THANG": "Period of the month",
+      "CHUA_DO_DU_LIEU_CHAM_CONG_THANG": "No timekeeping data for the month",
+      "NAM_KHONG_HOP_LE": "Invalid year !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "This month is time to work !!",
+      "DA_KHOA_CHAM_CONG": "Time stamped on software HRM !!",
+      "THANH_CONG": "Success !!",
+      "THAT_BAI": "Invalid !!",
+      "CHUA_CO_DU_LIEU": "Data is not available !!",
+      "HUY_THANH_CONG": "Cancel successfully",
+      "THAT_BAI_CHUA_HUY_KY_TINH_LUONG": "Failed. Not yet cancel to link the payroll period !!",
+      "BAN_THAT_SU_MUON_CHOT_CONG_NGOAI_GIO": "Do you really want to lock overtime data?",
+      "CHOT_CONG_NGOAI_GIO_THANH_CONG": "Lock overtime data successfully !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_THAT_SU_MUON_CHOT_CONG": "Do you really want to lock attendance report?"
+    }
+  },
+  "KIEM_TRA_CHOT_CONG_DON_VI": {
+    "KIEM_TRA_CHOT_CONG_DON_VI": "Attendance report check",
+    "XUAT_EXCEL": "Export to Excel",
+    "TAT_CA": "All",
+    "CHUA_XET": "Not yet review",
+    "DA_XET": "Have reviewed",
+    "THANG": "month",
+    "NAM": "year",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "PHONG_BAN": "Department",
+      "THANG": "Month",
+      "TRANG_THAI": "Status"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Invalid month !",
+      "NAM_KHONG_HOP_LE": "Invalid year !"
+    }
+  },
+  "QUAN_LY_USER": {
+    "TAO_MOI": "Create new",
+    "XOA": "Delete",
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "TEN_USER": "User name",
+      "HO_TEN": "Full name",
+      "TEN_BO_PHAN": "Department",
+      "LOAI_TAI_KHOAN": "Type of account",
+      "TRANG_THAI": "Status"
+    },
+    "ADD": {
+      "THONG_TIN_NGUOI_DUNG": "User Information",
+      "LOAI_TAI_KHOAN": "Type of account",
+      "TRUONG": "School",
+      "PHONG_BAN": "Department",
+      "NHAN_VIEN": "Employee",
+      "KHONG_CHON": "Do not select",
+      "TEN_DANG_NHAP": "User name",
+      "MAT_KHAU": "Password",
+      "TRANG_THAI": "Status",
+      "TT_HOAT_DONG": "Operation",
+      "TT_KHOA_LAI": "Lock",
+      "LUU": "Save",
+      "LUU_Y": "Notes:",
+      "BAT_BUOC_NHAP": " Required to enter",
+      "PHAN_QUYEN_TRUONG_DON_VI": "Decentralization school | department",
+      "CHON_TAT_CA": "All select"
+    },
+    "HO_SO_NHAN_VIEN": {
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name"
+    },
+    "ALERT": {
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "User name and password not null.",
+      "TEN_DANG_NHAP_DA_TON_TAI": "User name has existed already",
+      "EMAIL_GIAM_DOC_CHI_NHANH_KHONG_HOP_LE": "Email Director of branch is invalid.",
+      "EMAIL_GIAM_DOC_KHOI_KHONG_HOP_LE": "Email  Executive Director is invalid.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email manager is invalid.",
+      "CHON_NHAN_VIEN": "Select employee.",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No line is selected!!",
+      "XOA_THANH_CONG": "Delete successfully !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Are you sure you want to delete?"
+    },
+    "THONG_TIN_NGUOI_DUNG_VIEW": {
+      "THONG_TIN_NGUOI_DUNG": "User Information",
+      "LOAI_TAI_KHOAN": "Type of account",
+      "MA_NHAN_SU": "Employee code ",
+      "TEN_USER": "User name",
+      "MAT_KHAU": "Password",
+      "DOI_MAT_KHAU": "Change password",
+      "XAC_NHAN_MAT_KHAU": "Confirm password",
+      "HO_TEN": "Full name",
+      "EMAIL": "Email",
+      "EMAIL_TP": "Email Head of Department",
+      "EMAIL_HT": "Email of Principal",
+      "EMAIL_HDQT": "Email of Board of Directors",
+      "BO_PHAN": "Department",
+      "TRANG_THAI": "Status",
+      "HOAT_DONG": "Operation",
+      "KHOA_LAI": "Lock",
+      "PHAN_QUYEN_DON_VI": "Decentralization",
+      "CHON_TAT_CA": "Select all",
+      "LUU_Y": "Notes ",
+      "BAT_BUOC_NHAP": " Required to enter",
+      "LUU": "Save",
+      "TRO_VE": "Return",
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "User name and password not null",
+      "MAT_KHAU_KHONG_KHOP": "Password does not match",
+      "TEN_DANG_NHAP_DA_TON_TAI": "Username already exists",
+      "CHON_LOAI_TAI_KHOAN": "Select type of account.",
+      "EMAIL_HIEU_TRUONG_KHONG_HOP_LE": "Principal Email is invalid.",
+      "EMAIL_HOI_DONG_QUAN_TRI_KHONG_HOP_LE": "Email of Board of Directors is invalid.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email manager is invalid.",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "CO_LOI_XAY_RA": "Something happening is wrong"
+    }
+  },
+  "QUAN_LY_USER_ADMIN": {
+    "TAO_MOI": "Create new",
+    "XOA": "Delete",
+    "TABLE": {
+      "STT": "Num.",
+      "MA_NHAN_SU": "Employee code",
+      "TEN_USER": "User name",
+      "HO_TEN": "Full name",
+      "TEN_BO_PHAN": "Department",
+      "LOAI_TAI_KHOAN": "Type of account",
+      "TRANG_THAI": "Status"
+    },
+    "ADD": {
+      "THONG_TIN_NGUOI_DUNG": "User Information",
+      "LOAI_TAI_KHOAN": "Type of account",
+      "TRUONG": "School",
+      "PHONG_BAN": "Department",
+      "NHAN_VIEN": "Employee",
+      "KHONG_CHON": "Do not select",
+      "TEN_DANG_NHAP": "User name",
+      "MAT_KHAU": "Password",
+      "TRANG_THAI": "Status",
+      "TT_HOAT_DONG": "Operation",
+      "TT_KHOA_LAI": "Lock",
+      "LUU": "Save",
+      "LUU_Y": "Notes:",
+      "BAT_BUOC_NHAP": " Required to enter",
+      "PHAN_QUYEN_TRUONG_DON_VI": "Decentralization school | department",
+      "CHON_TAT_CA": "All select"
+    },
+    "HO_SO_NHAN_VIEN": {
+      "MA_QUAN_LY": "Employee code",
+      "HO_TEN": "Full name"
+    },
+    "ALERT": {
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "User name and password not null.",
+      "TEN_DANG_NHAP_DA_TON_TAI": "User name has existed already",
+      "EMAIL_HIEU_TRUONG_KHONG_HOP_LE": "Principal Email is invalid.",
+      "EMAIL_HOI_DONG_QUAN_TRI_KHONG_HOP_LE": "Email of Board of Directors is invalid.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email manager is invalid.",
+      "CHON_NHAN_VIEN": "Select employee.",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No line is selected!!",
+      "XOA_THANH_CONG": "Delete successfully !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Are you sure you want to delete?"
+    }
+  },
+  "QUAN_LY_GUI_MAIL": {
+    "QUAN_LY_GUI_MAIL": "SENDING MAIL MANAGEMENT",
+    "TU_NGAY": "From date",
+    "DEN_NGAY": "To date",
+    "XOA": "Delete",
+    "TIM": "Search",
+    "TABLE": {
+      "STT": "Num.",
+      "TIEU_DE": "Subject",
+      "NOI_DUNG": "Content",
+      "EMAIL_GUI": "Send from",
+      "EMAIL_NHAN": "Send to",
+      "NGAY_GUI": "Sending date "
+    },
+    "ALERT": {
+      "CHON_NHAN_VIEN": "Select employee.",
+      "LUU_THANH_CONG": "Save successfully !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "No line is selected!!",
+      "XOA_THANH_CONG": "Delete successfully !!",
+      "XOA_THAT_BAI": "Fail to delete"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Are you sure you want to delete?"
+    }
+  },
+  "GUI_EMAIL": {
+    "GUI_EMAIL": "SEND EMAIL",
+    "TU": "From",
+    "MAT_KHAU": "Password",
+    "GUI_DEN": "Send to",
+    "TIEU_DE": "Subject",
+    "GUI": "Send",
+    "DANG_XU_LY_VUI_LONG_CHO": "Processing email. Please wait .......",
+    "TAI_TAP_TIN_THANH_CONG": "Loading file sucsessfully !!!",
+    "ALERT": {
+      "VUI_LONG_NHAP_EMAIL_GUI": "Please enter the email sending.",
+      "VUI_LONG_NHAP_MAT_KHAU_GUI": "Please enter password.",
+      "VUI_LONG_NHAP_EMAIL_NHAN": "Please enter the email receiving!",
+      "EMAIL_GUI": "Send from: [",
+      "KHONG_HOP_LE": "] Invalid",
+      "EMAIL_NHAN": "To mailbox: [",
+      "GUI_EMAIL_THANH_CONG": "Send mail sucsessful !!",
+      "GUI_EMAIL_THAT_BAI": "Sending mail failed. Please check Email sent and password"
+    }
+  },
+  "QUAN_LY_NHAC_VIEC": {
+    "THONG_BAO_NGOAI_GIO": {
+      "THONG_BAO_NGOAI_GIO": "OVERTIME NOTIFICATION",
+      "CO": "Yes",
+      "DON_XIN_LAM_NGOAI_GIO": "application(s) for overtime"
+    },
+    "THONG_BAO_KHAI_BAO_CONG_TAC": {
+      "THONG_BAO_KHAI_BAO_CONG_TAC": "BUSINESS TRIP REGISTRATION NOTIFICATION",
+      "CO": "Yes",
+      "DON_KHAI_BAO_CONG_TAC_CAN_DUYET": "business trip registration needs approval"
+    },
+    "THONG_BAO_DON_XIN_NGHI": {
+      "THONG_BAO_DON_XIN_NGHI": "APPLICATION FOR LEAVE NOTIFICATION",
+      "CO": "Yes",
+      "DON_XIN_NGHI_CAN_DUYET": "application(s) needs approval"
+    }
+  },
+  "QUAN_LY_MENU_VA_PHAN_QUYEN": {
+    "PHAN_QUYEN": {
+      "PHAN_QUYEN": "Decentralization",
+      "DANH_SACH_NHOM_NGUOI_DUNG": "List of the user group",
+      "ALERT": {
+        "BAN_CHUA_CHON_PHAN_TU": "You have not selected element yet!",
+        "THANH_CONG": "Sucsessful!",
+        "THAT_BAI": "Failed!"
+      },
+      "EDIT": {
+        "PHAN_QUYEN_MENU": " Menu decentralization",
+        "TEN_NHOM": "Group name",
+        "DANH_SACH_MENU": "Menu",
+        "DONG_Y": "OK",
+        "HUY": "Cancel"
+      }
+    },
+    "QUAN_LY_MENU": {
+      "QUAN_LY_MENU": "Menu Management",
+      "DANH_SACH_MENU": "Menu",
+      "LOC_BOI": "Filtered by:",
+      "LOC": "Filter",
+      "XOA": "Delete",
+      "TU_KHOA": "Key word",
+      "ALERT": {
+        "BAN_CHUA_CHON_PHAN_TU": "You have not selected element yet!",
+        "THANH_CONG": "Sucsessful!",
+        "THAT_BAI": "Failed!"
+      },
+      "EDIT": {
+        "QUAN_LY": "Management",
+        "TEN": "Name",
+        "THU_TU": "Order",
+        "MENU_CHA": "Parent menu",
+        "CHON_MENU": "Select menu ...",
+        "DONG_Y": "Ok",
+        "HUY": "Cancel"
+      }
+    }
+  },
+  "THONG_TIN_TAI_KHOAN": {
+    "ALERT": {
+      "LUU_THANH_CONG": "Save successfully !!"
+    },
+    "THONG_TIN_NGUOI_QUAN-TRI": "ADMINISTRATOR INFORMATION",
+    "MA_NHAN_SU": "Employee code",
+    "TEN_USER": "User name",
+    "MAT_KHAU": "Password",
+    "DOI_MAT_KHAU": "Change password",
+    "XAC_NHAN_MAT_KHAU": "Confirm password",
+    "HO_TEN": "Full name",
+    "EMAIL": "Email",
+    "EMAIL_TP": "Email Head of Department",
+    "EMAIL_HT": "Email of Principal",
+    "EMAIL_HDQT": "Email of Directors",
+    "LUU": "Save",
+    "TRO_VE": "Return"
+  }
+}

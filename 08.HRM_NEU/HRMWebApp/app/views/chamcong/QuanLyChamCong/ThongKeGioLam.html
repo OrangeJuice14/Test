@@ -1,0 +1,190 @@
+﻿<style type="text/css">
+.jqx-grid-column-header {
+    white-space: normal;
+    vertical-align:middle;
+}
+</style>
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+        var self = this;
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable();
+        self.NgayThang = ko.observable("ngày " + new Date().getDate() + " tháng " + (new Date().getMonth() + 1) + " năm " + new Date().getFullYear());
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+                if (obj.length > 0)
+                    self.departmentSelected(obj[0].Oid);
+            }
+        });
+
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenDonVi', type: 'string' },
+                { name: 'Ngay', type: 'date' },
+                { name: 'GioVao', type: 'date' },
+                { name: 'GioRa', type: 'date' },
+                { name: 'ThoiGianBatDauNghiGiuaCa', type: 'date' },
+                { name: 'ThoiGianKetThucNghiGiuaCa', type: 'date' }
+            ],
+            id: 'Id',
+            // sortcolumn: 'HoTen',
+            //sortdirection: 'asc',
+            url: "/WebServices/ThongKeGioLam_Find",
+            formatdata: function (data) {
+                return {
+                    ngay: self.day(),
+                    thang: self.month(),
+                    nam: self.year(),
+                    boPhanId: self.departmentSelected() == undefined ? null : self.departmentSelected()
+                };
+            },
+            beforeprocessing: function (result) {
+                return result;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                columnsresize: true,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 120, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', width: 150, align: 'center'
+                    },
+                    {
+                        text: 'Phòng ban', datafield: 'TenDonVi', width: 200, align: 'center'
+                    },
+                    {
+                        text: 'Ngày', datafield: 'Ngay', width: 200, align: 'center', cellsalign: "middle", cellsformat: 'dd/MM/yyyy'
+                    },
+                    {
+                        text: 'Giờ vào', datafield: 'GioVao', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'HH:mm'
+                    },
+                    {
+                        text: 'Giờ ra', datafield: 'GioRa', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'HH:mm'
+                    },
+                    {
+                        text: 'Tổng số giờ', width: 100, align: 'center', cellsrenderer: function (row, column, value, a, b, data) {
+                            var diffTime = '';
+                            if (data.GioVao && data.GioRa) {
+                                var gioVao = moment(moment(data.GioVao).format('HH:mm'), 'HH:mm')
+                                var gioRa = moment(moment(data.GioRa).format('HH:mm'), 'HH:mm')
+                                //Khoảng thời gian giữa giờ vào và giờ ra thực tế (chưa trừ nghỉ giữa ca)
+                                var duration = moment.duration(gioRa.diff(gioVao))
+                                
+                                //lấy thời gian nghỉ giữa ca theo thời gian check vân tay thực tế
+                                var batDauTru = gioVao.diff(moment(data.ThoiGianBatDauNghiGiuaCa, 'HH:mm:ss')) < 0 ? moment(data.ThoiGianBatDauNghiGiuaCa, 'HH:mm:ss') : gioVao
+                                var ketThucTru = gioRa.diff(moment(data.ThoiGianKetThucNghiGiuaCa, 'HH:mm:ss')) > 0 ? moment(data.ThoiGianKetThucNghiGiuaCa, 'HH:mm:ss') : gioRa
+                                var soGioTru = moment.duration(ketThucTru.diff(batDauTru))
+
+                                duration = duration.subtract(soGioTru)
+                                var soGio = duration.hours()
+                                var soPhut = duration.minutes()
+                                    
+                                diffTime = ('0' + soGio).slice(-2) + ':' + ('0' + soPhut).slice(-2)
+                            }
+
+                            return "<div style='text-align:center;margin-top:15px;'>" + diffTime + "</div>";
+                        }
+                    }
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            }
+            if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#ThongKeGioLam")[0]);
+
+        
+    });
+</script>
+<div id="ThongKeGioLam">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>THỐNG KÊ GIỜ LÀM</h4></div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" placeholder="ngày" data-bind="value: day" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+        -
+        <input type="text" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <select style="width: 200px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan  }, optionsValue: 'Oid', value: departmentSelected, optionsCaption: 'Tất cả'"></select>
+
+        <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+</div>
+

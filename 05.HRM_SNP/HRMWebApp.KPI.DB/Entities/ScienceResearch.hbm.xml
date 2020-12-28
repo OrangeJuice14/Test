@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ScienceResearch, HRMWebApp.KPI.DB" table="KPI_ScienceResearch">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="NumberOfResearch" column="NumberOfResearch"></property>   
+    <many-to-one name="PlanKPIDetail" class="HRMWebApp.KPI.DB.Entities.PlanKPIDetail" column="PlanKPIDetailId" />
+    <many-to-one name="CriterionDictionary" class="HRMWebApp.KPI.DB.Entities.CriterionDictionary" column="CriterionDictionaryId" />
+  </class>
+</hibernate-mapping>
+
+

@@ -1,0 +1,25 @@
+﻿
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:36px;">
+        <span class="widget-caption">Cập nhật điểm</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-6">
+                    <select k-options="departmentsDataSource" k-placeholder="'Chọn Đơn vị'" kendo-combo-box style="width:100%;" name="selectLeader" k-ng-model="deptId">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button ng-click="SearchDept()" class="btn btn-primary" ng-disabled="CriterionForm.$invalid"><i class="fa fa-search"></i> </button>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <br />
+            <div kendo-grid="gridAll" k-data-source="dataSourceAll" k-options="mainGridOptionsAll"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,554 @@
+﻿<style type="text/css">
+    .td1 {
+        width: 30%;
+    }
+
+    .th1 {
+        text-align: center;
+        vertical-align: baseline;
+    }
+
+    .title {
+        font-family: 'Times New Roman';
+        font-weight: bold !important;
+        margin-top: 10px !important;
+    }
+
+    textarea {
+        padding: 4px;
+        background-color: white;
+        color: black;
+        resize: none;
+        /*border: 0px;*/
+        text-align: justify;
+    }
+             .overlay {
+        display: table;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .inner {
+        font-family: sans-serif;
+        font-size: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption"><b> {{planName}} - {{staffResultDetaitObject.StaffDTO.Name}}</b></span>
+        <span ng-if="!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsPlanLocked==false" class="widget-caption" style="color: red;"><b style="padding-left: 10px;"> (Kế hoạch chưa được duyệt) </b></span>
+        <span ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated" class="widget-caption" style="color: red;"><b style="padding-left: 10px;">(Cấp dưới chưa đánh giá)</b></span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-body">
+            <div class="overlay" loading>
+                <div class="inner">
+                    <img height="60" src="/Images/loader.gif" /><br />
+                    Đang xử lý ...
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <div style="float:right;width:200px;"><b>MẪU 06/ĐGCN</b></div><br />
+                <h3 class="title">BẢN ĐÁNH GIÁ KẾ HOẠCH HOẠT ĐỘNG CÁ NHÂN NĂM HỌC</h3>
+                <h4 class="title">Áp dụng cho CBGD</h4>
+            </div>
+            <form name="planDetailKPIForm" role="form" class="form-horizontal" novalidate>
+                <h4 ng-if="staffResultDetaitObject.IsSupervisor">
+                    Trưởng Bộ môn đánh giá: {{staffResultDetaitObject.Supervisor.Name}}
+                </h4>                
+                    <div>
+
+                        <table class="table table-striped table-bordered" style="width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td class="td1">Họ và tên giảng viên</td>
+                                    <td><b>{{staffResultDetaitObject.StaffDTO.Name}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1">Khoa</td>
+                                    <td>{{staffResultDetaitObject.StaffDTO.Department.Name}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1">Bộ môn</td>
+                                    <td>{{staffResultDetaitObject.StaffDTO.Subject.Name}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1">Đối tượng</td>
+                                    <td>{{staffResultDetaitObject.AgentObjectName}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1">MSGV</td>
+                                    <td>{{staffResultDetaitObject.StaffDTO.UserName}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1">Cấp trên trực tiếp</td>
+                                    <td>
+                                        <div ng-if="departmentLeaderName!=''">
+                                            {{departmentLeaderName}}
+                                        </div>
+                                        <!--Trường hợp trưởng phòng đánh giá ko lấy đc cấp trên trực tiếp do ko có departmentid-->
+                                        <div ng-if="departmentLeaderName=='' && staffResultDetaitObject.IsSupervisor">
+                                            {{staffResultDetaitObject.Supervisor.Name}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+                <fieldset ng-disabled="!staffResultDetaitObject.IsPlanLocked || (staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated) || (isExpired && !isFreeRating)">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr><td style="text-align: center" class="header1"><h4>Phần 1: Đánh giá chi tiết</h4></td></tr>
+                            <tr><td style="text-align: center"><h4>CBGD và Cấp trên trực tiếp căn cứ theo Kế hoạch hoạt động cá nhân đầu năm học để tự đánh giá và đánh giá kết quả đạt được của KPIs theo mẫu này.</h4> </td></tr>
+                        </thead>
+                        <tbody ng-repeat="tg in staffResultDetaitObject.TargetGroupRatingDTOs">
+                            <tr>
+                                <td>
+                                    <table class="table  table-bordered">
+                                        <thead style="color:white">
+                                            <tr>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;" rowspan="2">STT</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;" rowspan="2">Mục tiêu chi tiết</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" ng-if="tg.TargetGroupDetailTypeId!=0" colspan="4">NMT#{{$index +1}} : {{tg.Name}}</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" ng-if="tg.TargetGroupDetailTypeId==0" colspan="6">NMT#{{$index +1}} : {{tg.Name}}</th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==0">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Điểm KPI Max</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Chỉ tiêu đăng ký</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Kết quả thực hiện</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Điểm KPI Giảng viên tự đánh giá</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Điểm KPI cấp trên đánh giá</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Diễn giải</th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId!=0">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Chỉ tiêu đăng ký</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Kết quả thực hiện</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Điểm KPI Giảng viên tự đánh giá</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;">Điểm KPI cấp trên đánh giá</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==0" ng-repeat="rd in tg.ResultDetailDTOs track by $index">
+                                                <td style="text-align:center; width:50px;">{{$index +1}}</td>
+                                                <td style="width:200px;">{{rd.CriterionName}}</td>
+                                                <td style="text-align:center;width:80px;">{{rd.MaxRecord}}</td>
+                                                <td style="width:170px;">
+                                                    {{rd.RegisterTarget}}
+                                                </td>
+                                                <td style="width:200px;">
+                                                    <input style="width:90%;" ng-if="rd.CriterionTypeId==2" ng-disabled="staffResultDetaitObject.IsSupervisor" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.CurrentResult" class="col-xs-12" />
+                                                    <span ng-if="rd.CriterionTypeId==4 || rd.CriterionId=='9dcd919b-7bbe-40ab-819a-f72a69092913'">{{rd.CurrentResult}}</span>
+                                                    <textarea ng-auto-expand ng-if="rd.CriterionTypeId==1 || tg.TargetGroupDetailTypeId==4" ng-disabled="staffResultDetaitObject.IsSupervisor" ng-attr-tooltip="{{rd.Tooltip}}" required class="col-xs-12" ng-model="rd.CurrentResult"></textarea>
+                                                    <select class="form-control col-md-12" ng-if="rd.CriterionTypeId==3 && rd.CriterionId!='9dcd919b-7bbe-40ab-819a-f72a69092913'" name="selectTarget" ng-disabled="staffResultDetaitObject.IsSupervisor" ng-change="criterionDictionaryUpdate(rd.CurrentResult,tg.Id,rd.PlanKPIDetailId)" required ng-model="rd.CurrentResult" ng-options="listobj.Id as listobj.Name for listobj in rd.CriterionDictionaries">
+                                                        <option value="">...Chọn tiêu chí...</option>
+                                                    </select>
+                                                </td>
+                                                <td style="text-align:center;width:90px;">
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor">
+                                                        <span ng-if="rd.CriterionTypeId!=3" class="error" ng-show="rd.Record>rd.MaxRecord">Điểm max: {{rd.MaxRecord}}</span>
+                                                        <!--<textarea style="text-align:center" ng-auto-expand  lower-than="{{rd.MaxRecord}}" class="col-xs-12" ng-model="rd.Record"></textarea>-->
+                                                        <input name="Record" kendo-numeric-text-box k-options="numericOptions" k-max="{{rd.MaxRecord}}" k-lower-than="{{rd.MaxRecord}}"  k-ng-model="rd.Record" />
+                                                    </div>
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor || rd.CriterionTypeId==3" style="text-align:center">
+                                                        <!--<b>{{rd.Record}}</b>-->
+                                                    </div>
+                                                </td>
+                                                <td style="text-align:center;width:90px;">
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor && rd.CriterionId!='751b5eaa-c48a-4849-ba10-1555c60dd422' && rd.CriterionId!='9dcd919b-7bbe-40ab-819a-f72a69092913'">
+                                                        <span class="error" style="color: red" ng-show="rd.SupervisorRecord>rd.MaxRecord">
+                                                            Điểm tối đa: {{rd.MaxRecord}}
+                                                        </span>
+                                                        <textarea style="text-align:center" lower-than="{{rd.MaxRecord}}" class="col-xs-12" ng-model="rd.SupervisorRecord"></textarea>
+                                                    </div>
+                                                    <!--<div style="text-align:center" ng-if="staffResultDetaitObject.IsSupervisor && rd.CriterionId=='751b5eaa-c48a-4849-ba10-1555c60dd422' || rd.CriterionId=='9dcd919b-7bbe-40ab-819a-f72a69092913'">
+                                            {{rd.SupervisorRecord}}
+                                        </div>-->
+                                                    <div style="text-align:center" ng-if="!staffResultDetaitObject.IsSupervisor">
+                                                        <b>{{rd.SupervisorRecord}}</b> 
+                                                    </div>
+                                                <td>
+                                                    <div ng-if="rd.CriterionId!='751b5eaa-c48a-4849-ba10-1555c60dd422' && rd.CriterionId!='9dcd919b-7bbe-40ab-819a-f72a69092913'">
+                                                        <div style="padding-bottom:10px;" ng-if="!staffResultDetaitObject.IsSupervisor">
+                                                            <a ng-click="newResultDetaillFile(rd.Id,tg.Id)" class="btn btn-labeled btn-success">
+                                                                <i class="btn-label fa fa-pencil"></i>Chọn File
+                                                            </a>
+                                                        </div>
+                                                        <div ng-repeat="f in rd.FileAttachments">
+                                                            <p>-&nbsp;&nbsp;<a ng-click="downloadFile(f.Id)" href="javascript:void(0)">{{f.Name}}.{{f.Extention}}</a></p>
+                                                        </div>
+                                                        <textarea ng-if="!staffResultDetaitObject.IsSupervisor" ng-auto-expand class="col-xs-12" placeholder="Ghi chú" ng-model="rd.Note"></textarea>
+                                                        <div ng-if="staffResultDetaitObject.IsSupervisor"><p>{{rd.Note}}</p></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==4" ng-repeat="rd in tg.ResultDetailDTOs track by $index">
+                                                <td style="text-align:center; width:50px;">{{$index +1}}</td>
+                                                <td>{{rd.CriterionName}}</td>
+                                                <td style="width:300px;">
+                                                    <table class="table">
+                                                        <thead style="font: bold">
+                                                            <tr>
+                                                                <td>
+                                                                    <b>Hoạt động</b>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <b>Số lần</b>
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="pa in rd.ProfessorOtherActivities">
+                                                            <tr>
+                                                                <td style="width:75%">{{pa.Name}}</td>
+                                                                <td style="width:25%; text-align:center">{{pa.NumberOfTime}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td style="width:300px;">
+                                                    <table class="table">
+                                                        <thead style="font: bold">
+                                                            <tr>
+                                                                <td>
+                                                                    <b>Hoạt động</b>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <b>Số lần</b>
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="pa in rd.ProfessorOtherActivitiesResult">
+                                                            <tr>
+                                                                <td style="width:75%">{{pa.Name}}</td>
+                                                                <td style="width:25%; text-align:center">{{pa.NumberOfTimeDouble}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td><b>Tổng số giờ</b></td>
+                                                                <td style="text-align:center">{{rd.ActivityHour}}</td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </td>
+                                                <td style="width:100px">
+
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor && tg.Id!='00000000-0000-0000-0000-000000000002' && tg.TargetGroupDetailTypeId!=4">
+                                                        <span ng-if="rd.CriterionTypeId!=3" class="error" ng-show="rd.Record>rd.MaxRecord">Điểm max: {{rd.MaxRecord}}</span>
+                                                        <textarea style="text-align:center" ng-auto-expand ng-if="rd.CriterionTypeId!=3" lower-than="{{rd.MaxRecord}}" class="col-xs-12" ng-model="rd.Record"></textarea>
+                                                        <!--<span >{{rd.Record}}</span>-->
+                                                    </div>
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor && tg.Id!='00000000-0000-0000-0000-000000000002' && tg.TargetGroupDetailTypeId==4">
+                                                        <span ng-if="rd.CriterionTypeId!=3" class="error" ng-show="rd.Record>100">Điểm max: 100</span>
+                                                        <textarea style="text-align:center" ng-auto-expand ng-if="rd.CriterionTypeId!=3" lower-than="100" class="col-xs-12" ng-model="rd.Record"></textarea>
+                                                        <!--<span >{{rd.Record}}</span>-->
+                                                    </div>
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor || rd.CriterionTypeId==3" style="text-align:center">
+                                                        <b>{{rd.Record}}</b>
+                                                    </div>
+                                                </td>
+                                                <td style="width:100px">
+                                                    <div style="text-align:center;">
+                                                        <b>{{rd.SupervisorRecord}}</b>
+</div>
+                                                    <!--<div ng-if="staffResultDetaitObject.IsSupervisor && tg.Id!='00000000-0000-0000-0000-000000000002' && tg.TargetGroupDetailTypeId!=4">
+                                            <span class="error" style="color: red" ng-show="rd.SupervisorRecord>rd.MaxRecord">
+                                                Điểm tối đa: {{rd.MaxRecord}}
+                                            </span>
+                                            <textarea style="text-align:center" lower-than="{{rd.MaxRecord}}" class="col-xs-12" ng-model="rd.SupervisorRecord"></textarea>
+                                        </div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor && tg.Id!='00000000-0000-0000-0000-000000000002' && tg.TargetGroupDetailTypeId==4">
+                                            <span class="error" style="color: red" ng-show="rd.SupervisorRecord>100">
+                                                Điểm tối đa: 100
+                                            </span>
+                                            <textarea style="text-align:center" lower-than="100" class="col-xs-12" ng-model="rd.SupervisorRecord"></textarea>
+                                        </div>
+                                        <div style="text-align:center" ng-if="!staffResultDetaitObject.IsSupervisor">
+                                            {{rd.SupervisorRecord}}
+                                        </div>
+                                        <div style="text-align:center" ng-if="staffResultDetaitObject.IsSupervisor  && tg.Id=='00000000-0000-0000-0000-000000000002' ">
+                                            {{rd.SupervisorRecord}}
+                                        </div>-->
+                                                </td>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==5" ng-repeat="rd in tg.ResultDetailDTOs track by $index">
+                                                <td style="text-align:center; width:50px;">{{$index +1}}</td>
+                                                <td>{{rd.CriterionName}}</td>
+                                                <td style="width:400px;">
+                                                    <table class="table">
+                                                        <thead style="font: bold">
+                                                            <tr>
+                                                                <td>
+                                                                    <b>Hoạt động</b>
+                                                                </td>
+                                                                <td style="text-align:center">
+                                                                    <b>Số lần</b>
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody ng-repeat="pa in rd.ScienceResearches">
+                                                            <tr>
+                                                                <td style="width:75%">{{pa.Name}}</td>
+                                                                <td style="width:25%; text-align:center">{{pa.NumberOfResearch}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td style="width:200px;">
+                                                    {{rd.CurrentKPI}}
+                                                </td>
+                                                <td style="width:100px">
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor">
+                                                        <span class="error" ng-show="rd.Record>100">Điểm max: 100</span>
+                                                        <textarea style="text-align:center" ng-auto-expand lower-than="100" class="col-xs-12" ng-model="rd.Record"></textarea>
+                                                    </div>
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor" style="text-align:center">
+                                                        <b>{{rd.Record}}</b>
+                                                    </div>
+                                                </td>
+                                                <td style="width:100px">
+                                                    <div style="text-align:center;">
+                                                        <b>{{rd.SupervisorRecord}}</b> 
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td ng-if="tg.TargetGroupDetailTypeId==0" colspan="5" style="text-align: right;">Tổng cộng</td>
+                                                <td ng-if="tg.TargetGroupDetailTypeId==4 || tg.TargetGroupDetailTypeId==5" colspan="4" style="text-align: right;">Tổng cộng</td>
+                                                <td style="text-align:center;">{{sumProfessor(tg.ResultDetailDTOs,'Record')}}</td>
+                                                <td style="text-align:center;">{{sumProfessor(tg.ResultDetailDTOs,'SupervisorRecord')}}</td>
+                                                <td ng-if="tg.TargetGroupDetailTypeId==0"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="staffResultDetaitObject.ProfessorAdditionalResultDetailDTOs">
+                        <div style="text-align:center;">
+                            <h3 class="title">KẾ HOẠCH PHÂN CÔNG CHO GIẢNG VIÊN</h3>
+                        </div>
+                        <div style="width:100%;">
+                            <div style="width:100%;">
+                                <div style="width: 100%; overflow-x:scroll;">
+                                    <table class="table  table-bordered">
+                                        <thead ng-style="{color: TABLECOLORS[0] }">
+                                            <tr>
+                                                <th style="vertical-align:middle; text-align:center;">STT</th>
+                                                <th style="vertical-align:middle; text-align:center;">Mục tiêu </th>
+                                                <th style="vertical-align:middle; text-align:center;">Kết quả thực hiện </th>
+                                                <th style="vertical-align:middle; text-align:center;">Cấp trên xác nhận</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="rd in staffResultDetaitObject.ProfessorAdditionalResultDetailDTOs track by $index | orderBy:'OrderNumber'">
+                                                <td style="text-align:center">{{$index +1}}</td>
+                                                <td>
+                                                    <div>{{rd.CriterionName}}</div>
+                                                </td>
+                                                <td style="width:250px;">
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor" style="padding-bottom:10px;">
+                                                        <a ng-click="newResultDetaillFile(rd.Id)" class="btn btn-labeled btn-success">
+                                                            <i class="btn-label fa fa-pencil"></i>Chọn File
+                                                        </a>
+                                                    </div>
+                                                    <div ng-repeat="f in rd.FileAttachments">
+                                                        <p>-&nbsp;&nbsp;<a ng-click="downloadFile(f.Id)" href="javascript:void(0)">{{f.Name}}.{{f.Extention}}</a></p>
+                                                    </div>
+                                                    <textarea ng-if="!staffResultDetaitObject.IsSupervisor" ng-auto-expand class="col-xs-12" placeholder="Ghi chú" ng-model="rd.Note"></textarea>
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor"><p>{{rd.Note}}</p></div>
+                                                </td>
+                                                <td style="text-align:center;width:100px">
+                                                    <div ng-if="staffResultDetaitObject.IsSupervisor">
+                                                        <input type="checkbox" ng-model="rd.IsConfirmed" />
+                                                    </div>
+                                                    <div ng-if="!staffResultDetaitObject.IsSupervisor">
+                                                        <input disabled type="checkbox" ng-model="rd.IsConfirmed" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class=" table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center" colspan="3" class="header1">
+                                    <h4> Phần 2: Điểm thưởng (Tối đa: {{staffResultDetaitObject.MaxBonusRecord}})</h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align:middle; text-align:center;">
+                                    Diễn giải
+                                </th>
+                                <th style="vertical-align:middle; text-align:center;">
+                                    Số điểm
+                                </th>
+                                <th style="vertical-align:middle; text-align:center;">
+                                    Minh chứng
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="rd in staffResultDetaitObject.BonusRecordList">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <textarea ng-if="staffResultDetaitObject.IsSupervisor" ng-auto-expand class="col-xs-12" required ng-model="rd.CurrentResult"></textarea>
+                                        <p ng-if="!staffResultDetaitObject.IsSupervisor">{{rd.CurrentResult}}</p>
+                                    </div>
+                                </td>
+                                <td style="width:150px;">
+                                    <div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor">
+                                            <span class="error" style="color: red" ng-show="rd.Record>staffResultDetaitObject.MaxBonusRecord">
+                                                Điểm tối đa: {{staffResultDetaitObject.MaxBonusRecord}}
+                                            </span>
+                                            <input name="Record" lower-than="100" style="width:100%;" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.Record" />
+                                        </div>
+                                        <div style="text-align:center" ng-if="!staffResultDetaitObject.IsSupervisor">
+                                            <span ng-if="rd.Record>0">{{rd.Record}}</span>
+                                            <span ng-if="rd.Record<=0">Chưa có</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor" style="padding-bottom:10px;">
+                                        <a ng-click="newResultDetaillFile(rd.Id)" class="btn btn-labeled btn-success">
+                                            <i class="btn-label fa fa-pencil"></i>Chọn File
+                                        </a>
+                                    </div>
+                                    <div ng-repeat="f in rd.FileAttachments">
+                                        <p>-&nbsp;&nbsp;<a ng-click="downloadFile(f.Id)" href="javascript:void(0)">{{f.Name}}.{{f.Extention}}</a></p>
+                                    </div>
+                                    <textarea ng-if="staffResultDetaitObject.IsSupervisor" ng-auto-expand class="col-xs-12" placeholder="Ghi chú" ng-model="rd.Note"></textarea>
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor"><p>{{rd.Note}}</p></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center" colspan="6" class="header1" colspan="6"><h4>Phần 3: Đánh giá tổng hợp</h4></th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">STT</th>
+                                <th rowspan="2">Nhóm mục tiêu</th>
+                                <th colspan="4" style="text-align: center;">Điểm đánh giá</th>
+                            </tr>
+                            <tr>
+                                <th>Tỷ trọng</th>
+                                <th>Giảng viên tự đánh giá</th>
+                                <th>Cấp trên đánh giá</th>
+                                <th>Điểm KPI trung bình </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="tg in staffResultDetaitObject.TargetGroupRatingDTOs">
+                                <td>{{$index +1}}</td>
+                                <td>{{tg.Name}}</td>
+                                <td>{{tg.Density}}</td>
+                                <td>{{sumProfessor(tg.ResultDetailDTOs,'Record')}}</td>
+                                <td>{{sumProfessor(tg.ResultDetailDTOs,'SupervisorRecord')}}</td>
+                                <td>{{(sumProfessor(tg.ResultDetailDTOs,'SupervisorRecord')*(tg.Density/100)).toFixed(1)}}</td>
+                                <!--<td>{{(sumProfessor(tg.ResultDetailDTOs,'Record')*(tg.Density/200) + sumProfessor(tg.ResultDetailDTOs,'SupervisorRecord')*(tg.Density/200)).toFixed(1)}}</td>-->
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            
+
+                            <tr>
+                                
+
+                                <td colspan="3" rowspan="2"></td>
+                                
+
+                                <td colspan="2">Tổng cộng điểm(làm tròn)</td>
+                                <td style="text-align:center" ng-if="staffResultDetaitObject.TotalRecordSecond<=0"><b>{{totalsumProfessor()}}</b></td>
+                                <td style="text-align:center" ng-if="staffResultDetaitObject.TotalRecordSecond>0"><b><span style="font-weight:bold">{{staffResultDetaitObject.TotalRecordSecond}}</b></span> <span style="color:red">(Điểm đã được chỉnh sửa)</span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Xếp loại</td>
+                                <td style="text-align:center; font-weight:bold" ng-if="staffResultDetaitObject.TotalRecordSecond<=0"><b>Loại {{rank()}}</b></td>
+                                <td style="text-align:center; font-weight:bold" ng-if="staffResultDetaitObject.TotalRecordSecond>0"><b>Loại {{rankSecondRecord(staffResultDetaitObject.TotalRecordSecond)}}</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="row">
+                        <div ng-if="!staffResultDetaitObject.IsFreeRating" style="float: right; margin-right: 30px;">
+                            <button class="btn btn-primary" ng-click="save()" ng-disabled="!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsLocked ">Lưu</button>
+                            <button class="btn btn-success" ng-click="unlock()" ng-if="staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsLocked ">Mở khóa</button>
+                        </div>
+                        <div ng-if="staffResultDetaitObject.IsFreeRating" style="float: right; margin-right: 30px;">
+                            <button class="btn btn-primary" ng-click="save()" ng-if="((!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsPlanLocked) || (staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated)) && (!isExpired || isFreeRating)">Lưu</button>
+                        </div>
+                    </div>
+                </fieldset>
+</form>
+        </div>
+</div>
+    </div>
+
+
+<!--<div class="box box-info">
+    <div class="box-header">
+        <div style="text-align: center;" class="col-md-12">
+            <h3>Đánh giá KPI</h3>
+        </div>
+    </div>
+    <div class="box-body">
+        <form name="ratingKPIForm" role="form" class="form-horizontal" novalidate>
+            <div ng-repeat="tg in staffResultDetaitObject.TargetGroupRatingDTOs">
+                <div class="box-header">
+                    <div class="col-md-6">
+                        <h4>Nhóm mục tiêu {{$index +1}}: <b>{{tg.Name}}</b></h4>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Mục tiêu chi tiết</th>
+                            <th>Chỉ tiêu đăng ký</th>
+                            <th>Kết quả thực hiện tháng</th>
+                            <th>Kết quả thục hiện năm</th>
+                            <th>Điểm đánh giá</th>
+                            <th>Điểm đánh giá của cấp quản lý</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="rd in tg.ResultDetailDTOs track by $index">
+                            <td>{{rd.CriterionName}}</td>
+                            <td>{{rd.CurrentKPI}}</td>
+                            <td><textarea class="col-xs-12" required ng-model="rd.MonthResult"></textarea></td>
+                            <td><textarea class="col-xs-12" required ng-model="rd.YearResult"></textarea></td>
+                            <td><span class="error" ng-show="rd.Record>rd.MaxRecord">Điểm max: {{rd.MaxRecord}}</span><textarea lower-than="{{rd.MaxRecord}}"  class="col-xs-12" ng-model="rd.Record"></textarea></td>
+                            <td><span class="error" style="color: red" ng-show="rd.SupervisorRecord>rd.MaxRecord">Điểm tối đa: {{rd.MaxRecord}}</span><textarea lower-than="{{rd.MaxRecord}}" class="col-xs-12" ng-model="rd.SupervisorRecord"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div style="float: right; margin-right: 30px;">
+                    <button class="btn btn-primary" ng-click="save()" ng-disabled="ratingKPIForm.$invalid">Lưu</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Hủy</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>-->

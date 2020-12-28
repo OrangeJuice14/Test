@@ -1,0 +1,59 @@
+﻿<style>
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > td {
+        white-space: nowrap;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+    </div>
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="padding-bottom: 15px">
+            Năm học: <select ng-options="item.Oid as item.TenNamHoc for item in namHocList" ng-change="getHocKy()" ng-model="namHocId"></select>
+            Học kỳ: <select ng-options="item.Oid as item.TenHocKy for item in hocKyList" ng-change="loadData()" ng-model="hocKyId"></select>
+        </div>
+        <div ng-if="duocXacNhan" class="table-responsive" style="width: 100%;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Học kỳ</th>
+                        <th>Mã quản lý</th>
+                        <th>Họ tên</th>
+                        <th>Hoạt động</th>
+                        <th>Ngày thực hiện</th>
+                        <th>Số giờ thực hiện</th>
+                        <th>Ghi chú</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listHoatDongKhac track by $index">
+                        <td>{{item.TenHocKy}}</td>
+                        <td>{{item.MaQuanLy}}</td>
+                        <td>{{item.HoTen}}</td>
+                        <td>{{item.TenHoatDong}}</td>
+                        <td><format-date my-value="item.NgayThucHien"></format-date></td>
+                        <td><input type="number" style="width: 100px" ng-model="item.SoGioThucHien" /></td>
+                        <td><input ng-model="item.GhiChu" /></td>
+                        <td>{{item.TenTrangThai}}</td>
+                        <td>
+                            <button class="btn btn-success" ng-click="duyet(item, true)">Duyệt</button>
+                            <button class="btn btn-danger" ng-click="duyet(item, false)">Không duyệt</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="!duocXacNhan">
+            <div style="font-size: 18px; text-align: center;">Không có dữ liệu hoặc không có quyền thao tác!</div>
+        </div>
+    </div>
+</div>

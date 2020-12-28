@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_CriterionDetail, HRMWebApp.KPI.DB" table="ABC_CriterionDetail">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="MaxRecord" column="MaxRecord"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <many-to-one name="ABC_Criterion" class="HRMWebApp.KPI.DB.Entities.ABC_Criterion" column="CriterionId"  />
+    <many-to-one name="ABC_CriterionDetailType" class="HRMWebApp.KPI.DB.Entities.ABC_CriterionDetailType" column="CriterionDetailTypeId"  />
+  </class>
+</hibernate-mapping>

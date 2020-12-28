@@ -1,0 +1,40 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <div class="widget-caption">Phân công giảng dạy</div>
+    </div>
+    <div class="widget-body">
+        <div style="padding-bottom: 15px;">
+            <div style="display:flow-root; text-align:center">
+                Năm học: <select ng-options="item.Oid as item.TenNamHoc for item in namHocList" ng-change="getHocKy()" ng-model="namHocId"></select>
+                Học kỳ: <select ng-options="item.Oid as item.TenHocKy for item in hocKyList" ng-model="hocKyId"></select>
+                Bộ Môn: <select ng-options="item.Id as item.Name for item in ListBoPhanQuanLy" ng-model="BoPhanSelected"></select>
+                <button class="btn btn-info" ng-click="LoadData()">Tìm</button>
+            </div>
+        </div>
+
+        <div class="table-responsive" style="width: 100%;">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên Môn Học</th>
+                        <th>Mã Học Phần</th>
+                        <th>Lớp Học Phân</th>
+                        <th>Giảng viên</th>
+                        <th style="width:60px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in DanhSachPhanCongGiangDay">
+                        <td>{{item.TenMonHoc}}</td>
+                        <td>{{item.MaMonHoc}}</td>
+                        <td>{{item.LopHocPhan}}</td>
+                        <td><label ng-show="item.HoTen != ''">{{item.HoTen}}</label><label ng-show="item.SoHieuCongChuc != ''">({{item.SoHieuCongChuc}})</label></td>
+                        <td>
+                            <button class="btn btn-success" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="Add(item)"><i class='fa fa-plus' style='margin-right: 0px'></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

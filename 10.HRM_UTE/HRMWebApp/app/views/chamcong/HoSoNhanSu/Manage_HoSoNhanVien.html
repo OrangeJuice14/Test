@@ -1,0 +1,313 @@
+﻿<script type="text/javascript">
+    var session = {};
+
+    function ViewModel(datagrid) {
+
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+
+        self.bophan = ko.observableArray();
+        self.bophanSelected = ko.observable(null);
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser_All',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.bophan(obj);
+                self.bophanSelected(obj[0].Oid);
+            }
+        });
+
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'Ho', type: 'string' },
+                { name: 'Ten', type: 'string' },
+                { name: 'TenBoPhan', type: 'string' },
+                { name: 'NgaySinh', type: 'date' },
+                { name: 'CMND', type: 'string' },
+                { name: 'NgayCapNhat', type: 'date' }
+            ],
+            id: 'Id',
+            url: "/WebServices/UpdateHoSoNhanVien_Find",
+            formatdata: function (data) {
+                return {
+                    idbophan: self.bophanSelected() == undefined ? null : self.bophanSelected(),
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 40, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Số hiệu', datafield: 'SoHieuCongChuc', width: 120, align: 'left'
+                    },
+                    {
+                        text: 'Họ', datafield: 'Ho', width: 100, align: 'left'
+                    },
+                    {
+                         text: 'Tên', datafield: 'Ten', width: 70, align: 'left'
+                    },
+                    {
+                        text: 'Đơn vị', datafield: 'TenBoPhan', width: 230, align: 'left'
+                    },
+                    {
+                         text: 'Ngày sinh', datafield: 'NgaySinh', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'd/M/yyyy'
+                    }, 
+                    ,
+                    {
+                        text: 'CMND', datafield: 'CMND', width: 100, align: 'center'
+                    },
+                    {
+                        text: 'Ngày cập nhật', datafield: 'NgayCapNhat', width: 120, align: 'center', cellsalign: "middle", cellsformat: 'd/M/yyyy'
+                    },
+                    {
+                        text: '', columntype: 'button', width: 100, height: 50,
+                        cellsrenderer: function () { return "Chi tiết"; },
+                        buttonclick: function (row) {
+                            //
+                            var oid = $("#jqxgrid").jqxGrid("getcellvalue", row, "Oid");
+                            //
+                            if (oid != '') {
+                                $.get('/app/views/chamcong/HoSoNhanSu/Detail_HoSoNhanVien.html', function (data) {
+                                    $('#popupWindowManageDetail').html(data);
+                                    ko.cleanNode($('#popupWindowManageDetail')[0]);
+                                    $('#popupWindowManageDetail').kendoWindow({
+                                        width: "85%",
+                                        //title: "Chi tiết hồ sơ nhân sự",
+                                        visible: false,
+                                        actions: [
+                                            "Pin",
+                                            "Minimize",
+                                            "Maximize",
+                                            "Close"
+                                        ],
+                                        position: {
+                                            top: "10%",
+                                            left: "10%"
+                                        },
+                                        close: function (e) {
+                                            $(this.element).empty();
+                                        }
+                                    });
+                                    $('#popupWindowManageDetail').data("kendoWindow").open();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/WebServices/UpdateHoSoNhanVien_FindByOID',
+                                        contentType: "application/json; charset=utf-8",
+                                        data: ko.toJSON({
+                                            oid: oid
+                                        }),
+                                        dataType: "json",
+                                        async: false,
+                                        success: function (result) {
+                                            var model = new viewModel(result);
+                                            ko.applyBindings(model, document.getElementById('popupWindowManageDetail'));
+                                        }
+                                    });
+                                })
+                            }
+                        }
+                    },
+                ]
+            });
+    }
+
+    ViewModel.prototype = {
+
+        search: function () {
+            var self = this;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+
+        update: function () {
+
+            var self = this;
+            var selectedRecords = new Array();
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var message = confirm("Bạn có chắc cập nhật dữ liệu vào HRM?");
+            if (message == true)
+            {
+                for (var i = 0; i < rows.length; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid : row.Oid,
+                        /*
+                        Ho : row.Ho,
+                        Ten : row.Ten,
+                        TenGoiKhac : row.TenGoiKhac,
+                        NgaySinh : row.NgaySinh,
+                        NoiSinh : row.NoiSinh,
+                        GioiTinh : row.GioiTinh,
+                        CMND : row.CMND,
+                        NgayCap : row.NgayCap,
+                        NoiCap : row.NoiCap,
+                        QueQuan : row.QueQuan,
+                        DiaChiThuongTru : row.DiaChiThuongTru,
+                        NoiOHienNay : row.NoiOHienNay,
+                        Email : row.Email,
+                        DienThoaiDiDong : row.DienThoaiDiDong,
+                        TinhTrangHonNhan : row.TinhTrangHonNhan,
+                        DanToc : row.DanToc,
+                        TonGiao : row.TonGiao,
+                        TrinhDoVanHoa : row.TrinhDoVanHoa,
+                        TrinhDoChuyenMon : row.TrinhDoChuyenMon,
+                        ChuyenNganhDaoTao : row.ChuyenNganhDaoTao,
+                        TruongDaoTao : row.TruongDaoTao,
+                        NamTotNghiep : row.NamTotNghiep,
+                        NgoaiNgu : row.NgoaiNgu,
+                        TrinhDoNgoaiNgu : row.TrinhDoNgoaiNgu,
+                        NgayCapNhat: row.NgayCapNhat */
+                    });
+             }
+            if (selectedRecords.length > 0)
+            {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/UpdateHoSoNhanVien_Save',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.success == 'success') {
+                                alert("Lưu thành công !!");
+                            }
+                            else {
+                                alert("Lưu thất bại !!");
+                            }
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+                }
+
+            }
+        },
+
+        remove: function () {
+
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có chắc xóa hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/UpdateHoSoNhanVien_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert("Xóa thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#Manage_HoSoNhanVien")[0]);
+    });
+</script>
+
+<div id="Manage_HoSoNhanVien">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>CẬP NHẬT HỒ SƠ NHÂN VIÊN</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: update">
+                            <i class="btn-label glyphicon glyphicon-tags"></i>Cập nhật
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: remove">
+                            <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <select data-bind="options: bophan, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: bophanSelected" style="width:200px;"></select>
+        <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+
+</div>
+<div id="popupWindowManageDetail"></div>
+

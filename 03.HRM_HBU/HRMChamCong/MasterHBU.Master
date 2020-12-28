@@ -1,0 +1,417 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterHBU.master.cs" Inherits="HRMChamCong.MasterHBU" %>
+<%@ Import Namespace="HRMChamCong.Helper" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Website Quản lý nhân sự Trường Đại Học Quốc Tế Hồng Bàng</title>
+    <meta name="description" content="blank page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="Images/.png" type="image/x-icon" />
+
+    <!--Basic Styles-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+          rel="stylesheet" type="text/css" />
+
+    <!--Beyond styles-->
+    <link href="assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="assets/css/demo.min.css" rel="stylesheet" />
+    <link href="assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+        <script src="/Scripts/knockout-3.2.0.js"></script>
+<%--    <script src="../../assets/js/jquery-2.0.3.min.js"></script>--%>
+    <script src="/Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/Components/jqwidgets/jqx-all.js" type="text/javascript"></script>
+    <link href="/Components/jqwidgets/jqx.base.css" rel="stylesheet" />
+    <link href="/Components/jqwidgets/jqx.darkBlue.css" rel="stylesheet" />
+    <script src="/Scripts/printThis.js"></script>
+
+    <script type="text/javascript" src="/Components/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="/Components/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="/Components/jqwidgets/jqxmenu.js"></script>
+    <script src="/Scripts/helper.js"></script>
+   <script src="/Scripts/jquery.linq.min.js"></script>
+        
+    <!-- Kendo jQuery 2.1.4 -->
+
+<%--    <link href="/Components/kendo/kendo.common.min.css" rel="stylesheet" />
+    <link href="/Components/kendo/kendo.metro.min.css" rel="stylesheet" />
+    <script src="/Components/kendo/kendo.culture.vi-VN.min.js"></script>
+    <script src="/Components/kendo/jszip.min.js"></script>   --%> 
+    <!-- End Kendo jQuery 2.1.4 -->
+    
+    <script src="/assets/js/skins.min.js"></script>
+
+    <style type="text/css">
+        #navbarname
+        {
+            color: white;
+            margin-right: 10px;
+            font-size: 16px;
+            font-family: Time News Roman;
+            font-style: Italic;
+            height: 40px;
+            display: table !important;
+        }
+
+        #innername
+        {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #footerleft
+        {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: left;
+            float:left;
+            
+        }
+
+        #footerright
+        {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: right;
+    float:right;
+        }
+
+        #footerout
+        {
+            display: table;
+            color: white;
+        }
+
+        .page-footer
+        {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .float-right
+        {
+            float: right;
+        }
+        .float-left
+        {
+            float:left;
+        }
+        .custom-contain
+        {
+            min-height:700px;
+            margin-bottom:10px;
+        }
+        .font15
+        {
+            font-size:15px;
+            color:black;
+        }
+                /*AN chỉnh menu*/
+        .page-sidebar .sidebar-menu a {
+            min-height: 38px;
+            height:auto;
+        }
+        .page-sidebar .sidebar-menu a span {                
+            line-height: 25px;
+            display:inline-block;
+        }
+        .page-sidebar .sidebar-menu .submenu li {
+            border-bottom: 1px solid #D4D6D7;
+            border-top: 1px solid #fff;
+        }
+
+        /* Bảo chỉnh màu background*/
+        .navbar .navbar-inner {
+            background-color: #C00D00;
+        }
+        .bg-azure {
+            background-color: #C00D00 !important;
+        }
+        .navbar .navbar-inner .navbar-header .navbar-account .account-area > li.open > a {
+            background-color: #C00D00 !important;
+        }
+        .navbar .navbar-inner .navbar-header .navbar-account .account-area > li .dropdown-menu.dropdown-login-area > li.dropdown-footer {
+            border-top: 3px solid #C00D00 !important;
+        }
+
+        /*==================================== Menu trái =========================================*/
+        .page-sidebar .sidebar-menu > li.open > a {
+            background-color: #E56248;
+        }
+
+        .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+            background-color: #E56248;
+            border-color: #e5e5e5;
+        }
+        /* icon */
+        .page-sidebar.menu-compact .sidebar-menu > li:hover > a {
+            color: #fff;
+            background-color: #E56248;
+        }
+
+        .page-sidebar.menu-compact .sidebar-menu > li > a:hover {
+            background-color: #E56248;
+            color: #fff;
+        }
+
+        .page-sidebar .sidebar-menu li.open > a {
+            color: #fff;
+        }
+
+        .open > a > .menu-text {
+            color: #fff;
+        }
+
+        .open > a > .menu-expand {
+            color: #fff !important;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!-- Loading Container -->
+
+    <!--  /Loading Container -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+
+                            <img src="/Images/logo_HBU.png" width="200" alt="" style="margin-top:5px;"/>
+
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <!-- /Sidebar Collapse -->
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+                    <div class="navbar-account">
+                        <ul class="account-area" style="right:0px;">
+                            <li>
+                                <div id="navbarname">
+                                    <div id="innername">Website Quản lý nhân sự Trường Đại Học Quốc Tế Hồng Bàng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</div>
+                                </div>
+                            </li>
+                            <li class="">
+                                <a class="login-area dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="min-width:100px;">
+                                    <section>
+                                        <h2>
+                                            <span class=" profile">
+                                                <span><%#HttpContext.Current.Session[SessionKey.UserName.ToString()]%></span>
+                                            </span>
+                                        </h2>
+                                    </section>
+                                </a>
+                                <!--Login Area Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                    <li class="dropdown-footer">
+                                        <a href="#" onclick='logout()'>
+                                            Đăng xuất
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <!--/Login Area Dropdown-->
+                            </li>
+                            <!-- /Account Area -->
+                            <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                            <!-- Settings -->
+                        </ul>
+                      <%--  <img src="/Images/schoolname.png" />--%>
+                        
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid" style="font-family:Arial;">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" disabled="disabled" />
+                 
+                    <div class="searchhelper"></div>
+                </div>
+                
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu" id="menu_list" style="font-family:sans-serif;">
+                    </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="../../Default.aspx">Trang chủ</a>
+                        </li>
+                         <%--<li>
+                            <i class="fa fa-home"></i>
+                            <a href="../../Login.aspx">Đăng nhập</a>
+                        </li>--%>
+                        
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                <!-- Page Header -->
+                <div class="page-header position-relative">
+                    <div class="header-title">
+
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="#">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+                <!-- /Page Header -->
+                <!-- Page Body -->
+                <div class="page-body">
+
+                    <div class="container-fluid custom-contain">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                    <div style="padding-left: 15px; padding-right: 15px;">
+                        <div class="form-control bg-azure padding-10" id="footerout">
+
+                            <div id="footerleft">
+                                &copy; Trường Đại Học Quốc Tế Hồng Bàng
+                            </div>
+                            <div id="footerright">
+                                Phần mềm được phát triển bởi <a href="http://psctelecom.com.vn/">PSC</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Page Body -->
+                </div>
+
+                <!-- /Page Content -->
+            </div>
+            <!-- /Page Container -->
+        <!-- Main Container -->
+    </div></div>
+
+    
+
+    <!--Basic Scripts-->
+    
+    
+<%--    <script src="../../assets/js/jquery-2.0.3.min.js"></script>--%>
+    <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+    
+    <!--Beyond Scripts-->
+    <script src="../../assets/js/beyond.min.js"></script>
+
+    <!--Page Related Scripts-->
+    <!--Google Analytics::Demo Only-->
+     <script type="text/javascript">
+         function logout() {
+             $.ajax({
+                 type: 'POST',
+                 url: '/Services/ChamCongService.asmx/LogOut_WebUser',
+                 contentType: "application/json; charset=utf-8",
+                 dataType: "json",
+                 async: false,
+                 success: function (result) {
+                     window.location = "/Login.aspx";
+                 }
+             });
+         }
+         $(function () {
+             var items = Array('glyphicon-list-alt', 'glyphicon-cog', 'glyphicon-check', 'glyphicon-pencil', 'glyphicon-briefcase', 'glyphicon-file', 'glyphicon-time', 'glyphicon-tags', 'glyphicon-book');
+             var icon = 0;
+             var source;
+             var text = "";
+             $.ajax({
+                 type: 'POST',
+                 url: '/Services/ChamCongService.asmx/WebMenu_GetListBy_WebUserId',
+                 contentType: "application/json; charset=utf-8",
+                 data: ko.toJSON({
+                     webUserId: '<%#HttpContext.Current.Session[SessionKey.UserId.ToString()]%>'
+                                }),
+                                dataType: "json",
+                                async: false,
+                                success: function (result) {
+                                    var data = $.parseJSON(result.d);
+                                    source = data;
+                                }
+             });
+             if (source == null)
+             {
+                 window.location.href="../../Login.aspx";
+             }
+             else {
+
+
+                 for (i = 0; i < source.length; i++) {
+                     if (source[i].ParentId == "00000000-0000-0000-0000-000000000000")
+                     {
+                         text += "<li> <a href='" + source[i].Url + "' class='menu-dropdown font15'><i class='menu-icon glyphicon " + items[icon] + "'></i><span class='menu-text font15'>" + source[i].Name + "</span><i class='menu-expand'></i></a>";
+                         text += "<ul class='submenu'>";
+
+                         for (j = 0; j < source.length; j++) {
+                             if (source[j].ParentId == source[i].Oid) {
+                                 text += "<li><a href='" + source[j].Url + "'><span class='menu-text font15'>" + source[j].Name + "</span></a></li>";
+                             }
+                         }
+
+                         text += "</ul></li>";
+                         icon += 1;
+                         if (icon > items.length) {
+                             icon = 0;
+                         }
+                         
+                     }
+
+                 }
+                 document.getElementById("menu_list").innerHTML = text;
+             }
+                        });
+                    </script>
+</body>
+
+</html>

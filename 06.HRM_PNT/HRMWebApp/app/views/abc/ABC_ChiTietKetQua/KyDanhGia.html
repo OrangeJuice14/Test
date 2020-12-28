@@ -1,0 +1,27 @@
+﻿<div class="widget ng-scope">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">CHỌN KỲ ĐÁNH GIÁ</span>
+    </div>
+    <div class="widget-body">
+        <md-content class="md-no-momentum">
+            <md-input-container>
+                <label>Năm</label>
+                <md-select ng-model="Nam" ng-change="UpdateYearValue()">
+                    <md-option ng-repeat="item in ListNam" ng-value="item">
+                        {{item}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <div>
+                <div data-angular-treeview="true"
+                     data-tree-id="treeYears"
+                     data-tree-model="TreeKyDanhGia"
+                     data-node-id="Id"
+                     data-node-label="Ten"
+                     data-node-children="children">
+                </div>
+            </div>
+        </md-content>
+    </div>
+</div>
+<link href="../../../../assets/css/customTree.css" rel="stylesheet" />

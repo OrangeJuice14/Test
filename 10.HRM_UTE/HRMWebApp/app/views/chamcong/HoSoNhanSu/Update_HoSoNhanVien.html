@@ -1,0 +1,1120 @@
+﻿
+    <script type="text/javascript">
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        function ViewModel_UpdateHoSoNhanVien() {
+            var self = this;
+
+            self.ThongTinNhanVien = $('#oidnhanvien').val();
+            self.SoHieuCongChuc = ko.observable("");
+            self.Ho = ko.observable("");
+            self.Ten = ko.observable("");
+            self.TenGoiKhac = ko.observable("");
+            self.NgaySinh = ko.observable();
+            self.GioiTinh = ko.observable();
+            self.Email = ko.observable("");
+            self.DienThoaiDiDong = ko.observable("");
+            self.DanToc = ko.observable(null);
+            self.TonGiao = ko.observable(null);
+            self.QuocGia_NoiSinh = ko.observable(null);
+            self.TinhThanh_NoiSinh = ko.observable(null);
+            self.QuanHuyen_NoiSinh = ko.observable(null);
+            self.XaPhuong_NoiSinh = ko.observable(null);
+            self.SoNha_NoiSinh = ko.observable();
+            self.QuocGia_QueQuan = ko.observable(null);
+            self.TinhThanh_QueQuan = ko.observable(null);
+            self.QuanHuyen_QueQuan = ko.observable(null);
+            self.XaPhuong_QueQuan = ko.observable(null);
+            self.SoNha_QueQuan = ko.observable();
+            self.QuocGia_DiaChiTT = ko.observable(null);
+            self.TinhThanh_DiaChiTT = ko.observable(null);
+            self.QuanHuyen_DiaChiTT = ko.observable(null);
+            self.XaPhuong_DiaChiTT = ko.observable(null);
+            self.SoNha_DiaChiTT = ko.observable();
+            self.QuocGia_NoiOHienNay = ko.observable(null);
+            self.TinhThanh_NoiOHienNay = ko.observable(null);
+            self.QuanHuyen_NoiOHienNay = ko.observable(null);
+            self.XaPhuong_NoiOHienNay = ko.observable(null);
+            self.SoNha_NoiOHienNay = ko.observable();
+            self.CMND = ko.observable("");
+            self.NgayCap = ko.observable();
+            self.NoiCap = ko.observable();
+            self.TinhTrangHonNhan = ko.observable(null);
+            self.TrinhDoVanHoa = ko.observable(null);
+            self.TrinhDoChuyenMon = ko.observable(null);
+            self.ChuyenNganhDaoTao = ko.observable(null);
+            self.TruongDaoTao = ko.observable(null);
+            self.NamTotNghiep = ko.observable("");
+            self.NgoaiNgu = ko.observable(null);
+            self.TrinhDoNgoaiNgu = ko.observable(null);
+            //
+            self.data_dantoc = ko.observableArray();
+            self.data_tongiao = ko.observableArray();
+            self.data_tinhtranghonnhan = ko.observableArray();
+            self.data_quocgia = ko.observableArray();
+            self.data_tinhthanh = ko.observableArray();
+            self.data_quanhuyen = ko.observableArray();
+            self.data_xaphuong = ko.observableArray();
+            self.data_trinhdovanhoa = ko.observableArray();
+            self.data_trinhdochuyenmon = ko.observableArray();
+            self.data_chuyennganhdaotao = ko.observableArray();
+            self.data_truongdaotao = ko.observableArray();
+            self.data_ngoaingu = ko.observableArray();
+            self.data_trinhdongoaingu = ko.observableArray();
+
+            //Lấy dữ liệu của nhân viên hiện tại set mặc định
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetHoSoNhanVienByOidNhanVien',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ oidnhanvien: self.ThongTinNhanVien }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.SoHieuCongChuc = obj.SoHieuCongChuc.trim();
+                    self.Ho = obj.Ho.trim();
+                    self.Ten = obj.Ten.trim();
+                    self.TenGoiKhac = obj.TenGoiKhac != null ? obj.TenGoiKhac.trim() : "";
+                    self.NgaySinh = obj.NgaySinh;
+                    self.GioiTinh = obj.GioiTinh;
+                    self.Email = obj.Email != null ? obj.Email.trim() : "";
+                    self.DienThoaiDiDong = obj.DienThoaiDiDong != null ? obj.DienThoaiDiDong.trim() : "";
+                    self.DanToc = obj.DanToc;
+                    self.TonGiao = obj.TonGiao;
+                    self.QuocGia_NoiSinh = obj.NoiSinh.QuocGia;
+                    self.TinhThanh_NoiSinh = obj.NoiSinh.TinhThanh;
+                    self.QuanHuyen_NoiSinh = obj.NoiSinh.QuanHuyen;
+                    self.XaPhuong_NoiSinh = obj.NoiSinh.XaPhuong;
+                    self.SoNha_NoiSinh = obj.NoiSinh.SoNha != null ? obj.NoiSinh.SoNha.trim() : "";
+                    self.QuocGia_QueQuan = obj.QueQuan.QuocGia;
+                    self.TinhThanh_QueQuan = obj.QueQuan.TinhThanh;
+                    self.QuanHuyen_QueQuan = obj.QueQuan.QuanHuyen;
+                    self.XaPhuong_QueQuan = obj.QueQuan.XaPhuong;
+                    self.SoNha_QueQuan = obj.QueQuan.SoNha != null ? obj.QueQuan.SoNha.trim() : "";
+                    self.QuocGia_DiaChiTT = obj.DiaChiThuongTru.QuocGia;
+                    self.TinhThanh_DiaChiTT = obj.DiaChiThuongTru.TinhThanh;
+                    self.QuanHuyen_DiaChiTT = obj.DiaChiThuongTru.QuanHuyen;
+                    self.XaPhuong_DiaChiTT = obj.DiaChiThuongTru.XaPhuong;
+                    self.SoNha_DiaChiTT = obj.DiaChiThuongTru.SoNha!= null ? obj.DiaChiThuongTru.SoNha.trim() : "";
+                    self.QuocGia_NoiOHienNay = obj.NoiOHienNay.QuocGia;
+                    self.TinhThanh_NoiOHienNay = obj.NoiOHienNay.TinhThanh;
+                    self.QuanHuyen_NoiOHienNay = obj.NoiOHienNay.QuanHuyen;
+                    self.XaPhuong_NoiOHienNay = obj.NoiOHienNay.XaPhuong;
+                    self.SoNha_NoiOHienNay = obj.NoiOHienNay.SoNha != null ? obj.NoiOHienNay.SoNha.trim() : "";
+                    self.CMND = obj.CMND != null ? obj.CMND.trim() : "";
+                    self.NgayCap = obj.NgayCap;
+                    self.NoiCap = obj.NoiCap;
+                    self.TinhTrangHonNhan = obj.TinhTrangHonNhan;
+                    self.TrinhDoVanHoa = obj.TrinhDoVanHoa;
+                    self.TrinhDoChuyenMon = obj.TrinhDoChuyenMon;
+                    self.ChuyenNganhDaoTao = obj.ChuyenNganhDaoTao;
+                    self.TruongDaoTao = obj.TruongDaoTao;
+                    self.NamTotNghiep = obj.NamTotNghiep;
+                    self.NgoaiNgu = obj.NgoaiNgu;
+                    self.TrinhDoNgoaiNgu = obj.TrinhDoNgoaiNgu;
+                    //
+                    if (self.GioiTinh == 'Nam') {
+                        $("#gioitinhnam").prop("checked", true);
+                    }
+                    else
+                    {
+                        $("#gioitinhnu").prop("checked", true);
+                    }
+
+                    //Khởi tạo các control
+                    $("#jqxNgaySinh").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: new Date(self.NgaySinh) });
+                    $("#jqxNgayCap").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: new Date(self.NgayCap) });
+
+                }
+            });
+
+            ////Get dữ liệu Danh mục
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetDanhMucUpDateHoSoNhanVienAll',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+
+                    var objDanToc = result["DanToc"];
+                    var objTonGiao = result["TonGiao"];
+                    var objTinhTrangHonNhan = result["TinhTrangHonNhan"];
+                    var objQuocGia = result["QuocGia"];
+                    var objTinhThanh = result["TinhThanh"];
+                    var objQuanHuyen = result["QuanHuyen"];
+                    var objXaPhuong = result["XaPhuong"];
+                    var objTrinhDoVanHoa = result["TrinhDoVanHoa"];
+                    var objTrinhDoChuyenMon = result["TrinhDoChuyenMon"];
+                    var objChuyenNganhDaoTao = result["ChuyenNganhDaoTao"];
+                    var objTruongDaoTao = result["TruongDaoTao"];
+                    var objNgoaiNgu = result["NgoaiNgu"];
+                    var objTrinhDoNgoaiNgu = result["TrinhDoNgoaiNgu"];
+                    //
+                    self.data_dantoc(objDanToc);
+                    self.data_tongiao(objTonGiao);
+                    self.data_tinhtranghonnhan(objTinhTrangHonNhan);
+                    self.data_quocgia(objQuocGia);
+                    self.data_tinhthanh(objTinhThanh);
+                    self.data_quanhuyen(objQuanHuyen);
+                    self.data_xaphuong(objXaPhuong);
+                    self.data_trinhdovanhoa(objTrinhDoVanHoa);
+                    self.data_trinhdochuyenmon(objTrinhDoChuyenMon);
+                    self.data_chuyennganhdaotao(objChuyenNganhDaoTao);
+                    self.data_truongdaotao(objTruongDaoTao);
+                    self.data_ngoaingu(objNgoaiNgu);
+                    self.data_trinhdongoaingu(objTrinhDoNgoaiNgu);
+                }
+            });
+
+
+            //////////////////////////////Đưa dữ liệu vào Combobox ///////////////////////////////
+            //1. Dân tộc
+            var serializedArr = JSON.stringify(eval("(" + self.data_dantoc() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxDanToc").kendoComboBox({
+                dataTextField: "TenDanToc",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectDanToc,
+                value: self.DanToc
+            });
+            function onSelectDanToc(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.DanToc = dataItem.Oid;
+            };
+
+
+            //2. Tôn giáo
+            var serializedArr = JSON.stringify(eval("(" + self.data_tongiao() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTonGiao").kendoComboBox({
+                dataTextField: "TenTonGiao",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTonGiao,
+                value: self.TonGiao
+            });
+            function onSelectTonGiao(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TonGiao = dataItem.Oid;
+            };
+
+            //2. Tình trạng hôn nhân
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhtranghonnhan() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhTrangHonNhan").kendoComboBox({
+                dataTextField: "TenTinhTrangHonNhan",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhTrangHonNhan,
+                value: self.TinhTrangHonNhan
+            });
+            function onSelectTinhTrangHonNhan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhTrangHonNhan = dataItem.Oid;
+            };
+
+            //3. Quốc gia
+            //3.1  Quê quán
+            var serializedArr = JSON.stringify(eval("(" + self.data_quocgia() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuocGia_QueQuan").kendoComboBox({
+                dataTextField: "TenQuocGia",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuocGia_QueQuan,
+                value: self.QuocGia_QueQuan
+            });
+            function onSelectQuocGia_QueQuan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuocGia_QueQuan = dataItem.Oid;
+            };
+
+
+            //3.2 Địa chỉ thường trú
+            var serializedArr = JSON.stringify(eval("(" + self.data_quocgia() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuocGia_DiaChiTT").kendoComboBox({
+                dataTextField: "TenQuocGia",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuocGia_DiaChiTT,
+                value: self.QuocGia_DiaChiTT
+            });
+            function onSelectQuocGia_DiaChiTT(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuocGia_DiaChiTT = dataItem.Oid;
+            };
+
+            //3.3 Nơi ở hiện nay
+            var serializedArr = JSON.stringify(eval("(" + self.data_quocgia() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuocGia_NoiOHienNay").kendoComboBox({
+                dataTextField: "TenQuocGia",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuocGia_NoiOHienNay,
+                value: self.QuocGia_NoiOHienNay
+            });
+            function onSelectQuocGia_NoiOHienNay(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuocGia_NoiOHienNay = dataItem.Oid;
+            };
+
+
+            //3.4 Nơi sinh
+            var serializedArr = JSON.stringify(eval("(" + self.data_quocgia() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuocGia_NoiSinh").kendoComboBox({
+                dataTextField: "TenQuocGia",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuocGia_NoiSinh,
+                value: self.QuocGia_NoiSinh
+            });
+            function onSelectQuocGia_NoiSinh(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuocGia_NoiSinh = dataItem.Oid;
+            };
+
+            //4. Tỉnh thành
+            //4.1 Quê quán
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhThanh_QueQuan").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhThanh_QueQuan,
+                value: self.TinhThanh_QueQuan
+            });
+            function onSelectTinhThanh_QueQuan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhThanh_QueQuan = dataItem.Oid;
+            };
+
+            //4.2 Địa chỉ thường trú
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhThanh_DiaChiTT").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhThanh_DiaChiTT,
+                value: self.TinhThanh_DiaChiTT
+            });
+            function onSelectTinhThanh_DiaChiTT(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhThanh_DiaChiTT = dataItem.Oid;
+            };
+
+            //4.3 Nơi ở hiện nay
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhThanh_NoiOHienNay").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhThanh_NoiOHienNay,
+                value: self.TinhThanh_NoiOHienNay
+            });
+            function onSelectTinhThanh_NoiOHienNay(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhThanh_NoiOHienNay = dataItem.Oid;
+            }
+
+            //4.4 Nơi sinh
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTinhThanh_NoiSinh").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTinhThanh_NoiSinh,
+                value: self.TinhThanh_NoiSinh
+            });
+            function onSelectTinhThanh_NoiSinh(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TinhThanh_NoiSinh = dataItem.Oid;
+            };
+
+            //4.5 Nơi cấp CMBD
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxNoiCap").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectNoiCap,
+                value: self.NoiCap
+            });
+            function onSelectNoiCap(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.NoiCap = dataItem.Oid;
+            };
+
+            //5. Quận huyện
+            //5.1 Quê quán
+            var serializedArr = JSON.stringify(eval("(" + self.data_quanhuyen() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuanHuyen_QueQuan").kendoComboBox({
+                dataTextField: "TenQuanHuyen",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuanHuyen_QueQuan,
+                value: self.QuanHuyen_QueQuan
+            });
+            function onSelectQuanHuyen_QueQuan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuanHuyen_QueQuan = dataItem.Oid;
+            };
+
+            //5.2 Địa chỉ thường trú
+            var serializedArr = JSON.stringify(eval("(" + self.data_quanhuyen() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuanHuyen_DiaChiTT").kendoComboBox({
+                dataTextField: "TenQuanHuyen",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuanHuyen_DiaChiTT,
+                value: self.QuanHuyen_DiaChiTT
+            });
+            function onSelectQuanHuyen_DiaChiTT(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuanHuyen_DiaChiTT = dataItem.Oid;
+            };
+
+            //5.3 Nơi ở hiện nay
+            var serializedArr = JSON.stringify(eval("(" + self.data_quanhuyen() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuanHuyen_NoiOHienNay").kendoComboBox({
+                dataTextField: "TenQuanHuyen",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuanHuyen_NoiOHienNay,
+                value: self.QuanHuyen_NoiOHienNay
+            });
+            function onSelectQuanHuyen_NoiOHienNay(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuanHuyen_NoiOHienNay = dataItem.Oid;
+            };
+
+            //5.4 Nơi sinh
+            var serializedArr = JSON.stringify(eval("(" + self.data_quanhuyen() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuanHuyen_NoiSinh").kendoComboBox({
+                dataTextField: "TenQuanHuyen",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuanHuyen_NoiSinh,
+                value: self.QuanHuyen_NoiSinh
+            });
+            function onSelectQuanHuyen_NoiSinh(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuanHuyen_NoiSinh = dataItem.Oid;
+            };
+
+            //5. Xã phường
+            //5.1 Quê quán
+            var serializedArr = JSON.stringify(eval("(" + self.data_xaphuong() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxXaPhuong_QueQuan").kendoComboBox({
+                dataTextField: "TenXaPhuong",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectXaPhuong_QueQuan,
+                value: self.XaPhuong_QueQuan
+            });
+            function onSelectXaPhuong_QueQuan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.XaPhuong_QueQuan = dataItem.Oid;
+            };
+
+            //5.2 Địa chỉ thường trú
+            var serializedArr = JSON.stringify(eval("(" + self.data_xaphuong() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxXaPhuong_DiaChiTT").kendoComboBox({
+                dataTextField: "TenXaPhuong",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectXaPhuong_DiaChiTT,
+                value: self.XaPhuong_DiaChiTT
+            });
+            function onSelectXaPhuong_DiaChiTT(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.XaPhuong_DiaChiTT = dataItem.Oid;
+            };
+
+            //5.3 Nơi ở hiện nay
+            var serializedArr = JSON.stringify(eval("(" + self.data_xaphuong() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxXaPhuong_NoiOHienNay").kendoComboBox({
+                dataTextField: "TenXaPhuong",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectXaPhuong_NoiOHienNay,
+                value: self.XaPhuong_NoiOHienNay
+            });
+            function onSelectXaPhuong_NoiOHienNay(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.XaPhuong_NoiOHienNay = dataItem.Oid;
+            };
+
+            //5.4 Nơi sinh
+            var serializedArr = JSON.stringify(eval("(" + self.data_xaphuong() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxXaPhuong_NoiSinh").kendoComboBox({
+                dataTextField: "TenXaPhuong",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectXaPhuong_NoiSinh,
+                value: self.XaPhuong_NoiSinh
+            });
+            function onSelectXaPhuong_NoiSinh(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.XaPhuong_NoiSinh = dataItem.Oid;
+            };
+
+            //6. Trình độ văn hóa
+            var serializedArr = JSON.stringify(eval("(" + self.data_trinhdovanhoa() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTrinhDoVanHoa").kendoComboBox({
+                dataTextField: "TenTrinhDoVanHoa",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTrinhDoVanHoa,
+                value: self.TrinhDoVanHoa
+            });
+            function onSelectTrinhDoVanHoa(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TrinhDoVanHoa = dataItem.Oid;
+            };
+
+            //7. Trình độ chuyên môn
+            var serializedArr = JSON.stringify(eval("(" + self.data_trinhdochuyenmon() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTrinhDoChuyenMon").kendoComboBox({
+                dataTextField: "TenTrinhDoChuyenMon",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTrinhDoChuyenMon,
+                value: self.TrinhDoChuyenMon
+            });
+            function onSelectTrinhDoChuyenMon(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TrinhDoChuyenMon = dataItem.Oid;
+            };
+
+            //8. Chuyên ngành đào tạo
+            var serializedArr = JSON.stringify(eval("(" + self.data_chuyennganhdaotao() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxChuyenNganhDaoTao").kendoComboBox({
+                dataTextField: "TenChuyenNganhDaoTao",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectChuyenNganhDaoTao,
+                value: self.ChuyenNganhDaoTao
+            });
+            function onSelectChuyenNganhDaoTao(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.ChuyenNganhDaoTao = dataItem.Oid;
+            };
+
+            //9. Trường đào tạo
+            var serializedArr = JSON.stringify(eval("(" + self.data_truongdaotao() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTruongDaoTao").kendoComboBox({
+                dataTextField: "TenTruongDaoTao",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTruongDaoTao,
+                value: self.TruongDaoTao
+            });
+            function onSelectTruongDaoTao(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TruongDaoTao = dataItem.Oid;
+            };
+
+            //10. Ngoại ngữ
+            var serializedArr = JSON.stringify(eval("(" + self.data_ngoaingu() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxNgoaiNgu").kendoComboBox({
+                dataTextField: "TenNgoaiNgu",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectNgoaiNgu,
+                value: self.NgoaiNgu
+            });
+            function onSelectNgoaiNgu(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.NgoaiNgu = dataItem.Oid;
+            };
+
+            //11. Trình độ ngoại ngữ
+            var serializedArr = JSON.stringify(eval("(" + self.data_trinhdongoaingu() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxTrinhDoNgoaiNgu").kendoComboBox({
+                dataTextField: "TenTrinhDoNgoaiNgu",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectTrinhDoNgoaiNgu,
+                value: self.TrinhDoNgoaiNgu
+            });
+            function onSelectTrinhDoNgoaiNgu(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.TrinhDoNgoaiNgu = dataItem.Oid;
+            };
+
+        }
+
+        ViewModel_UpdateHoSoNhanVien.prototype = {
+
+            validate: function () {
+                var self = this;
+                if (isNaN(self.NamTotNghiep) || self.NamTotNghiep < 0) {
+                    alert("Năm tốt nghiệp không hợp lệ !!");
+                    $('#txtNamTotNghiep').focus();
+                    return true;
+                }
+                if (!isEmail(self.Email)) {
+                    alert("Email không hợp lệ !!");
+                    $('#txtEmail').focus();
+                    return true;
+                }
+
+                return false;
+            },
+            Save: function () {
+                var self = this;
+                if (self.validate()) {
+                    return;
+                }
+                else {
+
+                    var gioitinh = $('input[name=radiogioitinh]:checked').val();
+                    var ngaysinh = $("#jqxNgaySinh").val();
+                    var ngaycap = $("#jqxNgayCap").val();
+
+                    var ngaysinhArray = ngaysinh.split("/");
+                    var ngaysinhDate = ngaysinhArray[1] + '/' + ngaysinhArray[0] + '/' + ngaysinhArray[2];
+                    self.NgaySinh = ngaysinhDate;
+
+                    var ngaycapArray = ngaycap.split("/");
+                    var ngaycapDate = ngaycapArray[1] + '/' + ngaycapArray[0] + '/' + ngaycapArray[2];
+                    self.NgayCap = ngaycapDate;
+
+                    //Tiến hành lưu dữ liệu
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ThongTinHoSoNhanVien_Save',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            obj:
+                            {
+                                ThongTinNhanVien: self.ThongTinNhanVien,
+                                SoHieuCongChuc: self.SoHieuCongChuc != null ? self.SoHieuCongChuc.trim() : "",
+                                Ho: self.Ho,
+                                Ten: self.Ten,
+                                TenGoiKhac: self.TenGoiKhac,
+                                NgaySinh: self.NgaySinh,
+                                GioiTinh: gioitinh == 0 ? 'Nam' : 'Nữ',
+                                Email: self.Email ,
+                                DienThoaiDiDong: self.DienThoaiDiDong,
+                                DanToc: self.DanToc,
+                                TonGiao: self.TonGiao,
+                                TinhTrangHonNhan: self.TinhTrangHonNhan,
+                                NoiSinh: {
+                                    QuocGia: self.QuocGia_NoiSinh,
+                                    TinhThanh: self.TinhThanh_NoiSinh,
+                                    QuanHuyen: self.QuanHuyen_NoiSinh,
+                                    XaPhuong: self.XaPhuong_NoiSinh,
+                                    SoNha: self.SoNha_NoiSinh
+                                },
+                                QueQuan: {
+                                    QuocGia: self.QuocGia_QueQuan,
+                                    TinhThanh: self.TinhThanh_QueQuan,
+                                    QuanHuyen: self.QuanHuyen_QueQuan,
+                                    XaPhuong: self.XaPhuong_QueQuan,
+                                    SoNha: self.SoNha_QueQuan
+                                },
+                                DiaChiThuongTru: {
+                                    QuocGia: self.QuocGia_DiaChiTT,
+                                    TinhThanh: self.TinhThanh_DiaChiTT,
+                                    QuanHuyen: self.QuanHuyen_DiaChiTT,
+                                    XaPhuong: self.XaPhuong_DiaChiTT,
+                                    SoNha: self.SoNha_DiaChiTT
+                                },
+                                NoiOHienNay: {
+                                    QuocGia: self.QuocGia_NoiOHienNay,
+                                    TinhThanh: self.TinhThanh_NoiOHienNay,
+                                    QuanHuyen: self.QuanHuyen_NoiOHienNay,
+                                    XaPhuong: self.XaPhuong_NoiOHienNay,
+                                    SoNha: self.SoNha_NoiOHienNay
+                                },
+                                CMND: self.CMND ,
+                                NgayCap: self.NgayCap,
+                                NoiCap: self.NoiCap,
+                                TrinhDoVanHoa: self.TrinhDoVanHoa,
+                                TrinhDoChuyenMon: self.TrinhDoChuyenMon ,
+                                ChuyenNganhDaoTao: self.ChuyenNganhDaoTao ,
+                                TruongDaoTao: self.TruongDaoTao ,
+                                NamTotNghiep: self.NamTotNghiep,
+                                NgoaiNgu: self.NgoaiNgu,
+                                TrinhDoNgoaiNgu: self.TrinhDoNgoaiNgu
+                            }
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.success == 'success') {
+                                alert("Lưu thành công !!");
+                                var close = $("#popupWindowUpdateHoSoNhanvien").data("kendoWindow");
+                                close.center().close();
+                                //
+                                ko.cleanNode($('#popupWindowUpdateHoSoNhanvien')[0]);
+                            }
+                            else {
+                                alert("Lưu thất bại !!");
+                                var close = $("#popupWindowUpdateHoSoNhanvien").data("kendoWindow");
+                                close.center().close();
+                                //
+                                ko.cleanNode($('#popupWindowUpdateHoSoNhanvien')[0]);
+                            }
+                        }
+                    });
+                    return;
+                }
+            },
+            Cance: function () {
+
+                var close = $("#popupWindowUpdateHoSoNhanvien").data("kendoWindow");
+                close.center().close();
+                //
+                ko.cleanNode($('#popupWindowUpdateHoSoNhanvien')[0]);
+            },
+        }
+
+        $(function () {
+            var model = new ViewModel_UpdateHoSoNhanVien();
+            ko.applyBindings(model, document.getElementById('updatehosonhanvien'));
+        });
+
+    </script>
+
+    <div id="updatehosonhanvien">
+        <div class="form-group">
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center; font-weight:bold">CẬP NHẬT THÔNG TIN HỒ SƠ</div>
+        </div>
+        <div class="col-lg-12 col-xs-12 col-sm-12" style="float:left;width:400px">
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+                <div class="col-sm-6">
+                </div>
+            </div>
+            <div class="form-horizontal form-bordered">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Số hiệu công chức:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: SoHieuCongChuc"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Họ:</label>
+                    <div class="col-sm-6">
+                        <input  data-bind="value: Ho"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tên:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: Ten"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tên gọi khác:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: TenGoiKhac" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Ngày sinh:</label>
+                    <div class="col-sm-6">
+                        <div  id="jqxNgaySinh"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label class="col-sm-4 control-label no-padding-right">Giới tính:</label>
+                        <div class="col-sm-6">
+                            <span><input type="radio" name="radiogioitinh" value="0" id="gioitinhnam">Nam</span>
+                            <span><input type="radio" name="radiogioitinh" value="1" id="gioitinhnu">Nữ</span>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Email:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: Email" id="txtEmail"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Điện thoại di động:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: DienThoaiDiDong" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">CMND:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: CMND" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Ngày cấp:</label>
+                    <div class="col-sm-6">
+                        <div data-bind="value: NgayCap" id="jqxNgayCap"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Nơi cấp:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxNoiCap" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-10" style="font-weight:bold">Nơi sinh</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quốc gia:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuocGia_NoiSinh" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tỉnh thành:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTinhThanh_NoiSinh" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quận huyện:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuanHuyen_NoiSinh" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Xã phường:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxXaPhuong_NoiSinh" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Số nhà:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: SoNha_NoiSinh" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-10" style="font-weight:bold">Quê quán </label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quốc gia:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuocGia_QueQuan" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tỉnh thành:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTinhThanh_QueQuan" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quận huyện:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuanHuyen_QueQuan" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Xã phường:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxXaPhuong_QueQuan" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Số nhà:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: SoNha_QueQuan" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-xs-12 col-sm-12" style="float:right;width:400px;">
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+                <div class="col-sm-6">
+                </div>
+            </div>
+            <div class="form-horizontal form-bordered">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Dân tộc:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxDanToc" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tôn giáo:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTonGiao" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tình trạng hôn nhân:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTinhTrangHonNhan" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-10" style="font-weight:bold">Địa chỉ thường trú</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quốc gia:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuocGia_DiaChiTT" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tỉnh thành:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTinhThanh_DiaChiTT" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quận huyện:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuanHuyen_DiaChiTT" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Xã phường:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxXaPhuong_DiaChiTT" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Số nhà:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: SoNha_DiaChiTT" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-10" style="font-weight:bold">Nơi ở hiện nay </label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quốc gia:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuocGia_NoiOHienNay" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Tỉnh thành:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTinhThanh_NoiOHienNay" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Quận huyện:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxQuanHuyen_NoiOHienNay" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Xã phường:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxXaPhuong_NoiOHienNay" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Số nhà:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: SoNha_NoiOHienNay" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-10" style="font-weight:bold">Thông tin trình độ</label>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Trình độ văn hóa:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTrinhDoVanHoa" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Trình độ chuyên môn:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTrinhDoChuyenMon" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Chuyên ngành đào tạo:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxChuyenNganhDaoTao" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Trường đào tạo:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTruongDaoTao" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Năm tốt nghiệp:</label>
+                    <div class="col-sm-6">
+                        <input data-bind="value: NamTotNghiep" id="txtNamTotNghiep"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Ngoại ngữ:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxNgoaiNgu" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right">Trình độ ngoại ngữ:</label>
+                    <div class="col-sm-6">
+                        <input id="comboboxTrinhDoNgoaiNgu" placeholder="Chọn..." style="width: 100%;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Save">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                    </a>
+                    <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Cance">
+                        <i class="btn-label glyphicon glyphicon-log-out"></i>Thoát
+                    </a>
+                </div>
+            </div>
+         </div>
+    </div>

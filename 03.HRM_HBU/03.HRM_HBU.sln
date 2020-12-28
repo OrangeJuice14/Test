@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMChamCong", "HRMChamCong\HRMChamCong.csproj", "{CC59ACA4-7534-412B-823E-D6DB30B4B295}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_Core", "ERP.Core\ERP_Core.csproj", "{7BB0057E-88FF-412C-81E8-4B3455C86FA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWeb_Business", "HRMWeb_Business\HRMWeb_Business.csproj", "{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWeb_Service", "HRMWeb_Service\HRMWeb_Service.csproj", "{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B141266-7A5C-4599-A3EF-44E030141565}"
+	ProjectSection(SolutionItems) = preProject
+		TaoUser.txt = TaoUser.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC59ACA4-7534-412B-823E-D6DB30B4B295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC59ACA4-7534-412B-823E-D6DB30B4B295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC59ACA4-7534-412B-823E-D6DB30B4B295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC59ACA4-7534-412B-823E-D6DB30B4B295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://servererp:8080/tfs/erpcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ERP.Core\\ERP_Core.csproj
+		SccProjectName1 = ERP.Core
+		SccLocalPath1 = ERP.Core
+		SccProjectUniqueName2 = HRMChamCong\\HRMChamCong.csproj
+		SccProjectName2 = HRMChamCong
+		SccLocalPath2 = HRMChamCong
+		SccProjectUniqueName3 = HRMWeb_Business\\HRMWeb_Business.csproj
+		SccProjectName3 = HRMWeb_Business
+		SccLocalPath3 = HRMWeb_Business
+		SccProjectUniqueName4 = HRMWeb_Service\\HRMWeb_Service.csproj
+		SccProjectName4 = HRMWeb_Service
+		SccLocalPath4 = HRMWeb_Service
+	EndGlobalSection
+EndGlobal

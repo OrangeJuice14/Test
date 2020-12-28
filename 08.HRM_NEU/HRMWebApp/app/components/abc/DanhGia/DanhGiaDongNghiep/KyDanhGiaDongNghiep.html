@@ -1,0 +1,16 @@
+﻿<div class="widget">
+    <div class="widget-header bg-themeprimary">
+        <span class="widget-caption">Kỳ đánh giá năm: </span>
+        <select kendo-drop-down-list
+                k-options="DataListNam"
+                style="width: 60px;float: left;margin: 3px;"
+                ng-model="nam"
+                ng-change="GetKyDanhGia()">
+        </select>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div kendo-treelist="grid" options="kyDanhGiaOptions" k-data-source="kyDanhGiaList"></div>
+        </div>
+    </div>
+</div>

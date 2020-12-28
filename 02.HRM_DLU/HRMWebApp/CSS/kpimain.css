@@ -1,0 +1,79 @@
+﻿
+@import url('fixTabledefaultTheme.css');
+.td1 {
+        width: 30%;
+        vertical-align: middle;
+    }
+
+    .th1 {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .title {
+        font-family: 'Times New Roman';
+        font-weight: bold !important;
+        margin-top: 10px !important;
+    }
+    p
+    {
+        white-space: pre-wrap;
+    }
+    textarea {
+        padding: 4px;
+        background-color: white;
+        color: black;
+        resize: none;
+        /*border: 0px;*/
+        text-align: justify;
+    }
+
+    .overlay {
+        display: table;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .inner {
+        font-family: sans-serif;
+        font-size: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #fff !important;
+    }
+
+    .planTable button {
+        width: 30px;
+    }
+
+    .planTable td {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        margin: 0 4px 0 4px;
+    }
+
+
+    .planButton {
+        border: 1px solid #fff !important;
+    }
+
+    .planTable ul
+    {
+        list-style: none;
+        padding-left: 0px !important;
+    }
+    .planTable ul li i,p i{
+         font-size:20px;
+         color:#EF694B;
+         padding-right:5px;
+    }

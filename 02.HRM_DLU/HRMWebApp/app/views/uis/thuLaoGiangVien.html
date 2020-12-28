@@ -1,0 +1,316 @@
+﻿<style>
+    table th {
+        text-align: center;
+        color: #fff;
+    }
+</style>
+<link href="/CSS/uiscss.css" rel="stylesheet" /><div class="divmain">
+    <div class="bgtitle">Thù lao giảng viên</div>
+    <div>
+        Năm học:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyYearId" ng-options="listobj.Id as listobj.Name for listobj in studyYears"></select>
+        Học kỳ:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyTermId" ng-options="listobj.Id as listobj.Name for listobj in studyTerms"></select>
+        Đợt thanh toán:
+        <select style="width:200px" ng-change="selectedChangeStudyYear()" ng-model="dotThanhToanId" ng-options="listobj.MaCauHinhGioChot as listobj.TenDot for listobj in DotThanhToans"></select>
+
+    </div>
+    <br />
+
+    <div id="tblTable0">
+        <fieldset>
+            <legend>Thù lao chi tiết</legend>
+            <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+                <thead>
+                    <tr style="background:#0094FF">
+                        <th>Mã môn học</th>
+                        <th>Tên môn học</th>
+                        <th>Loại học phần</th>
+                        <th>Mã lớp học phần</th>
+                        <th>Nhóm</th>
+                        <th>Mã lớp</th>
+                        <th>Sĩ số</th>
+
+                        <th>Tiết thực dạy</th>
+                        <th>Hệ số lớp đông</th>
+                        <th>Hệ số chức danh chuyên môn</th>
+                        <th>Hệ số bậc đào tạo</th>
+                        <th>Hệ số thực hành</th>
+                        <th>Tiết quy đổi</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sd in obj">
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MaMonHoc}}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{sd.TenMonHoc}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+
+                                {{sd.LoaiHocPhan}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MalopHocPhan}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.Nhom}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MaLop}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SiSo}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.TietThucDay}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoLopDong}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoChucDanhChuyenMon}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoBacDaoTao}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoThucHanh}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.TietQuyDoi}}
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <div id="tblTable1">
+        <fieldset>
+            <legend>Thù lao tổng hợp</legend>
+            <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+                <thead>
+                    <tr style="background:#0094FF">
+                        <th>Số giờ quy đổi</th>
+                        <th>Số giờ quy đổi khối lượng cộng thêm</th>
+                        <th>Tổng giờ giảng</th>
+                        <th>Giờ NCKH</th>
+                        <th>Giờ nghĩa vụ giảng dạy</th>
+                        <th>Giờ nghĩa vụ NCKH</th>
+                        <th>Số tiết thanh toán</th>
+
+                        <th>Đơn giá</th>
+                        <th>Số tiền</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sd in obj1">
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SoGioQuyDoi}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SoGioQuyDoiKhoiLuongCongThem}}
+                            </div>
+                        </td>
+
+                        <td style="text-align:center">
+                            <div>
+
+                                {{sd.TongGioGiang}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.GioNckh}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.GioNghiaVuGiangDay}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.GioNghiaVuNckh}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SoTietThanhToan}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.DonGia}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SoTien}}
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            </fieldset>
+</div>
+
+    <div id="tblTable2">
+        <fieldset>
+            <legend>Thù lao thỉnh giảng</legend>
+            <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+                <thead>
+                    <tr style="background:#0094FF">
+                        <th>Mã môn học</th>
+                        <th>Tên môn học</th>
+                        <th>Loại học phần</th>
+                        <th>Mã lớp học phần</th>
+                        <th>Nhóm</th>
+                        <th>Mã lớp</th>
+                        <th>Sĩ số</th>
+                        <th>Nội dung</th>
+                        <th>Tiết thực dạy</th>
+                        <th>Hệ số QĐGC</th>
+                        <th>Hệ số chức danh chuyên môn</th>
+                        <th>Cộng hệ số</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                        <th>Thuế</th>
+                        <th>Còn nhận</th>
+                        <th>Ghi chú</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sd in obj2">
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MaMonHoc}}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{sd.TenMonHoc}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+
+                                {{sd.LoaiHocPhan}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MalopHocPhan}}
+                            </div>
+                        </td>
+                        <!-- MaMonHoc,TenMonHoc,LoaiHocPhan,MaLopHocPhan,Nhom,MaLop,SiSo,NoiDung
+                    ,TietThucDay,HeSoQDGC,HeSoChucDanhChuyenMon,CongHeSo,DonGia,ThanhTien,Thue,ConNhan,GhiChu-->
+
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.Nhom}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.MaLop}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.SiSo}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.NoiDung}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.TietThucDay}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoQDGC}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.HeSoChucDanhChuyenMon}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.CongHeSo}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.DonGia}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.ThanhTien}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.Thue}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.ConNhan}}
+                            </div>
+                        </td>
+                        <td style="text-align:center">
+                            <div>
+                                {{sd.GhiChu}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </fieldset>
+</div>
+</div>

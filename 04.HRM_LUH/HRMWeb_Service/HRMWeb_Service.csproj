@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMWeb_Service</RootNamespace>
+    <AssemblyName>HRMWeb_Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\AutoMapper.dll" />
+    <Content Include="bin\AutoMapper.Net4.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\ERP_Core.dll" />
+    <Content Include="bin\ERP_Core.pdb" />
+    <Content Include="bin\HRMWeb_Business.dll" />
+    <Content Include="bin\HRMWeb_Business.pdb" />
+    <Content Include="bin\HRMWeb_Service.dll" />
+    <Content Include="bin\HRMWeb_Service.pdb" />
+    <Content Include="bin\HRMWeb_TimesheetService.dll" />
+    <Content Include="bin\HRMWeb_TimesheetService.pdb" />
+    <Content Include="bin\LinqToExcel.dll" />
+    <Content Include="bin\log4net.dll" />
+    <Content Include="bin\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.Configuration.dll" />
+    <Content Include="bin\Microsoft.Practices.Unity.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Remotion.Data.Linq.dll" />
+    <Content Include="Ghi chu.txt" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoAndroid\AutoMapper.Android.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoAndroid\AutoMapper.Android.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoAndroid\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoAndroid\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoAndroid\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoTouch\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoTouch\AutoMapper.iOS.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoTouch\AutoMapper.iOS.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoTouch\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\MonoTouch\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+sl5+MonoAndroid+MonoTouch\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+sl5+MonoAndroid+MonoTouch\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+sl5+MonoAndroid+MonoTouch\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+wpa81+sl5+MonoAndroid+MonoTouch\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+wpa81+sl5+MonoAndroid+MonoTouch\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\portable-windows8+net40+wp8+wpa81+sl5+MonoAndroid+MonoTouch\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\sl5\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\sl5\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\sl5\AutoMapper.SL5.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\sl5\AutoMapper.SL5.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\sl5\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\windows8\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\windows8\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\windows8\AutoMapper.WinRT.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\windows8\AutoMapper.WinRT.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\windows8\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wp8\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wp8\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wp8\AutoMapper.WP8.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wp8\AutoMapper.WP8.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wp8\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wpa81\AutoMapper.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wpa81\AutoMapper.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wpa81\AutoMapper.WPA81.dll" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wpa81\AutoMapper.WPA81.pdb" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\lib\wpa81\AutoMapper.xml" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.xml" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.xml" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.xml" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.xml" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\about_EntityFramework.help.txt" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\EntityFramework.PowerShell.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\EntityFramework.PowerShell.Utility.dll" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\migrate.exe" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net20\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net20\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net35\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net35\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.xml" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.xml" />
+    <Content Include="obj\Debug\HRMWeb_Service.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\HRMWeb_Service.dll" />
+    <Content Include="obj\Debug\HRMWeb_Service.pdb" />
+    <Content Include="obj\Debug\HRMWeb_TimesheetService.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\HRMWeb_TimesheetService.dll" />
+    <Content Include="obj\Debug\HRMWeb_TimesheetService.pdb" />
+    <Content Include="obj\Release\HRMWeb_Service.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\HRMWeb_Service.dll" />
+    <Content Include="obj\Release\HRMWeb_Service.pdb" />
+    <Content Include="obj\Release\HRMWeb_TimesheetService.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\HRMWeb_TimesheetService.dll" />
+    <Content Include="obj\Release\HRMWeb_TimesheetService.pdb" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\AutoMapper.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\AutoMapper.Net4.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\EntityFramework.SqlServer.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\ERP_Core.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\HRMWeb_Business.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\HRMWeb_Service.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\Newtonsoft.Json.dll" />
+    <Content Include="obj\Release\Package\PackageTmp\Service1.svc" />
+    <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
+    <Content Include="Properties\PublishProfiles\HRMWEB.pubxml.user" />
+    <Content Include="Service1.svc" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HoSoNhanSu\IService1_GiayToHoSo.cs" />
+    <Compile Include="HoSoNhanSu\Service1_DangLuuTru.cs" />
+    <Compile Include="HoSoNhanSu\IService1_DangLuuTru.cs" />
+    <Compile Include="HoSoNhanSu\IService1_ModuleThongTinNhanSu.cs" />
+    <Compile Include="HoSoNhanSu\Service1_GiayToHoSo.cs" />
+    <Compile Include="HoSoNhanSu\Service1_ModuleThongTinNhanSu.cs" />
+    <Compile Include="IService1.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IService1_BoPhan.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IService1_KyTinhLuong.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IService1_LoaiNhanSu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Service1_KyTinhLuong.cs" />
+    <Compile Include="MenuVaPhanQuyen\IService1_WebMenu_Role.cs" />
+    <Compile Include="MenuVaPhanQuyen\Service1_WebMenu_Role.cs" />
+    <Compile Include="MenuVaPhanQuyen\IService1_WebMenu.cs" />
+    <Compile Include="Service1_LoaiNhanSu.cs" />
+    <Compile Include="MenuVaPhanQuyen\IService1_WebUser.cs" />
+    <Compile Include="MenuVaPhanQuyen\IService1_WebGroup.cs" />
+    <Compile Include="HoSoNhanSu\IService1_HoSoNhanVien.cs" />
+    <Compile Include="MenuVaPhanQuyen\Service1_WebGroup.cs" />
+    <Compile Include="HoSoNhanSu\Service1_HoSoNhanVien.cs" />
+    <Compile Include="MenuVaPhanQuyen\Service1_WebMenu.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MenuVaPhanQuyen\Service1_WebUser.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Service1.svc.cs">
+      <DependentUpon>Service1.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service1_BoPhan.cs" />
+    <Compile Include="Utils\EncryptUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="bin\Debug\" />
+    <Folder Include="HRMChamCong\HRMWeb_Service\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\ProfileTransformWebConfig\transformed\" />
+    <Folder Include="obj\Release\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\AutoMapper.3.3.1.nupkg" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\MonoAndroid\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\MonoAndroid\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\MonoTouch\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\MonoTouch\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\net40\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\net40\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\sl5\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\sl5\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\windows8\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\windows8\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\wp8\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\wp8\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\wpa81\Install.ps1" />
+    <Content Include="HRMChamCong\packages\AutoMapper.3.3.1\tools\wpa81\uninstall.ps1" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\content\App.config.transform" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\content\Web.config.transform" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\EntityFramework.6.1.3.nupkg" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\EntityFramework.psd1" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\EntityFramework.psm1" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\init.ps1" />
+    <Content Include="HRMChamCong\packages\EntityFramework.6.1.3\tools\install.ps1" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\Newtonsoft.Json.6.0.8.nupkg" />
+    <Content Include="HRMChamCong\packages\Newtonsoft.Json.6.0.8\tools\install.ps1" />
+    <Content Include="HRMChamCong\packages\repositories.config" />
+    <Content Include="bin\App.config" />
+    <Content Include="bin\HRMWeb_Service.dll.config" />
+    <Content Include="bin\HRMWeb_TimesheetService.dll.config" />
+    <Content Include="obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\ERP_Core.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\HRMWeb_Business.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\HRMWeb_Service.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Debug\HRMWeb_TimesheetService.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\ConsoleApplication1.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\HRMWeb_Service.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\HRMWeb_TimesheetService.csprojResolveAssemblyReference.cache" />
+    <Content Include="obj\Release\Package\PackageTmp\bin\App.config" />
+    <Content Include="obj\Release\Package\PackageTmp\packages.config" />
+    <Content Include="obj\Release\Package\PackageTmp\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
+    <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
+    <None Include="Properties\PublishProfiles\HRMWEB.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERP.Core\ERP_Core.csproj">
+      <Project>{7bb0057e-88ff-412c-81e8-4b3455c86fa6}</Project>
+      <Name>ERP_Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HRMWeb_Business\HRMWeb_Business.csproj">
+      <Project>{4f3d5db4-1d47-4de1-aa89-920a84d2eac6}</Project>
+      <Name>HRMWeb_Business</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8741</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8741/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

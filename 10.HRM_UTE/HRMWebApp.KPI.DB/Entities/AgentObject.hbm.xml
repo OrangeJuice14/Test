@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.AgentObject, HRMWebApp.KPI.DB" table="KPI_AgentObject">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <!--<one-to-one name="AgentObjectDetail" class="HRMWebApp.KPI.DB.Entities.AgentObjectDetail" cascade="all-delete-orphan"/>-->
+    <many-to-one name="AgentObjectType" class="HRMWebApp.KPI.DB.Entities.AgentObjectType" column="AgentObjectTypeId" />
+   <!--<bag name="TargetGroupDetails" table="KPI_TargetGroup" lazy="false">
+      <key column="AgentObjectId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId"/>
+    </bag>-->
+    <bag name="PlanKPIs" table="KPI_PlanKPI_AgentObject" cascade="none" inverse="true" lazy="false">
+      <key column="AgentObjectId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.PlanKPI" column="PlanKPIId" />
+    </bag>
+    <bag name="AgentObjectDetails" table="KPI_AgentObjectDetail" cascade="none" inverse="true">
+      <key column="AgentObjectId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.AgentObjectDetail"/>
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+    </div>
+    <div class="widget-body">
+        <h3>Kế hoạch: </h3>
+        <div kendo-treelist="grid" options="mainGridOptions" k-data-source="dataSource"></div>
+
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Kế hoạch</th>
+                    <th>Đối tượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="pl in userPlanKPIList track by $index">
+                    <td ng-if="pl.AgentObjectTypeId==1"><a href="/#/professorRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}">{{pl.Name}}</a></td>
+                    <td ng-if="pl.AgentObjectTypeId==2 || pl.AgentObjectTypeId==3"><a href="/#/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}">{{pl.Name}}</a></td>
+                    <td>{{pl.AgentObjectName}}</td>
+                    <td>
+                        <!--<a href="/#/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}">Hiệu chỉnh</a>-->
+
+                        <a ng-if="pl.AgentObjectTypeId==1" href="/#/professorRatingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}">Hiệu chỉnh</a>
+                        <a ng-if="pl.AgentObjectTypeId==2 || pl.AgentObjectTypeId==3" href="/#/ratingKPI/{{pl.Id}}/{{pl.AgentObjectId}}/{{IsSupervisorRating?pl.StaffId:''}}">Hiệu chỉnh</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="IsSupervisor">
+            <h3>Đánh giá nhân viên:  Danh sách nhân viên phòng</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Họ tên</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="sl in staffList track by $index">
+                        <td>{{sl.Name}}</td>
+                        <td><a href="/#/userRatingKPI/{{sl.Id}}">Đánh giá</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </div>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_LogBoTieuChi, HRMWebApp.KPI.DB" table="ABC_LogBoTieuChi">
+    <id name="Id" column="Oid"></id>
+    <property name="Name" column="Name"></property>
+    <property name="TuNgay" column="TuNgay"></property>
+    <property name="DenNgay" column="DenNgay"></property>
+    <property name="Status" column="Status"></property>
+    <property name="LoaiBoTieuChi" column="LoaiBoTieuChi"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+    <property name="ShowTen" column="ShowTen"></property>
+    <property name="ShowDonVi" column="ShowDonVi"></property>
+    <property name="DeleteUserId" column="DeleteUserId"></property>
+    <property name="DeleteTime" column="DeleteTime"></property>
+    <property name="LastEditUserId" column="LastEditUserId"></property>
+    <property name="LastEditTime" column="LastEditTime"></property>
+    <property name="AddUserId" column="AddUserId"></property>
+    <property name="AddTime" column="AddTime"></property>
+    <property name="TimeLog" column="TimeLog"></property>
+    <property name="BoTieuChiId" column="BoTieuChiId"></property>
+  </class>
+</hibernate-mapping>

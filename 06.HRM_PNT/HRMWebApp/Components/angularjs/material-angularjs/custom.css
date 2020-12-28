@@ -1,0 +1,73 @@
+﻿.md-datepicker-calendar-pane {
+    z-index: 1100 !important;
+}
+
+div md-dialog-actions {
+    display: flex;
+    order: 2;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 0;
+    padding-right: 8px;
+    padding-left: 16px;
+    min-height: 52px;
+    overflow: hidden;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+
+.collapsed ul {
+    display: none;
+}
+
+li.collapsed:before {
+    content: '+';
+    display: inline-block;
+    width: 10px;
+}
+
+li a:hover {
+    cursor: pointer;
+}
+
+.md-select-menu-container.md-active {
+    z-index: 2000;
+}
+md-input-container.flex-80 {
+    margin-bottom: 0 !important;
+}
+.form-horizontal .md-padding {
+    padding: 8px !important;
+}
+.cke_editor_STT1, .cke_editor_TenTieuChi {
+    padding-top: 10px;
+    height: 150px;
+}
+.cke_editor_STT1 .cke_contents{
+    height:100px !important;
+}
+.table md-input-container {
+    margin: 0 !important;
+}
+    .table md-input-container .md-errors-spacer {
+        margin: 0 !important;
+        min-height:unset !important;
+    }
+td .md-button{
+    padding: 0px !important;
+    margin:0px !important;
+}
+.cke_editor_TenTieuChi .cke_inner {
+    height: 150px;
+}
+.cke_editor_TenTieuChi .cke_contents{
+    height: 108px !important;
+}
+p{
+    margin: 0px !important;
+}

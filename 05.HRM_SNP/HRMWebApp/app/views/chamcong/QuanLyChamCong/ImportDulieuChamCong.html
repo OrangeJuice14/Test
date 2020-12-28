@@ -1,0 +1,36 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Import dữ liệu chấm công từ Excel</span>
+    </div>
+    <div class="widget-body">
+        <div class="row">
+                <label for="selectType" class="col-md-2 control-label">Kỳ tính lương :</label>
+                <div class="col-md-3">
+                    <select class="form-control" ng-model="kyTinhLuong" name="StaffRoleSelect" ng-options="listRole.Oid as listRole.Name for listRole in kyTinhLuongList">
+                        <option value="">Chọn Kỳ tính lương ...</option>
+                    </select>
+                </div>
+            <br /><br /><br />
+            <label for="selectType" class="col-md-2 control-label">Đơn vị :</label>
+            <div class="col-md-3">
+                <select class="form-control" ng-model="thongTinTruong" name="StaffRoleSelect" ng-options="listRole.Oid as listRole.TenVietTat for listRole in thongTinTruongList">
+                    <option value="">Chọn Đơn vị ...</option>
+                </select>
+            </div>
+            <br /><br /><br />
+                <label for="selectType" class="col-md-2 control-label">Chọn file :</label>
+                <div class="col-md-6">
+                    <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+                </div>
+                <div class="col-md-4">
+                    &nbsp;
+                </div>
+        </div>
+    </div>
+</div>
+

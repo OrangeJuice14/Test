@@ -1,0 +1,68 @@
+﻿<style>
+    .k-grid .k-grid-header .k-header .k-link {
+        height: auto;
+        text-align: center;
+    }
+
+    .k-grid .k-grid-header .k-header {
+        white-space: normal;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: middle !important;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height: 45px;">
+        <select kendo-drop-down-list
+                k-ng-model="yearSelected"
+                k-data-source="yearList"
+                k-value-primitive="true"
+                style="text-align:left; float:right; margin:7px 15px; width:80px;"></select>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div ng-if="isSupervisor!=2 && isSupervisor!=3" kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">
+                        Đánh giá bản thân
+                    </li>
+                    <li ng-show="isSupervisor==1">
+                        Đánh giá cấp dưới
+                    </li>
+                    <li ng-show="isSupervisor==1">
+                        Đánh giá tập thể
+                    </li>
+                </ul>
+                <div kendo-treelist="grid" options="mainGridOptions2" k-data-source="dataSource2"></div>
+                <div ng-show="isSupervisor==1" kendo-treelist="grid" options="mainGridOptions3" k-data-source="dataSource"></div>
+                <div ng-show="isSupervisor==1" kendo-treelist="grid" options="mainGridOptionsLanhDaoTuDanhGiaDonVi" k-data-source="dataSource2"></div>
+            </div>
+            <!--BGH-->
+            <div ng-if="isSupervisor==2" kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">
+                        Đánh giá ABC
+                    </li>
+                    <li>
+                        Đánh giá tập thể
+                    </li>                 
+                </ul>
+                <div kendo-treelist="grid" options="mainGridOptions2" k-data-source="dataSource2"></div>
+                <div kendo-treelist="grid" options="mainGridOptions4" k-data-source="dataSource"></div>
+            </div>
+            <!--Admin đơn vị ủy quyền-->
+            <div ng-if="isSupervisor==3" kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">
+                        Đánh giá cấp dưới
+                    </li>
+                </ul>
+                <div kendo-treelist="grid" options="mainGridOptions3" k-data-source="dataSource"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

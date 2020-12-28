@@ -1,0 +1,53 @@
+﻿<style>
+    .k-grid .k-grid-header .k-header .k-link {
+        height: auto;
+        text-align: center;
+    }
+
+    .k-grid .k-grid-header .k-header {
+        white-space: normal;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: middle !important;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">ĐÁNH GIÁ TỔNG HỢP</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <select kendo-drop-down-list 
+                            k-ng-model="studyYearId" 
+                            k-data-source="yearList" 
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"></select>
+                    <select kendo-drop-down-list
+                            k-ng-model="planId"
+                            k-data-source="planDataSource"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="width:250px;margin:auto"></select>
+                    <select kendo-drop-down-list 
+                            k-ng-model="departmentId"
+                            k-data-source="departmentDataSource"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="width:250px;margin:auto"></select>
+                    <a ng-click="Search()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-search"></i> Tìm kiếm
+                    </a>
+                </div>
+            </div>
+            <br />
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>

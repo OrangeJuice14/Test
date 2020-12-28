@@ -1,0 +1,1008 @@
+﻿
+<script type="text/javascript">
+    $(function () {
+        var session = {};
+
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split('/')[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+
+
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var session = {};
+        var self = this;
+
+        // nhắc việc
+        self.nhacViec = false;
+        if (window.location.href.indexOf("quanlyngoaigio_nhacviec") != -1) {
+            self.nhacViec = true;
+            self.tatCaDonChuaDuyet = ko.observable(true);
+            //$("#jqxTuNgay").jqxDateTimeInput({ disabled: true });
+            //$("#jqxDenNgay").jqxDateTimeInput({ disabled: true });
+            //self.tatCaDonChuaDuyet.subscribe(function (newValue) {
+            //    if (newValue) {
+            //        $("#jqxTuNgay").jqxDateTimeInput({ disabled: true });
+            //        $("#jqxDenNgay").jqxDateTimeInput({ disabled: true });
+            //    } else {
+            //        $("#jqxTuNgay").jqxDateTimeInput({ disabled: false });
+            //        $("#jqxDenNgay").jqxDateTimeInput({ disabled: false });
+            //    }
+            //});
+        }
+        // end nhắc việc
+
+        self.returnData = [];
+        self.UserId = ko.observable();
+        self.IsAdmin = ko.observable(null);
+        self.IsTruongBoPhan = ko.observable(null);
+        self.WebGroupId = ko.observable();
+        self.NgayHopLe = ko.observable();
+        
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.UserId(session.UserId);
+                self.WebGroupId(session.WebGroupId);
+            }
+        });
+        var trangthaiArr = [
+                 { Id: 3, Name: dataLocalize("QUAN_LY_NGOAI_GIO.JS.TRANG_THAI_ARRAY.TAT_CA") },
+                 { Id: 0, Name: dataLocalize("QUAN_LY_NGOAI_GIO.JS.TRANG_THAI_ARRAY.CHO_DUYET") },
+                 { Id: 1, Name: dataLocalize("QUAN_LY_NGOAI_GIO.JS.TRANG_THAI_ARRAY.CHAP_NHAN") },
+                 { Id: 2, Name: dataLocalize("QUAN_LY_NGOAI_GIO.JS.TRANG_THAI_ARRAY.KHONG_CHAP_NHAN") }
+        ];
+        self.datagrid = datagrid;
+        self.trangthaiList = ko.observableArray(trangthaiArr);
+        self.trangthaiSelected = ko.observable(3);
+        self.day = ko.observable(0),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.trangthaiList = ko.observableArray(trangthaiArr);
+        self.trangthaiSelected = ko.observable(0);
+        self.bophan = ko.observableArray();
+        self.bophanSelected = ko.observable();
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        self.maNhanSu = ko.observable("");
+        self.grid_hosonhanvien = ko.observableArray();
+
+        // Lấy các quyền
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000001"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000009"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000006"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000007")
+            self.IsAdmin(true);
+        else
+            self.IsAdmin(false);
+
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000011")
+            self.IsTruongBoPhan(true);
+        else
+            self.IsTruongBoPhan(false);
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: dataLocalize("QUAN_LY_NGOAI_GIO.JS.TEN_BO_PHAN_TAT_CA") });
+                    self.bophan(obj);
+                    if (obj.length > 0) {
+                        self.bophanSelected(obj[0].Oid);
+                    }
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+            }
+        });
+        //
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'MaNhanVien', type: 'string' },
+                { name: 'TenBoPhan', type: 'string' },
+                { name: 'Ngay', type: 'date' },
+                { name: 'TuGio', type: 'string' },
+                { name: 'DenGio', type: 'string' },
+                { name: 'TuGioThucTe', type: 'string' },
+                { name: 'DenGioThucTe', type: 'string' },
+                { name: 'SoGioDangKy', type: 'string' },
+                { name: 'SoGioThucTe', type: 'string' },
+                { name: 'TrangThai_TP', type: 'string' },
+                { name: 'TrangThai_Admin', type: 'string' },
+                { name: 'TrangThai_BGH', type: 'string' },
+                { name: 'LyDo', type: 'string' },
+                { name: 'TenLoaiNgay', type: 'string' },
+                { name: 'NgayTao', type: 'date' },
+                { name: 'PhanHoi_TP', type: 'string' },
+                { name: 'PhanHoi_Admin', type: 'string' },
+                { name: 'PhanHoi_BGH', type: 'string' }
+            ],
+            id: 'Id',
+            //async:false,
+            //pagesize: 10,
+            sortcolumn: 'Name',
+            sortdirection: 'asc',
+            url: !self.nhacViec ? "/WebServices/QuanLyChamCongNgoaiGio_Find" : "/WebServices/QuanLyChamCongNgoaiGio_Find_NhacViec",
+            //sort: function (value, row) {
+            //    self.datagrid.jqxGrid('updatebounddata');
+            //},
+            formatdata: function (data) {
+                if (!self.nhacViec) {
+                    return {
+                        ngay: self.day(),
+                        thang: self.month(),
+                        nam: self.year(),
+                        IDBoPhan: self.bophanSelected() == undefined ? null : self.bophanSelected(),
+                        trangthai: self.trangthaiSelected() == undefined ? null : self.trangthaiSelected(),
+                        idwebuser: self.UserId(),
+                        congTy: self.companySelected()
+                    };
+                }
+                else {
+                    return {
+                        ngay: self.day(),
+                        thang: self.month(),
+                        nam: self.year(),
+                        IDBoPhan: self.bophanSelected() == undefined ? null : self.bophanSelected(),
+                        trangthai: self.trangthaiSelected() == undefined ? null : self.trangthaiSelected(),
+                        idwebuser: self.UserId(),
+                        congTy: self.companySelected(),
+                        tatCaDonChuaDuyet: self.tatCaDonChuaDuyet()
+                    };
+                }
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+        {
+            source: self.dataAdapter,
+            width: '100%',
+            editable: true,
+            selectionmode: 'checkbox',
+            //virtualmode: true,
+            pageable: true,
+            pagesize: 10,
+            sortable: true,
+            filterable: true,
+            //rowsheight: 40,
+            columnsheight: 40,
+            autoheight: true,
+            autorowheight: true,
+            theme: "darkBlue",
+            //rendergridrows: function (args) {
+            //    return args.data;
+            //},
+            columns: [
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.STT"), columntype: 'number', width: 45, editable: false, cellsrenderer: function (row, column, value) {
+                        return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.TRANG_THAI_TP"), datafield: 'TrangThai_TP', editable: false, width: 140, align: 'center', cellsalign: "middle",
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        var str = "";
+                        if (cellvalue == 0) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                        }
+                        if (cellvalue == 1) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                        }
+                        if (cellvalue == 2) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                        }
+                        return str;
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.TRANG_THAI_BGH"), datafield: 'TrangThai_BGH', editable: false, width: 80, align: 'center', cellsalign: "middle",
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        var str = "";
+                        if (cellvalue == 0) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                        }
+                        if (cellvalue == 1) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                        }
+                        if (cellvalue == 2) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                        }
+                        return str;
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.TRANG_THAI_ADMIN"), datafield: 'TrangThai_Admin', editable: false, width: 120, align: 'center', cellsalign: "middle",
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        var str = "";
+                        if (cellvalue == 0) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                        }
+                        if (cellvalue == 1) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                        }
+                        if (cellvalue == 2) {
+                            str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                        }
+                        return str;
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.HO_TEN"), datafield: 'HoTen', editable: false, width: 150, align: 'center'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.MA_NHAN_VIEN"), datafield: 'MaNhanVien', editable: false, width: 150, align: 'center', cellsalign: "middle"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.DON_VI"), datafield: 'TenBoPhan', editable: false, width: 200, align: 'center', cellsalign: "left"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.NGAY"), datafield: 'Ngay', editable: false, width: 100, align: 'center', cellsalign: "middle", cellsformat: 'dd/MM/yyyy'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.TU_GIO_DK"), datafield: 'TuGio', editable: false, width: 100, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.DEN_GIO_DK"), datafield: 'DenGio', editable: false, width: 100, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.TU_GIO_TT"), datafield: 'TuGioThucTe', editable: false, width: 100, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.DEN_GIO_TT"), datafield: 'DenGioThucTe', editable: false, width: 100, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.SO_GIO_DK"), datafield: 'SoGioDangKy', editable: false, width: 130, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },  
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.SO_GIO_TT"), datafield: 'SoGioThucTe', columntype: 'template', width: 120, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    },
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        return "<div class='jqx-grid-cell-child'><input class='jqx-widget-content jqx-input jqx-widget jqx-rc-all' type='text' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                    },
+                    createeditor: function (row, cellvalue, editor, cellText, width, height) {
+                        var str = "<div class='jqx-grid-cell-child'><input  type='text' id='status' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                        editor.append(str);
+                    },
+                    initeditor: function (row, cellvalue, editor, celltext, pressedkey) {
+                        var status = editor.find('input#status');
+                        status.val(cellvalue);
+                        status.jqxInput({ width: 80, height: 20 });
+                        status.jqxInput("focus");
+                    },
+                    geteditorvalue: function (row, cellvalue, editor) {
+                        return editor.find('input#status').val();
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.LY_DO"), datafield: 'LyDo', editable: false, width: 300, align: 'center',
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.LOAI_NGAY"), datafield: 'TenLoaiNgay', editable: false, width: 300, align: 'center',
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.NGAY_TAO"), datafield: 'NgayTao', editable: false, width: 120, cellsformat: 'dd/MM/yyyy', align: 'center', cellsalign: "middle"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.PHAN_HOI_TP"), datafield: 'PhanHoi_TP', columntype: 'template', editable: true, width: 200, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    },
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        return "<div class='jqx-grid-cell-child'><input class='jqx-widget-content jqx-input jqx-widget jqx-rc-all' type='text' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                    },
+                    createeditor: function (row, cellvalue, editor, cellText, width, height) {
+                        var str = "<div class='jqx-grid-cell-child'><input  type='text' id='status' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                        editor.append(str);
+                    },
+                    initeditor: function (row, cellvalue, editor, celltext, pressedkey) {
+                        var status = editor.find('input#status');
+                        status.val(cellvalue);
+                        status.jqxInput({ width: 80, height: 20 });
+                        status.jqxInput("focus");
+                    },
+                    geteditorvalue: function (row, cellvalue, editor) {
+                        return editor.find('input#status').val();
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.PHAN_HOI_BGH"), datafield: 'PhanHoi_BGH', columntype: 'template', editable: true, width: 200, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    },
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        return "<div class='jqx-grid-cell-child'><input class='jqx-widget-content jqx-input jqx-widget jqx-rc-all' type='text' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                    },
+                    createeditor: function (row, cellvalue, editor, cellText, width, height) {
+                        var str = "<div class='jqx-grid-cell-child'><input  type='text' id='status' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                        editor.append(str);
+                    },
+                    initeditor: function (row, cellvalue, editor, celltext, pressedkey) {
+                        var status = editor.find('input#status');
+                        status.val(cellvalue);
+                        status.jqxInput({ width: 80, height: 20 });
+                        status.jqxInput("focus");
+                    },
+                    geteditorvalue: function (row, cellvalue, editor) {
+                        return editor.find('input#status').val();
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_NGOAI_GIO.TABLE.PHAN_HOI_ADMIN"), datafield: 'PhanHoi_Admin', columntype: 'template', editable: true, width: 200, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    },
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        return "<div class='jqx-grid-cell-child'><input class='jqx-widget-content jqx-input jqx-widget jqx-rc-all' type='text' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                    },
+                    createeditor: function (row, cellvalue, editor, cellText, width, height) {
+                        var str = "<div class='jqx-grid-cell-child'><input  type='text' id='status' value='" + cellvalue + "'  style='width:80px;height:20px;text-align:center;' /></div>";
+                        editor.append(str);
+                    },
+                    initeditor: function (row, cellvalue, editor, celltext, pressedkey) {
+                        var status = editor.find('input#status');
+                        status.val(cellvalue);
+                        status.jqxInput({ width: 80, height: 20 });
+                        status.jqxInput("focus");
+                    },
+                    geteditorvalue: function (row, cellvalue, editor) {
+                        return editor.find('input#status').val();
+                    }
+                }
+            ]
+        });
+        self.datagrid.jqxGrid('rendered', function () {
+            self.datagrid.jqxGrid('localizestrings', jqxLocalization());
+        });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.NGAY_KHONG_HOP_LE"));
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.THANG_KHONG_HOP_LE"));
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.NAM_KHONG_HOP_LE"));
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            var r = confirm(dataLocalize("QUAN_LY_NGOAI_GIO.CONFIRM.BAN_CO_CHAC_XOA_HAY_KHONG"));
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    if (row.TrangThai_Admin == '1' || row.TrangThai_BGH == '1') {
+                        alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.BANG_CONG_DA_DUYET_KHONG_DUOC_XOA"));
+                        //
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                        //
+                        return;
+                    }
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/DangKyChamCongNgoaiGio_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            list: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.XOA_THANH_CONG"));
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+        accept: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            var selectedRecords = new Array();
+            for (var i = 0, l = rows.length; i < l ; i++) {
+                var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid,
+                        PhanHoi_TP: row.PhanHoi_TP,
+                        PhanHoi_BGH: row.PhanHoi_BGH,
+                        PhanHoi_Admin: row.PhanHoi_Admin
+                    });
+            }
+            if (selectedRecords.length == 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            if (selectedRecords.length > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCongNgoaiGio_DuyetList',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: ko.toJSON({
+                        list: selectedRecords,
+                        trangthai: 1,
+                        idwebuser: self.UserId()
+                    }),
+                    success: function (result) {
+                        alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.THANH_CONG"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                    }
+                });
+
+            }
+        },
+        cancel: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            var selectedRecords = new Array();
+            for (var i = 0, l = rows.length; i < l ; i++) {
+                var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                if ((row.TrangThai_Admin == '1' || row.TrangThai_BGH == '1') 
+                     && self.WebGroupId() != "00000000-0000-0000-0000-000000000001"
+                     && self.WebGroupId() != "00000000-0000-0000-0000-000000000009")
+                {
+                    alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CAP_CAO_HON_DA_DUYET"));
+                    return;
+                }
+                //
+                selectedRecords.push({
+                    Oid: row.Oid,
+                    PhanHoi_TP: row.PhanHoi_TP,
+                    PhanHoi_BGH: row.PhanHoi_BGH,
+                    PhanHoi_Admin: row.PhanHoi_Admin
+                });
+            }
+            if (selectedRecords.length == 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            if (selectedRecords.length > 0) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCongNgoaiGio_DuyetList',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: ko.toJSON({
+                        list: selectedRecords,
+                        trangthai: 2,
+                        idwebuser: self.UserId()
+                    }),
+                    success: function (result) {
+                        alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.THANH_CONG"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                    }
+                });
+
+
+            }
+        },
+        New: function () {
+            var self = this;
+            //
+            self.thuList = ko.observableArray([
+                                                { Id: 1, Name: "T2" },
+                                                { Id: 2, Name: "T3" },
+                                                { Id: 3, Name: "T4" },
+                                                { Id: 4, Name: "T5" },
+                                                { Id: 5, Name: "T6" },
+                                                { Id: 6, Name: "T7" },
+                                                { Id: 0, Name: "CN" }
+            ]);
+            ko.utils.arrayForEach(self.thuList(), function (val) {
+                val.Chon = ko.observable(val.Chon);
+            });
+            self.bophan_nhansu = ko.observable();
+            self.bophan_nhansu.subscribe(function (newValue) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue, company: self.companySelected() }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.grid_hosonhanvien(obj);
+                    }
+                });
+                //
+                var source =
+                {
+                    localdata: self.grid_hosonhanvien(),
+                    datafields:
+                    [
+                        { name: 'Oid', type: 'string' },
+                        { name: 'MaQuanLy', type: 'string' },
+                        { name: 'HoTen', type: 'string' }
+                        //{ name: 'Ten', type: 'string' }
+                    ],
+                    datatype: "json"
+                };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+
+                // initialize jqxGrid
+                $("#jqxdropdownbutton2").jqxDropDownButton({ width: 252, height: 25 });
+
+                $("#jqxgrid_hosonhanvien2").jqxGrid(
+                    {
+                        width: 250,
+                        source: dataAdapter,
+                        pageable: true,
+                        autoheight: true,
+                        autorowheight: true,
+                        columnsresize: true,
+                        showfilterrow: true,
+                        filterable: true,
+                        columns: [
+                            { text: dataLocalize("QUAN_LY_NGOAI_GIO.TAO_MOI_MODAL.MA_QUAN_LY"), datafield: 'MaQuanLy', width: 90, },
+                            { text: dataLocalize("QUAN_LY_NGOAI_GIO.TAO_MOI_MODAL.HO_TEN"), datafield: 'HoTen', width: 150, }
+                            //{ text: dataLocalize("QUAN_LY_NGOAI_GIO.TAO_MOI_MODAL.TEN"), datafield: 'Ten', columntype: 'textbox', width: 70, },
+                        ]
+                    });
+                //
+                $("#jqxgrid_hosonhanvien2").on('rowselect', function (event) {
+                    var args = event.args;
+                    var row = $("#jqxgrid_hosonhanvien2").jqxGrid('getrowdata', args.rowindex);
+                    if (row == undefined)
+                        return;
+                    var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['HoTen'] + '</div>';
+                    $("#jqxdropdownbutton2").jqxDropDownButton('setContent', dropDownContent);
+                });
+                $("#jqxgrid_hosonhanvien2").jqxGrid('selectrow', 0);
+            });
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgoaiGio_New.html', function (data) {
+                $('#popupWindowCCNGNew').html(data);
+                ko.cleanNode($('#popupWindowCCNGNew')[0]);
+                $('#popupWindowCCNGNew').kendoWindow({
+                    width: "50%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+                });
+
+                //
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgoaiGio_NgayHopLe',
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        self.NgayHopLe(result);
+                    }
+                });
+                //
+                $('#popupWindowCCNGNew').data("kendoWindow").open();
+                $("#jqxFromDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#GioBatDau").val('07');
+                $("#GioKetThuc").val('17');
+                $("#PhutBatDau").val('00');
+                $("#PhutKetThuc").val('00');
+                //
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGNew'));
+            });
+        },
+        save: function () {
+            var self = this;
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien2').jqxGrid('getselectedrowindexes');
+            var idNhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien2').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : null;
+
+            //Kiểm tra từ ngày đến ngày hợp lệ
+            if ($('#jqxFromDate1').jqxDateTimeInput('getDate') > $('#jqxToDate1').jqxDateTimeInput('getDate')) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.TU_NGAY_DEN_NGAY_KHONG_HOP_LE"));
+                return;
+            }
+
+            //
+            if (idNhanVien == null) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.NHAN_VIEN_KHONG_DUOC_TRONG"));
+                return;
+            }
+            var ngayHopLe = new Date(self.NgayHopLe());
+            var tuNgay = $('#jqxFromDate1').jqxDateTimeInput('getDate');
+            var denNgay = $('#jqxToDate1').jqxDateTimeInput('getDate');
+
+            //
+            if ((ngayHopLe > tuNgay || ngayHopLe > denNgay)
+                && (self.WebGroupId() == "00000000-0000-0000-0000-000000000006"
+                     || self.WebGroupId() == "00000000-0000-0000-0000-000000000007")) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.THOI_GIAN_DANG_KY_KHONG_HOP_LE"));
+                return;
+            }
+            //
+            ko.utils.arrayForEach(self.thuList(), function (val) {
+                val.Chon = val.Chon();
+            });
+            //
+            var obj =
+            {
+                IDNhanVien: idNhanVien,
+                DanhSachDTO_Thu: self.thuList(),
+                TuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate'),
+                DenNgay: $('#jqxToDate1').jqxDateTimeInput('getDate'),
+                GioBatDau: $("#GioBatDau").val(),
+                PhutBatDau: $("#PhutBatDau").val(),
+                GioKetThuc: $("#GioKetThuc").val(),
+                PhutKetThuc: $("#PhutKetThuc").val(),
+                LyDo: $("#txtLyDo").val()
+            };
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({
+                    obj: obj,
+                    idwebuser: self.UserId()
+                }),
+                contentType: "application/json; charset=utf-8",
+                url: '/WebServices/Save_DangKyChamCongNgoaiGio',
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.LUU_THANH_CONG"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        $("#popupWindowCCNGNew").data("kendoWindow").close();
+                    }
+                    else {
+                        alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.LUU_THAT_BAI"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        $("#popupWindowCCNGNew").data("kendoWindow").close();
+                    }
+                    //location.reload();
+                }
+            });
+        },
+        Edit: function () {
+            var self = this;
+            //
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            //
+            var selectedRecords = new Array();
+            for (var i = 0, l = rows.length; i < l ; i++) {
+                //
+                var rows = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                $(self.returnData).each(function (index, value) {
+                    $(rows).each(function (index1, value1) {
+                        //
+                        if (value.Oid == value1.Oid && value.SoGioThucTe != value1.SoGioThucTe) {
+                            //
+                            selectedRecords.push({
+                                Oid: value1.Oid,
+                                SoGioThucTe: value1.SoGioThucTe
+                            });
+                        }
+                    });
+                })
+                //
+            }
+            if (selectedRecords.length == 0) {
+                alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CHUA_CO_DU_LIEU_NAO_THAY_DOI"));
+                return;
+            }
+
+            if (selectedRecords.length > 0) {
+
+               
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgoaiGio_Save',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: ko.toJSON({
+                        objList: selectedRecords
+                    }),
+                    success: function (result) {
+                        var obj = result;
+                        if (obj.message == "success") {
+                            //
+                            alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CAP_NHAT_THANH_CONG"));
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                        else {
+                            alert(dataLocalize("QUAN_LY_NGOAI_GIO.ALERT.CAP_NHAT_THAT_BAI"));
+                        }
+                    }
+                });
+
+            }
+        },
+        excel: function () {
+            var self = this;
+            var arr = new Array();
+            var rows = self.datagrid.jqxGrid('getrows');
+            for (var i = 0; i < rows.length; i++) {
+                var item = rows[i];
+                arr.push({
+                    MaNhanVien: item.MaNhanVien,
+                    HoTen: item.HoTen,
+                    TenBoPhan: item.TenBoPhan,
+                    Ngay: item.Ngay,
+                    TuGio: item.TuGio,
+                    DenGio: item.DenGio,
+                    TuGioThucTe: item.TuGioThucTe,
+                    DenGioThucTe: item.DenGioThucTe,
+                    SoGioDangKy: item.SoGioDangKy,
+                    SoGioThucTe: item.SoGioThucTe,
+                    TrangThai_TP: item.TrangThai_TP,
+                    TrangThai_Admin: item.TrangThai_Admin,
+                    TrangThai_BGH: item.TrangThai_BGH,
+                    TenLoaiNgay: item.TenLoaiNgay,
+                    LyDo: item.LyDo
+                });
+            }
+            this.datagrid.jqxGrid('exportdata', 'xls', dataLocalize("QUAN_LY_NGOAI_GIO.QUAN_LY_NGOAI_GIO"), true, arr);
+            //this.datagrid.jqxGrid('showcolumn', 'TrangThai');
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlycongtac")[0]);
+    });
+</script>
+<div id="quanlycongtac">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000; text-transform:uppercase;"><h4><span data-i18n="QUAN_LY_NGOAI_GIO.QUAN_LY_NGOAI_GIO">QUẢN LÝ NGOÀI GIỜ</span></h4></div>
+    <div data-bind="if: !IsTruongBoPhan()">
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="buttons-preview" id="userManage" style="margin-left:15px;">
+                    <div class="row">
+                        <div data-bind="if:IsAdmin">
+                            <div class="col-lg-2 col-xs-12 col-sm-6">
+                                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: New">
+                                    <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="QUAN_LY_NGOAI_GIO.TAO_MOI">Tạo mới</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div data-bind="if:IsAdmin">
+                            <div class="col-lg-2 col-xs-12 col-sm-6">
+                                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: remove">
+                                    <i class="btn-label glyphicon glyphicon-remove"></i><span data-i18n="QUAN_LY_NGOAI_GIO.XOA">Xóa</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: accept">
+                                <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="QUAN_LY_NGOAI_GIO.DUYET">Duyệt</span>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: cancel">
+                                <i class="btn-label glyphicon glyphicon-remove"></i><span data-i18n="QUAN_LY_NGOAI_GIO.HUY_DUYET">Hủy duyệt</span>
+                            </a>
+                        </div>
+                        <div data-bind="if:IsAdmin">
+                            <div class="col-lg-2 col-xs-12 col-sm-6">
+                                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: Edit">
+                                    <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="QUAN_LY_NGOAI_GIO.CAP_NHAT">Cập nhật</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: excel">
+                                <i class="btn-label glyphicon glyphicon-random"></i><span data-i18n="QUAN_LY_NGOAI_GIO.XUAT_EXCEL">Xuất Excel</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <div class="form-group">
+            <input type="text" data-i18n="[placeholder]QUAN_LY_NGOAI_GIO.NGAY" placeholder="ngày" data-bind="value:day, disable: nhacViec && tatCaDonChuaDuyet" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+            -
+            <input type="text" data-i18n="[placeholder]QUAN_LY_NGOAI_GIO.THANG" placeholder="tháng" data-bind="value: month, disable: nhacViec && tatCaDonChuaDuyet" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+            -
+            <input type="text" data-i18n="[placeholder]QUAN_LY_NGOAI_GIO.NAM" placeholder="năm" data-bind="value: year, disable: nhacViec && tatCaDonChuaDuyet" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+            <span data-bind="if: nhacViec" style="padding-left:10px;">
+                <input type="checkbox" data-bind="checked: tatCaDonChuaDuyet" />
+                <label class="control-label"><span data-i18n="QUAN_LY_NGOAI_GIO.TAT_CA_DON_CHUA_DUYET">Tất cả đơn chưa duyệt</span></label>
+            </span>
+        </div>
+        <div class="form-group">
+            <!-- ko if: company().length > 1 -->
+            <label class="control-label no-padding-right" style="padding-top:10px;"><span data-i18n="QUAN_LY_NGOAI_GIO.TRUONG">Trường:</span></label>
+            <select style="width: 250px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+            <!-- /ko -->
+            <label class="control-label no-padding-right" style="padding-top:10px;"><span data-i18n="QUAN_LY_NGOAI_GIO.DON_VI">Đơn vị:</span></label>
+            <select style="width: 250px" data-bind="options: bophan, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: bophanSelected"></select>
+            <span data-bind="visible: !nhacViec">
+                <select data-bind="options: trangthaiList, optionsText: 'Name', optionsValue: 'Id', value: trangthaiSelected"></select>
+            </span>
+            <input type="button" data-i18n="[value]QUAN_LY_NGOAI_GIO.TIM" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        </div>
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div class="row" style="padding-top:20px">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-4 col-xs-12 col-sm-4">
+                        <img src='/Images/InfoSmall.jpg' />
+                        <span data-i18n="QUAN_LY_NGOAI_GIO.TABLE.TT_CHO_XET">Chờ xét</span>
+                    </div>
+                    <div class="col-lg-4 col-xs-12 col-sm-4">
+                        <img src='/Images/TT_yes.png' />
+                        <span data-i18n="QUAN_LY_NGOAI_GIO.TABLE.TT_CHAP_NHAN">Chấp nhận</span>
+
+                    </div>
+
+                    <div class="col-lg-4 col-xs-12 col-sm-4">
+                        <img src='/Images/TT_no.png' />
+                        <span data-i18n="QUAN_LY_NGOAI_GIO.TABLE.TT_KHONG_CHAP_NHAN">Không chấp nhận</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:20px;color:#00a6a6">
+            <div style="padding-top:15px;font-size:24px;font-weight:bold;text-align:center"><span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_DANG_KY_LAM_NGOAI_GIO">QUY ĐỊNH ĐĂNG KÝ LÀM NGOÀI GIỜ</span></div>
+            <div style="padding-left:15px;vertical-align: baseline;padding-top:10px;">
+                <span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_1">
+                    1. Việc tính công ngoài giờ chỉ thực hiện cho trường hợp làm thêm giờ theo yêu cầu của Trưởng Bộ phận/Quản lý/Ban Giám hiệu và có xác nhận của Trưởng Bộ phận/Quản lý/Ban Giám hiệu; không tính công ngoài giờ đối với các trường hợp làm thêm giờ để hoàn thành công việc thường nhật hoặc công việc theo kế hoạch, dự án đã được phân công, hoặc đối với Nhân viên có tính chất công việc thường xuyên làm thêm giờ đã được khoán vào lương, hoặc đối với cấp từ Trưởng bộ phận trở lên.
+                </span>
+            </div>
+            <div style="padding-left:15px;padding-top:5px;">
+                <span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_2">
+                    2. Trưởng bộ phận/ Quản lý/Ban giám hiệu có trách nhiệm gửi "Kế hoạch làm ngoài giờ" / "Phiếu đề xuất làm ngoài" giờ được sự phê duyệt của Ban Tổng Giám đốc cho Bộ phận Nhân sự để xác minh tính hợp lệ của việc đăng kí làm ngoài giờ.
+                </span>
+            </div>
+            <div style="padding-left:15px;padding-top:5px;">
+                <span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_3">
+                    3. Nhân viên phải thực hiện chấm công khi làm thêm giờ trừ trường hợp làm thêm giờ bên ngoài Trường. Trường hợp này phải có xác nhận từ Trưởng bộ phận/ Quản lý/Ban giám hiệu.
+                </span>
+            </div>
+            <div style="padding-left:15px;padding-top:5px;">
+                <span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_4">
+                    4. Trưởng bộ phận/ Quản lý/Ban giám hiệu có trách nhiệm cuối cùng trong việc xác minh tính chính xác và phù hợp với yêu cầu công việc của các ngày/ giờ làm thêm của Nhân viên thuộc đơn vị mình quản lý.
+                </span>
+            </div>
+            <div style="padding-left:15px;padding-top:5px;">
+                <span data-i18n="QUAN_LY_NGOAI_GIO.QUY_DINH.QUY_DINH_5">
+                    5. Việc đăng kí làm ngoài giờ chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupWindowCCNGNew"></div>
+</div>

@@ -1,0 +1,51 @@
+﻿<md-content layout-padding="">
+    <form class="form-horizontal" name="BaoCaoDanhGiaForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Báo Cáo Đánh Giá</h3>
+        </div>
+
+        <div layout="row">
+            <md-input-container flex="80">
+                <label>Tên Báo Cáo</label>
+                <input required="" size="24" name="MoTa" ng-model="obj.MoTa">
+                <div ng-messages="BaoCaoDanhGiaForm.MoTa.$error">
+                    <div ng-message="required">Bắt buộc.</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div class="md-padding demo checkboxdemoSelectAll">
+            <div layout="row" layout-wrap="">
+                <div flex="100" layout="column">
+                    <div>
+                        <div layout="row" layout-wrap="" flex="">
+                            <div>
+                                <md-input-container>
+                                    <label>Loại bộ đánh giá</label>
+                                    <md-select style="margin:0px;" ng-model="obj.LoaiBoDanhGiaId">
+                                        <md-option ng-repeat="it in ListBoDanhGia" ng-value="it.Id">
+                                            {{it.TenLoai}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div>
+                                <md-input-container>
+                                    <md-datepicker ng-model="obj.TuNgay" md-placeholder="Từ ngày"></md-datepicker>
+                                </md-input-container>
+                            </div>
+                            <div>
+                                <md-input-container>
+                                    <md-datepicker ng-model="obj.DenNgay" md-placeholder="Đến ngày" ></md-datepicker>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="saveBoDanhGia()" ng-disabled="BaoCaoDanhGiaForm.$invalid">Save</button>
+            <button class="btn btn-warning" ng-click="$dismiss()">Cancel</button>
+        </div>
+    </form>
+</md-content>

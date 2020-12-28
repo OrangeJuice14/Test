@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_LogDanhGia, HRMWebApp.KPI.DB" table="ABC_LogDanhGia">
+    <id name="Id" column="Oid"></id>
+    <property name="ThoiGianDanhGia" column="ThoiGianDanhGia"></property>
+    <property name="IsLock" column="IsLock"></property>
+    <property name="TongDiem" column="TongDiem"></property>
+    <property name="TimeLog" column="TimeLog"></property>
+    <many-to-one name="UserDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_User" column="UserDanhGiaId" />
+    <many-to-one name="UserDuocDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_User" column="UserDuocDanhGiaId" />
+    <many-to-one name="KyDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_KyDanhGia" column="KyDanhGiaId" />
+    <many-to-one name="BoTieuChi" class="HRMWebApp.KPI.DB.Entities.ABC_BoTieuChi" column="BoTieuChiId" />
+    <many-to-one name="UserDanhGia_Group" class="HRMWebApp.KPI.DB.Entities.ABC_GroupDanhGia" column="UserDanhGia_GroupId" />
+    <many-to-one name="DanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_DanhGia" column="DanhGiaId" />
+  </class>
+</hibernate-mapping>

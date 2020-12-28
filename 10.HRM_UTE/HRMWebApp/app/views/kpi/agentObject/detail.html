@@ -1,0 +1,92 @@
+﻿
+<style>
+    label {
+        font-weight: bold;
+    }
+
+    .formItems textarea {
+        padding-left: 10px;
+    }
+
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #787878 !important;
+    }
+    .agentObjectDetail-dialog .modal-dialog {
+        min-width: 600px;
+    }
+</style>
+
+<form name="agentObjctDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': agentObjctDetailForm.name.$invalid}">
+            <label for="inputFirstName" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" placeholder="Tên ..." required ng-model="obj.Name">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="agentObjctDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Loại đối tượng</label>
+            <div class="col-md-6">
+                <select class="form-control" ng-model="obj.AgentObjectTypeId" name="AgentObjectTypeSelect" ng-options="listType.Id as listType.Name for listType in agentObjectTypes">
+                    <option value="">Chọn loại đối tượng ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Nhóm mục tiêu</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="targetGroupDetails" k-ng-model="obj.TargetGroupDetailIds"></select>
+            </div>
+        </div>
+       
+        <div ng-show="obj.AgentObjectTypeId == 1">
+            <button ng-if="workingModeLists.length > 0" ng-click="NewWorkingMode()" class="btn btn-primary"><i class='fa fa-plus'></i> Thêm chế độ làm việc</button>
+            <div kendo-tab-strip="mainTab" id="mainAgentObjectTabId" k-content-urls="[ null, null]" k-ng-delay="obj.AgentObjectDetails">
+                <ul>
+                    <li ng-repeat="(index, ao) in obj.AgentObjectDetails track by $index" ng-class="{'k-state-active': index==0}">{{ao.WorkingModeName != '' ? ao.WorkingModeName : 'chế độ'}}</li>
+                </ul>
+                <div ng-repeat="ao in obj.AgentObjectDetails track by $index" style="overflow: hidden" class="formItems">
+                    <div class="row col-md-12">
+                        <div class="form-group">
+                            <label for="selectType" class="col-md-4 control-label">Định mức giảng dạy</label>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="options" k-ng-model="ao.NumberOfSection" style="width:100px" />
+                            </div>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="ao.NumberOfSectionDensity" style="width:100px" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectType" class="col-md-4 control-label">Định mức NCKH</label>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="options" k-ng-model="ao.ScienceResearch" style="width:100px" />
+                            </div>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="ao.ScienceResearchDensity" style="width:100px" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="selectType" class="col-md-4 control-label">Định mức hoạt động khác</label>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="otherActivityOptions" k-ng-model="ao.OtherActivity" style="width:100px" />
+                            </div>
+                            <div class="col-md-3">
+                                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="ao.OtherActivityDensity" style="width:100px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="agentObjctDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

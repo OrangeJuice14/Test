@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_KetQuaChiTiet, HRMWebApp.KPI.DB" table="ABC_KetQuaChiTiet">
+    <id name="Id" column="Oid"></id>
+    <property name="Diem" column="Diem"></property>
+    <property name="GhiChu" column="GhiChu"></property>
+    <property name="YKienDanhGia" column="YKienDanhGia"></property>
+    <property name="IsChecked" column="IsChecked"></property>
+    <many-to-one name="TieuChiDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_TieuChiDanhGia" column="TieuChiDanhGiaId"></many-to-one>
+    <many-to-one name="ChiTietNhanVienDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_ChiTietNhanVienDanhGia" column="ChiTietNhanVienDanhGiaId"></many-to-one>
+    <!--<many-to-one name="Parent" class="HRMWebApp.KPI.DB.Entities.ABC_KetQuaChiTiet" column="ParentId"></many-to-one>-->
+    <!--<many-to-one name="ChiTietNhanVienDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_ChiTietNhanVienDanhGia" column="ChiTietNhanVienDanhGiaId"></many-to-one>-->
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,96 @@
+﻿<div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center">STT</th>
+                <th style="text-align: center">Nội dung</th>
+                <th style="text-align: center">Số tiền</th>
+                <th style="text-align: center; width: 40%">Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko if: ThueTNCN -->
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">1</td>
+                <td>Tổng thu nhập trong tháng</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().TongThuNhap)"></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">2</td>
+                <td>Tổng các khoản thu nhập không chịu thuế</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().TongThuNhap - ThueTNCN().TongThuNhapChiuThue)"></td>
+                <td style="text-align: right">Bao gồm phụ cấp thâm niên, ưu đãi, tiền ăn và các khoản thu nhập khác không tính thuế</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">3</td>
+                <td>Tổng thu nhập chịu thuế trong tháng</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().TongThuNhapChiuThue)"></td>
+                <td style="text-align: right">3 = 1-2</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">4</td>
+                <td>Các khoản được giảm trừ không tính thuế</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().TongGiamTru)"></td>
+                <td style="text-align: right">4 = 4.1 + 4.2 + 4.3</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">4.1</td>
+                <td>- Giảm trừ bản thân</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().GiamTruBanThan)"></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center">4.2</td>
+                <td>- Giảm trừ người phụ thuộc</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().GiamTruGiaCanh)"></td>
+                <td style="text-align: right">= Số người phụ thuộc * Mức giảm trừ người phụ thuộc</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">4.3</td>
+                <td>- Bảo hiểm</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().GiamTruBaoHiem)"></td>
+                <td style="text-align: right"></td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">5</td>
+                <td>Thu nhập tính thuế</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().ThuNhapTinhThue)"></td>
+                <td style="text-align: right">5 = 3 - 4</td>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td style="text-align: center">6</td>
+                <td>Số thuế TNCN phải nộp trong tháng</td>
+                <td style="text-align: right" data-bind="text: numberFormat(ThueTNCN().ThueTNCNPhaiNop)"></td>
+                <td style="text-align: right">= 5 * mức tính thuế lũy tiến</td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <br />
+    <p style="font-weight:bold;">Bảng thuế suất lũy tiến theo tháng</p>
+    <p>(theo phụ lục : PL01/PL-TNCN ban hành kèm theo thông tư 11/2013/TT-BTC)</p>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th rowspan="2" style="text-align: center; vertical-align: middle;">Bậc</th>
+                <th rowspan="2" style="text-align: center; vertical-align: middle;">Thu nhập tính thuế / tháng</th>
+                <th rowspan="2" style="text-align: center; vertical-align: middle;">Thuế suất</th>
+                <th colspan="2" style="text-align: center; vertical-align: middle;">Tính số thuế phải nộp</th>
+            </tr>
+            <tr>
+                <th style="text-align: center; vertical-align: middle;">Cách 1</th>
+                <th style="text-align: center; vertical-align: middle;">Cách 2</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: BangThueSuat">
+            <tr>
+                <td data-bind="text: Bac"></td>
+                <td data-bind="text: ThuNhap"></td>
+                <td data-bind="text: ThueSuat"></td>
+                <td data-bind="text: Cach1"></td>
+                <td data-bind="text: Cach2"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

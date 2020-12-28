@@ -1,0 +1,294 @@
+﻿
+<script type="text/javascript">
+
+    function viewModel() {
+        var self = this;
+        //
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var currentDay = day + '/' + month + '/' + year;
+        //
+        self.Oid = ko.observable("");
+        self.SoNgayNghiPhep = ko.observable("0");
+        self.DonGiaNgoaiGio = ko.observable("0");
+        self.TuNgay_Doc = ko.observable(currentDay);
+        self.DenNgay_Doc = ko.observable(currentDay);
+        self.TuNgay_Chot = ko.observable(currentDay);
+        self.DenNgay_Chot = ko.observable(currentDay);
+        self.NhanVienList = ko.observableArray();
+        self.SelectedNhanVien = ko.observable(null);
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/CauHinhChamCong_Find',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.Oid = obj.Oid,
+                self.SoNgayNghiPhep = obj.SoNgayNghiPhep;
+                self.DonGiaNgoaiGio = obj.DonGiaNgoaiGio;
+            }
+        });
+        
+        //Khởi tạo ngày
+        $("#jqxTuNgay_Doc").jqxDateTimeInput({ width: '250px', height: '25px' });
+        $("#jqxDenNgay_Doc").jqxDateTimeInput({ width: '250px', height: '25px' });
+        $("#jqxTuNgay_Chot").jqxDateTimeInput({ width: '250px', height: '25px' });
+        $("#jqxDenNgay_Chot").jqxDateTimeInput({ width: '250px', height: '25px' });
+
+        //Lấy danh sách nhân viên đã chấm công trong tháng
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_HoSoNhanVienCoIDChamCong',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var nhanVienList = result;
+                //
+                self.NhanVienList(nhanVienList);
+            }
+        });
+
+        //Gán dữ liệu vào combobox
+        //var serializedArr = JSON.stringify(eval("(" + self.NhanVienList() + ")"));
+        var dataSource = self.NhanVienList();
+
+        //// create ComboBox from input HTML element
+        $("#comboboxNhanVien").kendoComboBox({
+            dataTextField: "HoTen",
+            dataValueField: "Oid",
+            dataSource: dataSource,
+            filter: "contains",
+            suggest: true,
+            select: onSelectNhanVien
+        });
+        function onSelectNhanVien(e) {
+            var dataItem = this.dataItem(e.item.index());
+            self.SelectedNhanVien = dataItem.Oid;
+        };
+
+    }
+    viewModel.prototype = {
+        validate: function () {
+            var self = this;
+            if (isNaN(self.SoNgayNghiPhep)) {
+                alert("Số ngày phép không hợp lệ !!");
+                return true;
+            }
+            if (isNaN(self.DonGiaNgoaiGio)) {
+                alert("Đơn giá ngoài giờ không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        save: function () {
+            var self = this;
+            
+            if (self.validate())
+            {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/CauHinhChamCong_Save',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    oid: self.Oid,
+                    songaynghiphep: self.SoNgayNghiPhep,
+                    dongiangoaigio: self.DonGiaNgoaiGio
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.success == 'success') {
+                        alert("Lưu thành công !!");
+                    }
+                    else
+                    {
+                        alert("Lưu thất bại !!");
+                    }
+                }
+            });
+        },
+        getdata: function () {
+
+            var self = this;
+            //
+            var TuNgay_Doc = $('#jqxTuNgay_Doc').jqxDateTimeInput('getDate');
+            var DenNgay_Doc = $('#jqxDenNgay_Doc').jqxDateTimeInput('getDate');
+            //
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetDuLieuTuMayChamCong',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    tungay: TuNgay_Doc,
+                    denngay: DenNgay_Doc
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.success == 'success') {
+                        alert("Lấy dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Lấy dữ liệu thất bại !!");
+                    }
+                }
+            });
+
+        },
+        clockdata: function () {
+            var self = this;
+            //
+            var TuNgay_Chot = $('#jqxTuNgay_Chot').jqxDateTimeInput('getDate');
+            var DenNgay_Chot = $('#jqxDenNgay_Chot').jqxDateTimeInput('getDate');
+
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotDuLieuTuMayChamCongTuNgay_DenNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nhanvien: self.SelectedNhanVien,
+                    tungay: TuNgay_Chot,
+                    denngay: DenNgay_Chot,
+                    type: 1 // Chạy chốt
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.success == 'success') {
+                        alert("Chốt dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Chốt dữ liệu thất bại !!");
+                    }
+                }
+            });
+        },
+        removedata: function () {
+            var self = this;
+            //
+            var TuNgay_Chot = $('#jqxTuNgay_Chot').jqxDateTimeInput('getDate');
+            var DenNgay_Chot = $('#jqxDenNgay_Chot').jqxDateTimeInput('getDate');
+            //
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotDuLieuTuMayChamCongTuNgay_DenNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nhanvien: self.SelectedNhanVien,
+                    tungay: TuNgay_Chot,
+                    denngay: DenNgay_Chot,
+                    type: 0 // Hủy chốt
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.success == 'success') {
+                        alert("Hủy chốt dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Hủy chốt dữ liệu thất bại !!");
+                    }
+                }
+            });
+        }
+    };
+    $(function () {
+        var view = new viewModel();
+        ko.applyBindings(view, $("#cauhinhchamcong")[0]);
+    });
+
+</script>
+
+<div id="cauhinhchamcong">
+
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="form-horizontal form-bordered">
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">CẤU HÌNH CHẤM CÔNG</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Số ngày nghỉ phép:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: SoNgayNghiPhep" style="width: 200px; padding:5px;" />
+                </div>
+            </div><div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đơn giá ngoài giờ:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: DonGiaNgoaiGio" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: save">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                    </a>
+                </div>
+            </div>
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">ĐỌC DỮ LIỆU TỪ MÁY CÔNG</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+                <div class="col-sm-7">
+                    <div id='jqxTuNgay_Doc'></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+                <div class="col-sm-7">
+                    <div id='jqxDenNgay_Doc'></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: getdata">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lấy dữ liệu
+                    </a>
+                </div>
+            </div>  
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">CHỐT DỮ LIỆU CHẤM CÔNG</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Nhân Viên:</label>
+                <div class="col-sm-7">
+                    <input id="comboboxNhanVien" placeholder="Chọn..." style="width: 300px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+                <div class="col-sm-7">
+                    <div id='jqxTuNgay_Chot'></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+                <div class="col-sm-7">
+                    <div id='jqxDenNgay_Chot'></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: clockdata">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Chốt chấm công
+                    </a>
+                    <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: removedata">
+                        <i class="btn-label glyphicon glyphicon-upload"></i>Hủy chốt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

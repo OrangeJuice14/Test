@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_QuanLyDonVi, HRMWebApp.KPI.DB" table="ABC_QuanLyDonVi" dynamic-update="true">
+    <id name="Id" column="Oid"></id>
+    <many-to-one name="User" class="HRMWebApp.KPI.DB.Entities.WebUser" column="UserId" />
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId" />
+  </class>
+</hibernate-mapping>

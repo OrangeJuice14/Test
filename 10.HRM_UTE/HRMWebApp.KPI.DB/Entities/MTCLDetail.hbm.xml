@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.MTCLDetail, HRMWebApp.KPI.DB" table="dbo.KPI_MTCLDetail">
+    <id name="Id" column="ID"></id>
+    <property name="SoDiem" column="SoDiem"></property>
+    <property name="MaCanBo" column="MaCanBo"></property>
+    <property name="TenCanBo" column="TenCanBo"></property>
+    <many-to-one name="Khoa" class="HRMWebApp.KPI.DB.Entities.Department" column="Khoa"/>
+    <many-to-one name="IdCanBo" class="HRMWebApp.KPI.DB.Entities.Staff" column="IdCanBo"/>
+  </class>
+</hibernate-mapping>

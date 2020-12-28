@@ -1,0 +1,59 @@
+﻿
+
+<md-content layout-padding="">
+    <form class="form-horizontal" name="ChiTietDanhGiaForm" role="form" novalidate ng-disabled="BoDanhGia.IsLock">
+        <div class="modal-header">
+            <h3 class="modal-title">Chi Tiết Đánh Giá</h3>
+        </div>
+        <div>
+
+            <md-input-container style="margin: 18px 0; width:100%; height:150px;">
+                <label>Tên Tiêu Chí</label>
+                <textarea required="" ckeditor id="TenTieuChi" name="TenTieuChi" ng-model="obj.TenTieuChi"></textarea>
+                <div ng-messages="ChiTietDanhGiaForm.TenTieuChi.$error">
+                    <div ng-message="required">Bắt buộc.</div>
+                </div>
+            </md-input-container>
+
+        </div>
+        <div layout="row">
+            <md-input-container style="margin: 18px 0 0 0;" class="md-block">
+                <label>STT</label>
+                <input id="STT1" name="STT" value="0" ng-model="obj.STT">
+                <div ng-messages="ChiTietDanhGiaForm.DiemToiDa.$error" multiple="" md-auto-hide="false">
+                </div>
+            </md-input-container>
+            <md-input-container style="margin: 18px 0 0 0;" class="md-block">
+                <label>STT</label>
+                <input id="STT1" name="STT" value="0" ng-model="obj.DiemToiDa">
+                <div ng-messages="ChiTietDanhGiaForm.DiemToiDa.$error" multiple="" md-auto-hide="false">
+                </div>
+            </md-input-container>
+            <md-input-container style="margin:18px 0 0 0;" flex="20">
+                <div layout="row" style="margin: 5px 0 0 5px;">
+                    <md-checkbox ng-model="obj.ChildSelectOne"></md-checkbox>
+                    <div style="padding-top:2px">Mục con chỉ chọn một</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container style="margin:0" flex="20">
+                <div layout="row" style="margin: 5px 0 0 5px;">
+                    <md-checkbox name="Parent" ng-model="ShowParent"  ng-disabled="obj.ParentSTT=='-1'" ></md-checkbox>
+                    <div style="padding-top:2px">Tiêu chí con</div>
+                </div>
+            </md-input-container>
+            <md-input-container style="margin:0" flex="40" ng-show="ShowParent">
+                <label>Con của mục</label>
+                <md-select ng-model="obj.ParentId"  ng-disabled="obj.ParentSTT=='-1'" >
+                    <md-option ng-repeat="item in ListTieuChiDanhGia" ng-value="item.Id" ng-bind-html="item.TenTieuChi"></md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="delete()" ng-disabled="ChiTietDanhGiaForm.$invalid || BoDanhGia.IsLock">Xóa</button>
+            <button class="btn btn-primary" ng-click="update()" ng-disabled="ChiTietDanhGiaForm.$invalid || BoDanhGia.IsLock">Cập nhật</button>
+            <button class="btn btn-warning" ng-click="$dismiss()">Cancel</button>
+        </div>
+    </form>
+</md-content>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_GroupDanhGia, HRMWebApp.KPI.DB" table="ABC_GroupDanhGia" dynamic-update="true">
+    <id name="Id" column="Oid"></id>
+    <property name="Name" column="Name"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+    <property name="STT" column="STT"></property>
+    <property name="DaiDienDanhGia" column="DaiDienDanhGia"></property>
+    <property name="TuDanhGia" column="TuDanhGia"></property>
+    <property name="DanhGiaCapDuoi" column="DanhGiaCapDuoi"></property>
+    <property name="HasQuanLyDonVi" column="HasQuanLyDonVi"></property>
+    <property name="TimeDelete" column="TimeDelete"></property>
+    <property name="UserDeleteId" column="UserDeleteId"></property>
+    <property name="AddTime" column="AddTime"></property>
+    <property name="AddUserId" column="AddUserId"></property>
+    <property name="LastEditTime" column="LastEditTime"></property>
+    <property name="LastEditUserId" column="LastEditUserId"></property>
+  </class>
+</hibernate-mapping>

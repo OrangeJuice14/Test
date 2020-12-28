@@ -1,0 +1,73 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="targetGroupDetailForm" role="form" class="form-horizontal" novalidate >
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="density" class="col-md-4 control-label">STT</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="orderOptions" k-ng-model="obj.OrderNumber" />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': targetGroupDetailForm.inputFirstName.$invalid}">
+            <label for="inputFirstName" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="inputFirstName" placeholder="Tên ..." required ng-model="obj.Name">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="targetGroupDetailForm.inputFirstName.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': targetGroupDetailForm.density.$invalid}">
+            <label for="density" class="col-md-4 control-label">Tỷ trọng</label>
+            <div class="col-md-6">
+                <!--<input type="number" min="0" max="100" step="5" class="form-control" name="inputFirstName" placeholder="Tỷ trọng ..." required ng-model="obj.Density">-->
+                <input kendo-numeric-text-box k-options="options" k-ng-model="obj.Density" />
+                <!--<input type="hidden" name="density" ng-model="obj.Density" required />-->
+            </div>
+            <div class="col-md-2">
+                <span ng-show="targetGroupDetailForm.density.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Loại nhóm mục tiêu</label>
+            <div class="col-md-6">
+                <select ng-model="obj.TargetGroupDetailTypeId" ng-init="obj.TargetGroupDetailTypeId = 0" ng-options="listObj.Id as listObj.Name for listObj in targetGroupDetailTypes"></select>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label for="checkType" class="col-md-4 control-label">Nhóm được nhận chi tiết nhiệm vụ</label>
+            <div class="col-md-6">
+                <input type="checkbox" ng-model="Chitietnhiemvu" ng-checked="obj.IsCheck"/>
+            </div>
+        </div>-->
+        <!--<div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Nhóm phải nhận nhiệm vụ từ cấp trên</label>           
+                <div class="col-md-6">
+                    <select kendo-multi-select k-options="targetGroupDetails" k-ng-model="obj.TargetGroupDetailIds"></select>                   
+                </div>           
+        </div>-->
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Năm học</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="studyYears" k-ng-model="obj.StudyYearIds"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Đối tượng</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="agentObjects" k-ng-model="obj.AgentObjectIds"></select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="targetGroupDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

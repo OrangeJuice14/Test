@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_ClassRating, HRMWebApp.KPI.DB" table="ABC_ClassRating">
+    <id name="Id" column="ID"></id>
+    <many-to-one name="Staff" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffId" />
+    <many-to-one name="ABC_ClassEvaluationBoard" class="HRMWebApp.KPI.DB.Entities.ABC_ClassEvaluationBoard" column="ClassEvaluationBoardId" />
+    <property name="Classification" column="Classification"></property>
+    <property name="ClassificationSecond" column="ClassificationSecond"></property>
+    <property name="NoteSecond" column="NoteSecond"></property>
+    <property name="ClassificationThird" column="ClassificationThird"></property>
+    <property name="NoteThird" column="NoteThird"></property>
+    <property name="IsRated" column="IsRated"></property>
+    <property name="IsRatedSecond" column="IsRatedSecond"></property>
+    <property name="IsRatedThird" column="IsRatedThird"></property>
+    <property name="IsRatingLocked" column="IsRatingLocked"></property>
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId" />
+    <property name="DateRated" column="DateRated"></property>
+    <property name="DateRatedSecond" column="DateRatedSecond"></property>
+    <property name="DateRatedThird" column="DateRatedThird"></property>
+    <many-to-one name="StaffRatingSecond" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffRatingSecond" />
+    <many-to-one name="StaffRatingThird" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffRatingThird" />
+  </class>
+</hibernate-mapping>

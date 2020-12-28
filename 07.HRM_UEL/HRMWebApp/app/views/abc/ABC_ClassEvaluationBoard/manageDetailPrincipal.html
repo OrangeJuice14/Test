@@ -1,0 +1,133 @@
+﻿<style>
+    .modal-lg {
+        width: 1100px !important;
+    }
+
+    th, td {
+        vertical-align: middle !important;
+    }
+
+    td textarea {
+        padding: 0;
+        margin-top: 3px;
+    }
+
+    td > select {
+        width: 65px;
+    }
+
+    .sub-model-header button {
+        float: right;
+        margin-left: 5px;
+        margin-top: 10px;
+    }
+    
+    .modal-footer button {
+        display: inline;
+        float: right;
+        margin-left: 5px;
+    }   
+
+</style>
+<form name="departmentDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Bảng đánh giá {{evaluationBroadName}}</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div class="row sub-model-header">
+                <div class="col-sm-8">
+                    <h5>
+                        Danh sách CC, VC, NLĐ tại đơn vị
+                        <select ng-model="departmentSelected" ng-change="GetListStaffEvaluationByDepartment()" ng-options="department.Id as department.Name for department in departmentList | orderBy:'Name'"></select>
+                    </h5>
+                </div>
+                <div class="col-sm-4">
+                    <div ng-if="lockVisible">
+                        <button class="btn btn-danger" ng-click="lock()">Khóa</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered" style="margin-top:10px">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;vertical-align: middle;">STT</th>
+                        <th style="text-align:center;vertical-align: middle;">Chức vụ/Chức danh</th>
+                        <th style="text-align:center;vertical-align: middle;">Đánh giá</th>
+                        <th style="text-align:center;vertical-align: middle; width:90px;">Cá nhân đánh giá</th>
+                        <th style="text-align:center;vertical-align: middle; width:108px;">Trưởng đơn vị đánh giá</th>
+                        <th style="text-align: center;vertical-align: middle;">Ghi chú Trưởng đơn vị</th>
+                        <th style="text-align:center;vertical-align: middle; width:108px;">BGH đánh giá</th>
+                        <th style="text-align: center;vertical-align: middle;">Ghi chú BGH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in staffList">
+                        <td style="text-align:center;">
+                            {{$index + 1}}
+                        </td>
+                        <td>
+                            {{staff.StaffPosition}}
+                        </td>
+                        <td>
+                            <a href="/#/kpi/ABC_ClassRatingDetail/{{staff.ABC_ClassEvaluationBoardId}}/{{staff.StaffId}}/{{supervisorId}}/{{staff.DepartmentId}}/{{supervisorType}}/{{isSupervisor}}" ng-click="cancel()">{{staff.StaffName}}</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <span>{{staff.IsRated && staff.Classification || ''}}</span>
+                        </td>
+                        <td style="text-align:center;">
+                            <!--<span>{{staff.IsRatedSecond && staff.ClassificationSecond || ''}}</span>-->
+
+                            <div ng-if="staff.IsRatedSecond">{{staff.ClassificationSecond}}</div>
+                            <!-- Trưởng đơn vị -->
+                            <div ng-if="supervisorType == 1 && !staff.IsRatedSecond">
+                                <select ng-model="staff.ClassificationSecond">
+                                    <option value="A">A</option>
+                                    <option value="B1">B1</option>
+                                    <option value="B2">B2</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="staff.IsRatedSecond">{{staff.NoteSecond}}</div>
+                            <!-- Trưởng đơn vị -->
+                            <div ng-if="supervisorType == 1 && !staff.IsRatedSecond">
+                                <textarea ng-model="staff.NoteSecond" cols="25" rows="2"></textarea>
+                            </div>
+                        </td>
+                        <td style="text-align:center;">
+                            <!--<span>{{staff.IsRatedThird && staff.ClassificationThird || ''}}</span>-->
+
+                            <div ng-if="staff.IsRatedThird">{{staff.ClassificationThird}}</div>
+                            <!-- BGH -->
+                            <div ng-if="(supervisorType == 2 && !staff.IsRatedThird && staff.IsRatedSecond) || (staff.supervisorVisible)">
+                                <select ng-model="staff.ClassificationThird">
+                                    <option value="A">A</option>
+                                    <option value="B1">B1</option>
+                                    <option value="B2">B2</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="staff.IsRatedThird">{{staff.NoteThird}}</div>
+                            <!-- BGH -->
+                            <div ng-if="(supervisorType == 2 && !staff.IsRatedThird && staff.IsRatedSecond) || (staff.supervisorVisible)">
+                                <textarea ng-model="staff.NoteThird" cols="25" rows="2"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Hủy</button>
+        <div ng-if="lockVisible">
+            <button class="btn btn-danger" ng-click="lock()">Khóa</button>
+        </div>
+    </div>
+</form>

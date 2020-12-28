@@ -1,0 +1,22 @@
+﻿<div class="widget">
+    <div class="widget-header">
+        <span style="padding-right:10px" class="widget-caption">Danh sách bộ tiêu chí</span>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div ag-grid="gridOptions" style="text-align:left;max-height:700px ; overflow: auto;" class="ag-theme-balham">
+            <div ng-show="ListBoTieuChi.length == 0" style="color:red">Chưa có bộ tiêu chí nào</div>
+            <table class="table table-hover" border="1" style="border-color: lightgrey" ng-hide="ListBoTieuChi.length == 0">
+                <thead>
+                    <tr>
+                        <th>Tên bộ đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListBoTieuChi">
+                        <td><span style="cursor: pointer;" ng-click="BoTieuChiClick(item)">{{item.Name}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

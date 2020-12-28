@@ -1,0 +1,96 @@
+﻿
+<form class="form-horizontal" name="CriterionDetailForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="name" class="col-md-4 control-label">Mã hoạt động</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" ng-model="obj.ManageCode">
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" placeholder="Tên ..." required ng-model="obj.Name">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div ng-if="type==4" class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="hour" class="col-md-4 control-label">Số giờ</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="NumberOfHour_options" required k-ng-model="obj.NumberOfHour" />
+            </div>
+        </div>
+        <div ng-if="type!=4" class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="mark" class="col-md-4 control-label">Điểm</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.Record" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.mark.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div>
+            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+                <label for="hour" class="col-md-4 control-label">Giá trị từ</label>
+                <div class="col-md-6">
+                    <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.DataRecord" />
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+                <label for="hour" class="col-md-4 control-label">Giá trị đến</label>
+                <div class="col-md-6">
+                    <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.DataMaxRecord" />
+                </div>
+            </div>
+        </div>
+        <div ng-if="obj.Exception==2">
+            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+                <label for="hour" class="col-md-4 control-label">Số điểm SV đánh giá từ</label>
+                <div class="col-md-6">
+                    <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.DataRecord" />
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+                <label for="hour" class="col-md-4 control-label">Đến</label>
+                <div class="col-md-6">
+                    <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.DataMaxRecord" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="order" class="col-md-4 control-label">Thứ tự</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.OrderNumber" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.mark.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="order" class="col-md-4 control-label">Năm hiển thị </label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="studyYears" k-ng-model="obj.StudyYearIds"></select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="order" class="col-md-4 control-label">Mức độ</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.LevelIndex" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.LevelIndex.$error.required" class="help-block">*</span>
+            </div>
+        </div>  
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

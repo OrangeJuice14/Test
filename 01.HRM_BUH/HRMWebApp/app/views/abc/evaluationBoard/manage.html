@@ -1,0 +1,20 @@
+﻿
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">ĐÁNH GIÁ</span>
+        <div style="display:inline;line-height: 56px;margin-right:15px"><input style="width:80px" kendo-numeric-text-box="numeric" k-on-spin="updateYearValue()" k-options="numericOptions" k-ng-model="EvaluationYear" /></div>
+            <a style="float:right;margin-top:13px;" ng-click="New()" class="btn btn-labeled btn-blue">
+                <i class="btn-label fa fa-plus"></i>&nbsp;Tạo mới kỳ đánh giá năm
+               
+        </a>
+
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div kendo-treelist="grid" options="mainGridOptions" k-data-source="dataSource3"></div>
+            </div>
+    </div>
+</div>
+
+        
+

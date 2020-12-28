@@ -1,0 +1,35 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="agentObjctDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Loại thu nhập khác</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': agentObjctDetailForm.name.$invalid}">
+            <label for="inputFirstName" class="col-md-4 control-label">Mã quản lý</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.MaQuanLy">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="agentObjctDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': agentObjctDetailForm.name.$invalid}">
+            <label for="inputFirstName" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.TenLoaiThuNhapKhac">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="agentObjctDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+       </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="agentObjctDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

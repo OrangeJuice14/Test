@@ -1,0 +1,74 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Đổ MTCL nhân viên</span>
+        <button style="float:right;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+    </div>
+    <div class="widget-body">
+        <div class="row" style="padding-top:15px">
+           
+                <div class="col-md-3">
+                    <select ng-change="selectedChangeCap()" class="form-control" name="GroupSelect" required ng-model="CapMucTieu" ng-options="listObj.Id as listObj.Name for listObj in CapDanhMuc">
+                        <option value="">Chọn cấp danh mục...</option>
+                    </select>
+                </div>
+            <div ng-show="CapMucTieu == 1">
+                
+                <div class="col-md-3">
+                    <select class="form-control" name="GroupSelect" required ng-model="TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail">
+                        <option value="">Chọn nhóm mục tiêu cấp 1 ...</option>
+                    </select>
+                </div>
+            </div>
+            <div ng-show="CapMucTieu == 2">
+              
+                <div class="col-md-3">
+                    <select class="form-control" name="GroupSelect" required ng-model="TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail2">
+                        <option value="">Chọn nhóm mục tiêu cấp 2...</option>
+                    </select>
+                </div>
+            </div>
+            <div ng-show="CapMucTieu == 3">
+                
+                <div class="col-md-3">
+                    <select class="form-control" name="ManageCode" required ng-model="TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail3">
+                        <option value="">Chọn nhóm mục tiêu cấp 3 ...</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="col-md-2">
+                <select class="form-control" name="StaffSelect" ng-model="studyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Năm học ...</option>
+                </select>
+            </div>-->
+            <!--<div class="col-md-2">
+                <select class="form-control" name="StudyYearSelect" required ng-model="StudyTerm" ng-options="listObj.Id as listObj.Name for listObj in StudyTerms">
+                    <option value="">Chọn học kỳ ...</option>
+                </select>
+            </div>-->
+            <div class="col-md-2">
+                <button ng-click="SearchDept()" class="btn btn-primary" ng-disabled="CriterionForm.$invalid"><i class="fa fa-search"></i> </button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <label for="inputFirstName" class="col-md-6 control-label" style="font-size:16px;">Danh sách hoạt động</label>
+        </div>
+        <div class="widget-main">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div></br>
+        <div class="row">
+            <label for="inputNV" class="col-md-6 control-label" style="font-size:16px;">Danh sách nhân viên</label>
+        </div>
+        <div class="widget-main">
+            <div kendo-grid="grid1" k-data-source="dataSource1" k-options="mainGridOptionsUser"></div>
+        </div>
+    </div>
+</div>
+
+
+

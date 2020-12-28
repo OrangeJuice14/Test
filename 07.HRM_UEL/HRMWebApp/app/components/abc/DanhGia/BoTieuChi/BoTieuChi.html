@@ -1,0 +1,61 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span style="padding-right:10px" class="widget-caption">Danh sách bộ tiêu chí</span>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div style="width: 100%; text-align:center">
+            <i  ng-show="User == null" style="font-size:30px; color:red" class="fa fa-spinner fa-spin"></i>
+            <SPAN ng-show="User == 'ERRORS'"  style=" color:red">Không có thông tin tài khoản</SPAN>
+        </div>
+        <div ng-hide="User == null || User=='ERRORS'">
+            <ul class="nav nav-tabs" id="group-danh-gia">
+                <li ng-repeat="Group in User.ListGroupDanhGia" ng-class="$index == 0 ? 'active' : ''">
+                    <a data-toggle="tab" ng-href="#{{Group.Id}}" ng-click="GroupDanhGiaClick(Group.Id)">{{Group.Name}} ({{User.DepartmentName}})</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div ng-repeat="Group in User.ListGroupDanhGia" id="{{Group.Id}}" class="tab-pane fade" ng-class="$index == 0 ? 'in active' : ''">
+                    <ul class="nav nav-tabs">
+                        <li ng-if="Group.TuDanhGia" ng-class="Group.TuDanhGia == true ? 'active' : ''"><a data-toggle="tab" ng-href="#TuDanhGia{{Group.Id}}" ng-click="TuDanhGia()">Tự đánh giá</a></li>
+                        <li ng-if="Group.DanhGiaCapDuoi" ng-class="!Group.TuDanhGia == true ? 'active' : ''"><a data-toggle="tab" ng-href="#DanhGiaCapDuoi{{Group.Id}}" ng-click="DanhGiaCapDuoi()">Đánh giá cấp dưới</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="TuDanhGia{{Group.Id}}" ng-if="Group.TuDanhGia" class="tab-pane fade" ng-class="Group.TuDanhGia == true ? 'in active' : ''">
+                            <div ag-grid="gridOptions" style="text-align:left;max-height:700px ; overflow: auto;" class="ag-theme-balham">
+                                <div ng-show="Group.ListBoTieuChiTuDanhGia.length == 0 || Group.ListBoTieuChiTuDanhGia == undefined" style="color:red">Chưa có bộ tiêu chí nào</div>
+                                <table class="table table-hover" border="1" style="border-color: lightgrey" ng-hide="Group.ListBoTieuChiTuDanhGia.length == 0 || Group.ListBoTieuChiTuDanhGia == undefined">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên bộ đánh giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in Group.ListBoTieuChiTuDanhGia">
+                                            <td><span style="cursor: pointer;" ng-click="BoTieuChiTuDanhGiaClick(item)">{{item.Name}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="DanhGiaCapDuoi{{Group.Id}}" ng-if="Group.DanhGiaCapDuoi" class="tab-pane fade" ng-class="!Group.TuDanhGia == true ? 'in active' : ''">
+                            <div ng-show="Group.ListBoTieuChiDanhGiaCapDuoi.length == 0 || Group.ListBoTieuChiDanhGiaCapDuoi == undefined" style="color:red">Chưa có bộ tiêu chí nào</div>
+                            <table class="table table-hover" border="1" style="border-color: lightgrey" ng-hide="Group.ListBoTieuChiDanhGiaCapDuoi.length == 0 || Group.ListBoTieuChiDanhGiaCapDuoi == undefined">
+                                <thead>
+                                    <tr>
+                                        <th>Tên bộ đánh giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in Group.ListBoTieuChiDanhGiaCapDuoi">
+                                        <td><span style="cursor: pointer;" ng-click="BoTieuChiDanhGiaCapDuoiClick(item)">{{item.Name}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

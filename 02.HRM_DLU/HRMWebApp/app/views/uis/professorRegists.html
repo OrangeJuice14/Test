@@ -1,0 +1,104 @@
+﻿<style>
+    table th {
+        text-align: center;
+        color: #fff;
+    }
+</style>
+<link href="/CSS/uiscss.css" rel="stylesheet" /><div class="divmain">
+    <div class="bgtitle">Lớp học phần giảng dạy trong kỳ</div>
+    <div>
+        Năm học:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyYearId" ng-options="listobj.Id as listobj.Name for listobj in studyYears"></select>
+        Học kỳ:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyTermId" ng-options="listobj.Id as listobj.Name for listobj in studyTerms"></select>
+    </div>
+    <br />
+    <div>
+        <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+            <thead>
+                <tr style="background:#0094FF">
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>STC</th>
+                    <th>Hệ</th>
+                    <th>Lớp sinh viên</th>
+                    <th>Sĩ số</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sd in obj">
+                    <td>
+                        <div>
+                            {{sd.MaHocPhan}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.TenHocPhan}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.SoTinChi}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.HeDaoTao}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.LopSinhVien}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.SiSo}}
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        <div>
+                            <a href="http://online.dlu.edu.vn/Professor/Attendance/{{sd.MaMonHoc}}" target="_blank">
+                                <img src="/Images/kwrite.png" width="20px">
+                            </a>
+                        </div>
+                    </td>
+                    <!--<td>
+                        <div>
+                            {{sd.NgayBatDau}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.NgayKetThuc}}
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        <div>
+                            <a href="http://online.dlu.edu.vn/Professor/Attendance/{{sd.MaMonHoc}}" target="_blank">
+                                <img src="/Images/kwrite.png" width="20px">
+                            </a>
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        <div>
+                            <a href="http://online.dlu.edu.vn/Professor/ListStudent/{{sd.MaMonHoc}}" target="_blank"">
+                                <img src="/Images/list.png" width="20px">
+                            </a>
+                        </div>
+                    </td>-->
+                    <!--<td style="text-align:center">
+                        <div>
+                            <a href="javascript:void(0)">
+                                <img src="/Images/contact-list.png" width="20px">
+                            </a>
+                        </div>
+                    </td>-->
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

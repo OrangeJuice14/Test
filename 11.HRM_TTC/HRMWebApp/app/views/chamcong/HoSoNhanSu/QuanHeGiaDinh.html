@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="110%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 40px;">
+                    <th style="width: 120px" class="textToCenter">Tên người thân</th>
+                    <th class="textToCenter" style="width:  80px">Năm sinh</th>
+                    <th class="textToCenter" style="width:  80px">Quan hệ</th>
+                    <th class="textToCenter" style="width:  200px">Nơi ở hiện nay</th>
+                    <th class="textToCenter" style="width:  150px">Nghề nghiệp</th>
+                    <th class="textToCenter" style="width:  150px">Nơi làm việc</th>
+                    <th class="textToCenter" style="width:  80px">Tình trạng</th>
+                    <th class="textToCenter" style="width:  100px">Điện thoại</th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuanHeGiaDinh">
+                    <tr>
+                        <td data-bind="text: HoTen"></td>
+                        <td data-bind="text: NamSinh" class="textToCenter"></td>
+                        <td data-bind="text: QuanHe" class="textToCenter"></td>
+                        <td data-bind="text: NoiOHienNay" class="textToCenter"></td>
+                        <td data-bind="text: NgheNghiep" class="textToCenter"></td>
+                        <td data-bind="text: NoiLamViec" class="textToCenter"></td>
+                        <td data-bind="text: TinhTrang" class="textToCenter"></td>
+                        <td data-bind="text: DienThoaiDiDong" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

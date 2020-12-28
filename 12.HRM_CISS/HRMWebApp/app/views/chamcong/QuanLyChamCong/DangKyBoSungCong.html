@@ -1,0 +1,462 @@
+﻿<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var self = this;
+        var session = {};
+        //
+        $("#jqxTuNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        $("#jqxDenNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/KyChamCong_GetTuNgayDenNgay_ByNgay',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: ko.toJSON({ ngay: $('#jqxTuNgay').jqxDateTimeInput('getDate') }),
+            async: false,
+            success: function (result) {
+                if (result != null) {
+                    $("#jqxTuNgay").jqxDateTimeInput('setDate', result.TuNgay);
+                    $("#jqxDenNgay").jqxDateTimeInput('setDate', result.DenNgay);
+                }
+            }
+        });
+        //
+        self.UserId = ko.observable();
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.UserId(session.UserId);
+            }
+        });
+
+        var trangthaiArr = [
+            { Id: -1, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.TRANG_THAI_ARRAY.CHO_XET") },
+            { Id: 0, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.TRANG_THAI_ARRAY.KHONG_CHAP_NHAN") },
+            { Id: 1, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.TRANG_THAI_ARRAY.CHAP_NHAN") }
+        ];
+
+        self.buoiList = [
+                { Id: 1, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.BUOI_ARRAY.CA_NGAY") },
+                { Id: 2, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.BUOI_ARRAY.SANG") },
+                { Id: 3, Name: dataLocalize("DANG_KY_BO_SUNG_CONG.JS.BUOI_ARRAY.CHIEU") }
+        ];
+        self.buoiSelected = ko.observable(0);
+        self.lyDoBSC = ko.observable('');
+
+        self.returnData = [];
+        self.datagrid = datagrid;
+        //self.month = ko.observable(new Date().getMonth() + 1);
+        //self.year = ko.observable(new Date().getFullYear());
+        self.trangthaiList = ko.observableArray(trangthaiArr);
+        self.trangthaiSelected = ko.observable(-1);
+        self.HoTen = ko.observable("");
+        self.TuNgay = ko.observable(null);
+        self.DenNgay = ko.observable(null);
+
+        self.source = {
+            datatype: 'json',
+            datafields: [
+            { name: 'Oid', type: 'string' },
+            { name: 'HoTen', type: 'string' },
+            { name: 'TuNgay', type: 'date', format: 'dd-MM-yyyy' },
+            { name: 'DenNgay', type: 'date', format: 'dd-MM-yyyy' },
+            { name: 'Buoi', type: 'string' },
+            { name: 'LyDo', type: 'string' },
+            { name: 'NgayTao', type: 'date' },
+            { name: 'TrangThai', type: 'int' },
+            { name: 'IDNhanVien', type: 'string' },
+            { name: 'PhanHoi_NguoiDuyet', type: 'string' }
+            ],
+            id: 'Id',
+            sortcolumn: 'Name',
+            sortdirection: 'asc',
+            url: "/WebServices/CaNhanBoSungCong_Find",
+            formatdata: function (data) {
+                //
+                var date = $('#jqxTuNgay').jqxDateTimeInput('getDate');
+                var tuNgay = $.jqx.dataFormat.formatdate(date, 'd');
+                var date = $('#jqxDenNgay').jqxDateTimeInput('getDate');
+                var denNgay = $.jqx.dataFormat.formatdate(date, 'd');
+                //
+                return {
+                    tungay: tuNgay,
+                    denngay: denNgay,
+                    webUserId: session.UserId
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid({
+            source: self.dataAdapter,
+            width: '100%',
+            selectionmode: 'checkbox',
+            pageable: true,
+            pagesize: 10,
+            sortable: true,
+            autoheight: true,
+            autorowheight: true,
+            theme: "darkBlue",
+            columns: [
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.STT"), columntype: 'number', width: 45, editable: false, cellsrenderer: function (row, column, value) {
+                         return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                     }
+                 },
+
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.TU_NGAY"), datafield: 'TuNgay', width: 130, align: 'center', cellsalign: "middle", columnGroup: 'NgayDangKy', cellsformat: 'd/M/yyyy'
+                 },
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.DEN_NGAY"), datafield: 'DenNgay', width: 130, align: 'center', cellsalign: "middle", columnGroup: 'NgayDangKy', cellsformat: 'd/M/yyyy'
+                 },
+                {
+                    text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.BUOI"), datafield: 'Buoi', width: 100, align: 'center', cellsalign: "middle",
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        return "<div class='jqx-grid-cell-child'>" + self.buoiList.filter(q => q.Id == cellvalue)[0].Name + "</div>";
+                    }
+                },
+                  {
+                      text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.LY_DO"), datafield: 'LyDo', width: 180, align: 'center', cellsalign: "middle"
+                  },
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.NGAY_TAO"), datafield: 'NgayTao', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'd/M/yyyy'
+                 },
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.NHAN_VIEN"), datafield: 'IDNhanVien', width: 100, align: 'center', hidden: true
+                 },
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.TRANG_THAI"), datafield: 'TrangThai', align: 'center', width: 100, cellsalign: "middle",
+                     cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                         var str = "";
+                         if (cellvalue == -1) {
+                             str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                         }
+                         if (cellvalue == 1) {
+                             str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                         }
+                         if (cellvalue == 0) {
+                             str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                         }
+                         return str;
+                     }
+                 },
+                 {
+                     text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.PHAN_HOI"), datafield: 'PhanHoi_NguoiDuyet', width: 200, align: 'center', cellsalign: "middle"
+                 }
+            ],
+            columnGroups: [
+               { text: dataLocalize("DANG_KY_BO_SUNG_CONG.TABLE.NGAY_DANG_KY"), cellsAlign: 'center', align: 'center', name: 'NgayDangKy' }
+            ]
+        });
+        self.datagrid.jqxGrid('rendered', function () {
+            self.datagrid.jqxGrid('localizestrings', jqxLocalization());
+        });
+
+    }
+    //================
+    ViewModel.prototype = {
+        validate: function () {
+            var self = this;
+            if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.THANG_KHONG_HOP_LE"));
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.NAM_KHONG_HOP_LE"));
+                return true;
+            }
+            return false;
+        },
+        validateFromDateToDate: function (boSungCongOid, tuNgay, denNgay, webUserId, IDNhanVien, buoi) {
+            var check;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/CaNhanBoSungCong_KiemTraTuNgayDenNgayCoHopLe',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                async: false,
+                data: ko.toJSON({
+                    boSungCongOid: boSungCongOid,
+                    tuNgay: tuNgay,
+                    denNgay: denNgay,
+                    webUserId: webUserId,
+                    IDNhanVien: "",
+                    buoi: buoi
+                }),
+                complete: function (result) {
+                    var obj = result;
+                    check = obj.responseJSON;
+                }
+            });
+            return check;
+        },
+        save: function () {
+            var self = this;
+
+            //Kiểm tra từ ngày đến ngày hợp lệ
+            if ($('#jqxFromDateDKBSC').jqxDateTimeInput('getDate') > $('#jqxToDateDKBSC').jqxDateTimeInput('getDate')) {
+                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.TU_NGAY_DEN_NGAY_KHONG_HOP_LE"));
+                return;
+            }
+
+            //
+            if (self.validateFromDateToDate(null, $('#jqxFromDateDKBSC').jqxDateTimeInput('getDate'), $('#jqxToDateDKBSC').jqxDateTimeInput('getDate'), self.UserId(), "", self.buoiSelected())) {
+                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.THOI_GIAN_DANG_KY_BI_TRUNG"));
+                return;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/CaNhanBoSungCong_KhaiBaoMoi',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    tungay: $('#jqxFromDateDKBSC').jqxDateTimeInput('getDate'),
+                    denngay: $('#jqxToDateDKBSC').jqxDateTimeInput('getDate'),
+                    buoi: self.buoiSelected(),
+                    lyDo: self.lyDoBSC(),
+                    webUserId: self.UserId(),
+                    IDNhanVien: ""
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.LUU_THANH_CONG"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                    }
+                    else {
+                        alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.LUU_THAT_BAI"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                    }
+                    $("#popupDKBSC").jqxWindow('close');
+                }
+            });
+        },
+        search: function () {
+            var self = this;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        add: function () {
+            var self = this;
+            $("#Save").jqxButton({ theme: "darkBlue" });
+            var offset = $("#jqxgrid").offset();
+            $("#popupDKBSC").jqxWindow({ position: { x: parseInt(offset.left) + 120, y: parseInt(offset.top) - 120 } });
+            $("#jqxFromDateDKBSC").jqxDateTimeInput({ width: '100px', height: '25px' });
+            $("#jqxToDateDKBSC").jqxDateTimeInput({ width: '100px', height: '25px' });
+            $("#popupDKBSC").jqxWindow('open');
+
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            var r = confirm(dataLocalize("DANG_KY_BO_SUNG_CONG.CONFIRM.BAN_CO_CHAC_XOA_HAY_KHONG"));
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    if (row.TrangThai == '1') {
+                        alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA"));
+                        return;
+                    }
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/CaNhanBoSungCong_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            list: selectedRecords
+                        }),
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.message == 'success') {
+                                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.XOA_THANH_CONG"));
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                            else {
+                                alert(dataLocalize("DANG_KY_BO_SUNG_CONG.ALERT.XOA_THAT_BAI"));
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                        }
+                    });
+                }
+            }
+            else {
+                return;
+            }
+        }
+    };
+    //=============
+    $(function () {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#dangkybosungcong")[0]);
+        $("#popupDKBSC").jqxWindow({
+            width: 500, theme: "darkBlue", height: 450, resizable: true, isModal: false, autoOpen: false
+        });
+        //
+    });
+</script>
+
+<div id="dangkybosungcong">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left:15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: add">
+                            <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI">Tạo mới</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: remove">
+                            <i class="btn-label glyphicon glyphicon-remove"></i><span data-i18n="DANG_KY_BO_SUNG_CONG.XOA">Xóa</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+
+        <div style="margin: 10px 0px 10px 10px; text-align: left" class="row">
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" style="padding-top:3px;text-align:left"><span data-i18n="DANG_KY_BO_SUNG_CONG.TU_NGAY">Từ ngày:</span></label>
+                <div class="col-sm-2">
+                    <div id='jqxTuNgay'></div>
+                </div>
+                <label class="col-sm-1 control-label no-padding-right" style="padding-top:3px;text-align:left"><span data-i18n="DANG_KY_BO_SUNG_CONG.DEN_NGAY">Đến ngày:</span></label>
+                <div class="col-sm-2">
+                    <div id='jqxDenNgay'></div>
+                </div>
+                <div class="col-sm-1">
+                    <input type="button" data-i18n="[value]DANG_KY_BO_SUNG_CONG.TIM" value="Tìm" data-bind="click: search" style="width: 60px;height:26px;" />
+                </div>
+            </div>
+            <div style="padding-top:20px">
+                <div id="jqxgrid"></div>
+            </div>
+            <div class="row" style="padding-top:20px">
+                <div class="col-lg-12 col-xs-12 col-sm-12">
+                    <div class="buttons-preview" style="margin-left: 15px;">
+                        <div class="row">
+                            <div class="col-lg-4 col-xs-12 col-sm-4">
+                                <img src='/Images/InfoSmall.jpg' />
+                                <span data-i18n="DANG_KY_BO_SUNG_CONG.TABLE.TT_CHO_XET">Chờ xét</span>
+                            </div>
+                            <div class="col-lg-4 col-xs-12 col-sm-4">
+                                <img src='/Images/TT_yes.png' />
+                                <span data-i18n="DANG_KY_BO_SUNG_CONG.TABLE.TT_CHAP_NHAN">Chấp nhận</span>
+
+                            </div>
+
+                            <div class="col-lg-4 col-xs-12 col-sm-4">
+                                <img src='/Images/TT_no.png' />
+                                <span data-i18n="DANG_KY_BO_SUNG_CONG.TABLE.TT_KHONG_CHAP_NHAN">Không chấp nhận</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding-top:20px;color:#00a6a6">
+                <div style="padding-top:15px;font-size:24px;font-weight:bold;text-align:center; text-transform:uppercase;"><span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_BO_SUNG_CONG">QUY ĐỊNH BỔ SUNG CÔNG</span></div>
+                <div style="padding-left:15px;vertical-align: baseline;padding-top:10px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_1">
+                        1. Việc bổ sung công chỉ được thực hiện trong trường hợp không bấm được vân tay do lỗi hệ thống hoặc quên bấm vân tay
+                    </span>
+                </div>
+                <div style="padding-left:15px;padding-top:5px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_2">
+                        2. Thẩm quyền duyệt bổ sung công: Ban Giám đốc / Trưởng bộ phận /Quản lý/ Ban Giám hiệu của đơn vị mình quản lý
+                    </span>
+                </div>
+                <div style="padding-left:15px;padding-top:5px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_3">
+                        3. Nếu quên bấm vân tay từ 4 lần trở lên trong tháng sẽ bị nhắc nhở và xem xét trong quá trình đánh giá KPIs.
+                    </span>
+                </div>
+                <div style="padding-left:15px;padding-top:5px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_4">
+                        4. Những ngày không bấm vân tay nhưng không được Trưởng bộ phận/ Quản lý/Ban giám hiệu xác nhận thì sẽ được coi là nghỉ không lương ngày đó.
+                    </span>
+                </div>
+                <div style="padding-left:15px;padding-top:5px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_5">
+                        5. Nếu vào trễ từ 2h đến 4h mà không có lý do chính đáng thì sẽ được coi là nghỉ nửa ngày không lương.
+                    </span>
+                </div>
+                <div style="padding-left:15px;padding-top:5px;">
+                    <span data-i18n="DANG_KY_BO_SUNG_CONG.QUY_DINH.QUY_DINH_6">
+                        6. Việc Bổ sung công chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí.
+                    </span>
+                </div>
+            </div>
+
+            <div id="popupDKBSC">
+                <div><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.BO_SUNG_CONG">Bổ sung công</span></div>
+                <div style="overflow: hidden;">
+                    <table>
+                        <tr>
+                            <td align="right" style="height:36px"><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.BUOI">Buổi:</span> </td>
+                            <td align="left">
+                                <select data-bind="options: buoiList, optionsText: 'Name', optionsValue: 'Id', value: buoiSelected"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="height:36px"><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.TU_NGAY">Từ ngày:</span> </td>
+                            <td align="left"><div id='jqxFromDateDKBSC'></div></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="height:36px"><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.DEN_NGAY">Đến ngày:</span> </td>
+                            <td align="left"><div id='jqxToDateDKBSC'></div></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="height:36px"><span data-i18n="DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.LY_DO">Lý do:</span> </td>
+                            <td align="left"><textarea id="textLyDoBSCManage" data-bind="value: lyDoBSC"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 10px;" colspan="2" align="center">
+                                <input type="button" id="Save" data-i18n="[value]DANG_KY_BO_SUNG_CONG.TAO_MOI_MODAL.LUU" value="Save" data-bind="click: save" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

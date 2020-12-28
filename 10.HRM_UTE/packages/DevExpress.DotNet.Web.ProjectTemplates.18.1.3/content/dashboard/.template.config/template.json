@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Developer Express Inc. ",
+    "classifications": [ "Web", "Dashboard", ["C#"] ],
+    "identity": "devexpress.dashboard.netcore.template",
+    "name": "DevExpress ASP.NET Core Dashboard starter project",
+    "shortName": "dx.dashboard",
+    "description": "DevExpress ASP.NET Core Dashboard starter template. To start a project, specify the DevExpress NuGet feed url as a required feed parameter. Refer to https://nuget.devexpress.com/#feed-url and login to your account to obtain your feed url.",
+    "tags": {
+        "language": "C#"
+    },
+    "sourceName": "DevExpressProjectTemplate",
+    "preferNameDirectory": true,
+    "symbols":{
+		"nuget-feed": {
+			"type": "parameter",
+			"isRequired": true,
+            "replaces":"DX_NUGET_FEED_URL",
+			"description": "Refer to https://nuget.devexpress.com/#feed-url and login to your account to obtain your feed url.",
+		},
+        "no-demo-data":{
+            "type": "parameter",
+            "dataType":"bool",
+            "defaultValue": "false",
+            "description": "Whether to include sample dashboard and data"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "(no-demo-data)",
+                    "exclude": [ "Data/**", "Models/**", "Data", "Models" ]
+                }
+            ]
+        }
+    ]
+}

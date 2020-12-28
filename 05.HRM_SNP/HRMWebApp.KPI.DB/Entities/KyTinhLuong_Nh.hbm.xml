@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.KyTinhLuong_Nh, HRMWebApp.KPI.DB" table="KyTinhLuong">
+    <id name="Oid" column="Oid"></id>
+    <property name="Thang" column="Thang"></property>
+    <property name="Nam" column="Nam"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+  </class>
+</hibernate-mapping>

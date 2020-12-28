@@ -1,0 +1,148 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.name = ko.observable();
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.users = ko.observableArray();
+        self.userSelected = ko.observable(null);
+        self.loaiNhanSu = ko.observableArray();
+        self.loaiNhanSuSelected = ko.observable();
+        self.status = ko.observableArray();
+        self.webGroupId = ko.observable(session.WebGroupId.toUpperCase());
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+                if (obj != null && obj != undefined && obj.length > 0) {
+                    if (obj.length > 1)
+                        self.department.unshift({ STT: 0, Oid: undefined, TenBoPhan: 'Tất cả' });
+                    self.departmentSelected(obj[0].Oid);
+                }
+            }
+        });
+
+        self.getUserByDepartment = function () {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetUsersOfDepartment',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ departmentId: self.departmentSelected() == null ? "00000000-0000-0000-0000-000000000000" : self.departmentSelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.users(obj);
+                    //self.userSelected(obj[0].Id);
+                }
+            });
+        }
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        bangCongChiTietExcel: function () {
+            var self = this;
+            if (self.webGroupId() == '53D57298-1933-4E4B-B4C8-98AFED036E21') {
+                self.userSelected = ko.observable(session.Id);
+                //session.Id là nhanvienId
+                //session.UserId là webuserId
+            }
+            window.open("/ExcelExport/InBangCongChiTiet.ashx?thang=" + self.month() + "&nam=" + self.year() + "&bophanId=" + self.departmentSelected() + "&idNhanVien=" + self.userSelected());
+        },
+        fingerprintExcel: function () {
+            var self = this;
+            
+            if (self.webGroupId() == '53D57298-1933-4E4B-B4C8-98AFED036E21') {
+                self.userSelected = ko.observable(session.Id);
+                self.departmentSelected = ko.observable(session.DepartmentId);
+                //session.Id là nhanvienId
+                //session.UserId là webuserId
+            }
+            else if (self.departmentSelected() == undefined) {
+                alert('Vui lòng chọn 1 phòng ban');
+                return;
+            }
+
+            window.open("/ExcelExport/InBangVanTay.ashx?thang=" + self.month() + "&nam=" + self.year() + "&bophanId=" + self.departmentSelected() + "&idNhanVien=" + self.userSelected());
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlychamcong")[0]);
+    });
+</script>
+<div id="quanlychamcong">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>CHI TIẾT CHẤM CÔNG</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="display:flex; justify-content:center; align-items:center; text-align:center;">
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-blue" style="width: auto;" data-bind="click: bangCongChiTietExcel">
+                            <i class="btn-label glyphicon glyphicon-stats"></i>In bảng dữ liệu chi tiết
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-darkorange" style="width: auto;" data-bind="click: fingerprintExcel">
+                            <i class="btn-label glyphicon glyphicon-th-list"></i>In dữ liệu tổng hợp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" placeholder="tháng" data-bind="value:month" style="width: 50px; height:32px;text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value:year" style="width: 50px; height:32px;text-align: center" maxlength="4" />
+        <select style="width: 200px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected, event: { change: getUserByDepartment() }, visible: webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21'"></select>
+        <select style="width: 200px" data-bind="options:users, optionsText: 'HoTen', optionsValue: 'Oid', value: userSelected, optionsCaption:'Tất cả', visible: webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21'"></select>
+    </div>
+    <div style="padding: 0px 0px 0px 0px; display:none;">
+        <div id="jqxgrid"></div>
+    </div>
+</div>

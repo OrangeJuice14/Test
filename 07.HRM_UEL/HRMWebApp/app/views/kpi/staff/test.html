@@ -1,0 +1,49 @@
+﻿<!--<script type="text/javascript">
+    $(document).ready(function () {
+        $("#grid").kendoGrid({
+            dataSource: {
+                data: [],
+                schema: {
+                    model: {
+                        fields: {
+                            ProductName: { type: "string" },
+                            UnitPrice: { type: "number" },
+                            UnitsInStock: { type: "number" },
+                            Discontinued: { type: "boolean" }
+                        }
+                    }
+                },
+                pageSize: 20
+            },
+            height: 550,
+            scrollable: true,
+            sortable: true,
+            filterable: true,
+            pageable: {
+                input: true,
+                numeric: false
+            },
+            columns: [
+                "ProductName",
+                { field: "UnitPrice", title: "Unit Price", format: "{0:c}", width: "130px" },
+                { field: "UnitsInStock", title: "Units In Stock", width: "130px" },
+                { field: "Discontinued", width: "130px" }
+            ]
+        });
+    });
+</script>-->
+<div class="box box-info">
+    <div class="box-header">
+        <div class="col-md-6">
+            <h4>Nhân viên</h4>
+        </div>
+        <div class="col-md-6">
+            <button style="float:right;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div id="grid"></div>
+        <div kendo-grid="grid" k-data-source="resultList" k-options="mainGridOptions"></div>
+      
+    </div>
+</div>

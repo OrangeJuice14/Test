@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.TargetGroupDetail, HRMWebApp.KPI.DB" table="KPI_TargetGroupDetail">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="Density" column="Density"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <many-to-one name="TargetGroupDetailType" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetailType" column="TargetGroupDetailTypeId"  />
+    <many-to-one name="ParentTargetGroupDetail" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="ParentId"  />
+    <bag name="AgentObjects" table="KPI_TargetGroup" lazy="false">
+      <key column="TargetGroupDetailId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.AgentObject" column="AgentObjectId"/>
+    </bag>
+    <bag name="StudyYears" table="KPI_TargetGroup_StudyYear" lazy="false">
+      <key column="TargetGroupDetailId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.StudyYear" column="StudyYearId"/>
+    </bag>
+    <!--<bag name="TagetGroupDetail" table="KPI_TargetGroupDetailIds" lazy="false">
+      <key column="TargetGroupDetailId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId1"/>
+    </bag>-->
+  </class>
+</hibernate-mapping>

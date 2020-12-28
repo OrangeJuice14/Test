@@ -1,0 +1,572 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+<style type="text/css">
+    .formGroup {
+        padding: 10px 0px 0px 0px;
+        margin: 0 auto;
+    }
+
+        .formGroup label {
+            float: left;
+            width: 120px;
+        }
+
+        .formGroup span {
+            padding: 0px 10px;
+        }
+
+    .container {
+        border: solid 1px #7F9DB9;
+        width: 400px;
+        height: 500px;
+        overflow-y: scroll;
+    }
+
+    .form_checkbox {
+        padding: 0 5px;
+    }
+
+    h3 {
+        color: #3B6097;
+    }
+
+    .formEvent {
+        float: right;
+    }
+
+        .formEvent a {
+            color: #3B6097;
+            width: 50px;
+            float: left;
+        }
+
+    .validate {
+        color: red;
+    }
+</style>
+<script type="text/javascript">
+
+    var month, year, status;
+    function viewModel_ChotChamCong() {
+        var self = this;
+        self.IsAdmin = ko.observable(null);
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                // Lấy các quyền
+                if (session.WebGroupId == "00000000-0000-0000-0000-000000000001"
+                    || session.WebGroupId == "00000000-0000-0000-0000-000000000009"
+                    || session.WebGroupId == "00000000-0000-0000-0000-000000000010")
+                    self.IsAdmin(true);
+                else
+                    self.IsAdmin(false);
+            }
+        });
+
+        $('#ddlMonth').val(new Date().getMonth() + 1);
+        $('#txtYear').val(new Date().getFullYear());
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: 'Tất cả' });
+                    self.department(obj);
+                    //Khởi tạo combobox
+                    var source =
+                    {
+                        localdata: self.department(),
+                        datafields:
+                        [
+                            { name: 'Oid', type: 'string' },
+                            { name: 'STT', type: 'string' },
+                            { name: 'TenBoPhan', type: 'string' },
+                        ],
+                        datatype: "json"
+                    };
+                    //
+                    var dataAdapter = new $.jqx.dataAdapter(source);
+                    // initialize jqxGrid
+                    $("#jqxdropdownbutton").jqxDropDownButton({ width: 350, height: 25 });
+                    $("#jqxgrid_phongban").jqxGrid(
+                        {
+                            width: 350,
+                            source: dataAdapter,
+                            pageable: true,
+                            autoheight: true,
+                            autorowheight: true,
+                            columnsresize: true,
+                            showfilterrow: true,
+                            filterable: true,
+                            columns: [
+                                {
+                                    text: 'Đơn vị', datafield: 'TenBoPhan', width: 350, cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties, rowdata) {
+                                        return "<div class='jqx-grid-cell-child' style='text-align: left;padding-left:5px;'>" + rowdata.STT + '. ' + rowdata.TenBoPhan + "</div>";
+                                    }
+                                }
+                            ]
+                        });
+                    //
+                    $("#jqxgrid_phongban").on('rowselect', function (event) {
+                        var args = event.args;
+                        var row = $("#jqxgrid_phongban").jqxGrid('getrowdata', args.rowindex);
+                        if (row == undefined)
+                            return;
+                        //
+                        self.departmentSelected(row['Oid']);
+                        //
+                        var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['STT'] + '. ' + row['TenBoPhan'] + '</div>';
+                        $("#jqxdropdownbutton").jqxDropDownButton('setContent', dropDownContent);
+                    });
+                    //
+                    var rows = $('#jqxgrid_phongban').jqxGrid('getrows');
+                    $("#jqxgrid_phongban").jqxGrid('selectrow', 0);
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+            }
+        });
+        self.checkExits = function (month, year) {
+            var check;
+
+            if (self.departmentSelected() != undefined) {
+                //
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChotChamCongThang_CheckExists',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        thang: month,
+                        nam: year,
+                        boPhanId: self.departmentSelected(),
+                        congTy: self.companySelected()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        check = result;
+                    }
+                });
+            }
+            else {
+                check = true;
+            }
+            return check;
+        },
+        self.checkLock = function (month, year) {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotChamCongThang_CheckLock',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: month,
+                    nam: year,
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        },
+        self.checkLock_NgoaiGio = function (month, year) {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotChamCongNgoaiGio_CheckLock',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: month,
+                    nam: year,
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        },
+        self.save_hanhchinh = function () {
+
+            //
+            if ($('#ddlMonth').val() == -1) {
+                alert('Vui lòng chọn tháng !!');
+                $('#ddlMonth').focus();
+                return;
+            }
+            if ($('#txtYear').val() == '') {
+                alert('Vui lòng nhập năm !!');
+                $('#txtYear').focus();
+                return;
+            }
+            if (!self.checkExits_KyChamCong($('#ddlMonth').val(), $('#txtYear').val())) {
+                alert('Kỳ chấm công tháng ' + $('#ddlMonth').val() + '/' + $('#txtYear').val() + ' chưa tạo.');
+                return;
+            }
+            if (!self.checkDoDuLieuChamCongByThangNam($('#ddlMonth').val(), $('#txtYear').val())) {
+                alert('Chưa đổ dữ liệu chấm công tháng ' + $('#ddlMonth').val() + '/' + $('#txtYear').val() + '.');
+                return;
+            }
+            if (isNaN($('#txtYear').val())) {
+                alert('Năm không hợp lệ !!');
+                $('#txtYear').focus();
+                return;
+            }
+            //
+            var message = confirm("Bạn có thật sự muốn chốt công?");
+            if (message == false) {
+                return;
+            }
+            //
+            if ($('input[name="rStatus"]:checked').val() == "true") {
+                if (self.checkExits($('#ddlMonth').val(), $('#txtYear').val()) && self.departmentSelected() != undefined) {
+                    alert('Tháng này đã chốt chấm công rồi !!');
+                    return;
+                } else {
+                    if (self.checkLock($('#ddlMonth').val(), $('#txtYear').val())) {
+                        alert('Đã khóa chấm công trên phần mềm HRM !!');
+                        return;
+                    }
+                    else {
+                        //Mở img lên
+                        $('#prosess').show();
+
+                        //
+                        setTimeout(function () {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/WebServices/ChotChamCongThang_Create',
+                                contentType: "application/json; charset=utf-8",
+                                data: ko.toJSON({
+                                    thang: $('#ddlMonth').val(),
+                                    nam: $('#txtYear').val(),
+                                    boPhanId: self.departmentSelected() == undefined ? "" : self.departmentSelected(),
+                                    userId: session.UserId,
+                                    congTy: self.companySelected()
+                                }),
+                                dataType: "json",
+                                async: false,
+                                success: function (result) {
+                                    var obj = result;
+                                    //
+                                    if (obj.message == "success") {
+                                        alert("Chốt chấm công hành chính thành công !!");
+                                        $('#prosess').hide();
+                                    }
+                                    else {
+                                        alert("Chốt chấm công thất bại !!");
+                                    }
+                                }
+                            }), 0
+                        });
+                    }
+                }
+            } else {
+                if (self.checkLock($('#ddlMonth').val(), $('#txtYear').val())) {
+                    alert('Đã khóa chấm công trên phần mềm HRM !!');
+                    return;
+                }
+                else {
+                    if (self.checkExits($('#ddlMonth').val(), $('#txtYear').val())) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/WebServices/ChotChamCongThang_Delete',
+                            contentType: "application/json; charset=utf-8",
+                            data: ko.toJSON({
+                                thang: $('#ddlMonth').val(),
+                                nam: $('#txtYear').val(),
+                                boPhanId: self.departmentSelected(),
+                                congTy: self.companySelected()
+                            }),
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                var obj = result;
+                                //
+                                if (obj.message == "success") {
+                                    alert("Hủy chốt chấm công hành chính thành công !!");
+                                }
+                                else {
+                                    alert("Thất bại. Chưa hủy liên kết kỳ tính lương !!");
+                                }
+                            }
+                        });
+                    } else {
+                        alert("Chưa có dữ liệu !!");
+                        return;
+                    }
+
+                }
+
+            }
+        },
+        self.save_ngoaigio = function () {
+
+            //
+            if ($('#ddlMonth').val() == -1) {
+                alert('Vui lòng chọn tháng !!');
+                $('#ddlMonth').focus();
+                return;
+            }
+            if ($('#txtYear').val() == '') {
+                alert('Vui lòng nhập năm !!');
+                $('#txtYear').focus();
+                return;
+            }
+            if (isNaN($('#txtYear').val())) {
+                alert('Năm không hợp lệ !!');
+                $('#txtYear').focus();
+                return;
+            }
+            if (!self.checkExits_KyChamCong($('#ddlMonth').val(), $('#txtYear').val())) {
+                alert('Kỳ chấm công tháng ' + $('#ddlMonth').val() + '/' + $('#txtYear').val() + ' chưa tạo.');
+                return;
+            }
+            //
+            var message = confirm("Bạn có thật sự muốn chốt công ngoài giờ?");
+            if (message == false) {
+                return;
+            }
+            //
+            if ($('input[name="rStatus"]:checked').val() == "true") {
+                //
+                if (self.checkLock_NgoaiGio($('#ddlMonth').val(), $('#txtYear').val())) {
+                    alert('Đã khóa chấm công trên phần mềm HRM !!');
+                    return;
+                }
+                else {
+                    //Mở img lên
+                    $('#prosess').show();
+
+                    //
+                    setTimeout(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/WebServices/ChotCongNgoaiGioCCuoiThang',
+                            contentType: "application/json; charset=utf-8",
+                            data: ko.toJSON({
+                                thang: $('#ddlMonth').val(),
+                                nam: $('#txtYear').val(),
+                                congTy: self.companySelected()
+                            }),
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                alert("Chốt công ngoài giờ thành công !!");
+                                $('#prosess').hide();
+                            }
+                        }), 0
+                    });
+                }
+            }
+            else {
+                if (self.checkLock_NgoaiGio($('#ddlMonth').val(), $('#txtYear').val())) {
+                    alert('Đã khóa chấm công trên phần mềm HRM !!');
+                    return;
+                }
+                else {
+                    //
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/XoaChotCongNgoaiGioCCuoiThang',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            thang: $('#ddlMonth').val(),
+                            nam: $('#txtYear').val(),
+                            boPhanId: self.departmentSelected(),
+                            congTy: self.companySelected()
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            alert("Hủy chốt công ngoài giờ thành công !!");
+                        }
+                    });
+                }
+            }
+        },
+       self.checkExits_KyChamCong = function (month, year) {
+           var check;
+           $.ajax({
+               type: 'POST',
+               url: '/WebServices/CaChamCong_CheckExists',
+               contentType: "application/json; charset=utf-8",
+               data: ko.toJSON({ thang: month, nam: year, congTy: self.companySelected() }),
+               dataType: "json",
+               async: false,
+               success: function (result) {
+                   check = result;
+               }
+           });
+           return check;
+       },
+       self.checkDoDuLieuChamCongByThangNam = function (month, year) {
+           var check;
+           $.ajax({
+               type: 'POST',
+               url: '/WebServices/CheckDoDuLieuChamCongByThangNam',
+               contentType: "application/json; charset=utf-8",
+               data: ko.toJSON({ thang: month, nam: year, boPhan: self.departmentSelected(), congTy: self.companySelected() }),
+               dataType: "json",
+               async: false,
+               success: function (result) {
+                   check = result;
+               }
+           });
+           return check;
+       }
+    }
+
+
+    $(function () {
+        var view_chotchamCong = new viewModel_ChotChamCong();
+        ko.applyBindings(view_chotchamCong, $("#ChotChamCongThang")[0]);
+    });
+</script>
+
+<div id="ChotChamCongThang">
+    <div>
+        <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4>CHỐT CHẤM CÔNG THÁNG</h4></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label no-padding-right">Tháng:</label>
+            <div class="col-sm-10">
+                <select id="ddlMonth">
+                    <option value="1">Tháng 1</option>
+                    <option value="2">Tháng 2</option>
+                    <option value="3">Tháng 3</option>
+                    <option value="4">Tháng 4</option>
+                    <option value="5">Tháng 5</option>
+                    <option value="6">Tháng 6</option>
+                    <option value="7">Tháng 7</option>
+                    <option value="8">Tháng 8</option>
+                    <option value="9">Tháng 9</option>
+                    <option value="10">Tháng 10</option>
+                    <option value="11">Tháng 11</option>
+                    <option value="12">Tháng 12</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="padding-top:35px">
+            <label class="col-sm-2 control-label no-padding-right">Năm:</label>
+            <div class="col-sm-10">
+                <input type="text" id="txtYear" style="width: 200px; height:32px; padding-left:5px;" maxlength="4" />
+            </div>
+        </div>
+        <!-- ko if: company().length > 1 -->
+            <div class="form-group" style="padding-top:25px">
+                <label class="col-sm-2 control-label no-padding-right">Trường:</label>
+                <div class="col-sm-10">
+                    <select style="width: 350px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+                </div>
+            </div>
+        <!-- /ko -->
+        <div class="form-group" style="padding-top:25px">
+            <label class="col-sm-2 control-label no-padding-right">Đơn vị:</label>
+            <div class="col-sm-10">
+                <div id="jqxdropdownbutton">
+                    <div style="border-color: transparent;" id="jqxgrid_phongban">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-top:25px">
+            <label class="col-sm-2 control-label no-padding-right">Trạng thái:</label>
+            <div class="col-sm-10">
+                <input type="radio" value="true" name="rStatus" checked="checked" /><span>Chốt công</span>
+                <input type="radio" value="false" name="rStatus" /><span>Hủy chốt</span>
+            </div>
+        </div>
+        <div class="form-group" style="padding-top:25px;padding-left:17px;">
+            <span id="prosess" hidden style="font-weight:bold;font-size:16px;font-style:initial;color:blue">Đang xử lý vui lòng chờ .......</span>
+        </div>
+        <div class="form-group" style="padding-top:5px">
+            <label class="col-sm-2 control-label no-padding-right">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save_hanhchinh">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Công hành chính
+                </a>
+            </label>
+            <div data-bind="if:IsAdmin">
+                <label class="col-sm-2 control-label no-padding-right">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save_ngoaigio">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Công ngoài giờ
+                    </a>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

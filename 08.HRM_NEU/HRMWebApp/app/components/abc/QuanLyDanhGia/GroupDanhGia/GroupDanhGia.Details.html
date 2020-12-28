@@ -1,0 +1,42 @@
+﻿<div>
+    <form class="form-horizontal" name="GroupDanhGiaDetailsForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title" ng-show="GroupDanhGia == null">Tạo mới nhóm đánh giá</h3>
+            <h3 class="modal-title" ng-hide="GroupDanhGia == null">Nhóm đánh giá</h3>
+        </div>
+        <div class="modal-body">
+            <div>Thứ tự cấp bậc: </div>
+            <input type="number" class="k-textbox" style="width:100%" placeholder="Thứ tự cấp bậc ..." name="STT" ng-model="GroupDanhGia.STT" required />
+            <div style="margin-top:5px">Tên nhóm: </div>
+            <input type="text" class="k-textbox" style="width:100%" placeholder="Tên nhóm ..." name="name" ng-model="GroupDanhGia.Name" required />
+            <div style="margin-top: 5px">
+                <label class="checkbox-inline" style="vertical-align:middle">
+                    <input type="checkbox" ng-model="GroupDanhGia.DaiDienDanhGia">
+                    Đại diện đánh giá
+                </label>
+            </div>
+            <div style="margin-top: 5px">
+                <label class="checkbox-inline" style="vertical-align:middle" ng-hide="GroupDanhGia.DaiDienDanhGia">
+                    <input type="checkbox" ng-model="GroupDanhGia.TuDanhGia">
+                    Tự đánh giá
+                </label>
+            </div>
+            <div style="margin-top: 5px">
+                <label class="checkbox-inline" style="vertical-align:middle">
+                    <input type="checkbox" ng-model="GroupDanhGia.DanhGiaCapDuoi">
+                    Đánh giá cấp dưới
+                </label>
+            </div>
+            <div style="margin-top: 5px">
+                <label class="checkbox-inline" style="vertical-align:middle">
+                    <input type="checkbox" ng-model="GroupDanhGia.HasQuanLyDonVi">
+                    Quản lý đơn vị
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="Save()" ng-disabled="GroupDanhGiaDetailsForm.$invalid">Lưu</button>
+            <button class="btn btn-warning" style="cursor:pointer" ng-click="$dismiss()">Thoát</button>
+        </div>
+    </form>
+</div>

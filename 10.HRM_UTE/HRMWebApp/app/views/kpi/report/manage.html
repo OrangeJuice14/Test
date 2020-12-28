@@ -1,0 +1,79 @@
+﻿
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:36px;">
+        <span class="widget-caption">Báo cáo thống kê</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="row" style="text-align:center">
+                <div class="col-md-12">
+                    <select kendo-drop-down-list
+                            k-ng-model="studyYearId"
+                            k-data-source="yearList"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="margin:7px 15px; width:auto;"></select>
+
+                    <select kendo-drop-down-list
+                            k-ng-model="planId"
+                            k-data-source="plansDataSource"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="margin:7px 15px; width:250px;"></select>
+
+                    <select kendo-drop-down-list
+                            k-ng-model="deptId"
+                            k-data-source="departmentsDataSource"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="margin:7px 15px; width:300px;"></select>
+
+                    <!--<select k-options="plansDataSource" k-placeholder="'Chọn kế hoạch'" kendo-combo-box k-ng-model="planId"></select>
+                    <select k-options="departmentsDataSource" k-placeholder="'Chọn Đơn vị'" kendo-combo-box name="selectLeader" k-ng-model="deptId"></select>-->
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <a ng-click="StaffExportToExcel()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-file-excel-o"></i>Kết quả đánh giá cá nhân
+                    </a>
+                    <a ng-click="DepartmentExportToExcel()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-file-excel-o"></i>Kết quả đánh giá đơn vị
+                    </a>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <a ng-click="PlanStaffExportToExcel()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-file-excel-o"></i>Thống kê đăng ký chế độ làm việc
+                    </a>
+                    <a ng-click="DepartmentExportToExcel()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-file-excel-o"></i>Báo cáo kết quả đăng ký của giảng viên
+                    </a>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12" style="text-align:center">
+                    <a ng-click="SearchDetail()" class="btn btn-labeled btn-primary">
+                        <i class="btn-label fa fa-search"></i>Chi tiết
+                    </a>
+                    <a ng-click="SearchAll()" class="btn btn-labeled btn-success">
+                        <i class="btn-label fa fa-search"></i>Tổng hợp
+                    </a>
+                    <a ng-click="ExportExcel()" class="btn btn-labeled btn-yellow">
+                        <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+                    </a>
+                </div>
+            </div>
+            <br />
+            <div ng-show="show == 1" kendo-grid="gridAll" k-data-source="dataSourceAll" k-options="mainGridOptionsAll"></div>
+            <div ng-show="show == 2" kendo-grid="gridDetail" k-data-source="dataSourceDetail" k-options="mainGridOptionsDetail"></div>
+        </div>
+    </div>
+</div>

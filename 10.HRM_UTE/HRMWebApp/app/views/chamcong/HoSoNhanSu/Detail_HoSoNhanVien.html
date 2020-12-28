@@ -1,0 +1,315 @@
+﻿
+<html>
+<head>
+    <link href="/CSS/hrmmain.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        function viewModel(item) {
+            var self = this;
+            self.NgayCapNhat = item.NgayCapNhat;
+            self.SoHieuCongChuc = item.SoHieuCongChuc;
+            self.Ho = item.Ho;
+            self.Ten = item.Ten;
+            self.TenGoiKhac = item.TenGoiKhac;
+            self.TenBoPhan = item.TenBoPhan;
+            self.NgaySinh = item.NgaySinh;
+            self.NoiSinhFull = item.NoiSinhFull;
+            self.GioiTinh = item.GioiTinh;
+            self.CMND = item.CMND;
+            self.NgayCap = item.NgayCap;
+            self.NoiCapText = item.NoiCapText;
+            self.QueQuanFull = item.QueQuanFull;
+            self.DiaChiThuongTruFull = item.DiaChiThuongTruFull;
+            self.NoiOHienNayFull = item.NoiOHienNayFull;
+            self.Email = item.Email;
+            self.DienThoaiDiDong = item.DienThoaiDiDong;
+            self.TenTinhTrangHonNhan = item.TenTinhTrangHonNhan;
+            self.TenDanToc = item.TenDanToc;
+            self.TenTonGiao = item.TenTonGiao;
+            self.TenTrinhDoVanHoa = item.TenTrinhDoVanHoa;
+            self.TenTrinhDoChuyenMon = item.TenTrinhDoChuyenMon;
+            self.TenChuyenNganhDaoTao = item.TenChuyenNganhDaoTao;
+            self.TenTruongDaoTao = item.TenTruongDaoTao;
+            self.NamTotNghiep = item.NamTotNghiep == 0 ? '' : item.NamTotNghiep;
+            self.TenNgoaiNgu = item.TenNgoaiNgu;
+            self.TenTrinhDoNgoaiNgu = item.TenTrinhDoNgoaiNgu;
+        }
+
+        function formatDate(date) {
+            return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+        }
+    </script>
+
+</head>
+<body>
+
+    <div>
+        <div align="center" style="font-family: Arial, Tahoma; font-size: 14pt;color:#0083C1; font-weight: bold; padding-bottom: 5px;text-align:center">THÔNG TIN HỒ SƠ NHÂN SỰ CÁN BỘ ĐÃ CẬP NHẬT</div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content1">
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngày cập nhật:
+                </div>
+                <div class="hrm_middle" data-bind="text: NgayCapNhat == null ? '' : formatDate(new Date(NgayCapNhat))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Họ:
+                </div>
+                <div class="hrm_middle" data-bind="text: $data.Ho">
+                </div>
+            </div>
+
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tên:
+                </div>
+                <div class="hrm_middle" data-bind="text: Ten">
+                </div>
+            </div>
+
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Số hiệu công chức:
+                </div>
+                <div class="hrm_middle" data-bind="text: SoHieuCongChuc">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tên gọi khác:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenGoiKhac">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Giới tính:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: GioiTinh">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngày sinh:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: NgaySinh == null ? '' : formatDate(new Date(NgaySinh))">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Nơi sinh:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: NoiSinhFull">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Quê quán:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: QueQuanFull">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Dân tộc:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: TenDanToc">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tôn giáo:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTonGiao">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Địa chỉ thường trú:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DiaChiThuongTruFull">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Nơi ở hiện nay:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NoiOHienNayFull">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Số CMND:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: CMND">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngày cấp:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayCap == null ? '' : formatDate(new Date(NgayCap))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Nơi cấp:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NoiCapText">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tình trạng hôn nhân:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTinhTrangHonNhan">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Điện thoại di động:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DienThoaiDiDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Email:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: Email">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Trình độ văn hóa:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTrinhDoVanHoa">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Trình độ chuyên môn cao nhất:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTrinhDoChuyenMon">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Chuyên ngành đào tạo:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenChuyenNganhDaoTao">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Trường đào tạo:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTruongDaoTao">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Năm tốt nghiệp:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NamTotNghiep">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngoại ngữ chính:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenNgoaiNgu">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Trình độ ngoại ngữ chính:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenTrinhDoNgoaiNgu">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

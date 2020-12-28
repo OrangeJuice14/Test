@@ -1,0 +1,16 @@
+﻿<div class="widget">
+    <div class="widget-header" style="background-color:lightblue">
+        <span class="widget-caption" style="color:black">Quản lý nhóm đánh giá</span>
+        <div style="color:white">
+            <a style="margin: 2px 2px 2px 10px;" ng-click="New()" class="btn btn-label btn-primary">
+                <i class="btn-label fa fa-plus"></i>
+                <span>Thêm mới</span>
+            </a>
+        </div>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div class="widget-main ">
+            <div kendo-treelist="grid" options="NhomDanhGiaOptions" k-data-source="NhomDanhGiaData"></div>
+        </div>
+    </div>
+</div>

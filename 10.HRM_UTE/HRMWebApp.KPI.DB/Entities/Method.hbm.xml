@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.Method, HRMWebApp.KPI.DB" table="KPI_Method" >
+    <cache usage="read-write"/>
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="StartTime" column="StartTime"></property>
+    <property name="EndTime" column="EndTime"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <many-to-one name="PlanKPIDetail" class="HRMWebApp.KPI.DB.Entities.PlanKPIDetail" column="PlanKPIDetailId" />
+    <!--<many-to-one name="LeadDepartment" class="HRMWebApp.KPI.DB.Entities.Department" column="LeadDepartment" />-->
+    <bag name="SubStaffs" table="KPI_Method_SubStaff" lazy="false" >
+      <key column="MethodId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.Staff" column="SubStaffId"/>
+    </bag>
+    <bag name="LeadDepartment" table="KPI_Method_Department" cascade="none" inverse="true" >
+      <key column="MethodId"/>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.Method_Department" />
+    </bag>
+  </class>
+</hibernate-mapping>

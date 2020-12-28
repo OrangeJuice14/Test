@@ -1,0 +1,88 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Developer Express Inc. ",
+    "classifications": [ "Web", "MVC", ["C#"] ],
+    "identity": "devexpress.aspnetcore.bootstrap.starter",
+    "name": "DevExpress ASP.NET Core Bootstrap starter project",
+    "shortName": "dx.bootstrap",
+    "description": "DevExpress ASP.NET Core Bootstrap starter template. To start a project, specify the DevExpress NuGet feed url as a required feed parameter. Refer to https://nuget.devexpress.com/#feed-url and login to your account to obtain your feed url.",
+	"tags": {
+        "language": "C#"
+    },
+    "sourceName": "DevExpressProjectTemplate",
+    "preferNameDirectory": true,
+	"symbols":{
+		"nuget-feed": {
+			"type": "parameter",
+			"isRequired": true,
+            "replaces":"DX_NUGET_FEED_URL",
+			"description": "Refer to https://nuget.devexpress.com/#feed-url and login to your account to obtain your feed url.",
+		},
+		"include-sample":{
+			"type": "parameter",
+			"dataType":"bool",
+			"defaultValue": "true",
+			"description": "Whether to include example views and controllers into the projec"
+		},
+		"authentication": {
+		 "type":"parameter",
+		  "datatype": "choice",
+		  "defaultValue":"none",
+		  "choices": [
+			{
+			  "choice": "none",
+			  "description": "No authentication"
+			},
+			{
+			  "choice": "identity",
+			  "description": "Individual authentication"
+			},
+			{
+			  "choice": "windows",
+			  "description": "Windows authentication"
+			}
+		  ]
+		},
+		"id01":{
+		  "type": "generated",
+		  "generator": "guid",
+		  "replaces": "DX_DATA_GUID",
+		  "parameters": {
+			"format":"N"
+		  }
+		}
+    },
+	"sources": [
+		{
+			"modifiers": [
+				{
+					"condition": "(!include-sample)",
+					"exclude": [ "Controllers/SampleController.cs", "Models/NorthwindContext.cs", "Models/Person.cs", "Data/**", "Views/Sample/**" ]
+				},
+				{
+					"condition": "(authentication==none) || (authentication==windows)",
+					"exclude": [
+						"Controllers/AccountController.cs",
+						"Controllers/ManageController.cs",
+						"Models/AccountViewModels/**",
+						"Models/ManageViewModels/**",
+						"Models/ApplicationUser.cs",
+						"Data/ApplicationDbContext.cs",
+						"Data/Migrations/**",
+						"Extensions/**",
+						"Services/**",
+						"Views/Shared/_LoginPartial.cshtml",
+						"Views/Account/**",
+						"Views/Manage/**"
+					]
+				},
+				{
+					"condition": "(authentication!=windows)",
+					"exclude": [
+						"Properties/**"
+					]
+				}
+			]
+		}
+	]
+}

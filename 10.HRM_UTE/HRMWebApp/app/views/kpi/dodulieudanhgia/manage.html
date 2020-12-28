@@ -1,0 +1,20 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+     .modal-content{
+        min-height:200px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Giảng dạy</span>
+    </div>
+    <div class="widget-body">
+        <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+        <div class="widget-main">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="fileMainGridOptions"></div>
+        </div>
+    </div>
+</div>
+

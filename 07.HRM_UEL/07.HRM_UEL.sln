@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWebApp", "HRMWebApp\HRMWebApp.csproj", "{8E33AB62-148F-445B-AAB3-ED6049EFB777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_Core", "ERP.Core\ERP_Core.csproj", "{7BB0057E-88FF-412C-81E8-4B3455C86FA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWeb_Business", "HRMWeb_Business\HRMWeb_Business.csproj", "{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWeb_Service", "HRMWeb_Service\HRMWeb_Service.csproj", "{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWebApp.KPI.Core", "HRMWebApp.KPI.Core\HRMWebApp.KPI.Core.csproj", "{0BDD8381-E647-4894-BD78-8EBAAEBD7C88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWebApp.KPI.DB", "HRMWebApp.KPI.DB\HRMWebApp.KPI.DB.csproj", "{EDEF1F28-70A4-45C3-B32D-E477789A4D84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWebApp.Helpers", "HRMWebApp.Helpers\HRMWebApp.Helpers.csproj", "{65274EFD-C4D2-4288-B064-13B90E4BC72D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRMWebApp.ChamCong.Core", "HRMWebApp.ChamCong.Core\HRMWebApp.ChamCong.Core.csproj", "{68FEC5B4-6D21-4FB2-BDA3-52ADCB92753B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E33AB62-148F-445B-AAB3-ED6049EFB777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E33AB62-148F-445B-AAB3-ED6049EFB777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E33AB62-148F-445B-AAB3-ED6049EFB777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E33AB62-148F-445B-AAB3-ED6049EFB777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB0057E-88FF-412C-81E8-4B3455C86FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E94E56-D74F-45D9-83BA-2B7BBD43C1C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDD8381-E647-4894-BD78-8EBAAEBD7C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDD8381-E647-4894-BD78-8EBAAEBD7C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDD8381-E647-4894-BD78-8EBAAEBD7C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDD8381-E647-4894-BD78-8EBAAEBD7C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDEF1F28-70A4-45C3-B32D-E477789A4D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDEF1F28-70A4-45C3-B32D-E477789A4D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDEF1F28-70A4-45C3-B32D-E477789A4D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDEF1F28-70A4-45C3-B32D-E477789A4D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65274EFD-C4D2-4288-B064-13B90E4BC72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65274EFD-C4D2-4288-B064-13B90E4BC72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65274EFD-C4D2-4288-B064-13B90E4BC72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65274EFD-C4D2-4288-B064-13B90E4BC72D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68FEC5B4-6D21-4FB2-BDA3-52ADCB92753B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FEC5B4-6D21-4FB2-BDA3-52ADCB92753B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FEC5B4-6D21-4FB2-BDA3-52ADCB92753B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FEC5B4-6D21-4FB2-BDA3-52ADCB92753B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://servererp:8080/tfs/erpcollection
+		SccProjectUniqueName0 = HRMWebApp.ChamCong.Core\\HRMWebApp.ChamCong.Core.csproj
+		SccProjectName0 = HRMWebApp.ChamCong.Core
+		SccLocalPath0 = HRMWebApp.ChamCong.Core
+		SccProjectUniqueName1 = HRMWebApp.Helpers\\HRMWebApp.Helpers.csproj
+		SccProjectName1 = HRMWebApp.Helpers
+		SccLocalPath1 = HRMWebApp.Helpers
+		SccProjectUniqueName2 = HRMWebApp.KPI.Core\\HRMWebApp.KPI.Core.csproj
+		SccProjectName2 = HRMWebApp.KPI.Core
+		SccLocalPath2 = HRMWebApp.KPI.Core
+		SccProjectUniqueName3 = HRMWebApp.KPI.DB\\HRMWebApp.KPI.DB.csproj
+		SccProjectName3 = HRMWebApp.KPI.DB
+		SccLocalPath3 = HRMWebApp.KPI.DB
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = ERP.Core\\ERP_Core.csproj
+		SccProjectName5 = ERP.Core
+		SccLocalPath5 = ERP.Core
+		SccProjectUniqueName6 = HRMWeb_Business\\HRMWeb_Business.csproj
+		SccProjectName6 = HRMWeb_Business
+		SccLocalPath6 = HRMWeb_Business
+		SccProjectUniqueName7 = HRMWeb_Service\\HRMWeb_Service.csproj
+		SccProjectName7 = HRMWeb_Service
+		SccLocalPath7 = HRMWeb_Service
+		SccProjectUniqueName8 = HRMWebApp\\HRMWebApp.csproj
+		SccProjectName8 = HRMWebApp
+		SccLocalPath8 = HRMWebApp
+	EndGlobalSection
+EndGlobal

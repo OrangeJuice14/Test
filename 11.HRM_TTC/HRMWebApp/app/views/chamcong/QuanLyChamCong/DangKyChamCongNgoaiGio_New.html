@@ -1,0 +1,57 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Đăng ký chấm công ngoài giờ</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Thứ:</label>
+            <div class="col-sm-7">
+                <!-- ko foreach: thuList -->
+                    <div style="float: left;">
+                        <input type="checkbox" data-bind="checked: Chon" />
+                    </div>
+                    <div style="float: left;margin-right:10px"><span data-bind="text: Name"></span></div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxFromDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxToDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Giờ bắt đầu:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioBatDau" />
+                <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutBatDau" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Giờ kết thúc:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioKetThuc" />
+                <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutKetThuc" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Lý do</label>
+            <div class="col-sm-7">
+                <textarea id="txtLyDo" style="width: 300px;height: 50px;"></textarea>
+            </div>
+        </div>        
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+    </div>
+</div>

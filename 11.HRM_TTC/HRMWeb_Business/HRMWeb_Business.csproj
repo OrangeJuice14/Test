@@ -1,0 +1,771 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMWeb_Business</RootNamespace>
+    <AssemblyName>HRMWeb_Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\BIN\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\HRMWebApp\dll\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessServiceFactory\BoPhan_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_Attachments_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChamCongNgoaiGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_EmailManager_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_CauHinhChamCong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_CaChamCong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_DangKyKhungGioLamViec_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_HinhThucKhac_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_NgayNghiTrongNam_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyCongNgoaiGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyPhepHe_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\NienDoTaiChinh_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\NamHoc_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\KyTinhLuong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KyDangKyKhungGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyViPham_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChamCongTheoNgay_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChiTietChamCongNhanVien_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KhaiBaoCongTac_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChamCongNgayNghi_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ThoiGianDangKy_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyNghiPhep_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\UploadFile_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\GiayToHoSo_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebMailTemplate_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebMenu_Role_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KyChamCong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\TinhTrang_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\LoaiNhanSu_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyChamCongNhanVien_Factory .cs" />
+    <Compile Include="BusinessServiceFactory\CC_HinhThucNghi_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebMenu_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebGroup_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebUserLogin_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebUser_BoPhan_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\HoSo_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebUser_Factory.cs" />
+    <Compile Include="Model\BacLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BoPhan.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_Attachments.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_AttLog.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_CaChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_CauHinhChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChamCongNgayNghi.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChamCongNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChamCongTheoNgay.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChiTietChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChiTietCongNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChiTietNghiPhep.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChiTietPhepHe.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_DangKyKhungGioLamViec.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_HinhThucKhac.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_HinhThucNghi.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_HinhThucViPham.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KhaiBaoCongTac.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KyChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KyDangKyKhungGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_MailManager.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_NgayNghiTrongNam.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyCongNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyNghiPhep.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyPhepHe.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyViPham.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ThoiGianDangKyKhungGioLamViec.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChucDanh.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChucVu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChucVuKiemNhiem.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CongTy.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context.Entities.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context.IEntities.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ChucVuNhanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_DangKyKhungGioLamViec.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_GiayDeNghiPhep.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMailTemplateType.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMailTemplate.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyPhepHe_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyNhacViec.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KyDangKyKhungGio.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_NgayChamCong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KhaiBaoChamCong_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_DanhSachFile.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyNghiPhep_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_DanhSachChotCong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyGuiMail.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_Thu.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyViPham_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ChamCongNgayNghi_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ThongKeXetABCTheoNam.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_ChiTietTheoNhanVien_ChamCongNgay.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_ChiTietTheoNhanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ThongKeXetABCTheoThang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KiemTraPhongBanXetABC.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_BieuDo.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_ThongTinChamCongThang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_BieuDo.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyKhaiBaoCongTac_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_WebGroup_BoPhan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_BangLuongDLU.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhauTruLuong_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThueTNCN_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapCaNhan_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BANGLUONGNHANVIEN_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_GiayXacNhanCanBoVienChucTruong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_GiayXacNhan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_CongDoan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DoanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DangVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HoSoBaoHiem.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhBoNhiemKiemNhiem.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaBHXH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BAOHIEMXAHOI.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaLucLuongVuTrang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaHoiThao.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaHoatDongXaHoi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhNghienCuuKhoaHoc.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhKyLuat.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhKhenThuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhDiNuocNgoai.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhBoNhiem.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhDieuDong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhDaoTao.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhCongTac.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_LichSuBanThan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DienBienLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HOPDONGLAODONG.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HopDongDaKy.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HopDong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TRINHDOCHUYENMONNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChungChi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_NgoaiNgu.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_VanBang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TrinhDoChuyenMon.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_NguoiPhuThuoc.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_THONGTINLUONGNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TaiKhoanNganHang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ThongTinLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThueTNCN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapKhac.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietPhuCap.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapCaNhan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BANGLUONGNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuLaoGiangDay.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietNgoaiGio.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhenThuongPhucLoi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhauTruLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuanHeGiaDinh.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_SoYeuLyLich.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_CauHinhChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_CaChamCongApDung.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_KyTinhLuong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_LyDoDangKyCCNgoaiGio.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CauHinhXetABC.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCongNgoaiGio.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_QuanLyViPham.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCongNgayNghi.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_CaChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_DangLuuTru.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_NienDoTaiChinh.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_NamHoc.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_UploadFile.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_GiayToHoSo.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_KyChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_KhaiBaoCongTac.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMenu_Role.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_BoPhan.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_HoSoNhanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_ChamCongNgay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\DTO\DBTable\DTO_WebGroup.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_KhaiBaoChamCongGiangVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebUser.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMenu.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCongTheoNgay.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_HinhThucNghi.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_ChiTietChamCongNhanVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_QuanLyChamCongNhanVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_LoaiNhanSu.cs" />
+    <Compile Include="DemoClass.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Model\GiayToHoSo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HoSo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\KyTinhLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LoaiGiayTo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LoaiNgayNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LoaiNhanSu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MainModel.Designer.cs">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MainModel.Meta.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MainModel1.Meta.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\MapObjectCreator.Meta.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_BacLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_BoPhan.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_Attachments.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_AttLog.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_CaChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_CauHinhChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChamCongNgayNghi.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChamCongNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChamCongTheoNgay.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChiTietChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChiTietCongNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChiTietNghiPhep.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChiTietPhepHe.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_DangKyKhungGioLamViec.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_HinhThucKhac.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_HinhThucNghi.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_HinhThucViPham.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KhaiBaoCongTac.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KyChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KyDangKyKhungGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_MailManager.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_NgayNghiTrongNam.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyCongNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyNghiPhep.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyPhepHe.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyViPham.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ThoiGianDangKyKhungGioLamViec.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChucDanh.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChucVu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChucVuKiemNhiem.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CongTy.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_GiayToHoSo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_HoSo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_KyTinhLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_LoaiGiayTo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_LoaiNgayNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_LoaiNhanSu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NamHoc.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NgachLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NhanVienThongTinLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NhanVienTrinhDo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NienDoTaiChinh.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ThongTinNhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_TinhTrang.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebGroup.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMailTemplate.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMailTemplateType.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMenu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMenu_Role.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebUser.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebUserLogin.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebUser_BoPhan.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_WebChamCong_DanhSachCanBoChotChamCongCuoiThang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_WebChamCong_GiayDeNghiNghiPhep_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_WebChamCong_LayLoaiNgayNgoaiGio_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_ChungChi_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_DienBienLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_HopDongDaKy_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_HopDong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_LichSuBanThan_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_NgoaiNgu_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_NguoiPhuThuoc_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_QuanHeGiaDinh_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_QuaTrinhBoNhiemKiemNhiem_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_QuaTrinhBoNhiem_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_QuaTrinhCongTac_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_QuaTrinhDieuDong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_SoYeuLyLich_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_TaiKhoanNganHang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_ThongTinLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_TongThuNhapNhanVien_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_TrinhDoChuyenMon_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web_VanBang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NamHoc.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NgachLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhanVienThongTinLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhanVienTrinhDo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NienDoTaiChinh.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PartialModel\CC_ChiTietChamCong.cs" />
+    <Compile Include="Model\PartialModel\HoSo.cs" />
+    <Compile Include="Model\PartialModel\WebUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\spd_WebChamCong_DanhSachCanBoChotChamCongCuoiThang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_WebChamCong_GiayDeNghiNghiPhep_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_WebChamCong_LayLoaiNgayNgoaiGio_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_ChungChi_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_DienBienLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_HopDongDaKy_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_HopDong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_LichSuBanThan_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_NgoaiNgu_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_NguoiPhuThuoc_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_QuanHeGiaDinh_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_QuaTrinhBoNhiemKiemNhiem_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_QuaTrinhBoNhiem_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_QuaTrinhCongTac_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_QuaTrinhDieuDong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_SoYeuLyLich_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_TaiKhoanNganHang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_ThongTinLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_TongThuNhapNhanVien_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_TrinhDoChuyenMon_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web_VanBang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ThongTinNhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TinhTrang.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebGroup.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMailTemplate.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMailTemplateType.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMenu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMenu_Role.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebUser.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebUserLogin.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebUser_BoPhan.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Predefined\HinhThucNghiConst.cs" />
+    <Compile Include="Predefined\BoPhanConst.cs" />
+    <Compile Include="Predefined\LoaiBoPhanConst.cs" />
+    <Compile Include="Predefined\WebGroupConst.cs" />
+    <Compile Include="Predefined\LoaiNhanSuConst.cs" />
+    <Compile Include="Predefined\WebMailTemplateTypeConst.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERP.Core\Core.csproj">
+      <Project>{7BB0057E-88FF-412C-81E8-4B3455C86FA6}</Project>
+      <Name>Core</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HRMWebApp.Helpers\HRMWebApp.Helpers.csproj">
+      <Project>{65274efd-c4d2-4288-b064-13b90e4bc72d}</Project>
+      <Name>HRMWebApp.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Model\MainModel.edmx.diagram">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\MainModel.tt">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainModel1.Meta.cs</LastGenOutput>
+    </None>
+    <None Include="Model\MapObjectCreator\MapObjectCreator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MapObjectCreator.Meta.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model\MainModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MainModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

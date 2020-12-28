@@ -1,0 +1,619 @@
+﻿    <script type="text/javascript">
+        function getDaysInMonth(m, y) {
+            var daysArray = [];
+            daysInWeek = ['<span style="color:red">CN</span>', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            daysIndex = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
+            index = daysIndex[(new Date(y, m - 1, 1)).toString().split(' ')[0]];
+            var numDaysInMonth = /8|3|5|10/.test(--m) ? 30 : m == 1 ? (!(y % 4) && y % 100) || !(y % 400) ? 29 : 28 : 31;
+            for (i = 0, l = numDaysInMonth  ; i < l  ; i++) {
+                daysArray.push((i + 1) + '<br/>' + daysInWeek[index++]);
+                if (index == 7) index = 0;
+            }
+            return daysArray;
+        }
+        function ViewModel(datagrid) {
+            var self = this;
+            self.datagrid = datagrid;
+            $.ajax({
+                type: 'POST',
+                url: '/Authentication/GetUserSessionInfo',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    session = result;
+                }
+            });
+            self.CheckChot = ko.observable();
+            self.staffDepartment = ko.observable();
+            self.HinhThucNghiListForUpdate = ko.observableArray([]);
+            self.day = ko.observable(new Date().getDate()),
+            self.month = ko.observable(new Date().getMonth() + 1);
+            self.year = ko.observable(new Date().getFullYear());
+            self.department = ko.observableArray();
+            self.departmentSelected = ko.observable(null);
+            self.loaiNhanSu = ko.observableArray();
+            self.loaiNhanSuSelected = ko.observable();
+            self.name = ko.observable("");
+            self.items = ko.observableArray();
+            self.dayInMonth = ko.observableArray();
+            self.numDay = ko.observable();
+            self.webGroupId = ko.observable(session.WebGroupId.toUpperCase());
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.department(obj);
+                    if (obj.length > 0)
+                    {
+                        self.departmentSelected(obj[0].Oid);
+                    }
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghiForUpdate',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json", data: ko.toJSON({
+                    loai: 1, //Gán đại miễn đừng = 3
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiListForUpdate(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_LoaiNhanSu',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.loaiNhanSu(obj);
+                    if (obj.length > 0)
+                        self.loaiNhanSuSelected(obj[0].Oid);
+                }
+            });
+            self.search();
+            self.source =
+       {
+           datatype: "json",
+           datafields: [
+               { name: 'Oid', type: 'string' },
+               { name: 'SoHieuCongChuc', type: 'string' },
+               { name: 'Ho', type: 'string' },
+               { name: 'Ten', type: 'string' },
+               { name: 'HoTen', type: 'string' },
+               { name: 'TenCa', type: 'string' },
+               { name: 'TenPhongBan', type: 'string' },
+               { name: 'TenHinhThucViPham', type: 'string' },
+               { name: 'TGVaoSangQuyDinh', type: 'string' },
+               { name: 'GioVaoSang', type: 'string' },
+               { name: 'TGRaSangQuyDinh', type: 'string' },
+               { name: 'GioRaSang', type: 'string' },
+               { name: 'TGVaoChieuQuyDinh', type: 'string' },
+               { name: 'GioVaoChieu', type: 'string' },
+               { name: 'TGRaChieuQuyDinh', type: 'string' },
+               { name: 'GioRaChieu', type: 'string' },
+               { name: 'ThoiGianVaoTre', type: 'string' },
+               { name: 'ThoiGianVeSom', type: 'string' },
+               { name: 'Ngay', type: 'date', format: 'dd-MM-yyyy' }
+           ],
+           id: 'Id',
+           // sortcolumn: 'HoTen',
+           //sortdirection: 'asc',
+           url: "/WebServices/QuanLyViPham_FindXemBangChamCong",
+           formatdata: function (data) {
+               return {
+                   ngay: self.day(),
+                   thang: self.month(),
+                   nam: self.year(),
+                   boPhanId: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                   webGroup: self.webGroupId
+               };
+           },
+           beforeprocessing: function (result) {
+               self.returnData = result;
+               return self.returnData;
+           }
+       };
+            self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+            self.datagrid.jqxGrid(
+                {
+                    source: self.dataAdapter,
+                    width: '100%',
+                    columnsheight: 35,
+                    pageable: true,
+                    pagesize: 10,
+                    sortable: true,
+                    rowsheight: 50,
+                    filterable: true,
+                    autorowheight: true,
+                    autoheight: true,
+                    theme: "darkBlue",
+                    columns: [
+                        {
+                            text: 'STT', pinned: true, columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                                return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        {
+                            text: 'Mã nhân sự', pinned: true, datafield: 'SoHieuCongChuc', width: 120, align: 'center', cellsalign: "middle"
+                        },
+                        {
+                            text: 'Họ tên', pinned: true, datafield: 'HoTen', width: 120, align: 'center'
+                        },
+                        {
+                            text: 'Đơn vị', datafield: 'TenPhongBan', width: 200, align: 'center'
+                        },
+                        {
+                            text: 'Ngày', datafield: 'Ngay', width: 80, cellsformat: 'd/M/yyyy', align: 'center', cellsalign: "middle"
+                        },
+                        {
+                            text: 'Hình thức vi phạm', datafield: 'TenHinhThucViPham', width: 150, cellsalign: "middle", sortable: false, align: 'center',
+                        },
+                        {
+                            text: 'Vào sáng QĐ', datafield: 'TGVaoSangQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                            renderer: function (row) {
+                                var res = '';
+                                if (row.indexOf('<br>') > -1) {
+                                    // multi-line
+                                    res = '<div class="grid-column-header-multi">';
+                                } else {
+                                    res = '<div class="grid-column-header">';
+                                }
+                                res += row + '</div>';
+                            },
+                        },
+                        {
+                            text: 'TG vào sáng', datafield: 'GioVaoSang', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        },
+                        //{
+                        //    text: 'Ra sáng QĐ', datafield: 'TGRaSangQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        //},
+                        //{
+                        //    text: 'TG ra sáng', datafield: 'GioRaSang', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        //},
+                        //{
+                        //    text: 'Vào chiều QĐ', datafield: 'TGVaoChieuQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        //},
+                        //{
+                        //    text: 'TG vào chiều', datafield: 'GioVaoChieu', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        //},
+                        {
+                            text: 'Ra chiều QĐ', datafield: 'TGRaChieuQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        },
+                        {
+                            text: 'TG ra chiều', datafield: 'GioRaChieu', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        },
+                        {
+                            text: 'TG vào trễ', datafield: 'ThoiGianVaoTre', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        },
+                        {
+                            text: 'TG ra sớm', datafield: 'ThoiGianVeSom', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                        }
+
+                    ]
+                });
+        }
+        ViewModel.prototype = {
+            search: function () {
+                var self = this;
+                self.datagrid.jqxGrid('updatebounddata');
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCong_GetDepartmentOfStaff',
+                    contentType: "application/json; charset=utf-8",
+                    async: false,
+                    success: function (result) {
+                        self.staffDepartment(result);
+                    }
+                });           
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCong_CheckChot',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        thang: self.month(),
+                        nam: self.year(),
+                        boPhanId: self.departmentSelected() == null ? self.staffDepartment() : self.departmentSelected(),
+                        loaicanbo: 0
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        self.CheckChot(result);
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCong_ChamCongThang',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({
+                        thang: self.month(),
+                        nam: self.year(),
+                        bophanId: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                        maNhanSu: self.name(),
+                        idLoaiNhanSu: self.loaiNhanSuSelected() == undefined ? null : self.loaiNhanSuSelected(),
+                        loaicanbo: 0
+                    }),
+                    async: false,
+                    success: function (result) {
+                        var data = result;
+
+                        self.items(data);
+                        self.dayInMonth(getDaysInMonth(self.month(), self.year()));
+                        self.numDay(self.dayInMonth().length);
+                    }
+                });
+                //var model = new ViewModel($("#jqxgrid"));
+                //ko.applyBindings(model, $("#tableCC")[0]);
+            },
+            daysInMonth: function (month, year) {
+                return new Date(year, month, 0).getDate();
+            },
+            print: function () {
+                var self = this;
+                window.open("/ExcelExport/InBangCong.ashx?thang=" + self.month() + "&nam=" + self.year() + "&bophanId=" + self.departmentSelected() + "&idNhanVien=" + session.Id + "&webGroupId=" + session.WebGroupId);
+            },
+            detail: function () {
+                var self = this;
+                if (self.webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21') {
+                    if (self.departmentSelected() == undefined) {
+                        alert("Vui lòng chọn phòng ban !!");
+                        return;
+                    }
+                }
+                $.get('/app/views/chamcong/QuanLyChamCong/Detail.html', function (data) {
+                    $('#popupWindowPrint').html(data);
+                    ko.cleanNode($('#popupWindowPrint')[0]);
+                    $('#popupWindowPrint').kendoWindow({
+                        width: "80%",
+                        title: "Chi tiết chấm công",
+                        actions: [
+                            "Pin",
+                            "Minimize",
+                            "Maximize",
+                            "Close"
+                        ],
+                        position: {
+                            top: "15%",
+                            left: "10%"
+                        }
+
+                    });
+                    $('#popupWindowPrint').data("kendoWindow").open();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyChamCong_ChamCongThang',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: ko.toJSON({
+                            thang: self.month(),
+                            nam: self.year(),
+                            bophanId: self.departmentSelected(),
+                            maNhanSu: self.name(),
+                            idLoaiNhanSu: self.loaiNhanSuSelected(),
+                        }),
+                        async: false,
+                        success: function (result) {
+                            var model = new viewModel(result, self.departmentSelected(), self.month(), self.year());
+                            ko.applyBindings(model, document.getElementById('popupWindowPrint'));
+                        }
+                    });
+                });
+                //var url = "Detail.aspx?PhongBan=" + self.departmentSelected() + "&IdLoaiNhanSu=" + (self.loaiNhanSuSelected() == undefined ? null : self.loaiNhanSuSelected()) + "&Thang=" + self.month() + "&Nam=" + self.year() + "&Value=" + self.name();
+                //var Width = 800, Height = 700;
+                //var OffsetHeight = document.body.offsetHeight;
+                //var OffsettWidth = document.body.offsetWidth;
+                //var objWindow = window.open(url, "", "width=" + Width + ",height=" + Height + ",resizable=1,scrollbars=yes,location=0");
+                //objWindow.moveTo((OffsettWidth - Width) / 2, (OffsetHeight - Height) / 2);
+
+            },
+            chart: function () {
+                var self = this;
+                if (self.webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21') {
+                    if (self.departmentSelected() == undefined) {
+                        alert("Vui lòng chọn phòng ban !!");
+                        return;
+                    }
+                }
+                $.get('/app/views/chamcong/QuanLyChamCong/XemBCCChart.html', function (data) {
+                    $('#popupWindowXemBCCChart').html(data);
+                    ko.cleanNode($('#popupWindowXemBCCChart')[0]);
+                    $('#popupWindowXemBCCChart').kendoWindow({
+                        width: "80%",
+                        //height: "70%",
+                        //title: "Biểu đồ chấm công",
+                        actions: [
+                            "Pin",
+                            "Minimize",
+                            "Maximize",
+                            "Close"
+                        ],
+                        position: {
+                            top: "10%",
+                            left: "10%"
+                        },
+                        close: function (e) {
+                            $(this.element).empty();
+                        }
+                    });
+                    $('#popupWindowXemBCCChart').data("kendoWindow").open();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/GetPhongBan_ById',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: ko.toJSON({ id: self.departmentSelected() == null ? self.staffDepartment() : self.departmentSelected() }),
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            self.TenPhongBan = obj.TenBoPhan;
+                        }
+                    });
+                    //Quét 2 lần
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyChamCong_BieuDo',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: ko.toJSON({
+                            ngay: self.day(),
+                            thang: self.month(),
+                            nam: self.year(),
+                            bophanId: self.departmentSelected() == null ? self.staffDepartment() : self.departmentSelected(),
+                            loaicanbo: 0
+                        }),
+                        async: false,
+                        success: function (result) {
+                            self.chartData = result;
+                            $(self.chartData).each(function (index, value) {
+                                value.HoTen = value.HoTen + " (" + value.SoHieuCongChuc + ") ";
+                                if (value.GioVao == null && value.GioRa == null)
+                                    return;
+                                var gioVao = value.GioVao;
+                                var gioRa = value.GioRa;
+
+                                if (gioVao != null) {
+                                    value.GioVao = formatHour(gioVao);
+                                } else if (gioVao == null && gioRa != null) {
+                                    value.GioVao = formatHour(gioRa);
+                                }
+
+                                if (gioRa != null) {
+                                    value.GioRa = formatHour(gioRa);
+                                } else if (gioRa == null && gioVao != null) {
+                                    value.GioRa = formatHour(gioVao);
+                                }
+                            });
+
+                        }
+                    });
+                    //QUét 4 lần
+                    //$.ajax({
+                    //    type: 'POST',
+                    //    url: '/WebServices/QuanLyChamCong_BieuDo',
+                    //    contentType: "application/json; charset=utf-8",
+                    //    dataType: "json",
+                    //    data: ko.toJSON({
+                    //        ngay: self.day(),
+                    //        thang: self.month(),
+                    //        nam: self.year(),
+                    //        bophanId: self.departmentSelected()
+                    //    }),
+                    //    async: false,
+                    //    success: function (result) {
+                    //        self.chartData = result;
+                    //        $(self.chartData).each(function (index, value) {
+                    //            value.HoTen = value.HoTen + " (" + value.SoHieuCongChuc + ") ";
+                    //            var gioVaoSang = value.GioVaoSang;
+                    //            var gioRaSang = value.GioRaSang;
+                    //            var gioVaoChieu = value.GioVaoChieu;
+                    //            var gioRaChieu = value.GioRaChieu;
+
+                    //            if (gioVaoSang != null) {
+                    //                value.GioVaoSang = formatHour(gioVaoSang);
+                    //            } else if (gioVaoSang == null && gioRaSang != null) {
+                    //                value.GioVaoSang = formatHour(gioRaSang);
+                    //            }
+
+                    //            if (gioRaSang != null) {
+                    //                value.GioRaSang = formatHour(gioRaSang);
+                    //            }
+                    //            else if (gioRaSang == null && gioVaoSang != null) {
+                    //                value.GioRaSang = formatHour(gioVaoSang);
+                    //            }
+
+                    //            if (gioVaoChieu != null) {
+                    //                value.GioVaoChieu = formatHour(gioVaoChieu);
+                    //            }
+                    //            else if (gioVaoChieu == null && gioRaChieu != null) {
+                    //                value.GioVaoChieu = formatHour(gioRaChieu);
+                    //            }
+
+                    //            if (gioRaChieu != null) {
+                    //                value.GioRaChieu = formatHour(gioRaChieu);
+                    //            } else if (gioRaChieu == null && gioVaoChieu != null) {
+                    //                value.GioRaChieu = formatHour(gioVaoChieu);
+                    //            }
+                    //        });
+
+                    //    }
+                    //});
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/GetPhongBan_ById',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: ko.toJSON({ id: self.departmentSelected() == null ? self.staffDepartment() : self.departmentSelected() }),
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            self.phongban = obj.TenBoPhan;
+                        }
+                    });
+                    $("#popupWindowXemBCCChart").css("height", $(window).height() - ($(window).height() * 30 / 100));
+                    var model = new chart_Model(self.chartData, self.phongban, self.day(), self.month(), self.year());
+                    ko.applyBindings(model, document.getElementById('popupWindowXemBCCChart'));
+
+                });
+            }
+        };
+        $(function () {
+            var model = new ViewModel($("#jqxgrid"));
+            ko.applyBindings(model, $("#xembangchamcong")[0]);
+        });
+    </script>
+    <div id="xembangchamcong">
+        <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>XEM THÔNG TIN CHẤM CÔNG</h4></div>
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                    <div class="row">
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: print">
+                                <i class="btn-label glyphicon glyphicon-print"></i>In
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: chart">
+                                <i class="btn-label glyphicon glyphicon-stats"></i>Biểu đồ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 10px 0px 10px 0px; text-align: center">
+            <input type="text" placeholder="ngày" data-bind="value: day" style="width: 50px; height:32px; text-align: center;" maxlength="2"/>
+            -
+            <input type="text" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+            -
+            <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+            <select style="width: 150px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected"></select>
+            <select data-bind="options: loaiNhanSu, optionsText: 'TenLoaiNhanSu', optionsValue: 'Oid', value: loaiNhanSuSelected"></select>
+            <input type="text" placeholder="Mã nhân sự" data-bind="value: name, visible: webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21'" style="width: 150px; height:32px; padding-left:5px;" />
+            <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        </div>
+        <div style="padding: 0px 0px 0px 0px; overflow-x:scroll">
+            <table id="tableCC" border="1" cellpadding="1" cellspacing="0" style="padding:5px;width:1300px; background-color:white;">
+                <thead>
+                    <tr style="height: 30px;">
+                        <th style="width: 25px;padding:5px;text-align:center;" rowspan="2">STT</th>
+                        <th style="width: 150px;padding:5px;text-align:center;" rowspan="2">Họ</th>
+                        <th style="width: 50px;padding:5px;text-align:center;" rowspan="2">Tên</th>
+                        <th style="width: 100px;padding:5px;text-align:center;" rowspan="2">Tên ca</th>
+                        <th data-bind="attr: { colspan: numDay }" style="padding:5px;text-align:center;">Ngày trong tháng</th>
+                        <!-- ko if: CheckChot -->
+                        <th rowspan="2" style="padding:5px;text-align:center;">Số ngày công làm thực tế</th>
+                        <th rowspan="2" style="padding:5px;text-align:center;">Tổng ngày công hưởng lương</th>
+                        <th rowspan="2" style="padding:5px;text-align:center;">Tổng ngày đi học, bồi dưỡng ngắn hạn</th>
+                        <th rowspan="2" style="padding:5px;text-align:center;">Tổng không lương</th>
+                        <th rowspan="2" style="padding:5px;text-align:center;">Tổng BHXH</th>
+                        <th rowspan="2" style="padding:5px;text-align:center;">Đánh giá</th>
+                        <!-- /ko -->
+                    </tr>
+                    <tr data-bind="foreach: dayInMonth">
+                        <td data-bind="html: $data" style="padding:1px;text-align:center;"></td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: items">
+                    <tr>
+                        <td align="center" data-bind="text: $index() + 1"></td>
+                        <td style="padding:5px;width:150px;"><span data-bind="text: Ho"></span></td>
+                        <td style="padding:5px;width:50px;"><span data-bind="text: Ten"></span></td>
+                        <td style="padding:5px;width:100px;"><span data-bind="text: TenCa"></span></td>
+                        <!-- ko if:LaNhanVienToChucHanhChinh -->
+                        <!-- ko foreach: ChiTietChamCong -->
+                        <td align="center" style="padding:0;margin:0;font-weight:bold">
+                            <!--ko if:$data.MaHinhThucNghi == '' -->
+                            <div style="width: 100%; height: 100%; background-color: #FF9393">&nbsp;</div>
+                            <!-- /ko -->
+                            <span data-bind="text: $data.MaHinhThucNghi"></span>
+                        </td>
+                        <!-- /ko -->
+                        <!-- /ko -->
+
+                        <!-- ko if: !LaNhanVienToChucHanhChinh -->
+                        <!-- ko foreach: ChiTietChamCong -->
+                        <td align="center" style="padding:0;margin:0">
+                            <!--ko if:$data.MaHinhThucNghi == '' -->
+                            <div style="width: 100%; height: 100%; background-color: #FF9393">&nbsp;</div>
+                            <!-- /ko -->
+                            <span data-bind="text: $data.MaHinhThucNghi"></span>
+                        </td>
+                        <!-- /ko -->
+                        <!-- /ko -->
+
+                        <!-- ko if: $parent.CheckChot -->
+                        <td data-bind="text: NgayCong" style="font-weight: bold; text-align: center; width:125px"></td>
+                        <td data-bind="text: TongHuongLuong" style="font-weight: bold; text-align: center; width:125px"></td>
+                        <td data-bind="text: TongDiHoc" style="text-align: center; width:125px"></td>
+                        <td data-bind="text: TongKhongLuong" style="text-align: center; width:125px"></td>
+                        <td data-bind="text: TongBHXH" style="text-align: center; width:125px"></td>
+                        <td data-bind="text: DanhGia" style="text-align: center; width:125px"></td>
+                        <!-- /ko -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="width: 100%;" align="left">
+            <div style="font-family: Tahoma,Arial; font-size: 10pt; padding-top: 10px;padding-bottom:10px;" align="left">
+                <span style="font-weight: bold;">Ghi chú:</span><br />
+                <table style="float: left; width:33%">
+                    <thead>
+                        <tr>
+                            <td>+:</td>
+                            <td>Đi làm, hội họp cả ngày</td>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: $index() < 8  -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu + ':'"></td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <table style="float: left; width:33%">
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: ($index() >=8) && ($index() < 17) -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu + ':'"></td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <table style="float: left; width:33%">
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: $index() >=17 -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu + ':'"></td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>VI PHẠM TRONG NGÀY</h4></div>
+        <div style="padding: 0px 0px 0px 0px;">
+            <div id="jqxgrid"></div>
+        </div>
+    </div>
+
+<div id="popupWindowPrint"></div>
+<div id="popupWindowXemBCCChart"></div>

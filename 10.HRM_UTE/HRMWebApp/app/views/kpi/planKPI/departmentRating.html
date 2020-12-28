@@ -1,0 +1,47 @@
+﻿<form name="departmentRatingForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Danh sách Đơn vị</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <table class="table table-striped table-bordered" style="margin-top:10px">
+                <thead>
+                    <tr>
+                        <th style="text-align:center; vertical-align:middle">Đơn vị</th>
+                        <th style="text-align:center; vertical-align:middle">Trưởng đơn vị</th>
+                        <th style="text-align:center; width:90px; vertical-align:middle">Đánh giá</th>
+                        <th style="text-align:center; width:90px; vertical-align:middle">Kế hoạch được duyệt</th>
+                        <th style="text-align:center; width:90px; vertical-align:middle">Trưởng đơn vị đánh giá</th>
+                        <th style="text-align:center; width:108px; vertical-align:middle">Cấp quản lý đã đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="staff in staffList">
+                        <td>{{staff.DepartmentName}}</td>
+                        <td>
+                            <a ng-if="staff.AgentObjectTypeId==3" href="/#/kpi/departmentManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="cancel()">{{staff.Name}}</a>
+                            <a ng-if="staff.AgentObjectTypeId==5" href="/#/kpi/facultyManagePlankpidetail/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staff.DepartmentId}}/{{1}}/{{0}}" ng-click="cancel()">{{staff.Name}}</a>
+                        </td>
+                        <td style="text-align:center">
+                            <a ng-if="staff.AgentObjectTypeId==3" href="/#/kpi/departmentRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                            <a ng-if="staff.AgentObjectTypeId==5" href="/#/kpi/facultyRatingKPI/{{planId}}/{{staff.AgentObjectId}}/{{staff.Id}}/{{staffId}}/{{staff.DepartmentId}}/{{0}}" ng-click="cancel()">Đánh giá</a>
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsApproved" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsStaffRated" />
+                        </td>
+                        <td style="text-align:center;">
+                            <input type="checkbox" disabled="disabled" ng-model="staff.IsSupervisorRated" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!--<div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>-->
+</form>

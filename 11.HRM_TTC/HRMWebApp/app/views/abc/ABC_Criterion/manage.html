@@ -1,0 +1,21 @@
+﻿<div class="widget">
+    <div class="widget-header">
+        <span class="widget-caption">
+            Tiêu chí đánh giá ABC
+        </span>
+        <button style="float:right; margin-right: 2px; margin-top: 2px;" ng-click="New()" class="btn btn-info"><i class="fa fa-plus"></i> </button>
+        <div class="widget-buttons">
+            <a href="#" data-toggle="maximize">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a href="#" data-toggle="collapse">
+                <i class="fa fa-minus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="widget-body">
+        <div>
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>

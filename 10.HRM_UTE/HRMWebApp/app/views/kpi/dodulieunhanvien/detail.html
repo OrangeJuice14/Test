@@ -1,0 +1,119 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+
+    .k-grid-content {
+        max-height: 200px;
+    }
+</style>
+<form name="scienceResearchDataForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Năm học</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StudyYearSelect" required ng-model="obj.StudyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Chọn năm học ...</option>
+                </select>
+            </div>
+            <label class="control-label" ng-show="scienceResearchDataForm.StudyYearSelect.$error.required" style="color:red">( * )</label>
+        </div>
+        <!--<div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Học kỳ</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StudyYearSelect" required ng-model="obj.StudyTerm" ng-options="listObj.Id as listObj.Name for listObj in StudyTerms">
+                    <option value="">Chọn học kỳ ...</option>
+                </select>
+            </div>
+            <label class="control-label" ng-show="scienceResearchDataForm.StudyTermSelect.$error.required" style="color:red">( * )</label>
+        </div>-->
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Cấp danh mục</label>
+            <div class="col-md-6">
+                <select ng-change="selectedChangeCap()" class="form-control" name="GroupSelect" required ng-model="obj.CapMucTieu" ng-options="listObj.Id as listObj.Name for listObj in CapDanhMuc">
+                    <option value="">Chọn cấp danh mục...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="obj.CapMucTieu == 1">
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm mục tiêu cấp 1</label>
+            <div class="col-md-6">
+                <select class="form-control" name="GroupSelect" required ng-model="obj.TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail">
+                    <option value="">Chọn nhóm mục tiêu cấp 1 ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="obj.CapMucTieu == 2">
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm mục tiêu cấp 2</label>
+            <div class="col-md-6">
+                <select class="form-control" name="GroupSelect" required ng-model="obj.TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail2">
+                    <option value="">Chọn nhóm mục tiêu cấp 2...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="obj.CapMucTieu == 3">
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm mục tiêu cấp 3</label>
+            <div class="col-md-6">
+                <select class="form-control" name="ManageCode" required ng-model="obj.TargetGroupDetailId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupDetail3">
+                    <option value="">Chọn nhóm mục tiêu cấp 3 ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Mã công việc</label>
+            <div class="col-md-6">
+                <select class="form-control" name="ManageCodes" required ng-model="obj.DanhMucMTCL" ng-options="listObj.Id as listObj.TenDanhMuc for listObj in ListManageCode">
+                    <option value="">Chọn mã công việc ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+            <label for="inputFirstName" class="control-label" ng-show="scienceResearchDataForm.Name.$error.required" style="color:red">( * )</label>
+            <label for="inputFirstName" class="col-md-4 control-label">Tên hoạt động</label>
+            <div class="col-md-6">
+                <input ng-readonly="!isNew" type="text" class="form-control" name="Name" required ng-model="obj.TargetDetail">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Sản phẩm minh chứng</label>
+            <div class="col-md-6">
+                <input ng-readonly="!isNew" type="text" class="form-control" name="Name" required ng-model="obj.BasicResource">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Ngày bắt đầu</label>
+            <div class="col-md-6">
+                <input kendo-date-picker onkeydown="return false;" style="width:270px" name="startTime" required k-ng-model="obj.StartTime" k-format="'dd/MM/yyyy'" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Ngày kết thúc</label>
+            <div class="col-md-6">
+                <input kendo-date-picker onkeydown="return false;" style="width:270px" name="startTime" required k-ng-model="obj.EndTime" k-format="'dd/MM/yyyy'" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Cá nhân tham gia</label>
+            <div class="col-md-6">
+                <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputlistuser" class="col-md-4 control-label">Danh sách nhân viên tham gia</label>
+            <button style="margin-left:17px" ng-click="Add()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+        </div>
+        <div class="form-group">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridUser"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Close</button>
+    </div>
+</form>

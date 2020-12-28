@@ -1,0 +1,88 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <form role="form">
+        <div class="form-horizontal form-bordered">
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Khung giờ làm việc</div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Tên khung giờ:</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" style="height:20px" id="tbTenCa">
+                </div>
+                <label class="col-sm-2 control-label no-padding-right">Loại khung:</label>
+                <div class="col-sm-3">
+                    <select data-bind="options:loaiCa, optionsText: 'Name', optionsValue: 'Id',value:loaiCaSelected"></select>
+                </div>               
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Thời gian vào sáng:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioVaoSang"/>
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutVaoSang" />
+                </div>
+                <label class="col-sm-3 control-label no-padding-right">Thời gian ra chiều:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioRaChieu" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutRaChieu" />
+                </div>
+                <!--<label class="col-sm-3 control-label no-padding-right">Thời gian ra sáng:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioRaSang" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutRaSang" />
+                </div>-->
+            </div>
+            <!-- ko if:visible -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Thời gian bắt đầu nghỉ giữa ca:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioBatDauNghi" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutBatDauNghi" />
+                </div>
+                <label class="col-sm-3 control-label no-padding-right">Thời gian kết thúc nghỉ giữa ca:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioKetThucNghi" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutKetThucNghi" />
+                </div>
+            </div>
+            <!-- /ko -->
+            <!--<div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Thời gian vào chiều:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioVaoChieu" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutVaoChieu" />
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Thời gian bắt đầu quét buổi sáng :</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioBatDauQuet" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutBatDauQuet" />
+                </div>
+                <label class="col-sm-3 control-label no-padding-right">Thời gian kết thúc quét buổi chiều:</label>
+                <div class="col-sm-2">
+                    <input type="number" maxlength="2" min="1" max="24" style="height:20px;width:40px;text-align:center" id="GioKetThucQuet" />
+                    <input type="number" maxlength="2" min="0" max="59" style="height:20px;width:40px;text-align:center" id="PhutKetThucQuet" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Số phút cộng:</label>
+                <div class="col-sm-2">
+                    <input type="number" style="height:20px;width:40px;text-align:center" id="SoPhutCong" />
+                </div>
+                <label class="col-sm-3 control-label no-padding-right">Số phút trừ:</label>
+                <div class="col-sm-2">
+                    <input type="number" style="height:20px;width:40px;text-align:center" id="SoPhutTru" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: Create">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                    </a>
+                </div>
+            </div>
+            <div class="form-group">
+            </div>
+        </div>
+    </form>
+</div>

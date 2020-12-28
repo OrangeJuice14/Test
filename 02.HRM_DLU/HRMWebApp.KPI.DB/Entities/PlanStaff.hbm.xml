@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.PlanStaff, HRMWebApp.KPI.DB" table="KPI_PlanStaff" >
+    <id name="Id" column="ID"></id>
+    <property name="ModifiedTime" column="ModifiedTime"></property>
+    <property name="IsLocked" column="IsLocked"></property>
+    <property name="Vision" type="StringClob">
+      <column name="Vision" sql-type="nvarchar(max)"/>
+    </property>
+    <property name="Mission" type="StringClob">
+      <column name="Mission" sql-type="nvarchar(max)"/>
+    </property>
+    <property name="WebGroupId" column="WebGroupId"></property>
+    <many-to-one name="Staff" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffId" />
+    <many-to-one name="AgentObjectType" class="HRMWebApp.KPI.DB.Entities.AgentObjectType" column="AgentObjectTypeId" />
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId" />
+    <many-to-one name="PlanKPI" class="HRMWebApp.KPI.DB.Entities.PlanKPI" column="PlanKPIId" />
+    <bag name="PlanKPIDetails" table="KPI_PlanKPIDetail" cascade="none" inverse="true" >
+      <key column="PlanStaffId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.PlanKPIDetail"/>
+    </bag>
+  </class>
+</hibernate-mapping>

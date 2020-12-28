@@ -1,0 +1,31 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th class="textToCenter">Số quyết định</th>
+                    <th class="textToCenter">Từ năm</th>
+                    <th class="textToCenter">Đến năm</th>
+                    <th class="textToCenter">Chức vụ</th>
+                    <th class="textToCenter">HSPC Chức vụ</th>
+                    <th class="textToCenter">Ngày hưởng HSPCCV</th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuaTrinhBoNhiem">
+                    <tr>
+                        <td data-bind="text: SoQuyetDinh" class="textToCenter"></td>
+                        <td data-bind="text: TuNam" class="textToCenter"></td>
+                        <td data-bind="text: DenNam" class="textToCenter"></td>
+                        <td data-bind="text: ChucVu" class="textToCenter"></td>
+                        <td data-bind="text: HSPCChucVu" class="textToCenter"></td>
+                        <td data-bind="text: NgayHuongHSPCChucVu == null ? '' : formatDate(new Date(NgayHuongHSPCChucVu))" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</html>

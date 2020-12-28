@@ -1,0 +1,77 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Thông tin chấm công ngày nghỉ</div>
+        <div class="form-group" data-bind="visible:!isEdit()">
+            <label class="col-sm-3 control-label no-padding-right">Phòng ban:</label>
+            <div class="col-sm-7">
+                <select data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected_nhansu1"></select>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible:!isEdit()">
+            <label class="col-sm-3 control-label no-padding-right">Nhân viên:</label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton1">
+                    <div style="border-color: transparent;" id="jqxgrid_hosonhanvien1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Lý do:</label>
+            <div class="col-sm-7">
+                <textarea id="txtContent1" style="width:100%" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxFromDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxToDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Nghỉ phép năm trước:</label>
+            <div class="col-sm-7">
+                <input type="number" maxlength="2" style="height:20px;width:40px;text-align:center" id="soNgay1" /> ngày
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Trừ ngày phép đi đường:</label>
+            <div class="col-sm-7">
+                <input type="number" maxlength="2" style="height:20px;width:40px;text-align:center" id="ngayDiDuong1" /> ngày
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Nơi nghỉ phép:</label>
+            <div class="col-sm-7">
+                <select data-bind="options: TinhThanhList, optionsText: 'TenTinhThanh', optionsValue: 'Oid', value: tinhThanhSelected1"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Hình thức nghỉ:</label>
+            <div class="col-sm-7">
+                <select data-bind="options: HinhThucNghiList, optionsText: 'TenHinhThucNghi', optionsValue: 'Oid', value: hinhThucNghiSelected1"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: Create">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+                <!--<a href="#" class="btn btn-labeled btn-blue" style="width: 158px;">
+                    <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                </a>-->
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+    </div>
+</div>

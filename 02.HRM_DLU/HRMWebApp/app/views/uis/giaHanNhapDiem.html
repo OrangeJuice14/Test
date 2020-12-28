@@ -1,0 +1,82 @@
+﻿<style>
+    table th {
+        text-align: center;
+        color: #fff;
+    }
+</style>
+<link href="/CSS/uiscss.css" rel="stylesheet" /><div class="divmain">
+    <div class="bgtitle">Gia hạn nhập điểm </div>
+    <div>
+        Năm học:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyYearId" ng-options="listobj.Id as listobj.Name for listobj in studyYears"></select>
+        Học kỳ:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyTermId" ng-options="listobj.Id as listobj.Name for listobj in studyTerms"></select>
+        Loại điểm:
+        <select style="width:200px" ng-change="selectedChangeStudyYear()" ng-model="typeid" ng-options="listobj.Type as listobj.TypeName for listobj in types"></select>
+        <button class="btn btn-sm btn-info" ng-click="saveGiahan()">Lưu gia hạn</button>
+    </div>
+    <br />
+    <div>
+        <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+            <thead>
+                <tr style="background:#0094FF">
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>Lớp học phần</th>
+                    <th>Thời hạn NĐ</th>
+                    <th class="thNgayThi">Ngày thi</th>
+                    <th class="thPhongThi">Phòng thi</th>
+                    <th>Ngày gia hạn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sd in obj">
+                    <td>
+                        <div>
+                            {{sd.CurriculumID}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.CurriculumName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.ScheduleStudyUnitAlias}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.NgayNhap}}
+                        </div>
+                    </td>
+                    <td ng-if="sd.TypeND=='2'">
+                        <div>
+                            {{sd.ExamDate}}
+                        </div>
+                    </td>
+                    <td ng-if="sd.TypeND=='2'">
+                        <div>
+                            {{sd.RoomID}}
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                       <!--<input type="text" placeholder="dd/MM/yyyy"  ng-model="sd.NgayGiaHan" style="width:100px;text-align:center" value="{{sd.NgayGiaHan}}" />-->
+                        <input kendo-date-picker ng-model="sd.NgayGiaHan" style="width:120px"   k-format="'dd/MM/yyyy'" />
+                       
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+            $(document).ready(function() {
+                // create DatePicker from input HTML element
+                $("#datepicker").kendoDatePicker();
+
+               
+            });
+</script>

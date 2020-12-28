@@ -1,0 +1,191 @@
+﻿<style>
+    fieldset {
+        border: 1px solid #ddd !important;
+    }
+
+    legend {
+        display: block;
+        width: auto !important;
+        padding: 0;
+        margin-left: 10px;
+        margin-bottom: 0px !important;
+        font-size: 14px;
+        line-height: inherit;
+        color: #333;
+        border: 0 !important;
+    }
+</style>
+
+<md-content layout-padding="">
+    <form class="form-horizontal" name="BoTieuChiForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title" ng-show="BoTieuChi == null">Tạo mới bộ tiêu chí</h3>
+            <h3 class="modal-title" ng-hide="BoTieuChi == null">Bộ tiêu chí</h3>
+        </div>
+        <div class="modal-body" style="display:flow-root">
+            <div style="margin-bottom:5px">
+                <div style="width:90px;display: inline-block;">Tên bộ tiêu chí: </div>
+                <input type="text" name="name" style="width: calc(100% - 100px)" ng-model="BoTieuChi.Name" class="k-textbox" />
+            </div>
+            <div style="padding: 0px">
+                <div>
+                    <div style="width:90px;display: inline-block;margin-bottom:5px">Từ ngày: </div>
+                    <input kendo-date-picker
+                           ng-model="BoTieuChi.TuNgay"
+                           k-format="'dd/MM/yyyy'"
+                           k-parse-formats="['dd/MM/yyyy']" />
+
+                    <div style="width:75px;display: inline-block; margin-left:15px">Đến ngày: </div>
+                    <input kendo-date-picker
+                           ng-model="BoTieuChi.DenNgay"
+                           k-format="'dd/MM/yyyy'"
+                           k-parse-formats="['dd/MM/yyyy']" />
+                </div>
+            </div>
+            <div>
+                <div style="width: 255px; margin-bottom: 5px; display: inline-block;">
+                    <label style="vertical-align: bottom;margin: 0px;height: 100%;">Loại bộ tiêu chí: </label>
+                    <label class="radio-inline">
+                        <input ng-model="BoTieuChi.LoaiBoTieuChi" ng-value="1" type="radio" name="LoaiBoTieuChi" id="LoaiBoTieuChi3">
+                        Tháng
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="BoTieuChi.LoaiBoTieuChi" ng-value="12" type="radio" name="LoaiBoTieuChi" id="LoaiBoTieuChi0">
+                        Năm
+                    </label>
+                </div>
+                <div style="padding-left: 15px; margin-bottom: 5px; width: calc(100% - 260px); display: inline-block;">
+                    <label style="vertical-align: bottom;margin: 0px;height: 100%;">Bộ tiêu chí dành cho: </label>
+                    <label class="radio-inline">
+                        <input ng-model="BoTieuChi.NgachBoTieuChi" ng-value="GVCV" type="radio" name="NgachBoTieuChi" id="NgachBoTieuChi0">
+                        Ngạch giảng viên/chuyên viên
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="BoTieuChi.NgachBoTieuChi" ng-value="QL" type="radio" name="NgachBoTieuChi" id="NgachBoTieuChi1">
+                        Quản lý
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-model="BoTieuChi.NgachBoTieuChi" ng-value="OTHER" type="radio" name="NgachBoTieuChi" id="NgachBoTieuChi2">
+                        Khác
+                    </label>
+                </div>
+                <div>
+                    <!--<div class="checkbox" style="margin-left: 20px">
+                        <label><input type="checkbox" ng-model="BoTieuChi.IsQuanLy" >Là bộ tiêu chí quản lý</label>
+                    </div>-->
+
+                </div>
+            </div>
+            <div class="">
+                <fieldset style="vertical-align:middle">
+                    <legend><b>Thông tin hiển thị</b></legend>
+                    <div style="margin-bottom:10px; margin-left: 10px">
+                        <!--<label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowDay">
+                            Ngày
+                        </label>
+                        <label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowMonth">
+                            Tháng
+                        </label>
+                        <label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowYear">
+                            Năm
+                        </label>-->
+                        <label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowTen">
+                            Họ và tên
+                        </label>
+                        <!--<label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowBoPhan">
+                            Bộ phận
+                        </label>-->
+                        <label class="checkbox-inline" style="vertical-align:middle">
+                            <input type="checkbox" ng-model="BoTieuChi.ShowDonVi">
+                            Đơn vị
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <!--<div style=" height:30px" ng-hide="BoTieuChi.HasDieuKienDanhGia">
+                <label class="checkbox-inline" style="vertical-align:middle">
+                    <input type="checkbox" ng-model="BoTieuChi.HasDieuKienDanhGia">
+                    Diều kiện đánh giá
+                </label>
+            </div>
+            <fieldset style="vertical-align:middle" ng-if="BoTieuChi.HasDieuKienDanhGia">
+                <legend>
+                    <label class="checkbox-inline" style="vertical-align:middle; font-weight:bold">
+                        <input type="checkbox" ng-model="BoTieuChi.HasDieuKienDanhGia">
+                        Diều kiện đánh giá
+                    </label>
+                </legend>
+                <div style="padding: 5px 10px">
+                    <label style="vertical-align:middle; display:inline-block">
+                        Hoàn thành Bộ tiêu chí <i class="glyphicon glyphicon-question-sign" title="Chọn bộ tiêu chí hoàn thành trước khi đánh giá bộ tiêu chí này"></i>
+                    </label>
+                    <div ng-repeat="DieuKienBoTieuChi in ListDieuKienBoTieuChi track by $index+1">
+                        <select kendo-drop-down-list
+                                k-options="ListBoTieuChiOption"
+                                style="background-color:lightblue; width:calc(100% - 100px);display:inline-block"
+                                k-data-text-field="'Name'"
+                                k-data-value-field="'Id'"
+                                k-filter="'contains'"
+                                k-ng-model="DieuKienBoTieuChi.HoanThanhBoTieuChiId"></select>
+                        <button class="btn btn-success" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="AddNewRow()" ng-show="$index == 0"><i class="fa fa-plus" style='margin-right: 0px;vertical-align:middle'></i></button>
+                        <button class="btn btn-danger" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="DelRow(DieuKienBoTieuChi)"><i class="fa fa-times" style='margin-right: 0px;'></i></button>
+                        <label class="radio-inline" style="vertical-align:middle">
+                            <input type="radio" ng-model="DieuKienBoTieuChi.LoaiHoanThanh" value="1">
+                            Hoàn thành đúng người
+                        </label>
+                        <label class="radio-inline" style="vertical-align:middle" ng-hide="DieuKienBoTieuChi.HoanThanhBoTieuChiLoaiBoTieuChi != BoTieuChi.LoaiBoTieuChi ">
+                            <input type="radio" ng-model="DieuKienBoTieuChi.LoaiHoanThanh" value="2">
+                            Tất cả thành viên đơn vị
+                        </label>
+                        <label class="radio-inline" style="vertical-align:middle" ng-hide="DieuKienBoTieuChi.HoanThanhBoTieuChiLoaiBoTieuChi != BoTieuChi.LoaiBoTieuChi ">
+                            <input type="radio" ng-model="DieuKienBoTieuChi.LoaiHoanThanh" value="3">
+                            Tất cả thành viên bộ môn
+                        </label>
+                        <hr style="margin: 5px 0px;" />
+                    </div>
+                </div>
+            </fieldset>-->
+            <!--<fieldset style="vertical-align:middle">
+                <legend><b>Phân quyền bộ tiêu chí</b></legend>
+                <div class="row" style="padding: 5px 10px">
+                    <div class="col-md-6 col-12">
+                        <div>Tự đánh giá: </div>
+                        <select kendo-drop-down-list
+                                k-options="ListGroupTuDanhGiaOption"
+                                style="width:100%;background-color:lightblue"
+                                k-data-text-field="'Name'"
+                                k-data-value-field="'Id'"
+                                k-filter="'contains'"
+                                k-ng-model="objBoTieuChiRole.GroupTuDanhGiaId">
+                        </select>
+                        <div style="margin-top: 5px">
+                            <label class="checkbox-inline" style="vertical-align:middle">
+                                <input type="checkbox" ng-model="objBoTieuChiRole.UserDanhGiaNgangHang">
+                                Cấp trên đánh giá ngang hàng
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div>Cấp trên đánh giá: </div>
+                        <select kendo-multi-select
+                                k-options="ListGroupDanhGiaOption"
+                                style="background-color:lightblue"
+                                k-data-text-field="'Name'"
+                                k-data-value-field="'Id'"
+                                k-filter="'contains'"
+                                k-ng-model="ListGroupDanhGiaId"></select>
+                    </div>
+                </div>
+            </fieldset>-->
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="save()" ng-disabled="ChiTietDanhGiaForm.$invalid">Lưu</button>
+            <button class="btn btn-warning" style="cursor: pointer" ng-click="$dismiss()">Thoát</button>
+        </div>
+    </form>
+</md-content>

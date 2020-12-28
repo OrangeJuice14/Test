@@ -1,0 +1,91 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;text-transform:uppercase;"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.THONG_TIN_CHAM_CONG_NGAY_NGHI">Thông tin chấm công ngày nghỉ</span></div>
+        <div class="form-group" data-bind="visible:!isEdit()">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.PHONG_BAN">Phòng ban:</span></label>
+            <div class="col-sm-7">
+                <select data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected_nhansu1"></select>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible:!isEdit()">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.NHAN_VIEN">Nhân viên:</span></label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton1">
+                    <div style="border-color: transparent;" id="jqxgrid_hosonhanvien1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.TU_NGAY">Từ ngày:</span></label>
+            <div class="col-sm-7">
+                <div id='jqxFromDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.DEN_NGAY">Đến ngày:</span></label>
+            <div class="col-sm-7">
+                <div id='jqxToDate1'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.BUOI">Buổi</span></label>
+            <div class="col-sm-7">
+                <select data-bind="options: buoiList, optionsText: 'Name', optionsValue: 'Id', value: buoiSelected"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.HINH_THUC_NGHI">Hình thức nghỉ</span></label>
+            <div class="col-sm-7" >
+                <div id="jqxComboBox_HinhThucNghi" style="width:500px">
+                </div>
+                <!--<select id='jqxComboBox_HinhThucNghi' data-bind="options: HinhThucNghiList, optionsText: 'TenHinhThucNghi', optionsValue: 'Oid', value: hinhThucNghiSelected1"></select>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.SO_NGAY_HOP_LE">Số ngày hợp lệ:</span></label>
+            <div class="col-sm-7">
+                <input id="txtsongayhople" disabled style="color:red"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.NGUOI_NHAN_BAN_GIAO">Người nhận bàn giao:</span></label>
+            <div class="col-sm-7">
+                <input id="txtnguoibangiao"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.NOI_DUNG">Nội dung:</span></label>
+            <div class="col-sm-7">
+                <textarea id="txtContent1" style="width: 300px;height: 50px;"></textarea>
+            </div>
+        </div>
+        <!--
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.NOI_NGHI">Nơi nghỉ:</span></label>
+            <div class="col-sm-7">
+                <textarea id="txtNoiNghi" style="width: 300px;height: 50px;"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.DIA_CHI_LIEN_HE">Địa chỉ liên hệ:</span></label>
+            <div class="col-sm-7">
+                <textarea id="txtDiaChiLienHe" style="width: 300px;height: 50px;"></textarea>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: Create">
+                    <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.LUU">Lưu</span>
+                </a>
+                <!--<a href="#" class="btn btn-info" style="width: 158px;">
+                    <i class="btn-label glyphicon glyphicon-chevron-left"></i><span data-i18n="QUAN_LY_NGAY_NGHI.TAO_MOI_MODAL.TRO_VE">Trở về</span>
+                </a>-->
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+    </div>
+</div>

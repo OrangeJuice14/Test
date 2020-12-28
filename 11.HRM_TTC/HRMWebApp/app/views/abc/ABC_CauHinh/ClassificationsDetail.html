@@ -1,0 +1,45 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="staffDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">Bảng xếp loại</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Từ: </label>
+                    <div class="col-sm-6">
+                        <input required kendo-numeric-text-box k-options="orders" k-ng-model="obj.MinRecord" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Đến: </label>
+                    <div class="col-sm-6">
+                        <input required kendo-numeric-text-box k-options="orders" k-ng-model="obj.MaxRecord" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Xếp loại: </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" style="width: 200px" ng-model="obj.Rank" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Có điều kiện: </label>
+                    <div class="col-sm-6">
+                        <input type="checkbox" class="form-control" ng-model="obj.IsEligible" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info" ng-click="save()">OK</button>
+            <button class="btn btn-info" ng-click="$dismiss()">Cancel</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,400 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+    function numberFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date) {
+        return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+        self.CoBangLuong = ko.observable();
+        //
+        self.obj = ko.observable();
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuongOfBangLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = dataLocalize("BANG_LUONG.BANG_LUONG_THANG") + value.Thang + '/' + value.Nam;
+                }).OrderByDescending(function (value) {
+                    return value.TuNgay;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.BangLuongSelected.subscribe(function (newvalue) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ThongTinNhanSu_BANGLUONG',
+                data: ko.toJSON({
+                    webUserId: session.Id,
+                    kyTinhLuong: newvalue
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.CoBangLuong(false);
+                    if (data.ChiTietThuNhapCaNhan != null) {
+                        self.obj(data.ChiTietThuNhapCaNhan);
+                        if (getLanguage() == 'en') {
+                            switch (self.obj().KyTinhLuongThang) {
+                                case "1":
+                                    self.obj().KyTinhLuongThang = "JANUARY";
+                                    break;
+                                case "2":
+                                    self.obj().KyTinhLuongThang = "FEBRUARY";
+                                    break;
+                                case "3":
+                                    self.obj().KyTinhLuongThang = "MARCH";
+                                    break;
+                                case "4":
+                                    self.obj().KyTinhLuongThang = "APRIL";
+                                    break;
+                                case "5":
+                                    self.obj().KyTinhLuongThang = "MAY";
+                                    break;
+                                case "6":
+                                    self.obj().KyTinhLuongThang = "JUNE";
+                                    break;
+                                case "7":
+                                    self.obj().KyTinhLuongThang = "JULY";
+                                    break;
+                                case "8":
+                                    self.obj().KyTinhLuongThang = "AUGUST";
+                                    break;
+                                case "9":
+                                    self.obj().KyTinhLuongThang = "SEPTEMBER";
+                                    break;
+                                case "10":
+                                    self.obj().KyTinhLuongThang = "OCTOBER";
+                                    break;
+                                case "11":
+                                    self.obj().KyTinhLuongThang = "NOVEMBER";
+                                    break;
+                                case "12":
+                                    self.obj().KyTinhLuongThang = "DECEMBER";
+                                    break;
+                                default:
+                                    self.obj().KyTinhLuongThang = "";
+                            }
+                        }
+                        self.CoBangLuong(true);
+                    }
+                }
+            });
+        });
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        var mywindow = window.open('', '', 'height=400,width=600');
+        mywindow.document.write('<html><head><title></title>');
+        /*optional stylesheet*/
+        //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+
+</script>
+<style type="text/css">
+    .headertext {
+        width: 100%;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .italictext {
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: normal;
+        font-family: 'Times New Roman';
+    }
+
+    .righttext {
+        font-size: 12pt;
+        text-align: right;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .padding10boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-left: 10px;
+    }
+
+    thead tr.color-bold {
+        background-color: dodgerblue;
+        text-align: center;
+    }
+
+        thead tr.color-bold th {
+            text-align: center;
+        }
+
+    tr.color-bold {
+        background-color: lightskyblue;
+    }
+
+        tr.color-bold td {
+            font-weight: bold;
+        }
+
+    tr.bold td {
+        font-weight: bold;
+    }
+
+    tr th, tr td {
+        padding: 5px;
+    }
+</style>
+<div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#"><span data-i18n="BANG_LUONG.BANG_LUONG_VA_PHU_CAP">Bảng lương và phụ cấp: </span></a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>
+        <a href="#" class="btn btn-info" style="width: 158px;" onclick="PrintElem('#in')">
+            <i class="btn-label fa fa-print"></i><span data-i18n="BANG_LUONG.IN">In</span>
+        </a>
+    </div>
+    <div data-bind="visible: BangLuongSelected() != undefined">
+        <!-- ko if:CoBangLuong -->
+        <div id="in" style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                <span data-bind="text: obj().TenCongTy"> </span><br/>
+            </div>
+            <div style="text-align:center;font-size:16pt; font-weight:bold; font-family:'Times New Roman'; width: 100%">
+                <span data-i18n="BANG_LUONG.PHIEU_THANH_TOAN_LUONG">PHIẾU LƯƠNG</span><BR>
+                <span data-i18n="BANG_LUONG.THANG">THÁNG</span>
+                <span data-bind="text: obj().KyTinhLuongThang"></span>
+                <span data-i18n="BANG_LUONG.NAM">NĂM</span>
+                <span data-bind="text: obj().KyTinhLuongNam"></span>
+            </div>
+            <div style="text-align:left;font-size:12pt; font-family:'Times New Roman'; width: 100%">
+                <!--<span data-i18n="BANG_LUONG.DON_VI">ĐƠN VỊ: </span><span data-bind="text: obj().TenBoPhan"> </span>-->
+                <table>
+                    <tr>
+                        <td data-i18n="BANG_LUONG.TABLE.HO_TEN">Họ tên:</td>
+                        <td style="width: 50%;" data-bind="text: obj().HoTen"></td>
+                        <td data-i18n="BANG_LUONG.TABLE.NGAY_CONG_CHUAN">Ngày làm việc chuẩn:</td>
+                        <td><span data-bind="text: obj().NgayCongChuan"></span><span style="padding-left: 20px;">(1)</span></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="BANG_LUONG.TABLE.CHUC_VU">Chức vụ:</td>
+                        <td data-bind="text: obj().TenChucVu"></td>
+                        <td data-i18n="BANG_LUONG.TABLE.NGAY_NGHI_KHONG_HUONG_LUONG">Ngày nghỉ không hưởng lương:</td>
+                        <td data-bind="text: obj().NgayKhongLuong"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td data-i18n="BANG_LUONG.TABLE.NGAY_LAM_VIEC_THUC_TE">Ngày làm việc thực tế:</td>
+                        <td><span data-bind="text: obj().NgayCongThucTe"></span><span style="padding-left: 20px;">(2)</span></td>
+                    </tr>
+                </table>
+            </div>
+            <table style="border-collapse: collapse;width:100%;margin-top:10px;" border="1">
+                <thead>
+                    <tr class="color-bold">
+                        <th data-i18n="BANG_LUONG.TABLE.NOI_DUNG">Nội dung</th>
+                        <th data-i18n="BANG_LUONG.TABLE.SO_TIEN_VND">Số tiền VNĐ</th>
+                        <th data-i18n="BANG_LUONG.TABLE.GHI_CHU">Ghi chú</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_HOP_DONG">Lương hợp đồng</span></td>
+                        <td data-bind="text: obj().LuongChucDanh_QD"></td>
+                        <td></td>
+                        <td>(4)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.PHU_CAP">Phụ cấp</span></td>
+                        <td data-bind="text: obj().LuongHieuQuaCongViec_QD"></td>
+                        <td></td>
+                        <td>(5)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_DONG_BAO_HIEM">Lương đóng Bảo hiểm</span></td>
+                        <td data-bind="text: obj().LuongDongBaoHiem"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="color-bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_THANG_NAY">Lương tháng này</span></td>
+                        <td data-bind="text: obj().LuongThangNay"></td>
+                        <td></td>
+                        <td>(6)=[(4)+(5)]/(1)*(2)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.DIEU_CHINH_LUONG_CAC_KHOAN_KHAC">Điều chỉnh lương / Các khoản khác</span></td>
+                        <td data-bind="text: obj().DieuChinhLuong_ChiuThue"></td>
+                        <td></td>
+                        <td>(a)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_THANG_13_KHAC">Lương tháng 13 / Khác</span></td>
+                        <td data-bind="text: obj().LuongThang13"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.PHU_CAP_CHIU_THUE">Phụ cấp chịu thuế</span></td>
+                        <td data-bind="text: obj().PhuCapChiuThue"></td>
+                        <td></td>
+                        <td>(b)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_TANG_CA_CHIU_THUE">Lương tăng ca chịu thuế</span></td>
+                        <td data-bind="text: obj().LuongTangCaChiuThue"></td>
+                        <td></td>
+                        <td>(c)</td>
+                    </tr>
+                    <tr class="bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.TONG_CAC_KHOAN_CHIU_THUE_NGOAI_LUONG">Tổng các khoản chịu thuế ngoài lương</span></td>
+                        <td data-bind="text: obj().LuongTangCaChiuThue"></td>
+                        <td></td>
+                        <td>(7)=(a)+(b)+(c)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.PHU_CAP_MIEN_THUE">Phụ cấp miễn thuế</span></td>
+                        <td data-bind="text: obj().PhuCapKhongChiuThue"></td>
+                        <td></td>
+                        <td>(d)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_TANG_CA_MIEN_THUE">Lương tăng ca miễn thuế</span></td>
+                        <td data-bind="text: obj().LuongTangCaKhongChiuThue"></td>
+                        <td></td>
+                        <td>(e)</td>
+                    </tr>
+                    <tr class="bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.TONG_CAC_KHOAN_MIEN_THUE_NGOAI_LUONG">Tổng các khoản miễn thuế ngoài lương</span></td>
+                        <td data-bind="text: obj().KhoanKhongChiuThueNgoaiLuong"></td>
+                        <td></td>
+                        <td>(8)=(d)+(e)</td>
+                    </tr>
+                    <tr class="color-bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.THU_NHAP_CHIU_THUE">Thu nhập chịu thuế</span></td>
+                        <td data-bind="text: obj().ThuNhapChiuThue"></td>
+                        <td></td>
+                        <td>(9)=(6)+(7)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.MUC_DONG_BHXH">Mức đóng BHXH (8%)</span></td>
+                        <td data-bind="text: obj().BHXH_NLD"></td>
+                        <td></td>
+                        <td>(f)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.MUC_DONG_BHYT">Mức đóng BHYT (1.5%)</span></td>
+                        <td data-bind="text: obj().BHYT_NLD"></td>
+                        <td></td>
+                        <td>(g)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.MUC_DONG_BHTN">Mức đóng BHTN (1%)</span></td>
+                        <td data-bind="text: obj().BHTN_NLD"></td>
+                        <td></td>
+                        <td>(h)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.MUC_DONG_CONG_DOAN">Mức đóng công đoàn</span></td>
+                        <td data-bind="text: obj().CongDoan"></td>
+                        <td></td>
+                        <td>(i)</td>
+                    </tr>
+                    <tr class="bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.TONG_MUC_DONG_BAO_HIEM">Tổng mức đóng BHXH-YT-TN (10.5%)</span></td>
+                        <td data-bind="text: obj().TongBaoHiem"></td>
+                        <td></td>
+                        <td>(10)=(f)+(g)+(h)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.TONG_GIAM_TRU">Tổng giảm trừ(cá nhân-người phụ thuộc)</span></td>
+                        <td data-bind="text: obj().TongGiamTruGiaCanh"></td>
+                        <td></td>
+                        <td><span data-i18n="BANG_LUONG.TABLE.TONG_GIAM_TRU_GHI_CHU">(11)=Cá nhân:9.000.000+số NPT*3.600.000</span></td>
+                    </tr>
+                    <tr class="bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.THUE_TNCN">Thuế TNCN</span></td>
+                        <td data-bind="text: obj().ThueTNCN"></td>
+                        <td></td>
+                        <td>(12)</td>
+                    </tr>
+                    <tr>
+                        <td><span data-i18n="BANG_LUONG.TABLE.CAC_KHOAN_DIEU_CHINH_SAU_THUE">Các khoản điều chỉnh sau thuế</span></td>
+                        <td data-bind="text: obj().KhoanDieuChinhSauThue"></td>
+                        <td></td>
+                        <td>(13)</td>
+                    </tr>
+                    <tr class="color-bold">
+                        <td><span data-i18n="BANG_LUONG.TABLE.LUONG_THUC_NHAN">Lương thực nhận</span></td>
+                        <td data-bind="text: obj().ThucLanh"></td>
+                        <td></td>
+                        <td>(14)=(6)+(7)+(8)-(10)-(i)-(12)+/-(13)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <!-- /ko -->
+        <!-- ko if: CoBangLuong()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext"><span data-i18n="BANG_LUONG.THANG_DA_CHON_KHONG_CO_DU_LIEU_LUONG">Tháng đã chọn không có dữ liệu lương!</span></div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

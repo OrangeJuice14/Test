@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th style="width: 10%" class="textToCenter">Năm</th>
+                    <th style="width: 30%" class="textToCenter">Nội dung</th>
+                    <th style="width: 30%" class="textToCenter">Tên hội thảo</th>
+                    <th style="width: 10%" class="textToCenter">Cấp hội thảo</th>
+                    <th style="width: 10%" class="textToCenter">Thành tích</th>
+                    <th style="width: 10%" class="textToCenter">Ghi chú</th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuaTrinhHoiThao">
+                    <tr>
+                        <td data-bind="text: Nam" class="textToCenter"></td>
+                        <td data-bind="text: NoiDung" class="textToCenter"></td>
+                        <td data-bind="text: TenHoiThao" class="textToCenter"></td>
+                        <td data-bind="text: CapHoiThao" class="textToCenter"></td>
+                        <td data-bind="text: ThanhTich" class="textToCenter"></td>
+                        <td data-bind="text: GhiChu" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

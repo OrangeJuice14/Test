@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ProfessorCriterion, HRMWebApp.KPI.DB" table="KPI_ProfessorCriterion">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="ManageCode" column="ManageCode"></property>
+    <property name="NumberOfHour" column="NumberOfHour"></property>
+    <property name="Record" column="Record"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <property name="Tooltip" column="Tooltip"></property>
+    <many-to-one name="TargetGroupDetail" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId" />
+    <many-to-one name="CriterionType" class="HRMWebApp.KPI.DB.Entities.CriterionType" column="CriterionTypeId"/>
+    <bag name="CriterionDictionaries" table="KPI_CriterionDictionary" cascade="none" inverse="true" >
+      <key column="ProfessorCriterionId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.CriterionDictionary"/>
+    </bag>
+   <bag name="StudyYears" table="KPI_ProfessorCriterion_StudyYear" lazy="false">
+      <key column="ProfessorCriterionId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.StudyYear" column="StudyYearId"/>
+    </bag>
+    <many-to-one name="DonViTinh" class="HRMWebApp.KPI.DB.Entities.DonViTinh" column="DonViTinh"/>
+    <many-to-one name="DanhGiaChiTiet" class="HRMWebApp.KPI.DB.Entities.DanhGiaChiTiet" column="DanhGiaChiTiet"/>
+    <bag name="DonViCungCap" table="KPI_ProfessorCriterionId_BoPhan" lazy="false">
+      <key column="ProfessorCriterionId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId"/>
+    </bag>
+    <bag name="ChucDanh" table="KPI_ProfessorCriterion_ChucDanh" lazy="false">
+      <key column="ProfessorCriterionId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.ChucDanh" column="ChucdanhId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

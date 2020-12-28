@@ -1,0 +1,524 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+    function numberFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date)
+    {
+        return date.getDate() + "/" + parseInt(date.getMonth() +1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+        self.CoBangLuong = ko.observable();
+        self.TenBoPhan = ko.observable();
+        self.HoTen = ko.observable();
+        self.TenKy = ko.observable();
+        self.LuongCoBan = ko.observable(0);
+        self.HeSoLuong = ko.observable();
+        self.HSPCVuotKhung = ko.observable();
+        self.HSPCChucVu = ko.observable();
+        self.HSPCUuDai = ko.observable();
+        self.HSPCThamNien = ko.observable();
+        self.HSPCDocHai = ko.observable();
+        self.HSPCKhac = ko.observable();
+        self.TongHeSoLuongNhaNuoc = ko.observable();
+        self.LuongNhaNuoc = ko.observable(0);
+        self.HSLTangThem = ko.observable();
+        self.TiLeTangThem = ko.observable();
+        self.LuongTangThem = ko.observable(0);
+        self.HSPCThamNienHC = ko.observable();
+        self.PhanTramThamNienHC = ko.observable();
+        self.LuongThamNienHanhChinh = ko.observable(0);
+        self.TongLuongTangThem = ko.observable(0);
+        self.HSPCKhoiHanhChinh = ko.observable();
+        self.HSPCTrachNhiem1 = ko.observable();
+        self.HSPCTrachNhiem2 = ko.observable();
+        self.HSPCTrachNhiem3 = ko.observable();
+        self.HSPCTrachNhiem4 = ko.observable();
+        self.HSPCTrachNhiem5 = ko.observable();
+        self.HSPCTrachNhiem6 = ko.observable();
+        self.TongHSTrachNhiem = ko.observable();
+        self.LuongPhuCapKhoiHanhChinh = ko.observable(0);
+        self.LuongPhuCapTrachNhiem = ko.observable(0);
+        self.MucLuongTangThem = ko.observable(0);
+        self.PTBHXH = ko.observable();
+        self.PTBHYT = ko.observable();
+        self.PTBHTN = ko.observable();
+        self.BHTN = ko.observable(0);
+        self.BHYT = ko.observable(0);
+        self.BHXH = ko.observable(0);
+        self.ThueTNCN = ko.observable(0);
+        self.TruHocNuocNgoai = ko.observable(0);
+        self.TongThuNhapChiuThue = ko.observable(0);
+        self.TienKhauTruThieuTiet = ko.observable(0);
+        self.TienKhauTruThueTNCN = ko.observable(0);
+        self.TienKhauTruKhac = ko.observable(0);
+        self.TongKhauTruLuong = ko.observable(0);
+        self.TongThuNhap = ko.observable(0);
+        self.TongKhauTru = ko.observable(0);
+        self.ThucLanh = ko.observable(0);
+        self.NamTruoc = ko.observable(0);
+        self.PhuCapQuanLyDaoTao = ko.observable(0);
+        self.PhuCapQuanLyDaoTao_CLC = ko.observable(0);
+        self.HeSoKPI = ko.observable(0);
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    if (value.Thang <= 9) {
+                        return value.Name = 'Bảng lương tháng 0' + value.Thang + '/' + value.Nam;
+                    }
+                    else {
+                        return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                    }
+                }).OrderBy(function (value) {
+                    return value.Nam;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.BangLuongSelected.subscribe(function (newvalue) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ThongTinNhanSu_BANGLUONG',
+                data: ko.toJSON({
+                    webUserId: session.Id,
+                    kyTinhLuong: newvalue
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.CoBangLuong(false);
+                    if (data.ChiTietThuNhapCaNhan != null) {
+                        self.CoBangLuong(true);
+                        self.TenBoPhan(data.ChiTietThuNhapCaNhan.TenBoPhan);
+                        self.HoTen(data.ChiTietThuNhapCaNhan.HoTen);
+                        self.TenKy(data.ChiTietThuNhapCaNhan.TenKy);
+                        self.LuongCoBan(data.ChiTietThuNhapCaNhan.LuongCoBan);
+                        self.HeSoLuong(data.ChiTietThuNhapCaNhan.HeSoLuong);
+                        self.HSPCVuotKhung(data.ChiTietThuNhapCaNhan.HSPCVuotKhung);
+                        self.HSPCChucVu(data.ChiTietThuNhapCaNhan.HSPCChucVu);
+                        self.HSPCUuDai(data.ChiTietThuNhapCaNhan.HSPCUuDai);
+                        self.HSPCThamNien(data.ChiTietThuNhapCaNhan.HSPCThamNien);
+                        self.HSPCDocHai(data.ChiTietThuNhapCaNhan.HSPCDocHai);
+                        self.HSPCKhac(data.ChiTietThuNhapCaNhan.HSPCKhac);
+                        self.TongHeSoLuongNhaNuoc(data.ChiTietThuNhapCaNhan.TongHeSoLuongNhaNuoc);
+                        self.LuongNhaNuoc(data.ChiTietThuNhapCaNhan.LuongNhaNuoc);
+                        self.HSLTangThem(data.ChiTietThuNhapCaNhan.HSLTangThem);
+                        self.TiLeTangThem(data.ChiTietThuNhapCaNhan.TiLeTangThem);
+                        self.LuongTangThem(data.ChiTietThuNhapCaNhan.LuongTangThem);
+                        self.HSPCThamNienHC(data.ChiTietThuNhapCaNhan.HSPCThamNienHC);
+                        self.PhanTramThamNienHC(data.ChiTietThuNhapCaNhan.PhanTramThamNienHC);
+                        self.LuongThamNienHanhChinh(data.ChiTietThuNhapCaNhan.LuongThamNienHanhChinh);
+                        self.TongLuongTangThem(data.ChiTietThuNhapCaNhan.TongLuongTangThem);
+                        self.HSPCKhoiHanhChinh(data.ChiTietThuNhapCaNhan.HSPCKhoiHanhChinh);
+                        self.HSPCTrachNhiem1(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem1);
+                        self.HSPCTrachNhiem2(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem2);
+                        self.HSPCTrachNhiem3(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem3);
+                        self.HSPCTrachNhiem4(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem4);
+                        self.HSPCTrachNhiem5(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem5);
+                        self.HSPCTrachNhiem6(data.ChiTietThuNhapCaNhan.HSPCTrachNhiem6);
+                        self.TongHSTrachNhiem(data.ChiTietThuNhapCaNhan.TongHSTrachNhiem);
+                        self.LuongPhuCapKhoiHanhChinh(data.ChiTietThuNhapCaNhan.LuongPhuCapKhoiHanhChinh);
+                        self.LuongPhuCapTrachNhiem(data.ChiTietThuNhapCaNhan.LuongPhuCapTrachNhiem);
+                        self.MucLuongTangThem(data.ChiTietThuNhapCaNhan.MucLuongTangThem);
+                        self.PTBHXH(data.ChiTietThuNhapCaNhan.PTBHXH);
+                        self.PTBHYT(data.ChiTietThuNhapCaNhan.PTBHYT);
+                        self.PTBHTN(data.ChiTietThuNhapCaNhan.PTBHTN);
+                        self.BHTN(data.ChiTietThuNhapCaNhan.BHTN);
+                        self.BHYT(data.ChiTietThuNhapCaNhan.BHYT);
+                        self.BHXH(data.ChiTietThuNhapCaNhan.BHXH);
+                        self.ThueTNCN(data.ChiTietThuNhapCaNhan.ThueTNCN);
+                        self.TruHocNuocNgoai(data.ChiTietThuNhapCaNhan.TruHocNuocNgoai);
+                        self.TongThuNhapChiuThue(data.ChiTietThuNhapCaNhan.TongThuNhapChiuThue);
+                        self.TienKhauTruThieuTiet(data.ChiTietThuNhapCaNhan.TienKhauTruThieuTiet);
+                        self.TienKhauTruThueTNCN(data.ChiTietThuNhapCaNhan.TienKhauTruThueTNCN);
+                        self.TienKhauTruKhac(data.ChiTietThuNhapCaNhan.TienKhauTruKhac);
+                        self.TongKhauTruLuong(data.ChiTietThuNhapCaNhan.TongKhauTruLuong);
+                        self.TongThuNhap(data.ChiTietThuNhapCaNhan.TongThuNhap);
+                        self.TongKhauTru(data.ChiTietThuNhapCaNhan.TongKhauTru);
+                        self.ThucLanh(data.ChiTietThuNhapCaNhan.ThucLanh);
+                        self.NamTruoc(data.ChiTietThuNhapCaNhan.NamTruoc);
+                        self.PhuCapQuanLyDaoTao(data.ChiTietThuNhapCaNhan.PhuCapQuanLyDaoTao);
+                        self.PhuCapQuanLyDaoTao_CLC(data.ChiTietThuNhapCaNhan.PhuCapQuanLyDaoTao_CLC);
+                        self.HeSoKPI(data.ChiTietThuNhapCaNhan.HeSoKPI);
+                    }
+                }
+            });
+        });
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<script type="text/javascript">
+
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data)
+    {
+        var mywindow = window.open('', '', 'height=400,width=600');
+        mywindow.document.write('<html><head><title></title>');
+        /*optional stylesheet*/
+        //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+
+</script>
+<style type="text/css">
+        .headertext{
+            width:100%;text-align:center;font-size:16pt; font-weight:bold;font-family:'Times New Roman';
+        }
+        .boldtext{
+           font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;
+        }
+        .italictext{
+            font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';
+        }
+        .righttext{
+            font-size:12pt;text-align:right;font-weight:bold;font-family:'Times New Roman';
+        }
+        .padding10boldtext{
+            font-size:12pt; font-weight:bold; font-family:'Times New Roman';padding-left:10px;
+        }
+    </style>
+ <div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Bảng lương và phụ cấp : </a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>
+        <a href="#" class="btn btn-labeled btn-yellow" style="width: 158px;"  onclick="PrintElem('#in')">
+            <i class="btn-label fa fa-print"></i>In
+        </a>
+    </div>
+    <div data-bind="visible: BangLuongSelected() != undefined">
+        <!-- ko if:CoBangLuong -->
+        <div id="in"  style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div style="text-align:center;width:100%;font-weight:bold;font-family:'Times New Roman';font-size:16pt;">Chi tiết các khoản thu nhập / khấu trừ</div>
+            <div style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                I. Các khoản lương và phụ cấp theo ngạch bậc:<br />
+            </div>
+            <div style="padding-left:10px;font-size:12pt; font-weight:bold; font-family:'Times New Roman'">
+                1. Hệ số lương và phụ cấp của Nhà nước:
+                <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">
+                    (<span data-bind="text: numberWithCommas(LuongCoBan())"></span> / 1 hệ số)
+                </span>
+            </div>
+            <table style="border-collapse: collapse;width:90%;" border="0" cellspacing="5">
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;">a. Hệ số lương cơ bản:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HeSoLuong"></td>
+                    <td style="width:150px;padding-left:20px;">b. Hệ số PC chức vụ:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCChucVu"></td>
+                    <td style="width:150px;padding-left:20px;">c. Hệ số PC giảng dạy:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCUuDai"></td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;">d. Hệ số PC độc hại:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCDocHai"></td>
+                    <td style="width:150px;padding-left:20px;">e. Hệ số PC vượt khung:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCVuotKhung"></td>
+                    <td style="width:150px;padding-left:20px;">f. Hệ số PC khác:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCKhac"></td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;">d. Hệ số thâm niên:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: HSPCThamNien"></td>
+                    <td></td>
+                    <td></td>
+                    <td style="width:150px;padding-left:20px;font-weight:bold">Tổng các hệ số:</td>
+                    <td style="width:30px;font-weight:bold;text-align:right" data-bind="text: TongHeSoLuongNhaNuoc"></td>
+                </tr>
+            </table>
+            <div style="padding-left:80px;font-size:12pt; font-weight:bold; font-family:'Times New Roman'">
+                Thành tiền (1):
+                <span style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                    <span data-bind="text: numberFormat(LuongNhaNuoc())"></span>
+                    <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                </span>
+            </div>
+            <div style="padding-left:10px;font-size:12pt; font-weight:bold; font-family:'Times New Roman'">
+                2. Lương tăng thêm:
+                <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">
+                    (<span data-bind="text: numberWithCommas(MucLuongTangThem ())"></span> / 1 hệ số)
+                </span>
+            </div>
+            <table style="border-collapse: collapse;width:90%;" border="0" cellspacing="5">
+                <tr style="height:30px;">
+                    <td style="width:100px;padding-left:20px;">a. Hệ số tăng thêm:</td>
+                    <td style="font-weight:bold;text-align:right;width:20px;" data-bind="text: HSLTangThem "></td>
+                    <td style="width:100px;padding-left:10px;">Tỷ lệ hưởng:</td>
+                    <td style="font-weight:bold;text-align:right;width:50px;" data-bind="text: TiLeTangThem "></td>
+                    <td style="width:100px;padding-left:10px;">Hệ số KPI:</td>
+                    <td style="font-weight:bold;text-align:right" data-bind="text: HeSoKPI "></td>
+                    <td style="width:100px;padding-left:10px;">Thành tiền:</td>
+                    <td style="font-weight:bold;text-align:right;width:150px;">
+                        <span data-bind="text: numberFormat(LuongTangThem ())"></span>
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:230px;padding-left:20px;">b. Hệ số thâm niên khối HC:</td>
+                    <td style="width:20px;font-weight:bold;text-align:right" data-bind="text: HSPCThamNienHC "></td>
+                    <td style="width:100px;padding-left:10px;">Tỷ lệ hưởng:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: PhanTramThamNienHC "></td>
+                    <td style="width:100px;padding-left:10px;"></td>
+                    <td style="font-weight:bold;text-align:right" data-bind=""></td>
+                    <td style="width:100px;padding-left:10px;">Thành tiền:</td>
+                    <td style="width:80px;font-weight:bold;text-align:right;width:150px;">
+                        <span data-bind="text: numberFormat(LuongThamNienHanhChinh())"></span>
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+            </table>
+            <div style="padding-left:80px;font-size:12pt; font-weight:bold; font-family:'Times New Roman'">
+                Cộng (2):
+                <span style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                    <span data-bind="text: numberFormat(TongLuongTangThem())"></span>
+                    <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                </span>
+            </div>
+            <div style="font-size:12pt;font-weight:bold;font-family:'Times New Roman';padding-top:10px;padding-bottom:10px">
+                II. Các khoản phụ cấp:<br />
+            </div>
+            <table style="border-collapse: collapse;width:95%;margin-left:20px" border="1" cellspacing="5">
+                <tr style="height:30px;">
+                    <td style="width:34%;padding-left:10px;font-weight:bold">Phụ cấp khối hành chính</td>
+                    <td colspan="3" style="font-weight:bold;padding-left:10px;">
+                        Phụ cấp khối quản lý đào tạo
+                        <span style="font-weight:bold">(<span data-bind="text: numberFormat(PhuCapQuanLyDaoTao()) "></span>đ/1 hệ số or <span data-bind="text: numberFormat(PhuCapQuanLyDaoTao_CLC()) "></span>đ/1 hệ số CLC)</span>
+                    </td>
+                </tr>
+                <tr style="height:30px">
+                    <td style="padding-left:10px;vertical-align:top;padding-top:10px;" rowspan="3">
+                        Hệ số: <span style="font-weight:bold" data-bind="text: HSPCKhoiHanhChinh "></span><br /><br />
+                        Thành tiền:<span style="font-weight:bold" data-bind="text: numberFormat(LuongPhuCapKhoiHanhChinh ())"></span>
+                        <span class="italictext">đồng</span>
+
+                    </td>
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm 1:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem1 "></span>
+                    </td>
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm 3:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem3  "></span>
+                    </td>
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm 5:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem5 "></span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm 2:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem2 "></span>
+                    </td>
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm 4:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem4 "></span>
+                    </td>
+                    <td style="width:22%;padding-left:10px;">
+                        HS trách nhiệm - CLC:
+                        <span style="font-weight:bold" data-bind="text: HSPCTrachNhiem6 "></span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td colspan="3" style="font-weight:bold;padding-left:10px ">
+                        Tổng hệ số:
+                        <span style="font-weight:bold; padding-right:80px;" data-bind="text: TongHSTrachNhiem  "></span>
+                        Thành tiền:
+                        <span style="font-weight:bold;" data-bind="text: numberFormat(LuongPhuCapTrachNhiem ())"></span>
+                        <span class="italictext">đồng</span>
+                    </td>
+                </tr>
+            </table>
+            <div style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                III. Các khoản khấu trừ vào lương:<br />
+            </div>
+            <table style="border-collapse: collapse;width:90%;" border="0" cellspacing="5">
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        1. Bảo hiểm xã hội
+                        (<span data-bind="text: PTBHXH"></span>%)
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(BHXH())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        2. Bảo hiểm y tế
+                        (<span data-bind="text: PTBHYT "></span>%)
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(BHYT ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        3. Bảo hiếm thất nghiệp
+                        (<span data-bind="text: PTBHTN "></span>%)
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(BHTN())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        4. Thuế TNCN
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(ThueTNCN ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        5. Trừ đi học nước ngoài
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TruHocNuocNgoai ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:20px;font-weight:bold;">
+                        6. Các khoản trừ khác
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TongKhauTruLuong ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:25px;">
+                        6.1 Trừ thuế TNCN năm <span data-bind="text: NamTruoc()"></span>
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TienKhauTruThueTNCN ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:25px;">
+                        6.2 Trừ tiền thiếu tiết giảng dạy, thiếu tiết NCKH
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TienKhauTruThieuTiet ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+                <tr style="height:30px;">
+                    <td style="width:150px;padding-left:25px;">
+                        6.3 Khấu trừ khác
+                    </td>
+                    <td style="width:30px;font-weight:bold;">:</td>
+                    <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TienKhauTruKhac ())"></td>
+                    <td style="width:30px;padding-left:10px;">
+                        <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div style="border:2px solid; background-color:lightgray;width:90%;margin-left:40px;">
+                <table style="border-collapse: collapse;font-size:13pt;width:100%;" border="0" cellspacing="5">
+                    <tr style="height:30px;">
+                        <td style="width:180px;padding-left:20px;font-weight:bold;">
+                            TỔNG THU NHẬP (I + II)
+                        </td>
+                        <td style="width:30px;font-weight:bold;">:</td>
+                        <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TongThuNhap())"></td>
+                        <td style="width:30px;padding-left:10px;">
+                            <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                        </td>
+                    </tr>
+                    <tr style="height:30px;">
+                        <td style="width:180px;padding-left:20px;">
+                            Trong đó thu nhập chịu thuế (không bao gồm: PCGD, BHXH, BHYT và phụ cấp độc hại) là
+                        </td>
+                        <td style="width:30px;font-weight:bold;">:</td>
+                        <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TongThuNhapChiuThue())"></td>
+                        <td style="width:30px;padding-left:10px;">
+                            <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                        </td>
+                    </tr>
+                    <tr style="height:30px;">
+                        <td style="width:180px;padding-left:20px;font-weight:bold;">
+                            TỔNG KHẤU TRỪ (III)
+                        </td>
+                        <td style="width:30px;font-weight:bold;">:</td>
+                        <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(TongKhauTru ())"></td>
+                        <td style="width:30px;padding-left:10px;">
+                            <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                        </td>
+                    </tr>
+                    <tr style="height:30px;">
+                        <td style="width:180px;padding-left:20px;">
+                            <span style="font-weight:bold;">THỰC LÃNH (I + II - III)</span>
+                            (vào tài khoản thẻ ATM)
+                        </td>
+                        <td style="width:30px;font-weight:bold;">:</td>
+                        <td style="width:50px;font-weight:bold;text-align:right" data-bind="text: numberFormat(ThucLanh())"></td>
+                        <td style="width:30px;padding-left:10px;">
+                            <span style="font-size:12pt;font-style:italic;font-weight:normal;font-family:'Times New Roman';">đồng</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: CoBangLuong()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Không có bảng lương tháng này!</div>
+        </div>
+            <!-- /ko -->
+        </div>
+</div>

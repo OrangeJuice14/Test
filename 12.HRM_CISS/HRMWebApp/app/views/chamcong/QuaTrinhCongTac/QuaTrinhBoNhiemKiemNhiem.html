@@ -1,0 +1,31 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.SO_QUYET_DINH">Số quyết định</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.TU_NAM">Từ năm</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.DEN_NAM">Đến năm</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.CHUC_VU">Chức vụ</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.PHU_CAP_CHUC_VU">Phụ cấp Chức vụ</span></th>
+                    <th class="textToCenter"><span data-i18n="CAC_QUA_TRINH.QUA_TRINH_KIEM_NHIEM.NGAY_HUONG_CHUC_VU">Ngày hưởng chức vụ</span></th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuaTrinhBoNhiemKiemNhiem">
+                    <tr>
+                        <td data-bind="text: SoQuyetDinh" class="textToCenter"></td>
+                        <td data-bind="text: TuNam" class="textToCenter"></td>
+                        <td data-bind="text: DenNam" class="textToCenter"></td>
+                        <td data-bind="text: ChucVu" class="textToCenter"></td>
+                        <td data-bind="text: PhuCapChucVu" class="textToCenter"></td>
+                        <td data-bind="text: NgayHuongChucVu == null ? '' : formatDate(new Date(NgayHuongChucVu))" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</html>

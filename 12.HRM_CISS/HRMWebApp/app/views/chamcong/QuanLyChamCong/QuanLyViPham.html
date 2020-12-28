@@ -1,0 +1,288 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.webUserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        self.name = ko.observable("");
+        self.isEdit = ko.observable(false);
+        self.grid_hosonhanvien = ko.observableArray();
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: dataLocalize("QUAN_LY_VI_PHAM.JS.TEN_BO_PHAN_TAT_CA") });
+                    self.department(obj);
+                    if (obj.length > 0) {
+                        self.departmentSelected(obj[0].Oid);
+                    }
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'TenHinhThucViPham', type: 'string' },
+                { name: 'TGVaoSangQuyDinh', type: 'string' },
+                { name: 'GioVaoSang', type: 'string' },
+                { name: 'TGRaSangQuyDinh', type: 'string' },
+                { name: 'GioRaSang', type: 'string' },
+                { name: 'TGVaoChieuQuyDinh', type: 'string' },
+                { name: 'GioVaoChieu', type: 'string' },
+                { name: 'TGRaChieuQuyDinh', type: 'string' },
+                { name: 'GioRaChieu', type: 'string' },
+                { name: 'ThoiGianVaoTre', type: 'string' },
+                { name: 'ThoiGianVeSom', type: 'string' },
+                { name: 'Ngay', type: 'date', format: 'dd-MM-yyyy' }
+            ],
+            id: 'Id',
+            // sortcolumn: 'HoTen',
+            //sortdirection: 'asc',
+            url: "/WebServices/QuanLyViPham_Find",
+            formatdata: function (data) {
+                return {
+                    ngay: self.day(),
+                    thang: self.month(),
+                    nam: self.year(),
+                    boPhanId: self.departmentSelected() == undefined ? null : self.departmentSelected()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid({
+            source: self.dataAdapter,
+            width: '100%',
+            columnsheight: 35,
+            pageable: true,
+            pagesize: 10,
+            sortable: true,
+            rowsheight: 50,
+            filterable: true,
+            autorowheight: true,
+            autoheight: true,
+            theme: "darkBlue",
+            columns: [
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.STT"), pinned: true, columntype: 'number', width: 45, editable: false, cellsrenderer: function (row, column, value) {
+                        return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.MA_NHAN_SU"), pinned: true, datafield: 'SoHieuCongChuc', width: 120, align: 'center', cellsalign: "middle"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.HO_TEN"), pinned: true, datafield: 'HoTen', width: 120, align: 'center'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.DON_VI"), datafield: 'TenPhongBan', width: 200, align: 'center'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.NGAY"), datafield: 'Ngay', width: 80, cellsformat: 'd/M/yyyy', align: 'center', cellsalign: "middle"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.HINH_THUC_VI_PHAM"), datafield: 'TenHinhThucViPham', width: 150, cellsalign: "middle", sortable: false, align: 'center',
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_VAO_SANG_QUY_DINH"), datafield: 'TGVaoSangQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_VAO_SANG"), datafield: 'GioVaoSang', width: 120, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                //{
+                //    text: 'Ra sáng QĐ', datafield: 'TGRaSangQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                //},
+                //{
+                //    text: 'TG ra sáng', datafield: 'GioRaSang', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                //},
+                //{
+                //    text: 'Vào chiều QĐ', datafield: 'TGVaoChieuQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                //},
+                //{
+                //    text: 'TG vào chiều', datafield: 'GioVaoChieu', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                //},
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_RA_CHIEU_QUY_DINH"), datafield: 'TGRaChieuQuyDinh', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_RA_CHIEU"), datafield: 'GioRaChieu', width: 120, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_VAO_TRE"), datafield: 'ThoiGianVaoTre', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_VI_PHAM.TABLE.TG_VAO_TRE"), datafield: 'ThoiGianVeSom', width: 100, cellsalign: "middle", sortable: false, align: 'center',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                }
+
+            ]
+        });
+        self.datagrid.jqxGrid('rendered', function () {
+            self.datagrid.jqxGrid('localizestrings', jqxLocalization());
+        });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert(dataLocalize("QUAN_LY_VI_PHAM.ALERT.NGAY_KHONG_HOP_LE"));
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert(dataLocalize("QUAN_LY_VI_PHAM.ALERT.THANG_KHONG_HOP_LE"));
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert(dataLocalize("QUAN_LY_VI_PHAM.ALERT.NAM_KHONG_HOP_LE"));
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        excelExport: function (e) {
+            var self = this;
+            //this.datagrid.jqxGrid('exportdata', 'xls', 'jqxgrid'); // chỉ xuất được file dung lượng nhỏ (khoảng vài trăm dòng)
+
+            var gridContent = this.datagrid.jqxGrid('exportdata', 'html');
+
+            $('#jqxgrid-table-export').html(gridContent);
+
+            var instance = new TableExport(document.getElementById('jqxgrid-table-export'), {
+                formats: ['xlsx'],
+                exportButtons: false,
+                filename: 'QuanLyViPham_' + self.day() + '-' + self.month() + '-' + self.year()
+            });
+
+            //                                        // "id" of selector    // format
+            var exportData = instance.getExportData()['jqxgrid-table-export']['xlsx'];
+
+            //                   // data          // mime              // name              // extension
+            instance.export2file(exportData.data, exportData.mimeType, exportData.filename, exportData.fileExtension);
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#QuanLyViPham")[0]);
+    });
+</script>
+<div id="QuanLyViPham">
+    <div class="row">
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" data-i18n="[placeholder]QUAN_LY_VI_PHAM.NGAY" placeholder="ngày" data-bind="value: day" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        -
+        <input type="text" data-i18n="[placeholder]QUAN_LY_VI_PHAM.THANG" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        -
+        <input type="text" data-i18n="[placeholder]QUAN_LY_VI_PHAM.NAM" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <select style="width: 200px" data-bind="options: department, optionsText: function (type) { return type.TenBoPhan  }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <input type="button" data-i18n="[value]QUAN_LY_VI_PHAM.TIM" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        <input type="button" data-i18n="[value]QUAN_LY_VI_PHAM.XUAT_EXCEL" value="Xuất excel" data-bind="click: excelExport" style="width: 100px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="jqxgrid-table-export" style="display: none;"></div>
+</div>
+

@@ -1,0 +1,286 @@
+﻿<link href="/Components/jQuery-File-Upload-9.19.1/css/jquery.fileupload.css" rel="stylesheet" />
+<style>
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > td {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    #hoatdongkhac .row {
+        padding-bottom: 10px;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+    </div>
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="padding-bottom: 15px;">
+            <div style="float: left;">
+                Năm học: <select ng-options="item.Oid as item.TenNamHoc for item in namHocList" ng-change="getHocKy()" ng-model="namHocId"></select>
+                Học kỳ: <select ng-options="item.Oid as item.TenHocKy for item in hocKyList" ng-change="loadData()" ng-model="hocKyId"></select>
+            </div>
+            <div style="float: right;" ng-show="duocImport">
+                <span class="btn btn-labeled btn-success fileinput-button">
+                    <i class="btn-label glyphicon glyphicon-plus" ng-hide="isUploading"></i>
+                    <i class="btn-label glyphicon glyphicon-refresh gly-spin" ng-show="isUploading"></i>
+                    <span>Import dữ liệu</span>
+                    <input id="fileupload" type="file" name="files">
+                </span>
+                <div id="div_files"></div>
+            </div>
+        </div>
+        <div ng-if="!obj.HoTen" style="font-size: 18px; text-align: center;">Không có dữ liệu</div>
+        <div ng-if="obj.HoTen">
+            <div style="display: flex;padding-bottom: 15px; float: none;" class="col-md-12">
+                <div class="col-md-6 col-sm-6" style="font-size:12pt;">
+                    <div class="row">
+                        <div class="col-md-4">Họ và tên:</div>
+                        <div class="col-md-7">{{obj.HoTen}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Mã giảng viên:</div>
+                        <div class="col-md-7">{{obj.MaNhanVien}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Đơn vị:</div>
+                        <div class="col-md-7">{{obj.TenDonVi}}</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6" style="font-size:12pt;">
+                    <div class="row">
+                        <div class="col-md-4">Trình độ:</div>
+                        <div class="col-md-7">{{obj.TenTrinhDoChuyenMon}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Chức danh:</div>
+                        <div class="col-md-7">{{obj.TenChucDanh}}</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#thoikhoabieu">Thời khóa biểu</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#kekhai">Kê khai</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#hoatdongkhac">Hoạt động khác</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="thoikhoabieu" class="tab-pane fade in active">
+                    <div class="table-responsive" style="width: 100%;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tên môn học</th>
+                                    <th>Tên lớp học phần</th>
+                                    <th>Bậc đào tạo</th>
+                                    <th>Hệ đào tạo</th>
+                                    <th>Khóa đào tạo</th>
+                                    <th style="min-width: 300px; white-space: normal;">Thời gian giảng dạy</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số tiết đứng lớp</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số tiết hệ thống</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số SV đăng ký</th>
+                                    <th>Ghi chú</th>
+                                    <th>Xác nhận</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listTKB track by $index">
+                                    <td>{{item.TenMonHoc}}</td>
+                                    <td>{{item.TenLopHocPhan}}</td>
+                                    <td>{{item.TenBacDaoTao}}</td>
+                                    <td>{{item.TenHeDaoTao}}</td>
+                                    <td>{{item.KhoaDaoTao}}</td>
+                                    <td style="white-space: normal;">{{item.ThoiGianGiangDay}}</td>
+                                    <td style="text-align: center;">{{item.SoTietDungLop}}</td>
+                                    <td style="text-align: center;">{{item.SoTietHeThong}}</td>
+                                    <td style="text-align: center;">{{item.SoSinhVienDK}}</td>
+                                    <td>
+                                        <input ng-if="!item.XacNhan" ng-model="item.GhiChu" />
+                                        <span ng-if="item.XacNhan">{{item.GhiChu}}</span>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="item.XacNhan" class="btn btn-success" ng-click="xacNhan(item)">Xác nhận</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="kekhai" class="tab-pane fade">
+                    <button class="btn btn-success" ng-click="themMoiKeKhaiRow()">Thêm mới</button>
+                    <div class="table-responsive" style="width: 100%; margin-bottom: 20px;" ng-if="taoMoiKeKhai" >
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 100px; white-space: normal;">Tên môn học</th>
+                                    <th style="min-width: 100px; white-space: normal;">Lớp học phần</th>
+                                    <th style="min-width: 100px; white-space: normal;">Bộ môn</th>
+                                    <th style="min-width: 100px; white-space: normal;">Loại hướng dẫn</th>
+                                    <th style="min-width: 100px; white-space: normal;">Bậc đào tạo</th>
+                                    <th style="min-width: 100px; white-space: normal;">Hệ đào tạo</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số lượng hướng dẫn</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input style="width: 120px;" type="text" ng-model="keKhaiMoi.TenMonHoc" />
+                                    </td>
+                                    <td>
+                                        <input style="width: 120px;" type="text" ng-model="keKhaiMoi.LopHocPhan" />
+                                    </td>
+                                    <td>
+                                        <select ng-options="item.Oid as item.TenBoPhan for item in listBoPhan"
+                                                ng-model="keKhaiMoi.BoMon"></select>
+                                    </td>
+                                    <td>
+                                        <select ng-options="item.Oid as item.TenLoaiHoatDong for item in listHoatDong"
+                                                ng-model="keKhaiMoi.Oid_LoaiHuongDan"></select>
+                                    </td>
+                                    <td>
+                                        <select ng-options="item.Oid as item.TenBacDaoTao for item in listBacDaoTao"
+                                                ng-model="keKhaiMoi.BacDaoTao"></select>
+                                    </td>
+                                    <td>
+                                        <select ng-options="item.Oid as item.TenHeDaoTao for item in listHeDaoTao"
+                                                ng-model="keKhaiMoi.HeDaoTao"></select>
+                                    </td>
+                                    <td><input style="width: 60px;" type="number" ng-model="keKhaiMoi.SoLuongHuongDan" /></td>
+                                    <td>
+                                        <button class="btn btn-success" ng-click="themMoiKeKhai(keKhaiMoi)">Thêm</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive" style="width: 100%;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 100px; white-space: normal;">Tên môn học</th>
+                                    <th style="min-width: 100px; white-space: normal;">Lớp học phần</th>
+                                    <th style="min-width: 100px; white-space: normal;">Loại hướng dẫn</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số bài kiểm tra</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số bài thi</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số bài tập lớn</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số bài tiểu luận</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số đề án môn học</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số CĐ tốt nghiệp</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số HĐ khác</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số slot học</th>
+                                    <th style="min-width: 130px; white-space: normal;">Số trả lời câu hỏi trên hệ thống</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số truy cập lớp học</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số lượng hướng dẫn</th>
+                                    <th style="min-width: 100px; white-space: normal;">Số đề (Ra đề)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listKeKhai track by $index">
+                                    <td>
+                                        <span>{{item.TenMonHoc}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item.LopMonHoc}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item.TenHuongDan}}</span>
+                                    </td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoBaiKiemTra" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoBaiThi" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoBaiTapLon" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoBaiTieuLuan" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoDeAnTotNghiep" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoChuyenDeTotNghiep" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoHDKhac" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoSlotHoc" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoTraLoiCauHoiTrenHeThongHocTap" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoTruyCapLopHoc" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoLuongHuongDan" /></td>
+                                    <td><input style="width: 60px;" type="number" ng-disabled="!item.HieuLucXacNhan" ng-model="item.SoDeRaDe" /></td>
+                                    <td>
+                                        <button ng-disabled="!item.HieuLucXacNhan" class="btn btn-success" ng-click="xacNhanKeKhai(item)">Xác nhận</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="hoatdongkhac" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-2">Bộ môn</div>
+                        <div class="col-md-7">
+                            <select ng-options="item.Oid as item.TenBoPhan for item in listBoPhan" ng-model="hoatDongKhac.BoMon"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Nhóm hoạt động</div>
+                        <div class="col-md-7">
+                            <select style="width: 250px" ng-options="item.Oid as item.TenHoatDong for item in nhomHoatDongList" ng-change="getHoatDong()" ng-model="hoatDongKhac.NhomHoatDong"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Hoạt động</div>
+                        <div class="col-md-7">
+                            <select style="width: 250px" ng-options="item.Oid as item.TenHoatDong for item in hoatDongList" ng-model="hoatDongKhac.HoatDong"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Ngày thực hiện</div>
+                        <div class="col-md-7"><input type="date" style="line-height: 22px; width: 250px" ng-model="hoatDongKhac.NgayThucHien" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Số giờ thực hiện</div>
+                        <div class="col-md-7"><input style="width: 250px" type="number" ng-model="hoatDongKhac.SoGioThucHien" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">Ghi chú</div>
+                        <div class="col-md-7"><input style="width: 250px" ng-model="hoatDongKhac.GhiChu" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"><button class="btn btn-success" ng-click="themHoatDongKhac()">Thêm hoạt động</button></div>
+                        <div class="col-md-7"></div>
+                    </div>
+                    <div class="table-responsive" style="width: 100%;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Hoạt động</th>
+                                    <th>Ngày thực hiện</th>
+                                    <th>Số giờ thực hiện</th>
+                                    <th>Ghi chú</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listHoatDongKhac track by $index">
+                                    <td>{{item.TenHoatDong}}</td>
+                                    <td><format-date my-value="item.NgayThucHien"></format-date></td>
+                                    <td><input type="number" style="width: 100px" ng-model="item.SoGioThucHien" /></td>
+                                    <td><input ng-model="item.GhiChu" /></td>
+                                    <td>{{item.TenTrangThai}}</td>
+                                    <td>
+                                        <button class="btn btn-success" ng-disabled="item.TrangThai != 0" ng-click="capNhatHoatDongKhac(item)">Cập nhật</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

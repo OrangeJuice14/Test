@@ -1,0 +1,169 @@
+﻿<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var self = this;
+        var session = {};
+        //
+        self.Id = ko.observable();
+        self.UserId = ko.observable();
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.Id(session.Id);
+                self.UserId(session.UserId);
+            }
+        });
+
+        self.returnData = [];
+        self.datagrid = datagrid;
+        //
+        self.TuNgay = ko.observable();
+        self.DenNgay = ko.observable();
+        self.HoTen = ko.observable();
+        self.ThoiGianQuet = ko.observable();
+        self.TenBoPhan = ko.observable();
+
+        //
+        $("#jqxTuNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        $("#jqxDenNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        //
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenBoPhan', type: 'string' },
+                { name: 'NgayQuet', type: 'string', },
+                { name: 'GioQuet', type: 'string', },
+            ],
+            id: 'Id',
+            url: "/WebServices/ThoiGianQuetVanTay_Find",
+            formatdata: function (data) {
+
+                //
+                var date = $('#jqxTuNgay').jqxDateTimeInput('getDate');
+                var tungay = $.jqx.dataFormat.formatdate(date, 'd');
+                var date = $('#jqxDenNgay').jqxDateTimeInput('getDate');
+                var denngay = $.jqx.dataFormat.formatdate(date, 'd');
+                //
+                return {
+                    tungay: tungay,
+                    denngay: denngay,
+                    nhanvien: self.Id()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                autoheight: true,
+                autorowheight: true,
+                showfilterrow: true,
+                filterable: true,
+                theme: "darkBlue",
+                columns: [
+                     {
+                         text: 'STT', columntype: 'number', width: 80, editable: false, cellsrenderer: function (row, column, value) {
+                             return "<div style='text-align:center;margin-top:5px;'>" + (value + 1) + "</div>";
+                         }
+                     },
+                     {
+                         text: 'Họ tên', datafield: 'HoTen', align: 'center', width: 250
+                     }, ,
+                     {
+                         text: 'Đơn vị', datafield: 'TenBoPhan', align: 'center', width: 450
+                     },
+                      {
+                          text: 'Ngày quét', datafield: 'NgayQuet', width: 100, align: 'center'
+                      },
+                      {
+                          text: 'Giờ quét', datafield: 'GioQuet', width: 100, align: 'center'
+                      }
+                ]
+            });
+
+    }
+    //================
+    ViewModel.prototype = {
+        //
+        search: function () {
+            var self = this;
+            self.datagrid.jqxGrid('updatebounddata');
+        }
+    };
+    //=============
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#thoigianquet")[0]);
+    });
+    //
+    //Định dạng ngày
+    $(function () {
+        $("#tungay").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    $(function () {
+        $("#denngay").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+</script>
+
+<div id="thoigianquet">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>THỜI GIAN QUÉT VÂN TAY</h4></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+        <div class="col-sm-7">
+            <div id='jqxTuNgay'></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+        <div class="col-sm-7">
+            <div id='jqxDenNgay'></div>
+        </div>
+    </div>
+    <div class="form-group" style="padding-top:10px !important">
+        <label class="col-sm-3 control-label no-padding-right"></label>
+        <div class="col-sm-7">
+            &nbsp;
+        </div>
+    </div>
+    <div class="form-group" style="padding-top:10px !important">
+        <label class="col-sm-3 control-label no-padding-right"></label>
+        <div class="col-sm-7">
+            <input class="form-control" type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        </div>
+    </div>
+    <div class="form-group" style="padding-top:10px !important">
+        <label class="col-sm-3 control-label no-padding-right"></label>
+        <div class="col-sm-7">
+            &nbsp;
+        </div>
+    </div>
+    <div style="padding: 0px 10px 0px 0px !important">
+        <div id="jqxgrid"></div>
+    </div>
+</div>

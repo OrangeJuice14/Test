@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_Criterion, HRMWebApp.KPI.DB" table="ABC_Criterion">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="CriterionType" column="CriterionType"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <property name="IsNotVisibleInEvaluationBoardType" column="IsNotVisibleInEvaluationBoardType"></property>
+  </class>
+</hibernate-mapping>

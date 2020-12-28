@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th style="width: 20%" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.LICH_SU_BAN_THAN.TU_NAM">Từ năm</span></th>
+                    <th style="width: 20%" class="textToCenter"><span data-i18n="CAC_QUA_TRINH.LICH_SU_BAN_THAN.DEN_NAM">Đến năm</span></th>
+                    <th style="width: 60%"><span data-i18n="CAC_QUA_TRINH.LICH_SU_BAN_THAN.NOI_DUNG">Nội dung</span></th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_LichSuBanThan">
+                    <tr>
+                        <td data-bind="text: TuNam" class="textToCenter"></td>
+                        <td data-bind="text: DenNam" class="textToCenter"></td>
+                        <td data-bind="text: NoiDung"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4F3D5DB4-1D47-4DE1-AA89-920A84D2EAC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMWeb_Business</RootNamespace>
+    <AssemblyName>HRMWeb_Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\BIN\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\HRMWebApp\dll\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessServiceFactory\BoPhan_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_CaChamCong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_DangKyChamCongNgoaiGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_DangKyKhungGioLamViec_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KhaiBaoChamCongGiangVien_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KyDangKyKhungGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_LyDoDangKyCCNgoaiGio_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyNghiPhep_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_QuanLyViPham_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChamCongTheoNgay_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ThoiGianDangKy_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\ChiTietChamCongNhanVien_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_KhaiBaoCongTac_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CC_ChamCongNgayNghi_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\BangChotThongTinLuong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\CauHinhXetABC_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\NgayNghiTrongNam_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\QuanLyNgayNghiTrongNam_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\TinhThanh_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\Web_GiayChungNhan_AutoNumber_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\DangLuuTru_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\GiayToHoSo_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebMenu_Role_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\KyTinhLuong_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\TinhTrang_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\LoaiNhanSu_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\QuanLyChamCongNhanVien_Factory .cs" />
+    <Compile Include="BusinessServiceFactory\HinhThucNghi_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebMenu_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebGroup_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebUser_BoPhan_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\HoSo_Factory.cs" />
+    <Compile Include="BusinessServiceFactory\WebUser_Factory.cs" />
+    <Compile Include="Model\BangChotThongTinTinhLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BangLuongNhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BoPhan.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CacBuoiTrongNgay.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CauHinhXetABC.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_CaChamCong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChamCongNgayNghi.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ChamCongTheoNgay.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_DangKyChamCongNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_DangKyKhungGioLamViec.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_HinhThucViPham.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KhaiBaoChamCongGiangVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KhaiBaoCongTac.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_KyDangKyKhungGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_LyDoDangKyChamCongNgoaiGio.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyViPham.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_QuanLyViPham_New.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CC_ThoiGianDangKyKhungGioLamViec.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChiTietChamCongNhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChiTietNghiPhep.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChucDanh.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChucVu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context.Entities.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Context.IEntities.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DangLuuTru.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_BangChiTietChamCongThang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_DangKyKhungGioLamViec.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_GiayNghiPhep.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KhaiBaoChamCong_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KyDangKyKhungGio.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_NgayChamCong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_GioVaoRa.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_GioVaoRaTungCa.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyNgayNghiTrongNam_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyNghiPhep_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyViPham_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ChamCongNgayNghi_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ThongKeXetABCTheoNam.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_ChiTietTheoNhanVien_ChamCongNgay.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_ChiTietTheoNhanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_ThongKeXetABCTheoThang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_KiemTraPhongBanXetABC.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyXetABC_BieuDo.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_ThongTinChamCongThang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_BieuDo.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyKhaiBaoCongTac_Find.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_Thu.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_BangLuongBUH_LuongTamUng.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_BangLuongBUH_LuongNganSach.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhauTruLuong_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThueTNCN_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapCaNhan_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BANGLUONGNHANVIEN_IUH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_GiayXacNhanCanBoVienChucTruong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_GiayXacNhan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_CongDoan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DoanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DangVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HoSoBaoHiem.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaBHXH.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BAOHIEMXAHOI.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaLucLuongVuTrang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaHoiThao.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhThamGiaHoatDongXaHoi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhNghienCuuKhoaHoc.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhKyLuat.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhKhenThuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhDiNuocNgoai.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhBoNhiem.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhBoiDuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhDaoTao.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuaTrinhCongTac.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_LichSuBanThan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_DienBienLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HOPDONGLAODONG.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HopDongDaKy.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_HopDong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TRINHDOCHUYENMONNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChungChi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_NgoaiNgu.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_VanBang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TrinhDoChuyenMon.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_NguoiPhuThuoc.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_THONGTINLUONGNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_TaiKhoanNganHang.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ThongTinLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThueTNCN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapKhac.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietPhuCap.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuNhapCaNhan.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_BANGLUONGNHANVIEN.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietThuLaoGiangDay.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietNgoaiGio.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhenThuongPhucLoi.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_ChiTietKhauTruLuong.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_QuanHeGiaDinh.cs" />
+    <Compile Include="Model\DTO\ChucNang\ModuleThongTinNhanSu\DTO_ModuleThongTinNhanSu_SoYeuLyLich.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CacBuoiTrongNgay.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CauHinhXetABC.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCongNgayNghi.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_CaChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_DangKyChamCongNgoaiGio.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_KhaiBaoChamCongGiangVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_LyDoDangKyCCNgoaiGio.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_QuanLyViPham.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_DangLuuTru.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_GiayToHoSo.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_KyTinhLuong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_KhaiBaoCongTac.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_TinhThanh.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMenu_Role.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_BoPhan.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_HoSoNhanVien.cs" />
+    <Compile Include="Model\DTO\ChucNang\ChamCong\DTO_QuanLyChamCong_ChamCongNgay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\DTO\DBTable\DTO_WebGroup.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebUser.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_WebMenu.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCong.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_CC_ChamCongTheoNgay.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_HinhThucNghi.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_ChiTietChamCongNhanVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_QuanLyChamCongNhanVien.cs" />
+    <Compile Include="Model\DTO\DBTable\DTO_LoaiNhanSu.cs" />
+    <Compile Include="DemoClass.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Model\GiayTo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GiayToHoSo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HinhThucNghi.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HoSo.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\KyTinhLuong.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LoaiNhanSu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MainModel.Designer.cs">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MainModel.Meta.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MainModel2.Meta.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\MapObjectCreator.Meta.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\MapObjectCreator1.Meta.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_BangChotThongTinTinhLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_BangLuongNhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_BoPhan.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CacBuoiTrongNgay.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CauHinhXetABC.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_CaChamCong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChamCongNgayNghi.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ChamCongTheoNgay.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_DangKyChamCongNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_DangKyKhungGioLamViec.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_HinhThucViPham.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KhaiBaoChamCongGiangVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KhaiBaoCongTac.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_KyDangKyKhungGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_LyDoDangKyChamCongNgoaiGio.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyViPham.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_QuanLyViPham_New.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_CC_ThoiGianDangKyKhungGioLamViec.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChiTietChamCongNhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChiTietNghiPhep.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChucDanh.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ChucVu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_DangLuuTru.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_GiayTo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_GiayToHoSo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_HinhThucNghi.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_HoSo.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_KyTinhLuong.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_LoaiNhanSu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NgayNghiTrongNam.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_NhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_QuanLyChamCongNhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_QuanLyNgayNghiTrongNam.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_QuanLyNghiPhep.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ThongTinNghiPhep.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_ThongTinNhanVien.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_TinhThanh.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_TinhTrang.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebGroup.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMenu.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebMenu_Role.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebUser.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_WebUser_BoPhan.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\Mdl_Web_GiayChungNhan_AutoNumber.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong1_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result1.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result2.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result3.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result4.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result5.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result6.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_KetQuaChamCongCuoiThang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result1.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result2.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_LuongNganSach_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_LuongTamUng_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result1.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result2.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result3.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result4.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result5.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result6.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result7.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result8.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result9.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_BangLuong_LuongNganSach_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_BangLuong_LuongTamUng_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietKhauTruLuong_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietKhauTruLuong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietKhauTruLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietKhenThuongPhucLoi_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietKhenThuongPhucLoi_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietNgoaiGio_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietNgoaiGio_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietPhuCap_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietPhuCap_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThueTNCN_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThueTNCN_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThueTNCN_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuLaoGiangDay_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuLaoGiangDay_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuNhapCaNhan_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuNhapCaNhan_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuNhapCaNhan_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuNhapKhac_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChiTietThuNhapKhac_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChungChi_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChungChi_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChungChi_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChungChi_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ChungChi_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_CongDoan_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_CongDoan_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_CongDoan_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_CongDoan_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_CongDoan_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DangVien_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DangVien_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DangVien_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DangVien_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DangVien_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DienBienLuong_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DienBienLuong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DienBienLuong_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DienBienLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DienBienLuong_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DoanVien_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DoanVien_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DoanVien_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DoanVien_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_DoanVien_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_GiayChungNhanCanBoVienChucTruong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_GiayChungNhanCanBoVienChucTruong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_GiayChungNhan_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_GiayChungNhan_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDongDaKy_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDongDaKy_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDongDaKy_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDongDaKy_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDongDaKy_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDong_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDong_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HopDong_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HoSoBaoHiem_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_HoSoBaoHiem_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_LichSuBanThan_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_LichSuBanThan_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_LichSuBanThan_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_LichSuBanThan_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_LichSuBanThan_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NgoaiNgu_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NgoaiNgu_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NgoaiNgu_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NgoaiNgu_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NgoaiNgu_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NguoiPhuThuoc_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NguoiPhuThuoc_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NguoiPhuThuoc_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NguoiPhuThuoc_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_NguoiPhuThuoc_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuanHeGiaDinh_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuanHeGiaDinh_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuanHeGiaDinh_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuanHeGiaDinh_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuanHeGiaDinh_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoiDuong_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoiDuong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoiDuong_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoiDuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoiDuong_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoNhiem_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoNhiem_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoNhiem_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoNhiem_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhBoNhiem_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhCongTac_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhCongTac_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhCongTac_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhCongTac_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhCongTac_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDaoTao_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDaoTao_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDaoTao_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDaoTao_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDaoTao_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDiNuocNgoai_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDiNuocNgoai_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDiNuocNgoai_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDiNuocNgoai_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhDiNuocNgoai_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKhenThuong_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKhenThuong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKhenThuong_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKhenThuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKhenThuong_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKyLuat_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKyLuat_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKyLuat_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKyLuat_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhKyLuat_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhNghienCuuKhoaHoc_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhNghienCuuKhoaHoc_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhNghienCuuKhoaHoc_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhNghienCuuKhoaHoc_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhNghienCuuKhoaHoc_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaBHXH_HRM3_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaBHXH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoiThao_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoiThao_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoiThao_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoiThao_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaHoiThao_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_SoYeuLyLich_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_SoYeuLyLich_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_SoYeuLyLich_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_SoYeuLyLich_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_SoYeuLyLich_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TaiKhoanNganHang_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TaiKhoanNganHang_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TaiKhoanNganHang_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TaiKhoanNganHang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TaiKhoanNganHang_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ThongTinLuong_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ThongTinLuong_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ThongTinLuong_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ThongTinLuong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_ThongTinLuong_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TrinhDoChuyenMon_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TrinhDoChuyenMon_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TrinhDoChuyenMon_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TrinhDoChuyenMon_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_TrinhDoChuyenMon_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_VanBang_BUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_VanBang_IUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_VanBang_LUH_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_VanBang_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_Web1_VanBang_UTE_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MapObjectCreator\spd_WebChamCong_InBangChiTietChamCong_Result.cs">
+      <DependentUpon>MapObjectCreator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NgayNghiTrongNam.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PartialModel\ChiTietChamCongNhanVien.cs" />
+    <Compile Include="Model\PartialModel\HoSo.cs" />
+    <Compile Include="Model\PartialModel\WebUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\QuanLyChamCongNhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QuanLyNgayNghiTrongNam.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QuanLyNghiPhep.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong1_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result1.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result2.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result3.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result4.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result5.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_CacThongTinLamCoSoTinhTraLuong_Result6.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_KetQuaChamCongCuoiThang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result1.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVienTest_Result2.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_LuongNganSach_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_LuongTamUng_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result1.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result2.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result3.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result4.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result5.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result6.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result7.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result8.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Report_Luong_ChiTietTongThuNhapTungNhanVien_Result9.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_BangLuong_LuongNganSach_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_BangLuong_LuongTamUng_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietKhauTruLuong_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietKhauTruLuong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietKhauTruLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietKhenThuongPhucLoi_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietKhenThuongPhucLoi_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietNgoaiGio_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietNgoaiGio_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietPhuCap_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietPhuCap_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThueTNCN_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThueTNCN_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThueTNCN_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuLaoGiangDay_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuLaoGiangDay_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuNhapCaNhan_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuNhapCaNhan_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuNhapCaNhan_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuNhapKhac_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChiTietThuNhapKhac_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChungChi_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChungChi_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChungChi_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChungChi_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ChungChi_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_CongDoan_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_CongDoan_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_CongDoan_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_CongDoan_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_CongDoan_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DangVien_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DangVien_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DangVien_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DangVien_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DangVien_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DienBienLuong_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DienBienLuong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DienBienLuong_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DienBienLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DienBienLuong_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DoanVien_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DoanVien_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DoanVien_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DoanVien_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_DoanVien_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_GiayChungNhanCanBoVienChucTruong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_GiayChungNhanCanBoVienChucTruong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_GiayChungNhan_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_GiayChungNhan_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDongDaKy_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDongDaKy_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDongDaKy_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDongDaKy_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDongDaKy_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDong_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDong_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HopDong_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HoSoBaoHiem_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_HoSoBaoHiem_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_LichSuBanThan_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_LichSuBanThan_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_LichSuBanThan_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_LichSuBanThan_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_LichSuBanThan_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NgoaiNgu_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NgoaiNgu_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NgoaiNgu_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NgoaiNgu_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NgoaiNgu_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NguoiPhuThuoc_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NguoiPhuThuoc_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NguoiPhuThuoc_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NguoiPhuThuoc_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_NguoiPhuThuoc_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuanHeGiaDinh_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuanHeGiaDinh_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuanHeGiaDinh_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuanHeGiaDinh_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuanHeGiaDinh_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoiDuong_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoiDuong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoiDuong_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoiDuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoiDuong_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoNhiem_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoNhiem_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoNhiem_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoNhiem_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhBoNhiem_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhCongTac_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhCongTac_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhCongTac_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhCongTac_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhCongTac_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDaoTao_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDaoTao_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDaoTao_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDaoTao_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDaoTao_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDiNuocNgoai_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDiNuocNgoai_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDiNuocNgoai_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDiNuocNgoai_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhDiNuocNgoai_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKhenThuong_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKhenThuong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKhenThuong_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKhenThuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKhenThuong_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKyLuat_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKyLuat_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKyLuat_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKyLuat_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhKyLuat_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhNghienCuuKhoaHoc_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhNghienCuuKhoaHoc_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhNghienCuuKhoaHoc_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhNghienCuuKhoaHoc_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhNghienCuuKhoaHoc_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaBHXH_HRM3_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaBHXH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoatDongXaHoi_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoiThao_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoiThao_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoiThao_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoiThao_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaHoiThao_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_QuaTrinhThamGiaLucLuongVuTrang_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_SoYeuLyLich_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_SoYeuLyLich_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_SoYeuLyLich_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_SoYeuLyLich_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_SoYeuLyLich_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TaiKhoanNganHang_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TaiKhoanNganHang_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TaiKhoanNganHang_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TaiKhoanNganHang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TaiKhoanNganHang_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ThongTinLuong_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ThongTinLuong_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ThongTinLuong_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ThongTinLuong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_ThongTinLuong_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TrinhDoChuyenMon_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TrinhDoChuyenMon_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TrinhDoChuyenMon_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TrinhDoChuyenMon_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_TrinhDoChuyenMon_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_VanBang_BUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_VanBang_IUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_VanBang_LUH_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_VanBang_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_Web1_VanBang_UTE_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spd_WebChamCong_InBangChiTietChamCong_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ThongTinNghiPhep.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ThongTinNhanVien.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TinhThanh.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TinhTrang.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebGroup.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMenu.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebMenu_Role.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebUser.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WebUser_BoPhan.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Web_GiayChungNhan_AutoNumber.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Predefined\HinhThucNghiConst.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERP.Core\ERP_Core.csproj">
+      <Project>{7BB0057E-88FF-412C-81E8-4B3455C86FA6}</Project>
+      <Name>ERP_Core</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HRMWebApp.KPI.DB\HRMWebApp.KPI.DB.csproj">
+      <Project>{edef1f28-70a4-45c3-b32d-e477789a4d84}</Project>
+      <Name>HRMWebApp.KPI.DB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Model\MainModel.edmx.diagram">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\MainModel.tt">
+      <DependentUpon>MainModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MainModel2.Meta.cs</LastGenOutput>
+    </None>
+    <None Include="Model\MapObjectCreator\MapObjectCreator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MapObjectCreator1.Meta.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BusinessServiceFactory\ChucNang\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model\MainModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MainModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

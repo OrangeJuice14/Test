@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 25px;">
+                    <th style="width: 15%" class="textToCenter">Ngày quyết định</th>
+                    <th style="width: 15%" class="textToCenter">Ngày hết hiệu lực</th>
+                    <th style="width: 25%" class="textToCenter">Chương trình đào tạo</th>
+                    <th style="width: 20%" class="textToCenter">Cấp độ đào tạo</th>
+                    <th style="width: 15%" class="textToCenter">Điểm</th>
+                    <th style="width: 10%" class="textToCenter">Đạt</th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuaTrinhHuanLuyenDaoTao">
+                    <tr>
+                        <td data-bind="text: NgayQuyetDinh == null ? '' : formatDate(new Date(NgayQuyetDinh))" class="textToCenter"></td>
+                        <td data-bind="text: NgayHetHieuLuc == null ? '' : formatDate(new Date(NgayHetHieuLuc))" class="textToCenter"></td>
+                        <td data-bind="text: ChuongTrinhDaoTao" class="textToCenter"></td>
+                        <td data-bind="text: CapDoDaoTao" class="textToCenter"></td>
+                        <td data-bind="text: Diem" class="textToCenter"></td>
+                        <td data-bind="text: Dat" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿<style>
+.k-tabstrip-items .k-state-default .k-link, .k-panelbar>li.k-state-default>.k-link
+{
+    color: #fff !important;
+    font-size:16px;
+    background-color:#517D12  !important;
+    border-color:white !important;
+}
+.k-tabstrip-items .k-state-default, .k-ie7 .k-tabstrip-items .k-state-default .k-loading
+{
+    border-color:white !important;
+}
+.k-tabstrip-items .k-state-hover .k-link, .k-panelbar>li.k-state-default>.k-link
+{
+    color: white !important;
+    font-size:16px;
+        border-color:white !important;
+}
+.k-tabstrip-items .k-state-active, .k-panelbar .k-tabstrip-items .k-state-active, .k-ie7 .k-tabstrip-items .k-state-active .k-loading
+{
+    background-color:white !important;
+    border-color:black !important;
+}
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">KẾ HOẠCH</span>
+        <a style="float:right;margin-top:13px;" ng-click="New()" class="btn btn-labeled btn-blue">
+            <i class="btn-label fa fa-plus"></i>Thêm mới kế hoạch
+        </a>
+        
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="margin-bottom-10" ng-show="false">
+                <select class="form-control" name="AgentObjectSelect" ng-init="obj.AgentObject.Id = null" ng-change="selectedChange()" ng-model="obj.AgentObject.Id" ng-options="listObj.Id as listObj.Name for listObj in AgentObjects">
+                    <option value="">Chọn đối tượng ...</option>
+                </select>
+            </div>
+            <div kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">
+                        Kế hoạch
+                    </li>
+                    <li>
+                        Quản lý kế hoạch
+                    </li>
+                    <li>
+                        Xem kế hoạch các đơn vị
+                    </li>
+                </ul>
+                <div kendo-treelist="grid" options="mainGridOptions" k-data-source="dataSource"></div>
+                <div kendo-treelist="grid" options="mainGridOptions2" k-data-source="dataSource"></div>
+                <div kendo-treelist="grid" options="mainGridOptions3" k-data-source="dataSource"></div>
+            </div>
+            </div>
+    </div>
+</div>
+
+        
+

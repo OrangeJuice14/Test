@@ -1,0 +1,81 @@
+﻿<div class="bgtitle">Thời khóa biểu giảng viên</div>
+Năm học:
+<select style="width:115px" ng-change="selectedChangeStudyYear()"  ng-model="studyYearId" ng-options="listobj.Id as listobj.Name for listobj in studyYears"></select>
+Học kỳ:
+<select style="width:115px" ng-change="selectedChangeStudyYear()"  ng-model="studyTermId" ng-options="listobj.Id as listobj.Name for listobj in studyTerms"></select>
+Tuần:
+<select style="width:115px" ng-change="selectedChangeWeek()" ng-model="studyWeekId" ng-options="listobj.Id as listobj.Name for listobj in studyWeeks"></select>
+<br /><br />
+<b>Tuần {{studyWeek.Name}}: từ ngày {{studyWeek.StartDate}} đến ngày {{studyWeek.EndDate}}</b>
+<br /><br />
+<table style="border-collapse:collapse; width:100%" border="1">
+    <thead>
+        <tr style="background-color:LightGrey !important;">
+            <th style="background-color:#47a447; color:#FFF; width:40px;height:20px;padding:10px; text-align:center">Ngày</th>
+            <th style="background-color:LightGrey;text-align:center" width="30%">Sáng</th>
+            <th style="background-color:LightGrey;text-align:center" width="30%">Chiều</th>
+            <th style="background-color:LightGrey;text-align:center" width="30%">Tối</th>
+        </tr>
+    </thead>
+    <tbody>      
+        <tr ng-class="{todayClass: obj.Mons.IsToday }">
+            <td style="background-color:#47a447; color:#FFF;font-weight:bold; text-align:center">{{obj.Mons.DayOfWeekName}}<br />
+            <b ng-if="obj.Mons.IsToday">((Hôm nay))</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Mons.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Mons.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Mons.ScheduleNight.TKBHienThi"></span></td>   
+                 
+        </tr>
+        <tr  ng-class="{todayClass: obj.Tues.IsToday }" > 
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Tues.DayOfWeekName}}<br />
+             <b ng-if="obj.Tues.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Tues.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Tues.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Tues.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+        <tr ng-class="{todayClass: obj.Weds.IsToday }" >
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Weds.DayOfWeekName}}<br />
+                <b ng-if="obj.Weds.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Weds.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Weds.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Weds.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+        <tr ng-class="{todayClass: obj.Thus.IsToday }" >
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Thus.DayOfWeekName}}<br />
+                <b ng-if="obj.Thus.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Thus.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Thus.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Thus.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+        <tr ng-class="{todayClass: obj.Fris.IsToday }" >
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Fris.DayOfWeekName}}<br />
+                <b ng-if="obj.Fris.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Fris.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Fris.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Fris.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+        <tr ng-class="{todayClass: obj.Sats.IsToday }" >
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Sats.DayOfWeekName}}<br />
+                <b ng-if="obj.Sats.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Sats.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Sats.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Sats.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+        <tr ng-class="{todayClass: obj.Suns.IsToday }" >
+            <td style="background-color:#47a447;color:#FFF;font-weight:bold; text-align:center">{{obj.Suns.DayOfWeekName}}<br />
+                <b ng-if="obj.Suns.IsToday">(Hôm nay)</b>
+            </td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Suns.ScheduleMorning.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Suns.ScheduleAfternoon.TKBHienThi"></span></td>
+            <td style="padding:5px;"><span ng-bind-html="obj.Suns.ScheduleNight.TKBHienThi"></span></td>
+        </tr>
+
+    </tbody>
+</table>
+

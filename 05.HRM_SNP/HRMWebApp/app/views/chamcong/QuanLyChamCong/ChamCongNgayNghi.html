@@ -1,0 +1,756 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.webUserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.departmentSelected_nhansu = ko.observable();
+        self.departmentSelected_nhansu1 = ko.observable();
+        self.departmentSelected_First = "";
+        self.loaiNhanSu = ko.observableArray();
+        self.loaiNhanSuSelected = ko.observable();
+        self.name = ko.observable("");
+        self.HinhThucNghiList = ko.observableArray();
+        self.hinhThucNghiSelected = ko.observable();
+        self.hinhThucNghiSelected1 = ko.observable();
+        self.TinhThanhList = ko.observableArray();
+        self.tinhThanhSelected = ko.observable();
+        self.tinhThanhSelected1 = ko.observable();
+        self.isEdit = ko.observable(false);
+        self.grid_hosonhanvien = ko.observableArray();
+        self.grid_hosonhanvien1 = ko.observableArray();
+        self.departmentSelected_nhansu.subscribe(function (newValue) {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.grid_hosonhanvien(obj);
+                }
+            });
+            var source =
+            {
+                localdata: self.grid_hosonhanvien(),
+                datafields:
+                [
+                    { name: 'Oid', type: 'string' },
+                    { name: 'MaQuanLy', type: 'string' },
+                    { name: 'Ho', type: 'string' },
+                    { name: 'Ten', type: 'string' }
+                ],
+                datatype: "json"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // initialize jqxGrid
+            $("#jqxdropdownbutton").jqxDropDownButton({ width: 150, height: 25 });
+
+            $("#jqxgrid_hosonhanvien").jqxGrid(
+                {
+                    width: 250,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    columns: [
+                        { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                        { text: 'Họ', datafield: 'Ho', width: 90, },
+                        { text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                    ]
+                });
+
+            $("#jqxgrid_hosonhanvien").on('rowselect', function (event) {
+                var args = event.args;
+                var row = $("#jqxgrid_hosonhanvien").jqxGrid('getrowdata', args.rowindex);
+                if (row == undefined)
+                    return;
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['Ho'] + ' ' + row['Ten'] + '</div>';
+                $("#jqxdropdownbutton").jqxDropDownButton('setContent', dropDownContent);
+            });
+            $("#jqxgrid_hosonhanvien").jqxGrid('selectrow', 0);
+        });
+        self.departmentSelected_nhansu1.subscribe(function (newValue) {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.grid_hosonhanvien1(obj);
+                }
+            });
+            var source =
+            {
+                localdata: self.grid_hosonhanvien1(),
+                datafields:
+                [
+                    { name: 'Oid', type: 'string' },
+                    { name: 'MaQuanLy', type: 'string' },
+                    { name: 'Ho', type: 'string' },
+                    { name: 'Ten', type: 'string' }
+                ],
+                datatype: "json"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // initialize jqxGrid
+            $("#jqxdropdownbutton1").jqxDropDownButton({ width: 150, height: 25 });
+
+            $("#jqxgrid_hosonhanvien1").jqxGrid(
+                {
+                    width: 250,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    columns: [
+                        { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                        { text: 'Họ', datafield: 'Ho', width: 90, },
+                        { text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                    ]
+                });
+
+            $("#jqxgrid_hosonhanvien1").on('rowselect', function (event) {
+                var args = event.args;
+                var row = $("#jqxgrid_hosonhanvien1").jqxGrid('getrowdata', args.rowindex);
+                if (row == undefined)
+                    return;
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['Ho'] + ' ' + row['Ten'] + '</div>';
+                $("#jqxdropdownbutton1").jqxDropDownButton('setContent', dropDownContent);
+            });
+            $("#jqxgrid_hosonhanvien1").jqxGrid('selectrow', 0);
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+                self.departmentSelected_First = obj[0].Oid;
+            }
+        });
+
+        self.checkChot = function (ngay) {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_CheckChotTheoNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    ngay: ngay,
+                    boPhanId: self.departmentSelected_First
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_LoaiNhanSu',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.loaiNhanSu(obj);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'MaNhanSu', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'TinhThanh', type: 'string' },
+                { name: 'HinhThucNghi_Name', type: 'string' },
+                { name: 'TuNgay', type: 'date', format: 'dd-MM-yyyy' },
+                { name: 'DenNgay', type: 'date' },
+                { name: 'DienGiai', type: 'string' },
+            { name: 'SoNgayNghiPhepNamTruoc', type: 'string' },
+                        { name: 'TruNgayPhepDiDuong', type: 'string' }
+            ],
+            id: 'Id',
+            // sortcolumn: 'HoTen',
+            //sortdirection: 'asc',
+            url: "/WebServices/ChamCongNgayNghi_Find",
+            formatdata: function (data) {
+                return {
+                    ngay: self.day(),
+                    thang: self.month(),
+                    nam: self.year(),
+                    boPhanId: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    maNhanSu: self.name(),
+                    webUserId: session.UserId,
+                    idLoaiNhanSu: self.loaiNhanSuSelected() == undefined ? null : self.loaiNhanSuSelected(),
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'MaNhanSu', width: 120, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', width: 120, align: 'center'
+                    },
+                    {
+                        text: 'Từ ngày', datafield: 'TuNgay', width: 80, cellsformat: 'd/M/yyyy', align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Đến ngày', datafield: 'DenNgay', width: 80, cellsformat: 'd/M/yyyy', align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Phòng ban', datafield: 'TenPhongBan', width: 200, align: 'center'
+                    },
+                    {
+                        text: 'Nơi nghỉ phép', datafield: 'TinhThanh', width: 100, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Hình thức nghỉ', datafield: 'HinhThucNghi_Name', width: 150, cellsalign: "middle", sortable: false, align: 'center',
+                    },
+                    {
+                        text: 'Lý do', datafield: 'DienGiai', width: 200, align: 'center',
+                    },
+                    {
+                        text: 'Nghỉ phép năm trước', datafield: 'SoNgayNghiPhepNamTruoc', width: 160, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Trừ phép đi đường', datafield: 'TruNgayPhepDiDuong', width: 140, align: 'center', cellsalign: "middle"
+                    }
+
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validateFromDateToDate: function (chamCongNgayNghiOid, tuNgay, denNgay, nhanVienID) {
+            var check;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChamCongNgayNghi_KiemTraTuNgayDenNgayCoHopLe',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: ko.toJSON({
+                    chamCongNgayNghiOid: chamCongNgayNghiOid,
+                    tuNgay: tuNgay,
+                    denNgay: denNgay,
+                    nhanVienID: nhanVienID
+                }),
+                success: function (result) {
+                    var obj = result;
+                    check = obj;
+                }
+            });
+            return check;
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        New: function () {
+            var self = this;
+            self.isEdit(false);
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghi',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiList(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_TinhThanh',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.TinhThanhList(obj);
+                }
+            });
+
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgayNghi_New.html', function (data) {
+                $('#popupWindowCCNGNew').html(data);
+                ko.cleanNode($('#popupWindowCCNGNew')[0]);
+                $('#popupWindowCCNGNew').kendoWindow({
+                    width: "50%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+
+                });
+                $('#popupWindowCCNGNew').data("kendoWindow").open();
+                $("#jqxFromDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGNew'));
+                self.departmentSelected_nhansu1(self.departmentSelected_First);
+            });
+        },
+        Edit: function () {
+            var self = this;
+            self.isEdit(true);
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            if (getselectedrowindexes.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            if (getselectedrowindexes.length > 1) {
+                alert("Chọn quá nhiều dòng !!");
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghi',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiList(obj);
+
+                }
+            });
+
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgayNghi_Update.html', function (data) {
+                $('#popupWindowCCNGEdit').html(data);
+                ko.cleanNode($('#popupWindowCCNGEdit')[0]);
+                $('#popupWindowCCNGEdit').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "15%"
+                    }
+
+                });
+                $("#jqxFromDate").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgayNghi_GetByID',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: selectedrow.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.IDNhanVien = obj.IDNhanVien;
+                        self.departmentSelected_nhansu(obj.IDBoPhan);
+                        self.hinhThucNghiSelected(obj.IDHinhThucNghi);
+                        $("#txtContent").val(obj.DienGiai);
+                        $('#jqxFromDate ').jqxDateTimeInput('setDate', new Date(new Date(obj.TuNgay).getFullYear(), new Date(obj.TuNgay).getMonth(), new Date(obj.TuNgay).getDate()));
+                        $('#jqxToDate ').jqxDateTimeInput('setDate', new Date(new Date(obj.DenNgay).getFullYear(), new Date(obj.DenNgay).getMonth(), new Date(obj.DenNgay).getDate()));
+                    }
+                });
+                $('#popupWindowCCNGEdit').data("kendoWindow").open();
+
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGEdit'));
+            });
+        },
+        Report: function () {
+            var self = this;
+            self.HoTen = ko.observable();
+            self.MaNhanSu = ko.observable();
+            self.TenPhongBan = ko.observable();
+            self.ChucVu = ko.observable();
+            self.TuNgay = ko.observable();
+            self.DenNgay = ko.observable();
+            self.TinhThanh = ko.observable();
+            self.DienGiai = ko.observable();
+
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');         
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            if (getselectedrowindexes.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            if (getselectedrowindexes.length >1) {
+                alert("Chọn quá nhiều dòng !!");
+                return;
+            }
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgayNghi_Report.html', function (data) {
+                $('#popupWindowCCNGReport').html(data);
+                ko.cleanNode($('#popupWindowCCNGReport')[0]);
+                $('#popupWindowCCNGReport').kendoWindow({
+                    title: "",
+                    actions: [
+                        "Close"
+                    ],
+                    position: {
+                        top: "10%",
+                        left: "30%"
+                    }
+
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgayNghi_Report',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: selectedrow.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.HoTen(obj.HoTen);
+                        self.MaNhanSu(obj.MaNhanSu);
+                        self.TenPhongBan(obj.TenPhongBan);
+                        self.ChucVu(obj.ChucVu);
+                        self.TuNgay(obj.TuNgayString);
+                        self.DenNgay(obj.DenNgayString);
+                        self.TinhThanh(obj.TinhThanh);
+                        self.DienGiai(obj.DienGiai);
+                    }
+                });
+                $('#popupWindowCCNGReport').data("kendoWindow").open();
+
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGReport'));
+            });
+        },
+        Update: function () {
+            var self = this;
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien').jqxGrid('getselectedrowindexes');
+            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+            if (self.isEdit()) {
+                if (self.checkChot($('#jqxFromDate').jqxDateTimeInput('getDate'))) {
+                    alert('Tháng này đã chốt chấm công rồi !!');
+                    return;
+                }
+                else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_Save',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            obj:
+                            {
+                                Oid: selectedrow.Oid,
+                                DienGiai: $("#txtContent").val(),
+                                IDHinhThucNghi: self.hinhThucNghiSelected(),
+                                TuNgay: $('#jqxFromDate').jqxDateTimeInput('getDate'),
+                                DenNgay: $('#jqxToDate').jqxDateTimeInput('getDate')
+                            }
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            alert("Lưu thành công !!");
+                            $("#jqxgrid").jqxGrid('updatebounddata');
+                            $("#popupWindowCCNGEdit").data("kendoWindow").close();
+                        }
+                    });
+                    return;
+                }
+            }},
+        Create: function () {
+            var self = this;
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien1').jqxGrid('getselectedrowindexes');
+            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien1').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+            if (!self.validateFromDateToDate(getselectedrow_edit.length > 0 ? selectedrow.Oid : null, $('#jqxFromDate1').jqxDateTimeInput('getDate'), $('#jqxToDate1').jqxDateTimeInput('getDate'), ID_NhanVien)) {
+                alert("Trùng hoặc giao ngày với dữ liệu trước");
+                return;
+            }
+            if (self.checkChot($('#jqxFromDate1').jqxDateTimeInput('getDate'))) {
+                alert('Tháng này đã chốt chấm công rồi !!');
+                return;
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgayNghi_TaoMoi',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        nhanVienId: ID_NhanVien,
+                        noiDung: $("#txtContent1").val(),
+                        idHinhThucNghi: self.hinhThucNghiSelected1(),
+                        tuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate'),
+                        denNgay: $('#jqxToDate1').jqxDateTimeInput('getDate'),
+                        webUserId: session.UserId,
+                        tinhThanh: self.tinhThanhSelected1(),
+                        soNgay: $("#soNgay1").val(),
+                        ngayDiDuong: $("#ngayDiDuong1").val()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        alert("Lưu thành công !!");
+                        $("#jqxgrid").jqxGrid('updatebounddata');
+                        $("#popupWindowCCNGNew").data("kendoWindow").close();
+                    }
+                });
+            }
+        },
+        save: function () {
+            var self = this;
+            var selectedRecords = new Array();
+            var rows = self.datagrid.jqxGrid('getrows');
+            $(self.returnData).each(function (index, value) {
+                $(rows).each(function (index1, value1) {
+                    value1.IDHinhThucNghi = value1.IDHinhThucNghi == 0 ? null : value1.IDHinhThucNghi;
+                    if (value.IDHinhThucNghi != value1.IDHinhThucNghi && value.Oid == value1.Oid)
+                        selectedRecords.push({
+                            Oid: value1.Oid,
+                            IDHinhThucNghi: value1.IDHinhThucNghi == 0 ? null : value1.IDHinhThucNghi,
+                            DaChamCong: true
+                        });
+                });
+            });
+            if (selectedRecords.length == 0) {
+                alert("Chưa có dữ liệu nào thay đổi !!");
+                return;
+            }
+            if (selectedRecords.length > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCong_Save',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: ko.toJSON({
+                        userList: selectedRecords
+                    }),
+                    success: function (result) {
+                        alert("Lưu thành công !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+
+                    }
+                });
+            }
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có chắc xóa hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert("Xóa thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+
+    };
+    $(function () {
+        //$("#popupWindowCCNG").jqxWindow({
+        //    width: 500, theme: "darkBlue", height: 400, resizable: true, isModal: false, autoOpen: false, cancelButton: $("#Cancel")
+        //});
+        //$("#popupWindowCCNG").jqxWindow('hide');
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#ChamCongNgayNghi")[0]);
+    });
+</script>
+<div id="ChamCongNgayNghi">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: New">
+                            <i class="btn-label glyphicon glyphicon-tags"></i>Tạo mới
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-blue" style="width: 158px;" data-bind="click: Edit">
+                            <i class="btn-label glyphicon glyphicon-pencil"></i>Hiệu chỉnh
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: remove">
+                            <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-blue" style="width: 158px;" data-bind="click: Report">
+                            <i class="btn-label glyphicon glyphicon-chevron-left"></i>Giấy nghỉ phép
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <div style="display: none">
+            <input type="text" placeholder="ngày" data-bind="value: day" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+            -
+        </div>
+        <input type="text" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <select style="width: 200px" data-bind="options: department, optionsText: function (type) { return type.STT + '. '+ type.TenVietTatThongTinTruong + type.TenBoPhan}, optionsValue: 'Oid', value: departmentSelected, optionsCaption: 'Tất cả đơn vị'"></select>
+
+        <select data-bind="options: loaiNhanSu, optionsText: 'TenLoaiNhanSu', optionsValue: 'Oid', value: loaiNhanSuSelected, optionsCaption: 'Tất cả'"></select>
+        <input type="text" placeholder="Mã nhân sự" data-bind="value: name" style="width: 110px;height:32px; padding:5px;" />
+        <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="popupWindowCCNGNew"></div>
+    <div id="popupWindowCCNGEdit"></div>
+    <div id="popupWindowCCNGReport"></div>
+</div>
+

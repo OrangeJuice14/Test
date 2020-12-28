@@ -1,0 +1,33 @@
+﻿<form name="loginDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Tên Đăng nhập</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="userName" placeholder="Điền tên đăng nhập" required ng-model="obj.UserName">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="loginDetailForm.userName.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-md-4 control-label">Mật khẩu</label>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" name="password" placeholder="Điền mật khẩu" required ng-model="obj.Password">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="loginDetailForm.password.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="login()" ng-disabled="loginDetailForm.$invalid">Đăng nhập</button>
+        </div>
+        <div ng-show="loginFailed">
+            Tên đăng nhập hoặc Mật khẩu không đúng.
+        </div>
+    </div>
+</form>

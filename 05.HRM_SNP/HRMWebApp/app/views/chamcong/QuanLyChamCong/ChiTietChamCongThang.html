@@ -1,0 +1,346 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+<script type="text/javascript">
+    function ViewModel(datagrid) {      
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.XepLoaiList = ko.observableArray();
+        self.xepLoaiSelected = ko.observable();
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'MaNhanSu', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'NgayCongChuan', type: 'string' },
+                { name: 'NgayCongThucTe', type: 'string' },
+                { name: 'NgayCongCangTra', type: 'string' },
+                { name: 'NgayCongNghi', type: 'string' },
+                { name: 'NgayCongSuaChua', type: 'string' },
+                { name: 'NgayCongLamLe', type: 'string' },
+                { name: 'NgayCongNghiLe', type: 'string' },
+                { name: 'NgayCongAnCa', type: 'string' },
+                { name: 'NgayCongDocHai', type: 'string' },
+                { name: 'NgayCongLamDem', type: 'string' },
+                { name: 'NgayNghiPhep', type: 'string' },
+                { name: 'NgayNghiKhongPhep', type: 'string' },
+                { name: 'NgayNghiThaiSan', type: 'string' },
+                { name: 'XepLoaiCanBo', type: 'string' },
+                { name: 'HeSoXepLoai', type: 'string' },
+                { name: 'HeSoNgayCong', type: 'string' }
+            ],
+            id: 'Id',
+            //sortcolumn: 'HoTen',
+            sortdirection: 'asc',
+            url: "/WebServices/ChiTietChamCong_Find",
+            formatdata: function (data) {
+                return {
+                    thang: self.month(),
+                    nam: self.year(),
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                editable: true,
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                filterable: true,
+                rowsheight: 50,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', pinned: true, columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:15px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', pinned: true, datafield: 'MaNhanSu', width: 100, align: 'center', cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Họ tên', pinned: true, datafield: 'HoTen', width: 200, align: 'center', editable: false
+                    },
+                    {
+                        text: 'Đơn vị', datafield: 'TenPhongBan', width: 200, align: 'center', editable: false
+                    },
+                    {
+                        text: 'Công chuẩn', datafield: 'NgayCongChuan', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công thực tế', datafield: 'NgayCongThucTe', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công cảng trả', datafield: 'NgayCongCangTra', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công nghỉ', datafield: 'NgayCongNghi', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công sửa chữa', datafield: 'NgayCongSuaChua', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công làm lễ', datafield: 'NgayCongLamLe', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công nghỉ lễ', datafield: 'NgayCongNghiLe', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công ăn ca', datafield: 'NgayCongAnCa', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công độc hại', datafield: 'NgayCongDocHai', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Công làm đêm', datafield: 'NgayCongLamDem', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Nghỉ phép', datafield: 'NgayNghiPhep', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Nghỉ không phép', datafield: 'NgayNghiKhongPhep', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Nghỉ thai sản', datafield: 'NgayNghiThaiSan', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'Xếp loại', datafield: 'XepLoaiCanBo', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'HS xếp loại', datafield: 'HeSoXepLoai', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+                    {
+                        text: 'HS ngày công', datafield: 'HeSoNgayCong', width: 120, align: 'center',cellsalign: "middle", editable: false
+                    },
+
+
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        validate: function () {
+            var self = this;
+            if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        Edit: function () {
+            var self = this;
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            if (getselectedrowindexes.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_XepLoai',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.XepLoaiList(obj);
+
+                }
+            });
+
+            $.get('/app/views/chamcong/QuanLyChamCong/ChiTietChamCongThang_Update.html', function (data) {
+                $('#popupWindowCCNGEdit').html(data);
+                ko.cleanNode($('#popupWindowCCNGEdit')[0]);
+                $('#popupWindowCCNGEdit').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "15%"
+                    }
+
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChiTietChamCongNhanVien_GetByID',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: selectedrow.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        $("#NgayCongChuan").val(obj.NgayCongChuan);
+                        $("#NgayCongThucTe").val(obj.NgayCongThucTe);
+                        $("#NgayCongCangTra").val(obj.NgayCongCangTra);
+                        $("#NgayCongNghi").val(obj.NgayCongNghi);
+                        $("#NgayCongSuaChua").val(obj.NgayCongSuaChua);
+                        $("#NgayCongLamLe").val(obj.NgayCongLamLe);
+                        $("#NgayCongNghiLe").val(obj.NgayCongNghiLe);
+                        $("#NgayCongAnCa").val(obj.NgayCongAnCa);
+                        $("#NgayCongDocHai").val(obj.NgayCongDocHai);
+                        $("#NgayCongLamDem").val(obj.NgayCongLamDem);
+                        $("#NgayNghiPhep").val(obj.NgayNghiPhep);
+                        $("#NgayNghiKhongPhep").val(obj.NgayNghiKhongPhep);
+                        $("#NgayNghiThaiSan").val(obj.NgayNghiThaiSan);
+                        self.xepLoaiSelected(obj.XepLoaiCanBo);
+                        $("#HeSoXepLoai").val(obj.HeSoXepLoai);
+                        $("#HeSoNgayCong").val(obj.HeSoNgayCong);
+                    }
+                });
+                $('#popupWindowCCNGEdit').data("kendoWindow").open();
+
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGEdit'));
+            });
+        },
+        Update: function () {
+            var self = this;
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChiTietChamCongNhanVien_Save',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        Oid: selectedrow.Oid,
+                        NgayCongChuan: $("#NgayCongChuan").val(),
+                        NgayCongThucTe: $("#NgayCongThucTe").val(),
+                        NgayCongCangTra: $("#NgayCongCangTra").val(),
+
+                        NgayCongNghi: $("#NgayCongNghi").val(),
+                        NgayCongSuaChua: $("#NgayCongSuaChua").val(),
+
+                        NgayCongLamLe: $("#NgayCongLamLe").val(),
+                        NgayCongNghiLe: $("#NgayCongNghiLe").val(),
+
+                        NgayCongAnCa: $("#NgayCongAnCa").val(),
+                        NgayCongDocHai: $("#NgayCongDocHai").val(),
+
+                        NgayCongLamDem: $("#NgayCongLamDem").val(),
+                        NgayNghiPhep: $("#NgayNghiPhep").val(),
+
+                        NgayNghiKhongPhep: $("#NgayNghiKhongPhep").val(),
+                        NgayNghiThaiSan: $("#NgayNghiThaiSan").val(),
+                        XepLoaiCanBo:self.xepLoaiSelected(),
+                        HeSoXepLoai: $("#HeSoXepLoai").val(),
+                        HeSoNgayCong: $("#HeSoNgayCong").val(),
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        alert("Lưu thành công !!");
+                        $("#jqxgrid").jqxGrid('updatebounddata');
+                        $("#popupWindowCCCEdit").data("kendoWindow").close();
+                    }
+                });
+                return;
+        },
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlychamcong")[0]);
+    });
+</script>
+<div id="quanlychamcong">
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-blue" style="width: 158px;" data-bind="click: Edit">
+                            <i class="btn-label glyphicon glyphicon-pencil"></i>Hiệu chỉnh
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <input type="text" placeholder="tháng" data-bind="value:month" style="width: 50px; height:32px;text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value:year" style="width: 50px; height:32px;text-align: center" maxlength="4" />
+        <select style="width: 150px" data-bind="options: department, optionsText: function (type) { return type.STT + '. '+ type.TenVietTatThongTinTruong + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected, optionsCaption: 'Tất cả đơn vị'"></select>
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="popupWindowCCNGEdit"></div>
+</div>

@@ -1,0 +1,22 @@
+﻿<div class="widget">
+    <div class="widget-header" style="background-color:lightblue">
+        <span class="widget-caption" style="color:black">Nhân viên</span>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div class="widget-main ">
+
+            <select kendo-drop-down-list
+                    k-options="ListBoPhan"
+                    style="background-color:lightblue; width: 300px"
+                    k-data-text-field="'Name'"
+                    k-data-value-field="'Id'"
+                    k-ng-model="BoPhanId">
+            </select>
+
+            <div class="spinner-border text-primary" role="status" ng-hide="ShowStaff" style="width:100%; text-align:center">
+                <i style="font-size:30px; color:red" class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div kendo-grid="grid" k-options="GridUserOptions" k-data-source="GridUserData" ng-show="ShowStaff"></div>
+        </div>
+    </div>
+</div>

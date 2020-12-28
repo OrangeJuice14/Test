@@ -1,0 +1,235 @@
+﻿<script type="text/javascript">
+
+    function viewModel() {
+        var self = this;
+
+        self.TieuDeEmail = ko.observable();
+        self.NoiDungEmail = ko.observable();
+        self.LoaiGuiMail = ko.observable();
+        self.MailTemplateType = ko.observableArray();
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyGuiEmail_FindMailTemplateType',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.MailTemplateType(obj);
+                if (obj[0] != null)
+                    self.LoaiGuiMail(obj[0].Oid);
+            }
+        });
+        function GetCauHinh() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyGuiEmail_FindMailTemplate',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    congTy: self.companySelected(),
+                    loaiGuiMail: self.LoaiGuiMail()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj != null) {
+                        self.TieuDeEmail(obj.TieuDe);
+                        $('.note-editable').html(obj.NoiDung);
+                        self.NoiDungEmail(obj.NoiDung);
+                    }
+                    else {
+                        self.TieuDeEmail("");
+                        $('.note-editable').html("");
+                        self.NoiDungEmail("");
+                    }
+                }
+            });
+        }
+        GetCauHinh();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetCauHinh();
+            }
+        });
+        self.LoaiGuiMail.subscribe(function (value) {
+            if (value != null) {
+                GetCauHinh();
+            }
+        });
+    }
+    viewModel.prototype = {
+        validate: function () {
+            var self = this;
+            if (self.TieuDeEmail() == null || self.NoiDungEmail() == null) {
+                alert('Vui lòng điền đầy đủ thông tin.');
+                return false;
+            }
+            return true;
+        },
+        save: function () {
+            var self = this;
+            self.NoiDungEmail($('.note-editable').html());
+
+            if (!self.validate()) {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyGuiEmail_UpdateMailTemplate',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    tieuDeEmail: self.TieuDeEmail(),
+                    noiDungEmail: self.NoiDungEmail(),
+                    loaiGuiMail: self.LoaiGuiMail(),
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert("Lưu thành công !!");
+                    }
+                    else {
+                        alert("Lưu thất bại !!");
+                    }
+                }
+            });
+        }
+    }
+
+    $(function () {
+        var linkDuyetButton = function (context) {
+            var ui = $.summernote.ui;
+
+            // create button
+            var button = ui.button({
+                contents: '<i class="fa fa-chain"/>Chèn link duyệt',
+                tooltip: 'Chèn link duyệt',
+                click: function () {
+                    $('#mailtemplate').summernote('pasteHTML', '<a href="http://linkduyet/" target="_blank">Nhấn vào đây để duyệt</a>');
+                }
+            });
+
+            return button.render();   // return button as jquery object
+        }
+        $('#mailtemplate').summernote({
+            height: 150,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style', ['fontname']],
+                ['style', ['fontsize']],
+                ['style', ['color']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'hr']],
+                ['misc', ['fullscreen', 'codeview']],
+                ['mybutton', ['linkDuyet']]
+            ],
+            buttons: {
+                linkDuyet: linkDuyetButton
+            }
+        });
+        var view = new viewModel();
+        ko.applyBindings(view, $("#cauhinhguimail")[0]);
+    });
+</script>
+<div id="cauhinhguimail" style="text-align:left">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4>CẤU HÌNH GỬI MAIL</h4></div>
+    <div class="form-horizontal form-bordered" style="padding-bottom:10px">
+        <!-- ko if: company().length > 1 -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Trường:</label>
+            <div class="col-sm-7">
+                <select style="width: 350px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+            </div>
+        </div>
+        <!-- /ko -->
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Loại gửi mail:</label>
+            <div class="col-sm-7">
+                <select style="width: 350px" data-bind="options: MailTemplateType, optionsText: function (type) { return type.Name }, optionsValue: 'Oid', value: LoaiGuiMail"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Tiêu đề:</label>
+            <div class="col-sm-7">
+                <input data-bind="value: TieuDeEmail" style="width:350px" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12" style="padding:10px;">
+                <div id="mailtemplate"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ghi chú:</label>
+            <div class="col-sm-7">
+                <table class="table">
+                    <thead><tr><th>Tham số</th><th>Diễn giải</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>HoTen</td>
+                            <td>Họ và tên người đăng ký</td>
+                        </tr>
+                        <tr>
+                            <td>DonVi</td>
+                            <td>Bộ phận của người đăng ký</td>
+                        </tr>
+                        <tr>
+                            <td>NghiTuNgay</td>
+                            <td>Nghỉ từ ngày</td>
+                        </tr>
+                        <tr>
+                            <td>NghiDenNgay</td>
+                            <td>Nghỉ đến ngày</td>
+                        </tr>
+                        <tr>
+                            <td>HinhThucNghi</td>
+                            <td>Hình thức nghỉ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

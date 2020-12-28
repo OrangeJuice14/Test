@@ -1,0 +1,158 @@
+﻿<style>
+    label
+    {
+        font-weight:bold;
+    }
+    .app-modal-window .modal-dialog {
+        width: 900px !important;
+    }
+</style>
+<form class="form-horizontal" name="CriterionDetailForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-5 control-label">Mã số</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.ManageCode">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label ng-if="type!=4" for="name" class="col-md-5 control-label">Tên</label>
+            <label ng-if="type==4" for="name" class="col-md-5 control-label">Tên hoạt động</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.Name">
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div ng-if="type==4" class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="mark" class="col-md-5 control-label">Số giờ</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.NumberOfHour" />
+            </div>
+        </div>
+        <div ng-if="type!=4" class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="mark" class="col-md-5 control-label">Số điểm</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.Record" />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="mark" class="col-md-5 control-label">Thứ tự</label>
+            <div class="col-md-6">
+                <input kendo-numeric-text-box k-options="options" k-ng-model="obj.OrderNumber" />
+            </div>
+        </div>
+        <!--<div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}">
+            <label for="selectType" class="col-md-4 control-label">Đối tượng</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectAngentObject" ng-change="selectedChangeAgentObject()" required ng-model="obj.AgentObject.Id" ng-options="listobj.Id as listobj.Name for listobj in agentObjecs">
+                    <option value="">Chọn đối tượng</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.selectAngentObject.$error.required" class="help-block">*</span>
+            </div>
+        </div>-->
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectGroup.$invalid}">
+            <label for="selectType" class="col-md-5 control-label">Nhóm mục tiêu</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectGroup" required ng-model="obj.TargetGroupDetail.Id" ng-options="listobj.Id as listobj.Name for listobj in targetGroupDetails">
+                    <option value="">Chọn nhóm</option>
+                </select>
+                <!--<label for="selectType" style="font-weight:normal" class="control-label">{{TargetGroupDetailName}}</label>-->
+                
+            </div>
+        </div>
+        <!--<div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectDepart.$invalid}">
+            <label for="selectType" class="col-md-4 control-label">Phòng ban</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectDepart" required ng-model="obj.Department.Id" ng-options="listobj.Id as listobj.Name for listobj in departments">
+                    <option value="">Chọn phòng ban</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.selectDepart.$error.required" class="help-block">*</span>
+            </div>
+        </div>-->
+        <div ng-if="type!=4" class="form-group" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}">
+            <label for="selectType" class="col-md-5 control-label">Loại dữ liệu</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectType" ng-change="selectedChangeType()" required ng-model="obj.CriterionType.Id" ng-options="listobj.Id as listobj.Name for listobj in criterionTypes">
+                    <option value="">-- Chọn loại dữ liệu --</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.selectType.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+
+        <div class="form-group" for="selectType">
+            <label  for="selectType" class="col-md-5 control-label">Năm sử dụng tiêu chí</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="studyYears" k-ng-model="obj.StudyYearIds"></select>
+            </div>
+        </div>
+
+        <div class="form-group" for="selectType">
+            <label for="selectType" class="col-md-5 control-label">Đơn vị cung cấp dữ liệu</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="donvicungcap" k-ng-model="obj.DepartmentIds"></select>
+            </div>
+        </div>
+
+        <div class="form-group" for="selectType">
+            <label for="selectType" class="col-md-5 control-label">Chức danh cung cấp dữ liệu</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="ChucDanh" k-ng-model="obj.ChucDanhIds"></select>
+            </div>
+        </div>
+
+        <div class="form-group" for="selectDonVi">
+            <label for="selectType" class="col-md-5 control-label">Đơn vị tính</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectDonVi" ng-change="selectedChangeDonviTinh()" required ng-model="obj.DonViTinh.Id" ng-options="listobj.Id as listobj.Name for listobj in DonViTinhs">
+                    <option value="">-- Chọn đơn vị tính --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" for="selectDanhGia">
+            <label for="selectType" class="col-md-5 control-label">Đánh giá chi tiết</label>
+            <div class="col-md-6">
+                <select class="form-control" name="selectDonVi" ng-change="selectedChangeDanhGia()" required ng-model="obj.DanhGiaChiTiet.Id" ng-options="listobj.Id as listobj.Name for listobj in DanhGiaChiTiets">
+                    <option value="">-- Chọn kiểu đánh giá --</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="name" class="col-md-5 control-label">Chú thích</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="tooltip" ng-model="obj.Tooltip">
+            </div>
+        </div>
+        <input type="hidden" ng-model="isEdit" />
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}" ng-show="(obj.CriterionType.Id==3 || type==4 || obj.CriterionType.Id==4) && isNew == false">
+            <div class="col-md-12">
+                <button style="float:right;" ng-click="NewDictionary()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Từ điển dữ liệu</legend>
+
+                    <div ng-show="(obj.CriterionType.Id==3 || obj.CriterionType.Id==4) && type!=4" kendo-grid="grid" k-data-source="dataSource" k-options="mainDictionaryGridOptions"></div>
+                    <div ng-show="type==4" kendo-grid="grid" k-data-source="dataSource" k-options="mainDictionaryGridOptions2"></div>
+                </fieldset>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

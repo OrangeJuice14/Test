@@ -1,0 +1,29 @@
+﻿@using DevExpressProjectTemplate.Views.Manage
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<ul class="nav nav-pills nav-stacked">
+    @(Html.DevExpress()
+        .BootstrapMenu()
+        .Name("navigationMenu2")
+        .Orientation(Orientation.Vertical)
+        .Items(i => {
+            i.Add()
+                .NavigateUrl(Url.Action("Index", "Manage"))
+                .Text("Profile");
+            i.Add()
+                .NavigateUrl(Url.Action("ChangePassword", "Manage"))
+                .Text("Password");
+            if(hasExternalLogins) {
+                i.Add()
+                    .NavigateUrl(Url.Action("ExternalLogins", "Manage"))
+                    .Text("External logins");
+            }
+            i.Add()
+                .NavigateUrl(Url.Action("TwoFactorAuthentication", "Manage"))
+                .Text("Two-factor authentication");
+        })
+        .SettingsBootstrap(bootstrap => bootstrap.NavbarMode(true)))
+</ul>

@@ -1,0 +1,148 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+.k-grid-content {
+   max-height: 200px;
+}
+</style>
+<form name="scienceResearchDataForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Năm học</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StudyYearSelect" required ng-model="obj.StudyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Chọn năm học ...</option>
+                </select>
+            </div>
+            <label class="control-label" ng-show="scienceResearchDataForm.StudyYearSelect.$error.required" style="color:red">( * )</label>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Học kỳ</label>
+            <div class="col-md-6">
+                <!--<select class="form-control" name="StudyTermSelect" required ng-model="obj.StudyTerm">
+                    <option value="">Chọn học kỳ ...</option>
+                    <option value="CaNam">Cả Năm</option>
+                    <option value="HK01">Học kỳ I</option>
+                    <option value="HK02">Học kỳ II</option>
+                    <option value="HK03">Học kỳ III</option>
+                </select>-->
+                <select class="form-control" name="StudyYearSelect" required ng-model="obj.StudyTerm" ng-options="listObj.Id as listObj.Name for listObj in StudyTerms">
+                    <option value="">Chọn học kỳ ...</option>
+                </select>
+            </div>
+            <label class="control-label" ng-show="scienceResearchDataForm.StudyTermSelect.$error.required" style="color:red">( * )</label>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm mục tiêu</label>
+            <div class="col-md-6">
+                <select ng-change="selectedChangeTagetGroup()" ng-disabled="!isNew" class="form-control" name="GroupSelect" required ng-model="obj.NhomMucTieuId" ng-options="listObj.Id as listObj.Name for listObj in TargetGroupdetail">
+                    <option value="">Chọn nhóm mục tiêu ...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="obj.TargetGroupdetailType == 0 || obj.TargetGroupDetailType == 4 || obj.TargetGroupDetailType == 5" >
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm hoạt động</label>
+            <div class="col-md-6">
+                <select ng-change="selectedChangeActivityGroup()" ng-disabled="!isNew" class="form-control" name="GroupSelect" required ng-model="obj.ActivityManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterions">
+                    <option value="">Chọn nhóm hoạt động ...</option>
+                </select>
+            </div>
+            <!--<label class="control-label" ng-show="scienceResearchDataForm.GroupSelect.$error.required" style="color:red">( * )</label>-->
+        </div>
+        <div class="form-group" ng-show="obj.TargetGroupdetailType == 0 || obj.TargetGroupDetailType == 4 || obj.TargetGroupDetailType == 5">
+            <label for="inputFirstName" class="col-md-4 control-label">Hoạt động</label>
+            <div class="col-md-6">
+                <select ng-disabled="!isNew" class="form-control"  name="ManageCode" required ng-model="obj.ManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterionsDictionaries">
+                    <option value="">Chọn hoạt động ...</option>
+                </select>
+            </div>
+            <!--<label class="control-label" ng-show="scienceResearchDataForm.ManageCode.$error.required" style="color:red">( * )</label>-->
+        </div>
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+            <label for="inputFirstName" class="control-label" ng-show="scienceResearchDataForm.Name.$error.required" style="color:red">( * )</label>
+            <label for="inputFirstName" class="col-md-4 control-label">Tên hoạt động</label>
+            <div class="col-md-6">
+                <input ng-readonly="!isNew" type="text" class="form-control" name="Name" required ng-model="obj.Name">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Ngày hoạt động</label>
+            <div class="col-md-6">
+                <input kendo-date-picker onkeydown="return false;" style="width:270px" name="startTime" required k-ng-model="obj.Date" k-format="'dd/MM/yyyy'" />
+            </div>
+            <!--<label for="inputFirstName" class="col-md-2 control-label">STT</label>
+            <div class="col-md-2">
+                <input name="NumberOfTime" kendo-numeric-text-box k-options="numericOptions" style="width:70px !important;" k-ng-model="obj.OrderNumber" />
+            </div>-->
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Đơn vị cung cấp</label>
+            <div class="col-md-6">
+                <!--<select class="form-control" ng-change="selectedChangeDepartment()" name="StaffSelect" ng-model="obj.DepartmentId" ng-options="listObj.Id as listObj.Name for listObj in DepartmentList">
+                    <option value="">Chọn đơn vị ...</option>
+                </select>-->
+                <input type="text" class="form-control" ng-model="obj.DonViCungCapName" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputNNL" class="col-md-4 control-label">Người nhập dữ liệu</label>
+            <div class="col-md-6">
+               <input type="text" class="form-control" ng-model="obj.UserNhap" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Cá nhân tham gia</label>
+            <div class="col-md-6">
+                <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputlistuser" class="col-md-4 control-label">Danh sách cá nhân tham gia</label>
+            <button style="margin-left:17px" ng-click="Add()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+        </div>
+        <div class="form-group">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridUser"></div>
+        </div>
+        <!--<div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Tổng số cá nhân</label>
+            <div class="col-md-6">
+                <input name="TotalParticipants" kendo-numeric-text-box k-options="numericOptions" style="width:70px !important;" k-ng-model="obj.TotalParticipants" />
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Cá nhân tham gia</label>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <div class="form-group">           
+            <div class="col-md-6">
+                <div kendo-grid="grid" k-data-source="staffResource" k-options="staffOption"></div>
+            </div>
+            <div class="col-md-1" style="padding:0">
+                <button ng-click="onClick()" class="k-button">Chọn</button>
+            </div>
+            <div class="col-md-5">
+                <div class="list-group" style="max-height:235px; overflow:auto">
+                    <div ng-repeat="item in staffs track by $index" class="list-group-item">
+                        <span>{{item.Name}}</span>
+                        <div style='width:30px; float:right'>
+                            <button ng-click="Delete(item.Id)"  class="btn btn-block btn-danger btn-xs"><i class="fa fa-times"></i>  </button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </di-->
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Close</button>
+    </div>
+</form>

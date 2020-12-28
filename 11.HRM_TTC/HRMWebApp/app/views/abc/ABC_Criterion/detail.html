@@ -1,0 +1,101 @@
+﻿<style>
+    label
+    {
+        font-weight:bold;
+    }
+</style>
+<form class="form-horizontal" name="CriterionDetailForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <!-- chung -->
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.mark.$invalid}">
+            <label for="mark" class="col-md-3 control-label">STT</label>
+            <div class="col-md-7">
+                <input kendo-numeric-text-box k-options="options" name="mark" required k-ng-model="obj.OrderNumber" />
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-3 control-label">Năng lực</label>
+            <div class="col-md-7">
+                <textarea type="text" style="min-height:50px" class="form-control" name="name" required ng-model="obj.Name"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.detail.$invalid}">
+            <label for="detail" class="col-md-3 control-label">Mô tả năng lực</label>
+            <div class="col-md-7">
+                <textarea type="text" style="min-height:150px" class="form-control" name="detail" required ng-model="obj.CriterionDetail"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.detail.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.Methods.$invalid}">
+            <label for="Methods" class="col-md-3 control-label">Phương pháp đo</label>
+            <div class="col-md-7">
+                <textarea type="text" style="min-height:80px" class="form-control" name="Methods" required ng-model="obj.Methods"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.Methods.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.Percents.$invalid}">
+            <label for="Percents" class="col-md-3 control-label">Tỷ trọng</label>
+            <div class="col-md-7">
+                <input kendo-numeric-text-box k-options="options" name="Percents" required k-ng-model="obj.Percents" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="CriterionDetailForm.Percents.$error.required" class="help-block">*</span>
+            </div>
+        </div>             
+        
+        <!--<div class="form-group" ng-class="{'has-error': CriterionDetailForm.RatingType.$invalid}">
+            <label for="RatingType" class="col-md-3 control-label">Nhóm tiêu chí</label>
+            <div class="col-md-7">
+                <select class="form-control" name="RatingType" required ng-model="obj.RatingType" ng-options="listobj.Id as listobj.Name for listobj in ratingTypes">
+                    <option value="">Chọn nhóm tiêu chí</option>
+                </select>
+            </div>
+        </div>-->
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectRatingTypes.$invalid}">
+            <label for="selectRatingTypes" class="col-md-3 control-label" ng-click="alert(obj.RatingTypeIds)">Đối tượng đánh giá</label>
+            <div class="col-md-7">
+                <select class="form-control" name="selectRatingTypes" required kendo-multi-select k-options="selectOptions" k-ng-model="obj.RatingTypeIds"></select>
+            </div>
+        </div>
+
+        <!-- thêm -->
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}" ng-show="isNew == true">
+            <div class="col-md-12">
+                <!--<button style="float:right;" ng-click="NewCriterionDetail()" class="btn btn-info"><i class="fa fa-plus"></i> </button>-->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Mức độ đánh giá</legend>
+                    <div kendo-grid="grid" k-data-source="dataSource" k-options="mainDictionaryGridOptions"></div>
+                </fieldset>
+            </div>
+        </div>
+
+        <!-- sửa -->
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.selectAngentObject.$invalid}" ng-show="isNew == false">
+            <div class="col-md-12">
+                <!--<button style="float:right;" ng-click="NewCriterionDetail()" class="btn btn-info"><i class="fa fa-plus"></i> </button>-->
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Mức độ đánh giá</legend>
+                    <div kendo-grid="grid" k-data-source="dataSource2" k-options="mainDictionaryGridOptions"></div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="saveCriterion()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-info" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,96 @@
+﻿<div>
+    <h2>Kết quả tổng hợp KPIs</h2>
+</div>
+
+<div ng-if="resultList.manageRecordResultList.Results.length>0">
+    <h4> Quản lý</h4>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align:center">Đối tượng</th>
+                <th style="text-align:center">Kết quả</th>
+                <th style="text-align:center">Tỉ lệ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="re in resultList.manageRecordResultList.Results">
+                <td>{{re.Name}}</td>
+                <td>{{re.Record}}</td>
+                <td>{{re.Rate}}%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <div ng-if="resultList.teachingResultList.Results.length>0">
+        <h4>Giảng dạy</h4>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Đối tượng</th>
+                    <th style="text-align:center">Kết quả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="re in resultList.teachingResultList.Results">
+                    <td>{{re.Name}}</td>
+                    <td>{{re.Record}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="resultList.staffResultList.Results.length >0">
+    <h4>Nhân viên</h4>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align:center">Đối tượng</th>
+                <th style="text-align:center">Kết quả</th>
+                <th style="text-align:center">Tỉ lệ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="re in resultList.staffResultList.Results">
+                <td>{{re.Name}}</td>
+                <td>{{re.Record}}</td>
+                <td>{{re.Rate}}%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    
+    <div ng-if="resultList.generalManageResultList.Results.length>0">
+    <h4>Kết quả tổng hợp Chức vụ quản lý:</h4>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align:center">Đối tượng</th>
+                <th style="text-align:center">Tỉ lệ chức vụ</th>
+                <th style="text-align:center">Kết quả quản lý</th>
+                <th style="text-align:center">Tỉ lệ</th>
+                <th style="text-align:center">Kết quả giảng dạy</th>
+                <th style="text-align:center">Tỉ lệ</th>
+                <th style="text-align:center">Kết quả tổng</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="re in resultList.generalManageResultList.Results">
+            <tr>
+                <td>{{re.Name}}</td>
+                <td>{{re.PositionRate}}%</td>
+                <td><strong>{{re.Record}}</strong></td>
+                <td>{{re.Rate}}%</td>
+                <td><strong>{{re.Record2}}</strong></td>
+                <td>{{re.Rate2}}%</td>
+                <td><strong>{{re.TotalRecord}}</strong></td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <td colspan="6">Kết quả tổng kết</td>
+                <td><strong>{{resultList.generalManageResultList.FinalResult}}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

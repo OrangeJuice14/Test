@@ -1,0 +1,363 @@
+﻿
+<script type="text/javascript">
+    $(function () {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split('/')[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../Default.html";
+        //}
+    });
+</script>
+
+
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+             var trangthaiArr = [
+                 { Id: 0, Name: "Chờ duyệt" },
+                 { Id: 1, Name: "Chấp nhận" },
+                 { Id: 2, Name: "Không chấp nhận" }
+             ];
+             var self = this;
+             self.returnData = [];
+             self.datagrid = datagrid;
+             self.trangthaiList = ko.observableArray(trangthaiArr);
+             self.trangthaiSelected = ko.observable(-1);
+               self.day = ko.observable(new Date().getDate()),
+             self.month = ko.observable(new Date().getMonth() + 1);
+             self.year = ko.observable(new Date().getFullYear());
+             self.trangthaiList = ko.observableArray(trangthaiArr);
+             self.trangthaiSelected = ko.observable(-1);
+             self.bophan = ko.observableArray();
+             self.bophanSelected = ko.observable();
+             self.maNhanSu = ko.observable("");
+             $.ajax({
+                 type: 'POST',
+                 url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+                 contentType: "application/json; charset=utf-8",
+                 data: ko.toJSON({ userId: session.UserId }),
+                 dataType: "json",
+                 async: false,
+                 success: function (result) {
+                     var obj = result;
+                     self.bophan(obj);
+                     self.bophanSelected(obj[0].Oid);
+                 }
+             });
+             self.source =
+             {
+                 datatype: "json",
+                 datafields: [
+            { name: 'Oid', type: 'string' },
+            { name: 'HoTen', type: 'string' },
+            { name: 'SoHieuCongChuc', type: 'string' },
+            { name: 'Ngay', type: 'date' },
+            { name: 'ThoiGianBatDau', type: 'string' },
+            { name: 'ThoiGianKetThuc', type: 'string' },
+            { name: 'SoPhutDangKy', type: 'string' },
+            { name: 'SoPhutThucTe', type: 'string' },
+            { name: 'Duyet', type: 'string' },
+            { name: 'LyDo', type: 'string' }
+                 ],
+                 id: 'Id',
+                 //async:false,
+                 //pagesize: 10,
+                 sortcolumn: 'Name',
+                 sortdirection: 'asc',
+                 url: "/WebServices/QuanLyDangKyChamCongNgoaiGio_Find",
+                 //sort: function (value, row) {
+                 //    self.datagrid.jqxGrid('updatebounddata');
+                 //},
+                 formatdata: function (data) {
+                     return {
+                         ngay: self.day(),
+                         thang: self.month(),
+                         nam: self.year(),
+                         IDBoPhan: self.bophanSelected() == undefined ? null : self.bophanSelected(),
+                         trangthai: self.trangthaiSelected() == undefined ? null : self.trangthaiSelected(),
+                    };
+                },
+                beforeprocessing: function (result) {
+                    self.returnData = result;
+                    return self.returnData;
+                }
+            };
+            self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+            self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                //editable: true,
+                selectionmode: 'checkbox',
+                //virtualmode: true,
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                filterable: true,
+                //rowsheight: 40,
+                autoheight: true,
+                autorowheight: true,
+                theme: "darkBlue",
+                //rendergridrows: function (args) {
+                //    return args.data;
+                //},
+                columns: [
+                  {
+                      text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                          return "<div style='text-align:center;margin-top:5px;'>" + (value + 1) + "</div>";
+                      }
+                  },
+                  {
+                      text: 'Họ tên', datafield: 'HoTen', width: 150, align: 'center'
+                  },
+                  {
+                      text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 150, align: 'center', cellsalign: "middle"
+                  },
+                  {
+                      text: 'Ngày', datafield: 'Ngay', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'dd/MM/yyyy'
+                  },
+                  {
+                      text: 'TG bắt đầu', datafield: 'ThoiGianBatDau', width: 100, align: 'center', cellsalign: "middle",
+                  },
+                     {
+                         text: 'TG kết thúc', datafield: 'ThoiGianKetThuc', width: 100, align: 'center', cellsalign: "middle",
+                     },
+                     {
+                         text: 'Số phút đăng ký', datafield: 'SoPhutDangKy', width: 130, align: 'center', cellsalign: "middle",
+                     },
+                     {
+                         text: 'Số phút thực tế', datafield: 'SoPhutThucTe', width: 130, align: 'center', cellsalign: "middle",
+                     },
+                {
+                    text: 'Lý do', datafield: 'LyDo', width: 200, align: 'center',
+                },
+                  {
+                      text: 'Trạng thái', datafield: 'Duyet', width: 100, align: 'center', cellsalign: "middle",
+                      cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                          var str = "";
+                          if (cellvalue == 0) {
+                              str = "<img src='/Images/InfoSmall.jpg' style='padding:2px 0px 0px 40px;' />";
+                          }
+                          if (cellvalue == 1) {
+                              str = "<img src='/Images/TT_yes.png' style='padding:2px 0px 0px 40px;'/>";
+                          }
+                          if (cellvalue == 2) {
+                              str = "<img src='/Images/TT_no.png' style='padding:2px 0px 0px 40px;'/>";
+                          }
+                          return str;
+                      }
+                  }
+                ]
+            });
+        }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+            validate: function () {
+                var self = this;
+                if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                    alert("Ngày không hợp lệ !!");
+                    return true;
+                } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                    alert("Tháng không hợp lệ !!");
+                    return true;
+                }
+                else if (isNaN(self.year()) || self.year() < 0) {
+                    alert("Năm không hợp lệ !!");
+                    return true;
+                }
+                return false;
+            },
+            search: function () {
+                var self = this;
+                if (self.validate())
+                    return;
+                self.datagrid.jqxGrid('updatebounddata');
+            },
+            //remove: function () {
+            //    var self = this;
+            //    var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            //    if (rows.length == 0) {
+            //        alert("Chưa có dòng nào được chọn !!");
+            //        return;
+            //    }
+            //    var r = confirm("Bạn có chắc xóa hay không ?");
+            //    if (r == true) {
+            //        var selectedRecords = new Array();
+            //        for (var i = 0, l = rows.length; i < l ; i++) {
+            //            var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+            //            selectedRecords.push({
+            //                Oid: row.Oid
+            //            });
+            //        }
+            //        if (selectedRecords.length > 0) {
+
+            //            $.ajax({
+            //                type: 'POST',
+            //                url: '/WebServices/QuanLyKhaiBaoCongTac_Delete',
+            //                contentType: "application/json; charset=utf-8",
+            //                dataType: "json",
+            //                async: false,
+            //                data: ko.toJSON({
+            //                    list: selectedRecords
+            //                }),
+            //                success: function (result) {
+            //                    alert("Xóa thành công !!");
+            //                    self.datagrid.jqxGrid('updatebounddata');
+            //                    self.datagrid.jqxGrid('clearselection');
+            //                }
+            //            });
+
+            //        }
+            //    } else {
+            //        return;
+            //    }
+            //},
+            accept: function () {
+                var self = this;
+                var rows = self.datagrid.jqxGrid('selectedrowindexes');
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length == 0) {
+                    alert("Chưa có dòng nào được chọn !!");
+                    return;
+                }
+                if (selectedRecords.length > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyDangKyChamCongNgoaiGio_DuyetList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            list: selectedRecords,
+                            trangthai: 1
+                        }),
+                        success: function (result) {
+                            alert("Thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            },
+            cancel: function () {
+                var self = this;
+                var rows = self.datagrid.jqxGrid('selectedrowindexes');
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length == 0) {
+                    alert("Chưa có dòng nào được chọn !!");
+                    return;
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyDangKyChamCongNgoaiGio_DuyetList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            list: selectedRecords,
+                            trangthai: 2
+                        }),
+                        success: function (result) {
+                            alert("Thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+
+                }
+            }
+        };
+        $(function () {
+            var model = new ViewModel($("#jqxgrid"));
+            ko.applyBindings(model, $("#quanlycongtac")[0]);
+        });
+</script>
+       <div id="quanlycongtac">       
+           <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>QUẢN LÝ ĐĂNG KÝ CHẤM CÔNG NGOÀI GIỜ</h4></div>
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="buttons-preview" id="userManage" style="margin-left:15px;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center">
+                            <!--<a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: remove">
+                                <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                            </a>-->
+                            <a href="#" class="btn btn-labeled btn-blue" style="width: 158px;" data-bind="click: accept">
+                                <i class="btn-label glyphicon glyphicon-ok"></i>Duyệt
+                            </a>
+                            <a href="#" class="btn btn-labeled btn-yellow" style="width: 158px;" data-bind="click: cancel">
+                                <i class="btn-label glyphicon glyphicon-remove"></i>Không duyệt
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 10px 0px 10px 0px; text-align: center">
+            <input type="text" placeholder="ngày" data-bind="value:day" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+            -
+            <input type="text" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+            -
+            <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+            <select style="width: 150px" data-bind="options: bophan, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: bophanSelected"></select>
+            <select data-bind="options: trangthaiList, optionsText: 'Name', optionsValue: 'Id', value: trangthaiSelected, optionsCaption: 'Tất cả'"></select>
+            <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        </div>
+        <div style="padding: 0px 0px 0px 0px;">
+            <div id="jqxgrid"></div>
+        </div>
+    </div>

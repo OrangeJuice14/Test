@@ -1,0 +1,15 @@
+﻿<div class="widget">
+    <div class="widget-header bg-themeprimary">
+        <span class="widget-caption">Phân quyền</span>
+        <div style="display: none; background: #fff">
+            <input type="checkbox" ng-model="backup" ng-init="backup = false" />Backup
+            <input type="text" style="width: 250px" ng-model="path" placeholder="File Path" />
+            <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+        </div>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>

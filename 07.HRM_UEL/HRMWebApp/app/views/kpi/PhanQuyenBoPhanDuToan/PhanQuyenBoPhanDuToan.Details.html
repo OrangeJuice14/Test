@@ -1,0 +1,20 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Đơn vị được {{Name}} quản lý</h3>
+        <label class="modal-title">Số hiệu công chức: <span style="font-weight:bold">{{UserNow.WebUserUserName}}</span></label>
+    </div>
+    <div class="modal-body">
+        <div class="d-flex align-items-center" style="color:red;width: 100%; text-align:center;" ng-show="LoaddingTree">
+            <i style="font-size:30px; color:red" class="fa fa-spinner fa-spin"></i>
+        </div>
+        <div style="overflow:auto; max-height:500px;" ng-hide="LoaddingTree">
+            <div kendo-tree-view="menuTree"
+                 k-data-source="treeData" k-options="treeOptions">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" style="cursor:pointer" ng-click="Save()" ng-disabled="DisableBtnSave || LoaddingTree">Lưu</button>
+        <button class="btn btn-warning" style="cursor:pointer" ng-click="$dismiss()">Thoát</button>
+    </div>
+</div>

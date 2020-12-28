@@ -1,0 +1,420 @@
+﻿
+<script type="text/javascript">
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+
+        function ViewModel_UpdateQuanHeGiaDinh(oid) {
+            var self = this;
+
+            self.Oid = oid;
+            self.ThongTinNhanVien = session.Id;
+            self.HoTenNguoiThan = null;
+            self.NgaySinhFull = null;
+            self.NamSinh = null;
+            self.NoiSinh = null;
+            self.QuocTich = null;
+            self.CMND = null;
+            self.SoHoChieu = null;
+            self.QuanHe = null;
+            self.LoaiGiamTruGiaCanh = null;
+            self.PhuThuoc = null;
+            self.LienHeKhanCap = null;
+            self.DienThoaiDiDong = null;
+            self.GioiTinh = null;
+            self.QueQuan = null;
+            self.NgheNghiepHienTai = null;
+            self.NoiLamViec = null;
+            self.TinhTrang = null;
+            //
+            self.data_quocgia = ko.observableArray();
+            self.data_quanhe = ko.observableArray();
+            self.data_loaigiamtrugiacanh = ko.observableArray();
+            self.data_tinhthanh = ko.observableArray();
+
+            if (self.Oid != null) {
+                //Lấy dữ liệu của người thân hiện tại set mặc định
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanHeGiaDinh_GetByOid',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: self.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.HoTenNguoiThan = obj.HoTenNguoiThan;
+                        self.NgaySinhFull = obj.NgaySinhFull;
+                        self.NamSinh = obj.NamSinh;
+                        self.NoiSinh = obj.NoiSinh;
+                        self.QuocTich = obj.QuocTich;
+                        self.CMND = obj.CMND;
+                        self.SoHoChieu = obj.SoHoChieu;
+                        self.QuanHe = obj.QuanHe;
+                        self.LoaiGiamTruGiaCanh = obj.LoaiGiamTruGiaCanh;
+                        self.PhuThuoc = obj.PhuThuoc;
+                        self.LienHeKhanCap = obj.LienHeKhanCap;
+                        self.DienThoaiDiDong = obj.DienThoaiDiDong;
+                        self.GioiTinh = obj.GioiTinh;
+                        self.QueQuan = obj.QueQuan;
+                        self.NgheNghiepHienTai = obj.NgheNghiepHienTai;
+                        self.NoiLamViec = obj.NoiLamViec;
+                        self.TinhTrang = obj.TinhTrang;
+                        //
+                        if (self.GioiTinh == 'Nam') {
+                            $("#gioitinhnam").prop("checked", true);
+                        }
+                        else {
+                            $("#gioitinhnu").prop("checked", true);
+                        }
+
+                        if (self.TinhTrang == 'Còn sống') {
+                            $("#tinhtrangconsong").prop("checked", true);
+                        }
+                        else {
+                            $("#tinhtrangdamat").prop("checked", true);
+                        }
+
+                        //Khởi tạo các control
+                        if (self.NgaySinhFull == null) {
+                            $("#jqxNgaySinhFull").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: null });
+                        } else {
+                            $("#jqxNgaySinhFull").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: new Date(self.NgaySinhFull) });
+                        }
+                    }
+                });
+            } else {
+                $("#jqxNgaySinhFull").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy', value: null });
+            }
+            
+            ////Get dữ liệu Danh mục
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetDanhMucUpDateHoSoNhanVienAll',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    self.data_quocgia(result["QuocGia"]);
+                    self.data_quanhe(result["QuanHe"]);
+                    self.data_loaigiamtrugiacanh(result["LoaiGiamTruGiaCanh"]);
+                    self.data_tinhthanh(result["TinhThanh"]);
+                }
+            });
+
+
+            //////////////////////////////Đưa dữ liệu vào Combobox ///////////////////////////////
+            //Quan hệ
+            var serializedArr = JSON.stringify(eval("(" + self.data_quanhe() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuanHe").kendoComboBox({
+                dataTextField: "TenQuanHe",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuanHe,
+                value: self.QuanHe
+            });
+            function onSelectQuanHe(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuanHe = dataItem.Oid;
+            };
+
+            //Quốc tịch
+            var serializedArr = JSON.stringify(eval("(" + self.data_quocgia() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQuocTich").kendoComboBox({
+                dataTextField: "TenQuocGia",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQuocTich,
+                value: self.QuocTich
+            });
+            function onSelectQuocTich(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QuocTich = dataItem.Oid;
+            };
+
+            //Quê quán
+            var serializedArr = JSON.stringify(eval("(" + self.data_tinhthanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxQueQuan").kendoComboBox({
+                dataTextField: "TenTinhThanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectQueQuan,
+                value: self.QueQuan
+            });
+            function onSelectQueQuan(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.QueQuan = dataItem.Oid;
+            };
+
+            //Loại giảm trừ gia cảnh
+            var serializedArr = JSON.stringify(eval("(" + self.data_loaigiamtrugiacanh() + ")"));
+            var dataSource = JSON.parse(serializedArr);
+
+            // create ComboBox from input HTML element
+            $("#comboboxLoaiGiamTruGiaCanh").kendoComboBox({
+                dataTextField: "TenLoaiGiamTruGiaCanh",
+                dataValueField: "Oid",
+                dataSource: dataSource,
+                filter: "contains",
+                suggest: true,
+                select: onSelectLoaiGiamTruGiaCanh,
+                value: self.LoaiGiamTruGiaCanh
+            });
+            function onSelectLoaiGiamTruGiaCanh(e) {
+                var dataItem = this.dataItem(e.item.index());
+                self.LoaiGiamTruGiaCanh = dataItem.Oid;
+            };
+
+        }
+
+        ViewModel_UpdateQuanHeGiaDinh.prototype = {
+
+            validate: function () {
+                var self = this;
+                return false;
+            },
+            Save: function () {
+                var self = this;
+                if (self.validate()) {
+                    return;
+                }
+                else {
+                    var gioitinh = $('input[name=radiogioitinh]:checked').val();
+                    var tinhtrang = $('input[name=radiotinhtrang]:checked').val();
+
+                    var NgaySinhFull = $("#jqxNgaySinhFull").val();
+
+                    var NgaySinhFullArray = NgaySinhFull.split("/");
+                    var NgaySinhFullDate = NgaySinhFullArray[2] + '/' + NgaySinhFullArray[1] + '/' + NgaySinhFullArray[0];
+                    self.NgaySinhFull = NgaySinhFullDate;
+
+                    //Tiến hành lưu dữ liệu
+                    $.ajax({
+                        type: 'POST',
+                        url: self.Oid != null ? '/WebServices/QuanHeGiaDinh_CapNhat' : '/WebServices/QuanHeGiaDinh_ThemMoi',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            oid: self.Oid,
+                            thongTinNhanVien: self.ThongTinNhanVien,
+                            hoTenNguoiThan: self.HoTenNguoiThan,
+                            ngaySinhFull: self.NgaySinhFull,
+                            namSinh: NgaySinhFullArray[2] != null ? NgaySinhFullArray[2] : self.NamSinh,
+                            noiSinh: self.NoiSinh,
+                            quocTich: self.QuocTich,
+                            cMND: self.CMND,
+                            soHoChieu: self.SoHoChieu,
+                            quanHe: self.QuanHe,
+                            loaiGiamTruGiaCanh: self.LoaiGiamTruGiaCanh,
+                            phuThuoc: self.PhuThuoc,
+                            lienHeKhanCap: self.LienHeKhanCap,
+                            dienThoaiDiDong: self.DienThoaiDiDong,
+                            gioiTinh: gioitinh,
+                            queQuan: self.QueQuan,
+                            ngheNghiepHienTai: self.NgheNghiepHienTai,
+                            noiLamViec: self.NoiLamViec,
+                            tinhTrang: tinhtrang
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.success == 'success') {
+                                alert("Lưu thành công !!");
+                                var close = $("#popupWindowUpdateQuanHeGiaDinh").data("kendoWindow");
+                                close.center().close();
+                                //
+                                ko.cleanNode($('#popupWindowUpdateQuanHeGiaDinh')[0]);
+                                setTimeout(function () {
+                                    location.reload(true);
+                                }, 200);
+                            }
+                            else {
+                                alert("Lưu thất bại !!");
+                            }
+                        }
+                    });
+                    return;
+                }
+            },
+            Cancel: function () {
+
+                var close = $("#popupWindowUpdateQuanHeGiaDinh").data("kendoWindow");
+                close.center().close();
+                //
+                ko.cleanNode($('#popupWindowUpdateQuanHeGiaDinh')[0]);
+            },
+        }
+
+</script>
+
+<div id="updatequanhegiadinh">
+    <div class="form-group">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center; font-weight:bold">CẬP NHẬT THÔNG TIN QUAN HỆ GIA ĐÌNH</div>
+    </div>
+    <div class="col-lg-12 col-xs-12 col-sm-12" style="float:left;width:400px">
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right"></label>
+            <div class="col-sm-6">
+            </div>
+        </div>
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Họ tên người thân:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: HoTenNguoiThan" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Ngày sinh:</label>
+                <div class="col-sm-6">
+                    <div data-bind="value: NgaySinhFull" id="jqxNgaySinhFull"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Nơi sinh:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: NoiSinh" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Quốc tịch:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxQuocTich" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">CMND:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: CMND" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Số hộ chiếu:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: SoHoChieu" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Quan hệ:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxQuanHe" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Giảm trừ gia cảnh:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxLoaiGiamTruGiaCanh" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xs-12 col-sm-12" style="float:right;width:400px;">
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right"></label>
+            <div class="col-sm-6">
+            </div>
+        </div>
+        <div class="form-horizontal form-bordered">
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Phụ thuộc:</label>
+                <div class="col-sm-6">
+                    <input type="checkbox" data-bind="checked: PhuThuoc" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Liên hệ khẩn cấp:</label>
+                <div class="col-sm-6">
+                    <input type="checkbox" data-bind="checked: LienHeKhanCap" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Điện thoại di động:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: DienThoaiDiDong" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Giới tính:</label>
+                <div class="col-sm-6">
+                    <span><input type="radio" name="radiogioitinh" value="0" id="gioitinhnam">Nam</span>
+                    <span><input type="radio" name="radiogioitinh" value="1" id="gioitinhnu">Nữ</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Quê quán:</label>
+                <div class="col-sm-6">
+                    <input id="comboboxQueQuan" placeholder="Chọn..." style="width: 100%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Nghề nghiệp hiện tại:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: NgheNghiepHienTai" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Nơi làm việc:</label>
+                <div class="col-sm-6">
+                    <input data-bind="value: NoiLamViec" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right">Tình trạng:</label>
+                <div class="col-sm-6">
+                    <span><input type="radio" name="radiotinhtrang" value="0" id="tinhtrangconsong">Còn sống</span>
+                    <span><input type="radio" name="radiotinhtrang" value="1" id="tinhtrangdamat">Đã mất</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 120px;" data-bind="click: Cancel">
+                    <i class="btn-label glyphicon glyphicon-log-out"></i>Thoát
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

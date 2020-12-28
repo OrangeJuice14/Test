@@ -1,0 +1,393 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+    }
+    function numberFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date) {
+        return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+        self.CoBangLuong = ko.observable();
+        //
+        self.MaNhanVien = ko.observable();
+        self.MaTapDoan = ko.observable();
+        self.TenBoPhan = ko.observable();
+        self.TenCongTy = ko.observable();
+        self.HoTen = ko.observable();
+        self.TenChucDanh = ko.observable();
+        self.LuongChucDanh = ko.observable();
+        self.LuongHieuQuaCongViec = ko.observable();
+        self.LuongChucDanh_QD = ko.observable();
+        self.LuongHieuQuaCongViec_QD = ko.observable();
+        //
+        self.LuongGross = ko.observable();
+        self.NgayVaoCT = ko.observable();
+        self.NgayCongChuan = ko.observable();
+        self.NgayCongThucTe = ko.observable();
+        self.NgayHuongBHXH = ko.observable();
+        self.NgayKhongLuong = ko.observable();
+        self.NgayPhep = ko.observable();
+        self.PhanTramTinhLuong = ko.observable();
+        //
+        self.PhuCapTrachNhiem = ko.observable();
+        self.PhuCapKiemNhiem = ko.observable();
+        self.NgoaiGio = ko.observable();
+        self.HuuTri = ko.observable();
+        self.TruyLanh = ko.observable();
+        self.LuongThang13 = ko.observable();
+        self.ThuNhapKhac = ko.observable();
+        self.TongBaoHiem = ko.observable();
+        self.CongDoan = ko.observable();
+        self.TruyThu = ko.observable();
+        self.KhauTruKhac = ko.observable();
+        self.ThueTNCN = ko.observable();
+        self.TienDongPhuc = ko.observable();
+        self.ThucLanh = ko.observable();
+        self.TongThuNhap = ko.observable();
+        self.DuGio = ko.observable();
+        self.TongTru = ko.observable();
+        self.TienDongPhuc = ko.observable();
+        //
+        self.KyTinhLuong = ko.observable();
+        //
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuongOfBangLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                }).OrderByDescending(function (value) {
+                    return value.TuNgay;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.BangLuongSelected.subscribe(function (newvalue) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ThongTinNhanSu_BANGLUONG',
+                data: ko.toJSON({
+                    webUserId: session.Id,
+                    kyTinhLuong: newvalue
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.CoBangLuong(false);
+                    if (data.ChiTietThuNhapCaNhan != null) {
+                        self.CoBangLuong(true);
+                        //
+                        self.TenCongTy(data.ChiTietThuNhapCaNhan.TenCongTy);
+                        self.TenBoPhan(data.ChiTietThuNhapCaNhan.TenBoPhan);
+                        self.MaNhanVien(data.ChiTietThuNhapCaNhan.MaNhanVien);
+                        self.MaTapDoan(data.ChiTietThuNhapCaNhan.MaTapDoan);
+                        self.HoTen(data.ChiTietThuNhapCaNhan.HoTen);
+                        self.TenChucDanh(data.ChiTietThuNhapCaNhan.TenChucDanh);
+                        self.LuongChucDanh(data.ChiTietThuNhapCaNhan.LuongChucDanh);
+                        self.LuongHieuQuaCongViec(data.ChiTietThuNhapCaNhan.LuongHieuQuaCongViec);
+                        self.LuongChucDanh_QD(data.ChiTietThuNhapCaNhan.LuongChucDanh_QD);
+                        self.LuongHieuQuaCongViec_QD(data.ChiTietThuNhapCaNhan.LuongHieuQuaCongViec_QD);
+                        //
+                        self.LuongGross(data.ChiTietThuNhapCaNhan.LuongGross);
+                        self.NgayVaoCT(data.ChiTietThuNhapCaNhan.NgayVaoCT);
+                        self.NgayCongChuan(data.ChiTietThuNhapCaNhan.NgayCongChuan);
+                        self.NgayCongThucTe(data.ChiTietThuNhapCaNhan.NgayCongThucTe);
+                        self.NgayHuongBHXH(data.ChiTietThuNhapCaNhan.NgayHuongBHXH);
+                        self.NgayKhongLuong(data.ChiTietThuNhapCaNhan.NgayKhongLuong);
+                        self.NgayPhep(data.ChiTietThuNhapCaNhan.NgayPhep);
+                        self.PhanTramTinhLuong(data.ChiTietThuNhapCaNhan.PhanTramTinhLuong);
+                        //
+                        self.PhuCapTrachNhiem(data.ChiTietThuNhapCaNhan.PhuCapTrachNhiem);
+                        self.PhuCapKiemNhiem(data.ChiTietThuNhapCaNhan.PhuCapKiemNhiem);
+                        self.NgoaiGio(data.ChiTietThuNhapCaNhan.NgoaiGio);
+                        self.HuuTri(data.ChiTietThuNhapCaNhan.HuuTri);
+                        self.TruyLanh(data.ChiTietThuNhapCaNhan.TruyLanh);
+                        self.LuongThang13(data.ChiTietThuNhapCaNhan.LuongThang13);
+                        self.ThuNhapKhac(data.ChiTietThuNhapCaNhan.ThuNhapKhac);
+                        self.TongBaoHiem(data.ChiTietThuNhapCaNhan.TongBaoHiem);
+                        self.CongDoan(data.ChiTietThuNhapCaNhan.CongDoan);
+                        self.TruyThu(data.ChiTietThuNhapCaNhan.TruyThu);
+                        self.KhauTruKhac(data.ChiTietThuNhapCaNhan.KhauTruKhac);
+                        self.ThueTNCN(data.ChiTietThuNhapCaNhan.ThueTNCN);
+                        self.TienDongPhuc(data.ChiTietThuNhapCaNhan.TienDongPhuc);
+                        self.ThucLanh(data.ChiTietThuNhapCaNhan.ThucLanh);
+                        self.TongThuNhap(data.ChiTietThuNhapCaNhan.TongThuNhap);
+                        self.DuGio(data.ChiTietThuNhapCaNhan.DuGio);
+                        self.TongTru(data.ChiTietThuNhapCaNhan.TongTru);
+                        self.TienDongPhuc(data.ChiTietThuNhapCaNhan.TienDongPhuc);
+                        //
+                        self.KyTinhLuong(data.ChiTietThuNhapCaNhan.KyTinhLuong);
+                    }
+                }
+            });
+        });
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        var mywindow = window.open('', '', 'height=400,width=600');
+        mywindow.document.write('<html><head><title></title>');
+        /*optional stylesheet*/
+        //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+
+</script>
+<style type="text/css">
+    .headertext {
+        width: 100%;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .italictext {
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: normal;
+        font-family: 'Times New Roman';
+    }
+
+    .righttext {
+        font-size: 12pt;
+        text-align: right;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .padding10boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-left: 10px;
+    }
+</style>
+<div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Bảng lương và phụ cấp : </a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>
+        <a href="#" class="btn btn-info" style="width: 158px;" onclick="PrintElem('#in')">
+            <i class="btn-label fa fa-print"></i>In
+        </a>
+    </div>
+    <div data-bind="visible: BangLuongSelected() != undefined">
+        <!-- ko if:CoBangLuong -->
+        <div id="in" style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div style="font-size:12pt;font-weight:bold;font-family:'Times New Roman'; padding-top:10px;padding-bottom:10px;">
+                <span data-bind="text: TenCongTy"> </span><br/>
+            </div>
+            <div style="text-align:center;font-size:16pt; font-weight:bold; font-family:'Times New Roman'; width: 100%">
+                PHIẾU THANH TOÁN LƯƠNG<BR>
+                <span data-bind="text: KyTinhLuong"> </span>
+            </div>
+            <div style="text-align:left;font-size:12pt; font-weight:bold; font-family:'Times New Roman'; width: 100%">
+                ĐƠN VỊ: <span data-bind="text: TenBoPhan"> </span>
+            </div>
+            <table style="border-collapse: collapse;width:100%;margin-top:10px;border:double" border="1">
+               
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;font-weight:bold;">Họ tên:</td>
+                    <td style="width:150px;font-weight:bold;padding-left:2px" data-bind="text: HoTen"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-right:2px;text-align:right;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Mã nhân viên:</td>
+                    <td style="width:150px;padding-left:2px" data-bind="text: MaNhanVien"></td>
+                    <td style="width:200px;padding-left:10px;">Ngày công chuẩn:</td>
+                    <td style="width:150px;padding-right:2px;text-align:right;" data-bind="text: NgayCongChuan"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Chức danh:</td>
+                    <td style="width:150px;padding-left:2px" data-bind="text: TenChucDanh"></td>
+                    <td style="width:200px;padding-left:10px;">Ngày công thực tế:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px" data-bind="text: NgayCongThucTe"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Ngày nhận việc:</td>
+                    <td style="width:150px;padding-left:2px;" data-bind="text: NgayVaoCT"></td>
+                    <td style="width:200px;padding-left:10px;">Nghỉ phép:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: NgayPhep"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Mức lương tháng (Gross):</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongGross"></td>
+                    <td style="width:200px;padding-left:10px;">Nghỉ chế độ:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: NgayHuongBHXH"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Lương chức danh (theo quyết định):</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongChucDanh_QD"></td>
+                    <td style="width:200px;padding-left:10px;">Ngày không lương:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: NgayKhongLuong"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Lương bổ sung:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongHieuQuaCongViec_QD"></td>
+                    <td style="width:200px;padding-left:10px;">Mức hưởng:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: PhanTramTinhLuong"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:auto;padding-left:10px;font-weight:bold;font-size:18px;">Các khoản tiền lương</td>
+                    <td style="width:auto;padding-left:10px;"></td>
+                    <td style="width:auto;padding-left:10px;font-weight:bold;font-size:18px;">Các khoản khấu trừ</td>
+                    <td style="width:auto;padding-left:10px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Lương chức danh:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongChucDanh"></td>
+                    <td style="width:200px;padding-left:10px;">Tổng bảo hiểm:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: TongBaoHiem"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Lương bổ sung:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongHieuQuaCongViec"></td>
+                    <td style="width:200px;padding-left:10px;">Đoàn phí:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: CongDoan"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Phụ cấp trách nhiệm:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: PhuCapTrachNhiem"></td>
+                    <td style="width:200px;padding-left:10px;">Thuế TNCN:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: ThueTNCN"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Phụ cấp kiêm nhiệm:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: PhuCapKiemNhiem"></td>
+                    <td style="width:200px;padding-left:10px;">Truy thu:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: TruyThu"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Ngoài giờ/ tiết phụ trội:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;;padding-right:2px;" data-bind="text: PhuCapKiemNhiem"></td>
+                    <td style="width:200px;padding-left:10px;">Khấu trừ khác:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: KhauTruKhac"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Phụ đạo/luyện thi/bồi dưỡng/ngoại khóa:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: PhuCapKiemNhiem"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Hưu trí:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: HuuTri"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Truy lãnh:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: TruyLanh"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Lương tháng 13:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: LuongThang13"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;">Bổ sung khác:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;" data-bind="text: ThuNhapKhac"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;font-weight:bold">TỔNG CỘNG:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;font-weight:bold" data-bind="text: TongThuNhap"></td>
+                    <td style="width:200px;padding-left:10px;font-weight:bold">TỔNG CỘNG:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;font-weight:bold" data-bind="text: TongTru"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;padding-left:10px;"></td>
+                </tr>
+                <tr style="height: 20px">
+                    <td style="width:200px;text-align:center;font-weight:bold">THỰC LÃNH:</td>
+                    <td style="width:150px;text-align:right;padding-right:2px;font-weight:bold" data-bind="text: ThucLanh"></td>
+                    <td style="width:200px;padding-left:10px;"></td>
+                    <td style="width:150px;text-align:right;padding-right:2px;font-weight:bold"></td>
+                </tr>
+            </table>
+
+        </div>
+        <!-- /ko -->
+        <!-- ko if: CoBangLuong()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Tháng đã chọn không có dữ liệu lương!</div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>

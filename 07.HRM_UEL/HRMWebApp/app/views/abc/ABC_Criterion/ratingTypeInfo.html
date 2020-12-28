@@ -1,0 +1,42 @@
+﻿
+<form class="form-horizontal" name="RatingTypeForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': RatingTypeForm.order.$invalid}">
+            <label for="order" class="col-md-4 control-label">Thứ tự</label>
+            <div class="col-md-6">
+                <input name="order" kendo-numeric-text-box k-options="options" required ng-model="obj.OrderNumber" />
+            </div>
+            <div class="col-md-2">
+                <span ng-show="RatingTypeForm.order.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': RatingTypeForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Tên đối tượng đánh giá</label>
+            <div class="col-md-6">
+                <textarea type="text" style="min-height:80px" class="form-control" name="name" required ng-model="obj.Name"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="RatingTypeForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': RatingTypeForm.selectRatingTypes.$invalid}">
+            <label for="selectRatingTypes" class="col-md-4 control-label">Sao chép nhóm tiêu chí của đối tượng:</label>
+            <div class="col-md-8">
+                <select class="form-control" name="selectRatingTypes" kendo-multi-select k-options="selectOptions" k-ng-model="obj.RatingTypeIncludedIds"></select>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': RatingTypeForm.check.$invalid}">
+            <label for="check" class="col-md-4 control-label">Phân nhóm đối tượng trên bảng đánh giá</label>
+            <div class="col-md-8" style="margin-top: 10px;">
+                <input name="check" type="checkbox" ng-model="obj.IsGroupOnEvaluationBoard">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="RatingTypeForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

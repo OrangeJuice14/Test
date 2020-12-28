@@ -1,0 +1,291 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        if (x == null || x == undefined) {
+            return 0;
+        }
+        else {
+            x = x.toFixed(0);//làm tròn lương
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+        }
+    }
+    function numberFormat(x) {
+        if (x == null || x == undefined) {
+            return 0;
+        }
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function numberFormat2(x) {
+        if (x == null || x == undefined) {
+            return "";
+        }
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date) {
+        return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+
+        self.namHocList = ko.observableArray();
+        self.namHocSelected = ko.observable();
+
+        self.kyTinhPMSList = ko.observableArray();
+        self.kyTinhPMSSelected = ko.observable();
+
+        self.ThongTinCanBo = ko.observable();
+        self.TongHopThuNhap = ko.observable();
+
+        self.DetailPMS = ko.observable();
+
+        self.CoBangLuong = ko.observable();
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/GetNamHocPMS',
+            success: function (result) {
+                self.namHocList(result)
+            }
+        });
+        self.namHocSelected.subscribe(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/GetKyTinhPMSTheoNamHoc',
+                data: ko.toJSON({
+                    namHocOid: self.namHocSelected()
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.kyTinhPMSList(data);
+                }
+            });
+        });
+        self.search = function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ThuLaoGiangDay_ThinhGiang',
+                data: ko.toJSON({
+                    nhanVien: session.Id,
+                    kyTinhLuong: self.BangLuongSelected(),
+                    kyTinhPMS: self.kyTinhPMSSelected()
+                }),
+                success: function (result) {
+                    self.TongHopThuNhap({})
+                    if (result.length > 0) {
+                        self.TongHopThuNhap(result[0]);
+                    }
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/TongHopTienGiangVaThuNhapKhac',
+                data: ko.toJSON({
+                    nhanVien: session.Id,
+                    kyTinhLuong: self.BangLuongSelected(),
+                    kyTinhPMS: self.kyTinhPMSSelected()
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.CoBangLuong(false);
+                    self.ThongTinCanBo(data.ThongTinCanBo);
+                    if (data.ThongTinCanBo != null) {
+                        self.CoBangLuong(true);
+                    }
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/ChiTietThanhToanPMS',
+                data: ko.toJSON({
+                    nhanVien: session.Id,
+                    kyTinhLuong: self.BangLuongSelected(),
+                    kyTinhPMS: self.kyTinhPMSSelected()
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.DetailPMS(data);
+                }
+            });
+        }
+        self.detailPMS = function () {
+            $.get('/app/views/chamcong/BangLuong/DetailPMS.html', function (data) {
+                $('#popupWindowBangLuongDetail').html(data);
+                ko.cleanNode($('#popupWindowBangLuongDetail')[0]);
+                $('#popupWindowBangLuongDetail').kendoWindow({
+                    width: "80%",
+                    actions: [
+                        "Close"
+                    ],
+                    modal: true,
+                    close: function (e) {
+                        $(this.element).empty();
+                    }
+                });
+                $('#popupWindowBangLuongDetail').data("kendoWindow").title("Chi tiết thù lao giảng dạy").center().open();
+                ko.applyBindings(self, document.getElementById('popupWindowBangLuongDetail'));
+            });
+        }
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuongThinhGiang")[0]);
+    });
+</script>
+<style type="text/css">
+    .headertext {
+        width: 100%;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .italictext {
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: normal;
+        font-family: 'Times New Roman';
+    }
+
+    .righttext {
+        font-size: 12pt;
+        text-align: right;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .padding10boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-left: 10px;
+    }
+</style>
+<div id="bangLuongThinhGiang" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Bảng lương: </a>
+        <select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>
+        <a href="#">Năm học: </a>
+        <select data-bind="options: namHocList, optionsText: 'TenNamHoc', optionsValue: 'Oid', value: namHocSelected" style="height:32px"></select>
+        <a href="#">Kỳ tính lương: </a>
+        <select data-bind="options: kyTinhPMSList, optionsText: 'Dot', optionsValue: 'Oid', value: kyTinhPMSSelected" style="height:32px"></select>
+        <a href="#" class="btn btn-labeled btn-blue" style="width: auto;" data-bind="click: search">
+            <i class="btn-label glyphicon glyphicon-search"></i>Tìm
+        </a>
+        <!-- ko if: CoBangLuong() == true -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <p style="font-weight:bold;">A. Thông tin cán bộ, giảng viên:</p>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: center">Nội dung</th>
+                        <th style="text-align: center">Thông tin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="2">- Họ tên</td><td style="text-align: right" data-bind="text: ThongTinCanBo().HoTen"></td></tr>
+                    <tr><td colspan="2">- Mã số thuế</td><td style="text-align: right" data-bind='text: ThongTinCanBo().MaSoThue'></td></tr>
+                    <tr><td colspan="2">- Số tài khoản ngân hàng</td><td style="text-align: right" data-bind='text: ThongTinCanBo().NganHang'></td></tr>
+                </tbody>
+            </table>
+            <br />
+            <p style="font-weight:bold;">B. Tổng hợp thu nhập:</p>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">STT</th>
+                        <th style="text-align: center">Nội dung</th>
+                        <th style="text-align: center">Số tiền</th>
+                        <th style="text-align: center">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center">1</td>
+                        <td>Tổng thu nhập</td>
+                        <td style="text-align: right" data-bind="text: numberFormat(TongHopThuNhap().TongThuNhap)"></td>
+                        <td style="font-weight:bold"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">2</td>
+                        <td>Thuế TNCN</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopThuNhap().ThueTNCN)'></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center">3</td>
+                        <td>Thực nhận</td>
+                        <td style="text-align: right" data-bind='text: numberFormat(TongHopThuNhap().ThucNhan)'></td>
+                        <td>3 = 1 - 2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <!-- ko if: DetailPMS -->
+            <p>
+                <span style="font-weight:bold;">C. Chi tiết thu nhập: </span>
+                <span data-bind='text: numberFormat(DetailPMS().SoTien)'></span>
+                <a href="#" data-bind="click: detailPMS">Chi tiết</a>
+            </p>
+            <br />
+            <!-- /ko -->
+        </div>
+        <!-- /ko -->
+        <!-- ko if: CoBangLuong() == false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Tháng đã chọn không có dữ liệu lương!</div>
+        </div>
+        <!-- /ko -->
+    </div>
+</div>
+<div id="popupWindowBangLuongDetail"></div>

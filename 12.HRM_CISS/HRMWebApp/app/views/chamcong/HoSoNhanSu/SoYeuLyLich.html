@@ -1,0 +1,391 @@
+﻿
+<html>
+<head>
+</head>
+<body>
+    <div> 
+        <div class="hrm_content1">
+            <div class="hrm_subtitle1">
+                <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.HO_SO_CA_NHAN">Hồ Sơ Cá Nhân</span>
+            </div>
+            <div class="hrm_line">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.MA_QUAN_LY">Mã quản lý</span>:
+                </div>
+                <div class="hrm_middle" data-bind="text: SoHieuCongChuc">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.HO_VA_TEN">Họ và tên</span>:
+                </div>
+                <div class="hrm_middle" data-bind="text: HoTen">
+                </div>
+            </div>
+
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.TEN_GOI_KHAC">Tên gọi khác</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenGoiKhac">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.GIOI_TINH">Giới tính</span>:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: GioiTinh">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.NGAY_SINH">Ngày sinh</span>:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: NgaySinh == null ? '' : formatDate(new Date(NgaySinh))">
+                </div>
+            </div>
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.NOI_SINH">Nơi sinh</span>:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: NoiSinh">
+                </div>
+            </div>
+            <!--<div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Quê quán:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: QueQuan">
+                </div>
+            </div>-->
+            <div class="hrm_clear1">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.DAN_TOC">Dân tộc</span>:
+                </div>
+                <div class="hrm_middle"
+                     data-bind="text: DanToc">
+                </div>
+            </div>
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Chiều cao:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChieuCao + ' m'">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Cân nặng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: CanNang + ' kg'">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tình trạng sức khoẻ:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TinhTrangSucKhoe">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Nhóm máu:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NhomMau">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.TON_GIAO">Tôn giáo</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TonGiao">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.DIA_CHI_THUONG_TRU">Địa chỉ thường trú</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DiaChiThuongTru">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.NOI_O_HIEN_NAY">Nơi ở hiện nay</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NoiOHienNay">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.SO_CMND">Số CMND</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: SoCMND">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.NGAY_CAP">Ngày cấp</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayCap == null ? '' : formatDate(new Date(NgayCap))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.NOI_CAP">Nơi cấp</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NoiCap">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.QUOC_TICH">Quốc tịch</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: QuocTich">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.TINH_TRANG_HON_NHAN">Tình trạng hôn nhân</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TinhTrangHonNhan">
+                </div>
+            </div>
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Thành phần xuất thân:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ThanhPhanXuatThan">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ưu tiên gia đình:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: UuTienGiaDinh">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ưu tiên bản thân:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: UuTienBanThan">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.DIEN_THOAI_DI_DONG">Điện thoại di động</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DienThoaiDiDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.EMAIL">Email</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: Email">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.HO_SO_CA_NHAN.EMAIL_NOI_BO">Email nội bộ</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: EmailNoiBo">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_subtitle1">
+                <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.CONG_VIEC">Công Việc</span>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_line">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.CHUC_DANH">Chức danh</span>:
+</div>
+                <div class="hrm_right"
+                     data-bind="text: ChucDanh">
+                </div>
+            </div>
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Đơn vị tuyển dụng lần đầu:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DonViTuyenDung">
+                </div>
+            </div>-->
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Hình thức tuyển dụng lần đầu:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: HinhThucTuyenDung">
+                </div>
+            </div>-->
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngày tuyển dụng lần đầu:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayTuyenDung == null ? '' : formatDate(new Date(NgayTuyenDung))">
+                </div>
+            </div>-->
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Công việc tuyển dụng lần đầu:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: CongViecTuyenDung">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.DON_VI_CONG_TAC">Đơn vị công tác</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DonViCongTac">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.CHUC_VU_HIEN_TAI">Chức vụ hiện tại</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucVuHienTai">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.NGAY_BO_NHIEM">Ngày bổ nhiệm</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayBoNhiem == null ? '' : formatDate(new Date(NgayBoNhiem))">
+                </div>
+            </div>
+            <!--<div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Loại hợp đồng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: HopDongHienTai">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.CHUC_VU_KIEM_NHIEM">Chức vụ kiêm nhiệm</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucVuKiemNhiem">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    <span data-i18n="HO_SO_NHAN_SU.SO_YEU_LI_LICH.CONG_VIEC.NGAY_VAO_TRUONG">Ngày vào công ty</span>:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayVaoCoQuanHienNay == null ? '' : formatDate(new Date(NgayVaoCoQuanHienNay))">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

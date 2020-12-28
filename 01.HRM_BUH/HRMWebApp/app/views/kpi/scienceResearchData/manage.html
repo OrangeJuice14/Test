@@ -1,0 +1,17 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Nghiên cứu khoa học</span>
+    </div>
+    <div class="widget-body">
+        <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+        <div class="widget-main">           
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>
+

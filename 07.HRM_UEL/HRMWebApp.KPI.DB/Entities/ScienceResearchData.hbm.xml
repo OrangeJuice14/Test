@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ScienceResearchData, HRMWebApp.KPI.DB" table="KPI_ScienceResearchData">
+    <id name="Id" column="ID"></id>
+    <property name="StaffCode" column="StaffCode"></property>
+    <property name="ManageCode" column="ManageCode"></property>
+    <property name="Record" column="Record"></property>
+    <property name="StudyTerm" column="StudyTerm"></property>
+    <property name="StudyYear" column="StudyYear"></property>
+    <property name="Name" column="Name"></property>  
+  </class>
+</hibernate-mapping>
+
+
+

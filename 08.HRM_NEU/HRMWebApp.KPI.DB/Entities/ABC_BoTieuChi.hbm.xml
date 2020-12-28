@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_BoTieuChi, HRMWebApp.KPI.DB" table="ABC_BoTieuChi" dynamic-update="true">
+    <id name="Id" column="Oid"></id>
+    <property name="Name" column="Name"></property>
+    <property name="TuNgay" column="TuNgay"></property>
+    <property name="DenNgay" column="DenNgay"></property>
+    <property name="Status" column="Status"></property>
+    <property name="LoaiBoTieuChi" column="LoaiBoTieuChi"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+    <property name="TimeDelete" column="TimeDelete"></property>
+    <property name="UserDeleteId" column="UserDeleteId"></property>
+    <property name="HasDieuKienDanhGia" column="HasDieuKienDanhGia"></property>
+    <property name="ShowTen" column="ShowTen"></property>
+    <property name="ShowDonVi" column="ShowDonVi"></property>
+    <property name="ShowBoPhan" column="ShowBoPhan"></property>
+    <property name="ShowDay" column="ShowDay"></property>
+    <property name="ShowMonth" column="ShowMonth"></property>
+    <property name="ShowYear" column="ShowYear"></property>
+    <property name="LastEditUserId" column="LastEditUserId"></property>
+    <property name="AddUserId" column="AddUserId"></property>
+    <property name="EditLastTime" column="EditLastTime"></property>
+    <property name="AddTime" column="AddTime"></property>
+    <bag name="TieuChis" table="ABC_TieuChi" cascade="none" inverse="true" >
+      <key column="BoTieuChiId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.ABC_TieuChi"/>
+    </bag>
+  </class>
+</hibernate-mapping>

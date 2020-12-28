@@ -1,0 +1,504 @@
+﻿<script type="text/javascript">
+    function numberWithCommas(x) {
+        if (x == null || x == undefined) {
+            return 0;
+        }
+        else {
+            x = x.toFixed(0);//làm tròn lương
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " đ";
+        }
+    }
+    function numberFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    function formatDate(date)
+    {
+        return date.getDate() + "/" + parseInt(date.getMonth() +1) + "/" + date.getFullYear();
+    }
+    function ViewModel() {
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var self = this;
+        var loaiLuongArr = [
+         { Id: 0, Name: "Lương đợt 1 (Lương ngân sách)" },
+         { Id: 1, Name: "Lương đợt 2 (Lương tạm ứng)" }
+        ];
+        self.BangLuong = ko.observableArray();
+        self.BangLuongSelected = ko.observable();
+        self.loaiLuongList = ko.observableArray(loaiLuongArr);
+        self.loaiLuongSelected = ko.observable(0);
+
+        self.LuongNganSach = ko.observable(true);
+        self.CoLuongNganSach = ko.observable();
+        self.CoLuongTamUng = ko.observable();
+        self.SoTaiKhoan = ko.observable();
+        self.Ho = ko.observable();
+        self.Ten = ko.observable();
+        self.MaNgach = ko.observable();
+        self.HeSoLuong = ko.observable(0);
+        self.VuotKhung = ko.observable(0);
+        self.HSPCVuotKhung = ko.observable(0);
+        self.HSPCChucVu = ko.observable(0);
+        self.ThamNien = ko.observable(0);
+        self.HSPCThamNienNhaGiao = ko.observable(0);
+        self.TongHeSoLuong = ko.observable(0);
+        self.PTHuongLuong = ko.observable(0);
+        self.TongTienLuong = ko.observable(0);
+        self.SoNgayNghiViec = ko.observable(0);
+        self.TienNgayNghiViec = ko.observable(0);
+        self.SoNgayBHXHTra = ko.observable(0);
+        self.TienBHXHTra = ko.observable(0);
+        self.BHYT = ko.observable(0);
+        self.BHTN = ko.observable(0);
+        self.BHXH = ko.observable(0);
+        self.DPCD = ko.observable(0);
+        self.TongKhoanTru = ko.observable(0);
+        self.PhuCapUuDai = ko.observable(0);
+        self.HSPCUuDai = ko.observable(0);
+        self.PhuCapKiemNhiem = ko.observable(0);
+        self.HSPCKiemNhiem = ko.observable(0);
+        self.HSPCDocHai = ko.observable(0);
+        self.HSPCTrachNhiem = ko.observable(0);
+        self.TongHSPC = ko.observable(0);
+        self.TongTienPhuCap = ko.observable(0);
+        self.TruyThu = ko.observable(0);
+        self.ThucLanh = ko.observable(0);
+
+        self.PhuCapTienAn = ko.observable(0);
+        self.KTVayMuaNha = ko.observable(0);
+        self.KTDienNuoc = ko.observable(0);
+        self.KTThuePhong = ko.observable(0);
+        self.KTThueThuNhap = ko.observable(0);
+        self.KTKhac = ko.observable(0);
+        self.UH1NL = ko.observable(0);
+
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            url: '/WebServices/KyTinhLuong',
+            success: function (result) {
+                var data = result;
+                var arr = new Array();
+                data = $.Enumerable.From(data).Where(function (value) {
+                    return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+                }).OrderBy(function (value) {
+                    return value.Thang;
+                }).ToArray();
+                self.BangLuong(data);
+            }
+        });
+        self.search = function () {
+            if (self.loaiLuongSelected() == 0)
+            {
+                self.LuongNganSach(true);
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    async: false,
+                    url: '/WebServices/BangLuong_BUH_LuongNganSach',
+                    data: ko.toJSON({
+                        webUserId: session.Id,
+                        nam: self.year(),
+                        thang: self.month()
+                    }),
+                    success: function (result) {
+                        var data = result;
+                        self.CoLuongNganSach(false);
+                        if (data.Ho != null) {
+                            self.CoLuongNganSach(true);
+                            self.SoTaiKhoan(data.SoTaiKhoan);
+                            self.Ho(data.Ho);
+                            self.Ten(data.Ten);
+                            self.MaNgach(data.MaNgach);
+                            self.HeSoLuong(data.HeSoLuong);
+                            self.VuotKhung(data.VuotKhung);
+                            self.HSPCVuotKhung(data.HSPCVuotKhung);
+                            self.HSPCChucVu(data.HSPCChucVu);
+                            self.ThamNien(data.ThamNien);
+                            self.HSPCThamNienNhaGiao(data.HSPCThamNienNhaGiao);
+                            self.TongHeSoLuong(data.TongHeSoLuong);
+                            self.PTHuongLuong(data.PTHuongLuong*100);
+                            self.TongTienLuong(data.TongTienLuong);
+                            self.SoNgayNghiViec(data.SoNgayNghiViec);
+                            self.TienNgayNghiViec(data.TienNgayNghiViec);
+                            self.SoNgayBHXHTra(data.SoNgayBHXHTra);
+                            self.TienBHXHTra(data.TienBHXHTra);
+                            self.BHYT(data.BHYT);
+                            self.BHTN(data.BHTN);
+                            self.BHXH(data.BHXH);
+                            self.DPCD(data.DPCD);
+                            self.TongKhoanTru(data.TongKhoanTru);
+                            self.PhuCapUuDai(data.PhuCapUuDai);
+                            self.HSPCUuDai(data.HSPCUuDai);
+                            self.PhuCapKiemNhiem(data.PhuCapKiemNhiem);
+                            self.HSPCKiemNhiem(data.HSPCKiemNhiem);
+                            self.HSPCDocHai(data.HSPCDocHai);
+                            self.HSPCTrachNhiem(data.HSPCTrachNhiem);
+                            self.TongHSPC(data.TongHSPC);
+                            self.TongTienPhuCap(data.TongTienPhuCap);
+                            if (data.TruyThu == null)
+                                self.TruyThu(0)
+                            else
+                                self.TruyThu(data.TruyThu);                           
+                            self.ThucLanh(data.ThucLanh);
+                        }
+                    }
+                });
+            }
+            else
+            {
+                self.LuongNganSach(false);
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    async: false,
+                    url: '/WebServices/BangLuong_BUH_LuongTamUng',
+                    data: ko.toJSON({
+                        webUserId: session.Id,
+                        nam: self.year(),
+                        thang: self.month()
+                    }),
+                    success: function (result) {
+                        var data = result;
+                        self.CoLuongTamUng(false);
+                        if (data.Ho != null) {
+                            self.CoLuongTamUng(true);
+                            self.SoTaiKhoan(data.SoTaiKhoan);
+                            self.Ho(data.Ho);
+                            self.Ten(data.Ten);
+                            self.MaNgach(data.MaNgach);
+                            self.HeSoLuong(data.HeSoLuong);
+                            self.VuotKhung(data.VuotKhung);
+                            self.HSPCVuotKhung(data.HSPCVuotKhung);
+                            self.HSPCChucVu(data.HSPCChucVu);
+                            self.ThamNien(data.ThamNien);
+                            self.HSPCThamNienNhaGiao(data.HSPCThamNienNhaGiao);
+                            self.TongHeSoLuong(data.TongHeSoLuong);
+                            self.PTHuongLuong(data.PTHuongLuong*100);
+                            self.TongTienLuong(data.TongTienLuong);
+                            self.PhuCapTienAn(data.PhuCapTienAn);
+                            self.KTVayMuaNha(data.KTVayMuaNha);
+                            self.KTDienNuoc(data.KTDienNuoc);
+                            self.KTThuePhong(data.KTThuePhong);
+                            self.KTThueThuNhap(data.KTThueThuNhap);
+                            self.KTKhac(data.KTKhac);
+                            self.TongKhoanTru(data.TongKhoanTru);
+                            self.UH1NL(data.UH1NL);
+                            self.DPCD(data.DPCD);
+                            if (data.TruyThu == null)
+                                self.TruyThu(0)
+                            else
+                                self.TruyThu(data.TruyThu);
+                            self.ThucLanh(data.ThucLanh);
+                        }
+                    }
+                });
+            }
+            
+        }
+        //self.loaiLuongSelected.subscribe(function (loaiLuong) {
+        //    if (loaiLuong == 0) {
+        //        self.LuongNganSach(true);
+        //        $.ajax({
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            contentType: "application/json;charset=utf-8",
+        //            async: false,
+        //            url: '/WebServices/BangLuong_BUH_LuongNganSach',
+        //            data: ko.toJSON({
+        //                webUserId: session.Id,
+        //                nam: txtYear.value(),
+        //                thang: ddlMonth.value()
+        //            }),
+        //            success: function (result) {
+        //                var data = result;
+        //                self.CoLuongNganSach(false);
+        //                if (data.Ho != null) {
+        //                    self.CoLuongNganSach(true);
+        //                    self.SoTaiKhoan(data.SoTaiKhoan);
+        //                    self.Ho(data.Ho);
+        //                    self.Ten(data.Ten);
+        //                    self.MaNgach(data.MaNgach);
+        //                    self.HeSoLuong(data.HeSoLuong);
+        //                    self.VuotKhung(data.VuotKhung);
+        //                    self.HSPCVuotKhung(data.HSPCVuotKhung);
+        //                    self.HSPCChucVu(data.HSPCChucVu);
+        //                    self.ThamNien(data.ThamNien);
+        //                    self.HSPCThamNienNhaGiao(data.HSPCThamNienNhaGiao);
+        //                    self.TongHeSoLuong(data.TongHeSoLuong);
+        //                    self.PTHuongLuong(data.PTHuongLuong*100);
+        //                    self.TongTienLuong(data.TongTienLuong);
+        //                    self.SoNgayNghiViec(data.SoNgayNghiViec);
+        //                    self.TienNgayNghiViec(data.TienNgayNghiViec);
+        //                    self.SoNgayBHXHTra(data.SoNgayBHXHTra);
+        //                    self.TienBHXHTra(data.TienBHXHTra);
+        //                    self.BHYT(data.BHYT);
+        //                    self.BHTN(data.BHTN);
+        //                    self.BHXH(data.BHXH);
+        //                    self.DPCD(data.DPCD);
+        //                    self.TongKhoanTru(data.TongKhoanTru);
+        //                    self.PhuCapUuDai(data.PhuCapUuDai);
+        //                    self.HSPCUuDai(data.HSPCUuDai);
+        //                    self.PhuCapKiemNhiem(data.PhuCapKiemNhiem);
+        //                    self.HSPCKiemNhiem(data.HSPCKiemNhiem);
+        //                    self.HSPCDocHai(data.HSPCDocHai);
+        //                    self.HSPCTrachNhiem(data.HSPCTrachNhiem);
+        //                    self.TongHSPC(data.TongHSPC);
+        //                    self.TongTienPhuCap(data.TongTienPhuCap);
+        //                    if (data.TruyThu == null)
+        //                        self.TruyThu(0);
+        //                    else
+        //                        self.TruyThu(data.TruyThu);
+        //                    self.ThucLanh(data.ThucLanh);
+        //                }
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        self.LuongNganSach(false);
+        //        $.ajax({
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            contentType: "application/json;charset=utf-8",
+        //            async: false,
+        //            url: '/WebServices/BangLuong_BUH_LuongTamUng',
+        //            data: ko.toJSON({
+        //                webUserId: session.Id,
+        //                nam: txtYear.value(),
+        //                thang: ddlMonth.value()
+        //            }),
+        //            success: function (result) {
+        //                var data = result;
+        //                self.CoLuongTamUng(false);
+        //                if (data.Ho != null) {
+        //                    self.CoLuongTamUng(true);
+        //                    self.SoTaiKhoan(data.SoTaiKhoan);
+        //                    self.Ho(data.Ho);
+        //                    self.Ten(data.Ten);
+        //                    self.MaNgach(data.MaNgach);
+        //                    self.HeSoLuong(data.HeSoLuong);
+        //                    self.VuotKhung(data.VuotKhung);
+        //                    self.HSPCVuotKhung(data.HSPCVuotKhung);
+        //                    self.HSPCChucVu(data.HSPCChucVu);
+        //                    //self.ThamNien(data.ThamNien);
+        //                    //self.HSPCThamNienNhaGiao(data.HSPCThamNienNhaGiao);
+        //                    self.TongHeSoLuong(data.TongHeSoLuong);
+        //                    self.PTHuongLuong(data.PTHuongLuong*100);
+        //                    self.TongTienLuong(data.TongTienLuong);
+        //                    self.PhuCapTienAn(data.PhuCapTienAn);
+        //                    self.KTVayMuaNha(data.KTVayMuaNha);
+        //                    self.KTDienNuoc(data.KTDienNuoc);
+        //                    self.KTThuePhong(data.KTThuePhong);
+        //                    self.KTThueThuNhap(data.KTThueThuNhap);
+        //                    self.TongKhoanTru(data.TongKhoanTru);
+        //                    self.DPCD(data.DPCD);
+        //                    if (data.TruyThu == null)
+        //                        self.TruyThu(0);
+        //                    else
+        //                        self.TruyThu(data.TruyThu);
+        //                    self.ThucLanh(data.ThucLanh);
+        //                }
+        //            }
+        //        });
+        //    }
+
+        //});
+    }
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#bangLuong")[0]);
+    });
+</script>
+<style type="text/css">
+    .headertext {
+        width: 100%;
+        text-align: center;
+        font-size: 16pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .italictext {
+        font-size: 12pt;
+        font-style: italic;
+        font-weight: normal;
+        font-family: 'Times New Roman';
+    }
+
+    .righttext {
+        font-size: 12pt;
+        text-align: right;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+    }
+
+    .padding10boldtext {
+        font-size: 12pt;
+        font-weight: bold;
+        font-family: 'Times New Roman';
+        padding-left: 10px;
+    }
+</style>
+<div id="bangLuong" style="font-family:'Times New Roman';font-size:12pt;">
+    <div>
+        <a href="#">Tháng : </a>
+        <!--<select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected"></select>-->
+        <select data-bind="value: month" style="width: 145px; height:32px">
+            <option value="-1">--- Chọn tháng ---</option>
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
+        </select>
+        <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <a href="#">Loại lương : </a>
+        <select data-bind="options: loaiLuongList, optionsText: 'Name', optionsValue: 'Id', value: loaiLuongSelected" style="height:32px"></select>
+        <a href="#" class="btn btn-labeled btn-blue" style="width: auto;" data-bind="click: search">
+            <i class="btn-label glyphicon glyphicon-search"></i>Tìm
+        </a>
+        <!-- ko if:LuongNganSach() -->
+        <!-- ko if:CoLuongNganSach() -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <table class="table table-hover table-bordered" >
+                <tr><td colspan="2">Số tài khoản</td><td data-bind='text:SoTaiKhoan'></td></tr>
+                <tr><td colspan="2">Họ tên</td><td data-bind="text: Ho() + ' ' + Ten()"></td></tr>
+                <tr><td colspan="2">Mã ngạch</td><td data-bind='text:MaNgach'></td></tr>
+                <tr><td colspan="2">Hệ số lương</td><td data-bind='text:HeSoLuong'></td></tr>
+                <tr><td colspan="2">% PCTN vượt khung</td><td data-bind='text:VuotKhung'></td></tr>
+                <tr><td colspan="2">Hệ số PCTN vượt khung</td><td data-bind='text:HSPCVuotKhung'></td></tr>
+                <tr><td colspan="2">HSPC chức vụ + HSPC CVBL</td><td data-bind='text:HSPCChucVu'></td></tr>
+                <tr><td colspan="2">% PCTN nhà giáo</td><td data-bind='text:ThamNien'></td></tr>
+                <tr><td colspan="2">Hệ số PCTN nhà giáo</td><td data-bind='text:HSPCThamNienNhaGiao'></td></tr>
+                <tr><td colspan="2">Tổng hệ số</td><td data-bind='text:TongHeSoLuong'></td></tr>
+                <tr><td colspan="2">% hưởng lương</td><td data-bind='text:PTHuongLuong'></td></tr>
+                <tr><td colspan="2">Tổng tiền lương</td><td data-bind='text: numberWithCommas(TongTienLuong())'></td></tr>
+                <!--<tr>
+                    <td rowspan="2">Tiền lương những ngày nghỉ việc</td>
+                    <td>Số ngày</td>
+                    <td data-bind='text:SoNgayNghiViec'></td>
+                </tr>
+                <tr>                 
+                <td>Số tiền</td>
+                <td data-bind='text: numberWithCommas(TienNgayNghiViec())'></td>
+                </tr>-->
+                <!--<tr>
+                    <td rowspan="2">BHXH trả thay lương</td>
+                <td>Số ngày</td>
+                <td data-bind='text:SoNgayBHXHTra'></td>
+                </tr>
+                <tr><td>Số tiền</td><td data-bind='text: numberWithCommas(TienBHXHTra())'></td></tr>-->
+                <tr>
+                    <td rowspan="4">Các khoản phải trừ trong lương</td>
+                <td>BHYT</td>
+                <td data-bind='text: numberWithCommas(BHYT())'></td>
+                </tr>
+                <tr><td>BHTN</td><td data-bind='text: numberWithCommas(BHTN())'></td></tr>
+                <tr><td>BHXH</td><td data-bind='text: numberWithCommas(BHXH())'></td></tr>
+                <!--<tr><td>ĐPCĐ</td><td data-bind='text: numberWithCommas(DPCD())'></td></tr>-->
+                <tr><td>Tổng khoản trừ</td><td data-bind='text: numberWithCommas(TongKhoanTru())'></td></tr>
+                <tr>
+                    <td rowspan="8">Các khoản phụ cấp</td>
+                <td>% PC ưu đãi</td>
+                <td data-bind='text:PhuCapUuDai'></td>
+                </tr>
+                <tr><td>HSPC ưu đãi</td><td data-bind='text:HSPCUuDai'></td></tr>
+                <tr><td>% PC kiêm nhiệm</td><td data-bind='text:PhuCapKiemNhiem'></td></tr>
+                <tr><td>HSPC kiêm nhiệm</td><td data-bind='text:HSPCKiemNhiem'></td></tr>
+                <tr><td>HSPC độc hại</td><td data-bind='text:HSPCDocHai'></td></tr>
+                <tr><td>HSPC trách nhiệm</td><td data-bind='text:HSPCTrachNhiem'></td></tr>
+                <tr><td>Tổng HSPC</td><td data-bind='text:TongHSPC'></td></tr>
+                <tr><td>Tổng tiền phụ cấp</td><td data-bind='text: numberWithCommas(TongTienPhuCap())'></td></tr>
+                <tr><td colspan="2">Truy thu</td><td data-bind='text: numberWithCommas(TruyThu())'></td></tr>
+                <tr><td colspan="2">Tổng tiền lương được lĩnh</td><td data-bind='text: numberWithCommas(ThucLanh())'></td></tr>
+            </table>
+        </div>
+        <!-- /ko -->
+        <!-- ko if:CoLuongNganSach()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Không có bảng lương tháng này!</div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko if:LuongNganSach()==false -->
+        <!-- ko if:CoLuongTamUng() -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <table class="table table-hover table-bordered">
+                <tr><td colspan="2">Số tài khoản</td><td data-bind='text:SoTaiKhoan'></td></tr>
+                <tr><td colspan="2">Họ tên</td><td data-bind="text: Ho() + ' ' + Ten()"></td></tr>
+                <tr><td colspan="2">Mã ngạch</td><td data-bind='text:MaNgach'></td></tr>
+                <tr><td colspan="2">Hệ số lương</td><td data-bind='text:HeSoLuong'></td></tr>
+                <tr><td colspan="2">% PCTN vượt khung</td><td data-bind='text:VuotKhung'></td></tr>
+                <tr><td colspan="2">Hệ số PCTN vượt khung</td><td data-bind='text:HSPCVuotKhung'></td></tr>
+                <tr><td colspan="2">HSPC chức vụ + HSPC CVBL</td><td data-bind='text:HSPCChucVu'></td></tr>
+                <!--<tr><td colspan="2">% PCTN nhà giáo</td><td data-bind='text:ThamNien'></td></tr>
+                <tr><td colspan="2">Hệ số PCTN nhà giáo</td><td data-bind='text:HSPCThamNienNhaGiao'></td></tr>-->
+                <tr><td colspan="2">Tổng hệ số</td><td data-bind='text:TongHeSoLuong'></td></tr>
+                <tr><td colspan="2">% hưởng lương</td><td data-bind='text:PTHuongLuong'></td></tr>
+                <tr><td colspan="2">Tổng tiền lương</td><td data-bind='text: numberWithCommas(TongTienLuong())'></td></tr>
+                <tr><td colspan="2">Tiền ăn</td><td data-bind='text: numberWithCommas(PhuCapTienAn())'></td></tr>
+                <tr>
+                    <td rowspan="8">Các khoản trừ</td>
+                    <td>Tiền vay mua nhà</td>
+                    <td data-bind='text: numberWithCommas(KTVayMuaNha())'></td>
+                </tr>
+                <tr>
+                    <td>Tiền điện nước</td>
+                    <td data-bind='text: numberWithCommas(KTDienNuoc())'></td>
+                </tr>
+                <tr>
+                    <td>Tiền thuê phòng</td>
+                    <td data-bind='text: numberWithCommas(KTThuePhong())'></td>
+                </tr>
+                <tr>
+                    <td>Tạm trừ thuế thu nhập</td>
+                    <td data-bind='text: numberWithCommas(KTThueThuNhap())'></td>
+                </tr>
+                <tr><td>ĐPCĐ</td><td data-bind='text: numberWithCommas(DPCD())'></td></tr>
+                <tr><td>Ủng hộ một ngày lương</td><td data-bind='text: numberWithCommas(UH1NL())'></td></tr>
+                <tr><td>Khấu trừ khác</td><td data-bind='text: numberWithCommas(KTKhac())'></td></tr>
+                <tr><td>Tổng khoản trừ</td><td data-bind='text: numberWithCommas(TongKhoanTru())'></td></tr>                
+                <tr><td colspan="2">Truy thu</td><td data-bind='text: numberWithCommas(TruyThu())'></td></tr>
+                <tr><td colspan="2">Tổng tiền lương được lĩnh</td><td data-bind='text: numberWithCommas(ThucLanh())'></td></tr>
+            </table>
+        </div>
+        <!-- /ko -->
+        <!-- ko if:CoLuongTamUng()==false -->
+        <div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+            <div class="headertext">Không có bảng lương tháng này!</div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+    </div>
+</div>

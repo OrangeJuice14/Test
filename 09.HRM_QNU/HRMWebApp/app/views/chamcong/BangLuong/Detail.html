@@ -1,0 +1,25 @@
+﻿<div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">STT</th>
+                <th style="text-align: center;">Nội dung</th>
+                <th style="text-align: center;">Số tiền</th>
+                <th style="text-align: center;">Số tiền không chịu thuế TNCN</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: DetailData()">
+            <tr data-bind="visible: DienGiai != 'Tổng cộng'">
+                <td style="text-align: center;" data-bind="text: $index() + 1"></td>
+                <td data-bind="text: DienGiai"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoTien)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoTien - SoTienChiuThue)"></td>
+            </tr>
+            <tr data-bind="visible: DienGiai == 'Tổng cộng'">
+                <td style="font-weight:bold;text-align: center;" colspan="2" data-bind="text: DienGiai"></td>
+                <td style="font-weight:bold;text-align: right;" data-bind="text: numberFormat(SoTien)"></td>
+                <td style="font-weight:bold;text-align: right;" data-bind="text: numberFormat(SoTien - SoTienChiuThue)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

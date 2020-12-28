@@ -1,0 +1,44 @@
+﻿<style>
+    th {
+        padding: 7px 5px !important;
+        vertical-align: middle !important;
+        /*height: 30px;*/
+        text-align: center;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header">
+        <span style="padding-right:10px" class="widget-caption">Bộ tiêu chí</span>
+        <button style="float:right; margin: 2px 2px 0 0" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus" style="margin-left:0px"></i>Tạo mới bộ tiêu chí</button>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div ag-grid="gridOptions" style="text-align:left;max-height:700px ; overflow: auto;" class="ag-theme-balham">
+            <div ng-show="ListBoTieuChi == null || ListBoTieuChi.length == 0">Chưa có bộ tiêu chí nào</div>
+            <table class="table table-hover table-striped table-bordered" style="border-color: lightgrey" ng-hide="ListBoTieuChi == null || ListBoTieuChi.length == 0">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;color:black">STT</th>
+                        <th style="color:black">Tên bộ đánh giá</th>
+                        <th style="color:black; width: 140px">Từ ngày</th>
+                        <th style="color: black; width: 140px">Đến ngày</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ListBoTieuChi">
+                        <td style="padding-bottom:5px !important;vertical-align:middle; text-align:center;"><span style="font-weight:bold">{{$index + 1}}</span></td>
+                        <td style="padding-bottom:5px !important;vertical-align:middle"><a style="cursor: pointer;" ng-click="ShowTieuChi(item)">{{item.Name}}</a></td>
+                        <td style="padding-bottom:5px !important;vertical-align:middle; text-align:center">{{item.TuNgay}}</td>
+                        <td style="padding-bottom:5px !important;vertical-align:middle; text-align:center">{{item.DenNgay}}</td>
+                        <td style="padding-bottom:5px !important; width:150px; vertical-align: middle">
+                            <button class="btn btn-label btn-warning" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="Role(item)"><i class="fa fa-sitemap"></i></button>
+                            <button class="btn btn-success" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="edit(item)"><i class='fa fa-pencil'></i></button>
+                            <button class="btn btn-danger" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="delete(item.Id)" ng-hide="item.IsLock"><i class='fa fa-times'></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

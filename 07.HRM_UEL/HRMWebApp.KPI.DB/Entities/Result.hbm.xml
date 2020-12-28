@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.Result, HRMWebApp.KPI.DB" table="KPI_Result">
+    <id name="Id" column="ID"></id>
+    <property name="Time" column="Time"></property>
+    <property name="TotalRecord" column="KPIRecord"></property>
+    <property name="TotalRecordSecond" column="KPIRecordSecond"></property>
+    <property name="IsLocked" column="IsLocked"></property>
+    <property name="IsUnlocked" column="IsUnlocked"></property>
+    <property name="IsCommitted" column="IsCommitted"></property>
+    <property name="IsUnlockedForRating" column="IsUnlockedForRating"></property>
+    <property name="NumberOfEditing" column="NumberOfEditing"></property>
+    <property name="TempRecord" column="TempRecord"></property>
+    <many-to-one name="StaffRated" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffRatedId" />
+    <many-to-one name="StaffRating" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffRatingId" />
+  <many-to-one name="PlanStaff" class="HRMWebApp.KPI.DB.Entities.PlanStaff" column="PlanStaffId" />
+  </class>
+</hibernate-mapping>

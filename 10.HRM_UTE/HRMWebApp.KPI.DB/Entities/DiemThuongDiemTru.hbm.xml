@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.DiemThuongDiemTru, HRMWebApp.KPI.DB" table="dbo.KPI_DiemThuongDiemTru">
+    <id name="Id" column="ID"></id>
+    <property name="NoiDung" column="NoiDung"></property>
+    <many-to-one name="DonViCungCap" class="HRMWebApp.KPI.DB.Entities.Department" column="DonViCungCap"/>
+    <property name="MaHoatDong" column="MaHoatDong"></property>
+    <property name="MaNhomHoatDong" column="MaNhomHoatDong"></property>
+    <property name="NamHoc" column="NamHoc"></property>
+    <property name="HocKy" column="HocKy"></property>
+    <property name="Date" column="Date"></property>
+    <property name="UserNhap" column="NguoiNhapLieu"></property>
+    <property name="NoiDungHoatDong" column="NoiDungHoatDong"></property>
+    <property name="SoDiem" column="SoDiem"></property>
+    <property name="MaCanBo" column="MaCanBo"></property>
+    <property name="TenCanBo" column="TenCanBo"></property>
+    <many-to-one name="Khoa" class="HRMWebApp.KPI.DB.Entities.Department" column="Khoa"/>
+    <property name="DonViCungCapName" column="DonViCungCapName"></property>
+  </class>
+</hibernate-mapping>
+

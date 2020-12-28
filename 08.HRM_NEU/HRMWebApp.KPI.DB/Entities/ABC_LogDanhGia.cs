@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HRMWebApp.KPI.DB.Entities
+{
+    public class ABC_LogDanhGia
+    {
+        public virtual Guid Id { get; set; }
+        public virtual DateTime? ThoiGianDanhGia { get; set; }
+        public virtual DateTime? TimeLog { get; set; }
+        public virtual bool? IsLock { get; set; }
+        public virtual float? TongDiem { get; set; }
+        public virtual ABC_User UserDanhGia { get; set; }
+        public virtual ABC_User UserDuocDanhGia { get; set; }
+        public virtual ABC_KyDanhGia KyDanhGia { get; set; }
+        public virtual ABC_BoTieuChi BoTieuChi { get; set; }
+        public virtual ABC_GroupDanhGia UserDanhGia_Group { get; set; }
+        public virtual ABC_DanhGia DanhGia { get; set; }
+    }
+}

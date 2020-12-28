@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.AgentObjectDetail, HRMWebApp.KPI.DB" table="KPI_AgentObjectDetail">
+    <id name="Id" column="ID"></id>
+    <property name="NumberOfSection" column="NumberOfSection"></property>
+    <property name="ScienceResearch" column="ScienceResearch"></property>     
+  </class>
+</hibernate-mapping>

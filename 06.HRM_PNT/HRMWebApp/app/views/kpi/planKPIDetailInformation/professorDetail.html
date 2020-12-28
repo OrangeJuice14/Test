@@ -1,0 +1,221 @@
+﻿<style>
+    .warningPoint {
+        color: red;
+    }
+
+    .formItems textarea {
+        padding-left: 10px;
+    }
+
+    .lableTitle
+    {
+        text-align: left !important;
+    }
+      
+      .k-tabstrip-items .k-state-default .k-link, .k-panelbar>li.k-state-default>.k-link {
+        color: #787878 !important;
+    }
+</style>
+<!--<form name="CriterionDetailForm" role="form" class="form-horizontal" novalidate>
+    <script type="text/x-kendo-template" id="template">
+        <div class="mainGrid"> </div>
+    </script>
+    <div class="modal-header">
+        <h3 class="modal-title">Kế hoạch chi tiết Phòng/ban</h3>
+    </div>
+    <div class="modal-body" style="padding: 20px 20px 20px 20px">
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+
+            <div kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">Thông tin</li>
+                    <li>Nội dung</li>
+                </ul>
+                <div style="overflow: hidden" class="formItems">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.TargetDetail.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Mục tiêu</label>
+                                <div class="col-md-7">
+                                    <select class="form-control col-md-12" ng-change="selectedChangeProfessorCriterion()" ng-attr-tooltip="{{obj.Tooltip}}" name="selectTarget" required ng-model="obj.FromProfessorCriterion.Id" ng-options="listobj.Id as listobj.Name for listobj in professorCriterions">
+                                        <option value="">...Chọn mục tiêu...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm trước</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" required ng-model="obj.PreviousKPI" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm nay</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" required ng-model="obj.CurrentKPI" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label class="col-md-3 control-label">Số giờ</label>
+                                <div class="col-md-7">
+                                    <label class="control-label">{{NumberOfHour}}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label class="col-md-3 control-label">Số điểm</label>
+
+                                <div class="col-md-7">
+                                    <label class="control-label">{{Record}}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">Thời gian bắt đầu</label>
+                                <div class="col-md-7">
+                                    <input kendo-date-picker k-ng-model="obj.StartTime" k-format="'dd/MM/yyyy'" style="width:150px" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">Thời gian kết thúc</label>
+                                <div class="col-md-7">
+                                    <input kendo-date-picker k-ng-model="obj.EndTime" k-format="'dd/MM/yyyy'" style="width:150px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="overflow: hidden" class="formItems">
+                    <div class="row">
+                        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.Name.$invalid}">
+                            <label for="Name" class="col-md-3 control-label">Nội dung</label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="Name" required ng-model="obj.Name" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.ExecuteMethod.$invalid}">
+                            <label for="ExecuteMethod" class="col-md-3 control-label">Phương pháp thực hiện</label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="ExecuteMethod" required ng-model="obj.ExecuteMethod" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.BasicResource.$invalid}">
+                            <label for="BasicResource" class="col-md-3 control-label">Nguồn lực cần có</label>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="BasicResource" required ng-model="obj.BasicResource" rows="4"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid ||(targetGroupDetailTypeId!=3 && obj.MaxRecord==0) ">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+
+</form>-->
+<form name="CriterionDetailForm" role="form" class="form-horizontal" novalidate>
+    <script type="text/x-kendo-template" id="template">
+        <div class="mainGrid"> </div>
+    </script>
+    <div class="modal-header">
+    </div>
+    <div class="modal-body" style="padding: 20px 20px 20px 20px">
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+
+            <div kendo-tab-strip="mainTab" id="mainInformationTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">Thông tin</li>
+                    <li ng-show="targetGroupDetailTypeId==4">Hoạt động</li>
+                    <li ng-show="targetGroupDetailTypeId==5">Nghiên cứu khoa học</li>
+                </ul>
+                <div style="overflow: hidden" class="formItems">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.ExecuteMethod.$invalid}">
+                                <label for="ExecuteMethod" class="col-md-3 control-label">Phương pháp thực hiện</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" name="ExecuteMethod" required ng-model="obj.ExecuteMethod" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.BasicResource.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Nguồn lực cần có</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" name="BasicResource" ng-model="obj.BasicResource" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm trước</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" ng-model="obj.PreviousKPI"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-4 control-label">Thời gian bắt đầu</label>
+                                <div class="col-md-6">
+                                    <input kendo-date-picker k-ng-model="obj.StartTime" k-format="'dd/MM/yyyy'" style="width:150px" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-4 control-label">Thời gian kết thúc</label>
+                                <div class="col-md-6">
+                                    <input kendo-date-picker k-ng-model="obj.EndTime" k-format="'dd/MM/yyyy'" style="width:150px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>             
+                <div ng-show="targetGroupDetailTypeId==4">
+                    <div class="row" ng-if="obj.CriterionTypeId != 5">
+                        <div class="form-group">
+                            <label for="ExecuteMethod" class="col-md-3 control-label">Chọn hoạt động</label>
+                            <div class="col-md-4">
+                                <select kendo-multi-select k-options="activityResource" style="width:300px" k-ng-model="obj.ActivityIds"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" ng-click="saveActivity()">Chọn</button>
+                            </div>
+                        </div>
+                    </div>      
+                    <div style="display: block; height: 50px;" ng-if="obj.CriterionTypeId == 5">
+                        <button style="height: 30px; width:30px; float: right" ng-click="newActivity()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>              
+                    <div style="display: block;"><div kendo-grid="activityGrid" k-data-source="activityDataSource" k-options="activityMainGridOptions"></div></div>
+                </div>
+                <div ng-show="targetGroupDetailTypeId==5">
+                    <div class="row" ng-if="obj.CriterionTypeId != 5">
+                        <div class="form-group">
+                            <label for="ExecuteMethod" class="col-md-10 col-md-offset-1 control-label lableTitle">
+                                <h4>Chọn hoạt động nghiên cứu khoa học</h4>
+                            </label>
+                
+                            <div class="col-md-8 col-md-offset-1">
+                                <select kendo-multi-select k-options="researchResource" style="width:100%" k-ng-model="obj.ScienceResearchIds"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" ng-click="saveResearch()">Chọn</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: block; height: 50px;" ng-if="obj.CriterionTypeId == 5">
+                        <button style="height: 30px; width:30px; float: right" ng-click="newResearch()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>
+                    <div style="display: block;"><div kendo-grid="researchGrid" k-data-source="researchDataSource" k-options="researchMainGridOptions"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+
+</form>

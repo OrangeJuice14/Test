@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ResultDetail, HRMWebApp.KPI.DB" table="KPI_ResultDetail">
+    <id name="Id" column="ID"></id>
+    <property name="Record" column="Record"></property>
+    <property name="RecordSecond" column="RecordSecond"></property>
+    <property name="RegisterTarget" column="RegisterTarget"></property>   
+    <property name="PreviousResult" column="PreviousResult"></property>
+    <property name="CurrentResult" column="CurrentResult"></property>
+    <property name="SupervisorRecord" column="SupervisorRecord"></property>
+    <property name="Note" column="Note"></property>
+    <property name="SupervisorNote" column="SupervisorNote"></property>
+    <property name="IsTargetGroupRating" column="IsTargetGroupRating"></property>
+    <property name="IsConfirmed" column="IsConfirmed"></property>
+    <many-to-one name="PlanKPIDetail" class="HRMWebApp.KPI.DB.Entities.PlanKPIDetail" column="PlanKPIDetailId" />
+    <many-to-one name="TargetGroupDetail" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId" />
+    <many-to-one name="Result" class="HRMWebApp.KPI.DB.Entities.Result" column="ResultId" />
+    <bag name="FileAttachments" table="KPI_FileAttachment" cascade="all-delete-orphan">
+      <key column="ResultDetailId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.FileAttachment" />
+    </bag>
+    <many-to-one name="MethodId" class="HRMWebApp.KPI.DB.Entities.Method" column="MethodId" />
+    <property name="MaxRecord" column="MaxRecord"></property>
+    <property name="DensityResult" column="DensityResult"></property>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.StaffInfo, HRMWebApp.KPI.DB" table="ThongTinNhanVien">
+    <id name="Id" column="Oid"></id>
+    <!--<property name="Name" column="Name"></property>-->
+    <property name="Password" column="Password"></property>
+    <property name="ManageCode" column="SoHieuCongChuc"></property>
+    <property name="ThamGiaGiangDay" column="ThamGiaGiangDay"></property>
+    <!--<property name="UserName" column="UserName"></property>-->
+    <many-to-one name="StaffType" class="HRMWebApp.KPI.DB.Entities.StaffType" column="LoaiNhanSu" />
+    <many-to-one name="Position" class="HRMWebApp.KPI.DB.Entities.Position" column="ChucVu" />
+    <many-to-one name="Subject" class="HRMWebApp.KPI.DB.Entities.Department" column="TaiBoMon" />
+    <one-to-one name="WebUser" class="HRMWebApp.KPI.DB.Entities.WebUser" property-ref="StaffInfo" />
+    <one-to-one name="StaffProfile" class="HRMWebApp.KPI.DB.Entities.StaffProfile" />
+    <one-to-one name="Staff" class="HRMWebApp.KPI.DB.Entities.Staff" />
+    <!--<bag name="WebUsers" table="WebUsers" cascade="none" inverse="true" >
+      <key column="ThongTinNhanVien"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.WebUser"/>
+    </bag>-->
+    <bag name="AgentObjects" table="KPI_Staff_AgentObject">
+      <key column="KPI_StaffId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.AgentObject" column="AgentObjectId"/>
+    </bag>
+    <bag name="SubPositions" table="ChucVuKiemNhiem" cascade="none" inverse="true" >
+      <key column="ThongTinNhanVien"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.SubPosition"/>
+    </bag>
+    <!--<many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId" />-->
+  </class>
+</hibernate-mapping>

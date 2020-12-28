@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <script src="/Components/jqwidgets/jqxcore.js"></script>
+    <script src="/Components/jqwidgets/jqxdraw.js"></script>
+    <script src="/Components/jqwidgets/jqxchart.core.js"></script>
+    <style>
+        .over {
+            position: relative;
+        }
+
+            .over span {
+                position: absolute;
+                top: -0.5em;
+                left: 0;
+            }
+
+       .jqx-chart-label-text {
+            fill: red !important;
+        }
+
+        body, html {
+            height: 100%;
+        }
+    </style>
+    <!--Quét 4 lần-->
+    <!--<script type="text/javascript">
+        var formatHour = function (dd) {
+            var dtstr = dd.replace(/\D/g, " ");
+            var dtcomps = dtstr.split(" ");
+            var hours = parseInt(dtcomps[3]);
+            var minutes = dtcomps[4] / 60;
+            var seconds = dtcomps[5] / 3600;
+            return hours + minutes + seconds;
+        };
+        function chart_Model(data, phongban, day, month, year) {
+            var self = this;
+            self.TenPhongBan = phongban;
+            self.day = day;
+            self.month = month;
+            self.year = year;
+            self.data = data;
+            var toolTipCustomFormatFn = function (value, itemIndex, serie, group, categoryValue, categoryAxis) {
+                var from = Math.round(value.from * 3600);
+                var to = Math.round(value.to * 3600);
+                var hours_from = Math.floor(from / 3600);
+                var hours_to = Math.floor(to / 3600);
+                var minutes_from = Math.floor((from - (hours_from * 3600)) / 60);
+                var minutes_to = Math.floor((to - (hours_to * 3600)) / 60);
+                var seconds_from = from - (hours_from * 3600) - (minutes_from * 60);
+                var seconds_to = to - (hours_to * 3600) - (minutes_to * 60);
+
+                if (hours_from < 10) {
+                    hours_from = "0" + hours_from;
+                }
+                if (hours_to < 10) {
+                    hours_to = "0" + hours_to;
+                }
+                if (minutes_from < 10) {
+                    minutes_from = "0" + minutes_from;
+                }
+                if (minutes_to < 10) {
+                    minutes_to = "0" + minutes_to;
+                }
+                if (seconds_from < 10) {
+                    seconds_from = "0" + seconds_from;
+                }
+                if (seconds_to < 10) {
+                    seconds_to = "0" + seconds_to;
+                }
+                var time_from = hours_from + ':' + minutes_from + ':' + seconds_from;
+                var time_to = hours_to + ':' + minutes_to + ':' + seconds_to;
+                var str = '';
+                if (time_from == time_to) {
+                    str = '<DIV style="text-align:left"><b>Nhân viên: ' + categoryValue + '</b><br />Thời gian: <span style="color:red">' + time_from + '</span><br /></DIV>';
+                }
+                else {
+                    str = '<DIV style="text-align:left"><b>Nhân viên: ' + categoryValue + '</b><br />Thời gian vào: <span style="color:red">' + time_from + '</span><br />';
+                    str += 'Thời gian ra: <span style="color:red">' + time_to + '</span><br /></DIV>';
+                }
+                return str;
+            };
+            var settings = {
+                title: "TRƯỜNG ĐẠI HỌC NGÂN HÀNG TP.HCM",
+                description: "Thống kê giờ đi làm - " + self.day + '/' + self.month + '/' + self.year + ' (' + self.TenPhongBan + ')',
+                enableAnimations: true,
+                showLegend: true,
+                padding: { left: 15, top: 5, right: 15, bottom: 5 },
+                titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+                enableCrosshairs: true,
+                source: self.data,
+                xAxis:
+                {
+                    textRotationAngle: 90,
+                    dataField: "HoTen",
+                    showTickMarks: true,
+                    tickMarksInterval: 1,
+                    tickMarksColor: '#888888',
+                    unitInterval: 1,
+                    showGridLines: true,
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                [
+                    {
+                        type: 'rangecolumn',
+                        columnsGapPercent: 100,
+                        //orientation: 'vertical',
+                        orientation: 'horizontal',
+                        toolTipFormatFunction: toolTipCustomFormatFn,
+                        valueAxis:
+                        {
+                            unitInterval: 1,
+                            displayValueAxis: true,
+                            position: 'top',
+                            flip: true,
+                            description: 'Giờ [h]',
+                            formatSettings: { sufix: 'h' },
+                            axisSize: 'auto',
+                            tickMarksColor: '#888888',
+                            minValue: 0,
+                            maxValue: 24
+                        },
+                        series: [
+                            {
+                                dataFieldFrom: 'GioVaoSang',
+                                dataFieldTo: 'GioRaSang',
+                                displayText: 'Thời gian ca sáng',
+                                opacity: 1,
+                                showLabels: true,
+                                labelsHorizontalAlignment: 'top',
+                                formatFunction: function (val) {
+                                    if (val.from == null && val.to == null)
+                                        return "";
+                                    return "";
+                                }
+                            },
+                            {
+                                dataFieldFrom: 'GioVaoChieu',
+                                dataFieldTo: 'GioRaChieu',
+                                displayText: 'Thời gian ca chiều',
+                                opacity: 1,
+                                showLabels: true,
+                                labelsHorizontalAlignment: 'top',
+                                formatFunction: function (val) {
+                                    if (val.from == null && val.to == null)
+                                        return "";
+                                    return "";
+                                }
+                            }
+                        ],
+                        bands: [{ minValue: 0, maxValue: 24, color: '#E5E5E5', opacity: 0.5 }]
+                    }
+                ]
+            };
+            $('#popupWindowXemBCCChart').jqxChart(settings);
+        };
+    </script>-->
+
+    <!--Quét 2 lần-->
+    <script type="text/javascript">
+        //var TenPhongBan = "", data = [];
+
+        var formatHour = function (dd) {
+            var dtstr = dd.replace(/\D/g, " ");
+            var dtcomps = dtstr.split(" ");
+            var hours = parseInt(dtcomps[3]);
+            var minutes = dtcomps[4]/60;
+            var seconds = dtcomps[5] / 3600;
+            return hours + minutes + seconds;
+       };
+        function chart_Model(data, phongban, day, month, year) {
+            var self = this;
+            self.TenPhongBan = phongban;
+            self.day = day;
+            self.month = month;
+            self.year = year;
+            self.data = data;
+            var toolTipCustomFormatFn = function (value, itemIndex, serie, group, categoryValue, categoryAxis) {
+                var from = Math.round(value.from * 3600);
+                var to = Math.round(value.to * 3600);
+                var hours_from = Math.floor(from / 3600);
+                var hours_to = Math.floor(to / 3600);
+                var minutes_from = Math.floor((from - (hours_from * 3600)) / 60);
+                var minutes_to = Math.floor((to - (hours_to * 3600)) / 60);
+                var seconds_from = from - (hours_from * 3600) - (minutes_from * 60);
+                var seconds_to = to - (hours_to * 3600) - (minutes_to * 60);
+
+                if (hours_from < 10) {
+                    hours_from = "0" + hours_from;
+                }
+                if (hours_to < 10) {
+                    hours_to = "0" + hours_to;
+                }
+                if (minutes_from < 10) {
+                    minutes_from = "0" + minutes_from;
+                }
+                if (minutes_to < 10) {
+                    minutes_to = "0" + minutes_to;
+                }
+                if (seconds_from < 10) {
+                    seconds_from = "0" + seconds_from;
+                }
+                if (seconds_to < 10) {
+                    seconds_to = "0" + seconds_to;
+                }
+                var time_from = hours_from + ':' + minutes_from + ':' + seconds_from;
+                var time_to = hours_to + ':' + minutes_to + ':' + seconds_to;
+                if (time_from == time_to) {
+                    str = '<DIV style="text-align:left"><b>Nhân viên: ' + categoryValue + '</b><br />Thời gian: <span style="color:red">' + time_from + '</span><br /></DIV>';
+                }
+                else {
+                    str = '<DIV style="text-align:left"><b>Nhân viên: ' + categoryValue + '</b><br />Thời gian vào: <span style="color:red">' + time_from + '</span><br />';
+                    str += 'Thời gian ra: <span style="color:red">' + time_to + '</span><br /></DIV>';
+                }
+                return str;
+            };
+            var settings = {
+                title: "TRƯỜNG ĐẠI HỌC NGÂN HÀNG TP.HCM",
+                description: "Thống kê giờ đi làm - " + self.day + '/' + self.month + '/' + self.year + ' (' + self.TenPhongBan + ')',
+                enableAnimations: true,
+                showLegend: true,
+                padding: { left: 15, top: 5, right: 15, bottom: 5 },
+                titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+                enableCrosshairs: true,
+                source: self.data,
+                xAxis:
+                {
+                    textRotationAngle: 90,
+                    dataField: "HoTen",
+                    showTickMarks: true,
+                    tickMarksInterval: 1,
+                    tickMarksColor: '#888888',
+                    unitInterval: 1,
+                    showGridLines: true,
+                    //gridLinesInterval: 1,
+                    //gridLinesColor: 'red'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                [
+                    {
+                        type: 'rangecolumn',
+                        columnsGapPercent: 100,
+                        //orientation: 'vertical',
+                        orientation: 'horizontal',
+                        toolTipFormatFunction: toolTipCustomFormatFn,
+                        valueAxis:
+                        {
+                            unitInterval: 1,
+                            displayValueAxis: true,
+                            position: 'top',
+                            flip: true,
+                            description: 'Giờ [h]',
+                            formatSettings: { sufix: 'h' },
+                            axisSize: 'auto',
+                            tickMarksColor: '#888888',
+                            minValue: 0,
+                            maxValue: 24,
+                            //showGridLines: false,
+                            //gridLinesColor: 'brown',
+                            //gridLinesInterval: 0
+                        },
+                        series: [
+                            {
+                                dataFieldTo: 'GioRa',
+                                displayText: 'Thời gian chấm công',
+                                dataFieldFrom: 'GioVao',
+                                opacity: 1,
+                                showLabels: true,
+                                color: "#4450A0",
+                                labelsHorizontalAlignment: 'top',
+                                formatFunction: function (val) {
+                                    if (val.from == null && val.to == null)
+                                        return " Chưa quét vân tay";
+                                    return "";
+                                }
+                            }
+                        ],
+                        bands: [{ minValue: 0, maxValue: 24, color: '#E5E5E5', opacity: 0.5 }]
+                    }
+                ]
+            };
+            $('#popupWindowXemBCCChart').jqxChart(settings);
+        };
+        
+    </script>
+</head>
+<body>
+</body>
+</html>

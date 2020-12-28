@@ -1,0 +1,39 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="targetGroupDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{'has-error': targetGroupDetailForm.name.$invalid}">
+                <label for="name" class="col-md-4 control-label">Tên</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="name" placeholder="Điền tên" required ng-model="obj.Name">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="targetGroupDetailForm.name.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': targetGroupDetailForm.selectAgent.$invalid}">
+                <label for="selectType" class="col-md-4 control-label">Đối tượng KPI</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="selectAgent" ng-model="obj.AgentObject.Id" ng-options="agent.Id as agent.Name for agent in agentObjects" guidempty>
+                        <option value="">Chọn đối tượng KPI ...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="targetGroupDetailForm.selectAgent.$error.guidEmpty" class="help-block">*</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()" ng-disabled="targetGroupDetailForm.$invalid">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>

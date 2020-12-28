@@ -1,0 +1,257 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        self.WebGroupId = ko.observable(session.WebGroupId.toUpperCase());
+        self.IsAdmin = ko.observable(0);
+        self.nienDoTaiChinh = ko.observableArray();
+        self.nienDoTaiChinhSelected = ko.observable();
+        //
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000001"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000009") {
+            self.IsAdmin = 1;
+            //
+        }
+        //Phòng ban
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: dataLocalize("QUAN_LY_PHEP_HE.TEN_BO_PHAN_TAT_CA") });
+                    self.department(obj);
+                    if (obj.length > 0) {
+                        self.departmentSelected(obj[0].Oid);
+                    }
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+                GetNienDoTaiChinh();
+            }
+        });
+
+        function GetNienDoTaiChinh() {
+            // Niên độ tài chính
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetNienDoTaiChinhList',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.nienDoTaiChinh(obj);
+                    if (obj.length > 0) {
+                        self.nienDoTaiChinhSelected(obj[0].Oid);
+                    }
+                }
+            });
+        }
+        GetNienDoTaiChinh();
+
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'MaQuanLy', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'NgayVaoCoQuan', type: 'date' },
+                { name: 'SoPhepHe', type: 'string' }
+            ],
+            id: 'Id',
+            url: "/WebServices/QuanLyPhepHe_Find",
+            formatdata: function (data) {
+                return {
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected() == undefined ? null : self.nienDoTaiChinhSelected(),
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    webGroup: self.WebGroupId,
+                    congTy: self.companySelected()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        
+        self.datagrid.jqxGrid({
+            source: self.dataAdapter,
+            width: '100%',
+            selectionmode: 'checkbox',
+            pageable: true,
+            pagesize: 10,
+            sortable: true,
+            filterable: true,
+            autorowheight: true,
+            autoheight: true,
+            columnsheight: 50,
+            theme: "darkBlue",
+            columns: [
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.STT"), columntype: 'number', width: 45, editable: false, cellsrenderer: function (row, column, value) {
+                        return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.MA_NHAN_SU"), datafield: 'MaQuanLy', width: 140, align: 'center', cellsalign: "middle"
+                },
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.HO_TEN"), datafield: 'HoTen', width: 220, align: 'center'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.DON_VI"), datafield: 'TenPhongBan', width: 250, align: 'center'
+                },
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.NGAY_VAO_CO_QUAN"), datafield: 'NgayVaoCoQuan', width: 160, align: 'center', cellsalign: "middle", cellsformat: 'd/M/yyyy',
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                },
+                {
+                    text: dataLocalize("QUAN_LY_PHEP_HE.TABLE.SO_PHEP_HE"), datafield: 'SoPhepHe', width: 150, align: 'center', cellsalign: "middle",
+                    renderer: function (text, align) {
+                        return "<div class='jqx-grid-cell-child'>" + text + "</div>";
+                    }
+                }
+            ]
+        });
+        self.datagrid.jqxGrid('rendered', function () {
+            self.datagrid.jqxGrid('localizestrings', jqxLocalization());
+        });
+    }
+    ViewModel.prototype = {
+        search: function () {
+            var self = this;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        chotphephe: function () {
+            var self = this;
+
+            var message = confirm(dataLocalize("QUAN_LY_PHEP_HE.CONFIRM.BAN_CO_CHAC_CHOT_HAY_KHONG"));
+            if (message == false) { return; }
+           //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyPhepHe_ChotPhepHe',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected(),
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    //
+                    if (obj.message == 'success') {
+                        alert(dataLocalize("QUAN_LY_PHEP_HE.ALERT.THANH_CONG"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                    else {
+                        alert(dataLocalize("QUAN_LY_PHEP_HE.ALERT.THAT_BAI"));
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                }
+            });
+        },
+        excel: function () {
+            var self = this;
+            this.datagrid.jqxGrid('exportdata', 'xls', dataLocalize("QUAN_LY_PHEP_HE.QUAN_LY_PHEP_HE"), true);
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#QuanLyPhepHe")[0]);
+    });
+</script>
+<style type="text/css">
+    .jqx-grid-header {
+        height: 50px !important;
+    }
+</style>
+<div id="QuanLyPhepHe">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4 style="text-transform: uppercase;"><span data-i18n="QUAN_LY_PHEP_HE.QUAN_LY_PHEP_HE">QUẢN LÝ PHÉP HÈ</span></h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div data-bind="if:IsAdmin == '1'">
+                    <div class="col-lg-3 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 180px;" data-bind="click: chotphephe">
+                            <i class="btn-label glyphicon glyphicon-tags"></i><span data-i18n="QUAN_LY_PHEP_HE.CHOT_PHEP_HE">Chốt phép hè</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-12 col-sm-6">
+                    <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: excel">
+                        <i class="btn-label glyphicon glyphicon-random"></i><span data-i18n="QUAN_LY_PHEP_HE.XUAT_EXCEL">Xuất Excel</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <select data-bind="options:nienDoTaiChinh, optionsText: 'TenNienDo', optionsValue: 'Oid',value:nienDoTaiChinhSelected"></select>
+        <!-- ko if: company().length > 1 -->
+        <select style="width: 250px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+        <!-- /ko -->
+        <select style="width: 300px" data-bind="options: department, optionsText: function (type) { return type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <input type="button" data-i18n="[value]QUAN_LY_PHEP_HE.TIM" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+</div>
+

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.WebUser, HRMWebApp.KPI.DB" table="WebUsers">
+    <id name="Id" column="Oid"></id>
+    <property name="UserName" column="UserName"></property>
+    <property name="Password" column="Password"></property>
+    <property name="WebGroupId" column="WebGroupID"></property>
+    <!--<property name="ThongTinNhanVien" column="ThongTinNhanVien"></property>-->
+    <many-to-one name="StaffInfo" class="HRMWebApp.KPI.DB.Entities.StaffInfo" unique="true" not-null="false" column="ThongTinNhanVien" />
+    <many-to-one name="AgentObjectType" class="HRMWebApp.KPI.DB.Entities.AgentObjectType" unique="true" not-null="false" column="AgentObjectTypeId" />
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" unique="true" not-null="false" column="DepartmentId" />
+    <many-to-one name="GiangVienThinhGiang" class="HRMWebApp.KPI.DB.Entities.GiangVienThinhGiang" unique="true" not-null="false" column="GiangVienThinhGiang" />
+  </class>
+</hibernate-mapping>

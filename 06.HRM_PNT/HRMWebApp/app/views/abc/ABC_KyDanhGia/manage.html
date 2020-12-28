@@ -1,0 +1,41 @@
+﻿<div class="widget ng-scope">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">KỲ ĐÁNH GIÁ</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <div class="row">
+                <div class="col-12">
+                    <div layout-padding="">
+                        <br>
+                        <md-content class="md-no-momentum">
+                            <md-input-container class="md-icon-float md-icon-right md-block">
+                                <label>Năm</label>
+                                <input type="number" min="2016" max="2100" step="1" ng-model="Nam" ng-change="UpdateYearValue()" style="width:100px; font-size:14px">
+                                <a style="float:left;margin-left:13px;" ng-click="New()" class="btn btn-labeled btn-blue">
+                                    <i class="btn-label fa fa-plus"></i>&nbsp;Tạo mới kỳ đánh giá năm
+                                </a>
+                            </md-input-container>
+                            <md-list flex="">
+                                <ul>
+                                    <li ng-repeat="item in categories">{{ item.Ten }}</li>
+                                </ul>
+                            </md-list>
+                            <div>
+                                <div data-angular-treeview="true"
+                                     data-tree-id="treeYears"
+                                     data-tree-model="TreeKyDanhGia"
+                                     data-node-id="Id"
+                                     data-node-label="Ten"
+                                     data-node-children="children">
+                                </div>
+                            </div>
+                        </md-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<link href="../../../../assets/css/customTree.css" rel="stylesheet" />

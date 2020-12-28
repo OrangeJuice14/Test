@@ -1,0 +1,69 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="staffDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <!--<div class="form-group" ng-class="{'has-error': staffDetailForm.name.$invalid}">
+                <label for="name" class="col-md-4 control-label">Tên</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="name" placeholder="Điền tên" required ng-model="obj.Name">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="staffDetailForm.name.$error.required" class="help-block">*</span>
+                </div>
+            </div>-->
+            <!--<div class="form-group" ng-class="{'has-error': staffDetailForm.userName.$invalid}">
+                <label for="name" class="col-md-4 control-label">Tên Đăng nhập</label>
+                <div class="col-md-6">
+                    <input type="text" ng-disabled="!isNew" class="form-control" name="userName" placeholder="Điền tên đăng nhập" required ng-model="obj.UserName">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="staffDetailForm.userName.$error.required" class="help-block">*</span>
+                </div>
+            </div>-->
+            <div class="form-group" ng-show="isNew" ng-class="{'has-error': staffDetailForm.password.$invalid}">
+                <label for="name" class="col-md-4 control-label">Mật khẩu</label>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" name="password" placeholder="Điền mật khẩu" required ng-model="obj.Password">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="staffDetailForm.password.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+            <div class="form-group" ng-show="isNew" ng-class="{'has-error': staffDetailForm.passwordConfirm.$invalid  || obj.Password != obj.PasswordConfirm}">
+                <label for="name" class="col-md-4 control-label">Nhập lại mật khẩu</label>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" name="passwordConfirm" placeholder="Nhập lại mật khẩu" required ng-model="obj.PasswordConfirm">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="staffDetailForm.passwordConfirm.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selectType" class="col-md-4 control-label">Đơn vị</label>
+                <div class="col-md-6">
+                    <select class="form-control" disabled name="DepartmentSelect" ng-model="obj.Department.Id" ng-options="listObj.Id as listObj.Name for listObj in departments">
+                        <option value="">Chọn công việc ...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selectType" class="col-md-4 control-label">Chức danh</label>
+                <div class="col-md-6">
+                    <select kendo-multi-select k-options="agentObjects" k-ng-model="obj.AgentObjectIds"></select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>

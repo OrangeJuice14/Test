@@ -1,0 +1,346 @@
+﻿<style type="text/css">
+    .title {
+        font-family: 'Times New Roman';
+        font-weight: bold !important;
+        margin-top: 10px !important;
+    }
+
+    .overlay {
+        display: table;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        z-index: 2;
+    }
+
+    th, td {
+        border: 1px solid !important;
+    }
+    td > table td {
+        border-right:0 !important;       
+    }
+
+    .inner {
+        font-family: sans-serif;
+        font-size: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue ">       
+    </div>
+
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <div style="float:right;width:200px;"><b>MẪU 02</b></div><br />
+            <h3 class="title">PHIẾU CHẤM ĐIỂM ĐÁNH GIÁ VÀ PHÂN LOẠI GIẢNG VIÊN</h3>
+            <h4 class="title" ng-show="staffResultDetaitObject.EvaluationBoardType==2">6 THÁNG NĂM {{staffResultDetaitObject.Year}}</h4>
+            <h4 class="title" ng-show="staffResultDetaitObject.EvaluationBoardType==1">NĂM {{staffResultDetaitObject.Year}}</h4>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated" style="color:red">(Cấp dưới chưa khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsSupervisorRated" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsRatingLocked" style="color:red">(Đơn vị đã bị khóa đánh giá)</h5>
+        </div>
+        <form name="planDetailKPIForm" role="form" class="form-horizontal" novalidate>
+            <div style="font-family:'Times New Roman';font-size:12pt; margin-left:20px;">
+                <div class="row">
+                    <!--<div class="col-md-1 col-sm-1"></div>-->
+                    <div class="col-md-2 col-sm-2">Họ và tên</div>
+                    <div class="col-md-9 col-sm-9">{{staffResultDetaitObject.StaffName}}</div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-md-1 col-sm-1"></div>-->
+                    <div class="col-md-2 col-sm-2">Chức vụ</div>
+                    <div class="col-md-9 col-sm-9">{{staffResultDetaitObject.StaffPosition}}</div>
+                </div>
+                <div class="row">
+                    <!--<div class="col-md-1 col-sm-1"></div>-->
+                    <div class="col-md-2 col-sm-2">Đơn vị công tác</div>
+                    <div class="col-md-9 col-sm-9">{{staffResultDetaitObject.DepartmentName}}</div>
+                </div>
+            </div>
+            <br />
+            <a ng-click="ExportExcel()" class="btn btn-labeled btn-success planButton">
+                <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+            </a>
+            <a ng-if="staffResultDetaitObject.EvaluationBoardType!=3" ng-click="ThanhTichExportExcel()" class="btn btn-labeled btn-yellow">
+                <i class="btn-label fa fa-file-excel-o"></i>Xem thành tích
+            </a>
+            <br />
+            <table style="width:100%;background-color:white; text-align:center; vertical-align:middle; font-family:'Times New Roman';font-size:12pt;border-right:1px solid;">
+                <tr>
+                    <td style="width:50px; font-weight:bold;padding:5px;">I</td>
+                    <td style="font-weight:bold;padding:5px;">TIÊU CHÍ ĐÁNH GIÁ</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;">Điểm chuẩn</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin!=1 && !isDepartmentLeader">Cá nhân đánh giá</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin!=1 && !isDepartmentLeader">Trưởng đơn vị đánh giá</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin!=1 && isDepartmentLeader">Cá nhân đánh giá</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin!=1 && isDepartmentLeader">Hiệu trưởng đánh giá</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin==1">Cá nhân đánh giá</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;" ng-if="staffResultDetaitObject.IsAdmin==1">Hiệu trưởng đánh giá</td>
+                </tr>
+                <tr ng-repeat="tg in staffResultDetaitObject.ABC_RatingGroupDTOs">
+                    <td colspan="5" style="border:none !important">
+                        <table style="width:100%;background-color:white; text-align:center; vertical-align:middle; font-family:'Times New Roman';font-size:12pt;border:none">
+                            <tr>
+                                <td style="width:50px;font-weight:bold;padding:5px;border-top:none !important">{{tg.OrderNumber}}</td>
+                                <td style="text-align:justify;font-weight:bold;padding:5px;border-top:none !important">{{tg.Name}}</td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important">{{totalRatingGroupMaxRecord(tg.ABC_RatingDetailDTOs)}}</td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important">{{totalRatingGroupStaffRecord(tg.ABC_RatingDetailDTOs)}}</td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important">
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsAdmin==2">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisorRated">
+                                            {{totalRatingGroupSupervisorRecord(tg.ABC_RatingDetailDTOs)}}
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisorRated">
+                                            {{0}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.IsAdmin!=2">
+                                        {{totalRatingGroupSupervisorRecord(tg.ABC_RatingDetailDTOs)}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="rd in tg.ABC_RatingDetailDTOs track by $index">
+                                <td style="width:50px;padding:5px;">{{rd.OrderNumber}}</td>
+                                <td style="text-align:justify;padding:5px;">{{rd.Name}}</td>
+                                <td style="width:100px;">{{rd.MaxRecord}}</td>
+                                <td style="width:100px;">
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated  || staffResultDetaitObject.IsAdmin==2 || staffResultDetaitObject.EvaluationBoardType==1">
+                                        {{rd.StaffRecord}}
+                                    </div>
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated  && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                        <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.StaffRecord" />
+                                        <span class="error" style="color: red" ng-show="rd.StaffRecord>rd.MaxRecord">
+                                            Điểm tối đa: {{rd.MaxRecord}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="width:100px;">
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated  || staffResultDetaitObject.IsAdmin==2|| staffResultDetaitObject.EvaluationBoardType==1">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsSupervisor">
+                                            {{rd.SupervisorRecord}}
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsSupervisor">
+                                            {{0}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated   && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                        <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.SupervisorRecord" ng-disabled="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated" />
+                                        <span class="error" style="color: red" ng-show="rd.SupervisorRecord>rd.MaxRecord">
+                                            Điểm tối đa: {{rd.MaxRecord}}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:50px; font-weight:bold;padding:5px;border-top:none !important;border-bottom:none !important">II</td>
+                    <td style="font-weight:bold;padding:4px;border-top:none !important;border-bottom:none !important">ĐÁNH GIÁ ĐỐI VỚI GIẢNG VIÊN</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;border-top:none !important;border-bottom:none !important">{{totalRatingGroupSpecialMaxRecord()}}</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;border-top:none !important;border-bottom:none !important">{{totalRatingGroupSpecialStaffRecord()}}</td>
+                    <td style="width:100px; font-weight:bold;padding:5px;border-top:none !important;border-bottom:none !important">
+                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsAdmin==2">
+                            <div ng-if="staffResultDetaitObject.IsSupervisorRated">
+                                {{totalRatingGroupSpecialSupervisorRecord()}}
+                            </div>
+                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated">
+                                {{0}}
+                            </div>
+                        </div>
+                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.IsAdmin!=2">
+                            {{totalRatingGroupSpecialSupervisorRecord()}}
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="tgs in staffResultDetaitObject.ABC_RatingGroupSpecialDTOs">
+                    <td colspan="5" style="border:none !important">
+                        <table style="width:100%;background-color:white; text-align:center; vertical-align:middle; font-family:'Times New Roman';font-size:12pt;border:none">
+                            <tr ng-repeat="rd in tgs.ABC_RatingDetailDTOs track by $index">
+                                <td style="width:50px;padding:5px;">{{rd.OrderNumber}}</td>
+                                <td style="text-align:justify;padding:5px;">{{rd.Name}}</td>
+                                <td style="width:100px;">{{rd.MaxRecord}}</td>
+                                <td style="width:100px;">
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated || staffResultDetaitObject.IsAdmin==2 || staffResultDetaitObject.EvaluationBoardType==1">
+                                        {{rd.StaffRecord}}
+                                    </div>
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated   && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                        <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.StaffRecord" />
+                                        <span class="error" style="color: red" ng-show="rd.StaffRecord>rd.MaxRecord">
+                                            Điểm tối đa: {{rd.MaxRecord}}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td style="width:100px;">
+                                    <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated ||   rd.ABC_CriterionDetailType==1 || staffResultDetaitObject.IsAdmin==2 || staffResultDetaitObject.EvaluationBoardType==1">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsSupervisor">
+                                            {{rd.SupervisorRecord}}
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsSupervisor">
+                                            {{0}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated  && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                        <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.SupervisorRecord" />
+                                        <span class="error" style="color: red" ng-show="rd.SupervisorRecord>rd.MaxRecord">
+                                            Điểm tối đa: {{rd.MaxRecord}}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr ng-repeat="tgp in staffResultDetaitObject.ABC_RatingGroupPropertyDTOs" ng-show="!(tgp.IsNotVisibleInEvaluationBoardType==staffResultDetaitObject.EvaluationBoardType)">
+                    <!--<tr ng-repeat="tgp in staffResultDetaitObject.ABC_RatingGroupPropertyDTOs">-->
+                    <td colspan="5" style="border:none !important">
+                        <table style="width:100%;background-color:white; text-align:center; vertical-align:middle; font-family:'Times New Roman';font-size:12pt;border:none">
+                            <tr>
+                                <td style="width:50px;font-weight:bold;padding:5px;border-top:none !important"></td>
+                                <td style="text-align:center;font-weight:bold;padding:5px;border-top:none !important">{{tgp.Name}}</td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important"></td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important"><span ng-show="!tgp.IsCheckBoxGroup">{{totalRatingGroupStaffRecord(tgp.ABC_RatingDetailDTOs)}}</span></td>
+                                <td style="width:100px;font-weight:bold;border-top:none !important">
+                                    <!--<span ng-show="!tgp.IsCheckBoxGroup">{{totalRatingGroupSupervisorRecord(tgp.ABC_RatingDetailDTOs)}}</span>-->
+                                    <div ng-show="!tgp.IsCheckBoxGroup">
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsAdmin==2">
+                                            <div ng-if="staffResultDetaitObject.IsSupervisorRated">
+                                                {{totalRatingGroupSupervisorRecord(tgp.ABC_RatingDetailDTOs)}}
+                                            </div>
+                                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated">
+                                                {{0}}
+                                            </div>
+                                        </div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.IsAdmin!=2">
+                                            {{totalRatingGroupSupervisorRecord(tgp.ABC_RatingDetailDTOs)}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="rd in tgp.ABC_RatingDetailDTOs track by $index">
+                                <td style="width:50px;padding:5px;">{{rd.OrderNumber}}</td>
+                                <td style="text-align:justify;padding:5px;">{{rd.Name}}</td>
+                                <td style="width:100px;"></td>
+                                <td style="width:100px;">
+                                    <div ng-if="rd.ABC_CriterionDetailType==0">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated || staffResultDetaitObject.EvaluationBoardType==1">
+                                            {{rd.StaffRecord}}
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated  && staffResultDetaitObject.EvaluationBoardType!=1">
+                                            <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.StaffRecord" />
+                                        </div>
+                                    </div>
+                                    <!--Nếu trừ điểm-->
+                                    <div ng-if="rd.ABC_CriterionDetailType==1">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated  || staffResultDetaitObject.IsAdmin==2 || staffResultDetaitObject.EvaluationBoardType==1">
+                                            {{rd.StaffRecord}}
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated   && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                            <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.StaffRecord" />
+                                        </div>
+                                    </div>
+                                    <div ng-if="rd.ABC_CriterionDetailType==2">
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated || staffResultDetaitObject.IsAdmin==2">
+                                            <input type="checkbox" disabled="disabled" ng-model="rd.StaffRecord" ng-true-value="1" ng-false-value="0" />
+
+                                        </div>
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated && staffResultDetaitObject.IsAdmin!=2">
+                                            <input type="checkbox" ng-model="rd.StaffRecord" ng-true-value="1" ng-false-value="0" />
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td style="width:100px;">
+                                    <div ng-if="rd.ABC_CriterionDetailType==0">
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.EvaluationBoardType==1 || staffResultDetaitObject.IsAdmin==2">
+                                            <div ng-if="staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsSupervisor">
+                                                {{rd.SupervisorRecord}}
+                                            </div>
+                                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsSupervisor">
+                                                {{0}}
+                                            </div>
+                                        </div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.EvaluationBoardType!=1 && staffResultDetaitObject.IsAdmin!=2">
+                                            <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.SupervisorRecord" />
+                                        </div>
+                                    </div>
+                                    <div ng-if="rd.ABC_CriterionDetailType==1">
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated  || staffResultDetaitObject.IsAdmin==2 || staffResultDetaitObject.EvaluationBoardType==1">
+                                            <div ng-if="staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsSupervisor">
+                                                {{rd.SupervisorRecord}}
+                                            </div>
+                                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsSupervisor">
+                                                {{0}}
+                                            </div>
+                                        </div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated  && staffResultDetaitObject.IsAdmin!=2 && staffResultDetaitObject.EvaluationBoardType!=1">
+                                            <input style="width:100%" name="Record" kendo-numeric-text-box k-options="numericOptions" k-ng-model="rd.SupervisorRecord" />
+                                        </div>
+                                    </div>
+                                    <div ng-if="rd.ABC_CriterionDetailType==2">
+                                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsAdmin==2">
+                                            <div ng-if="staffResultDetaitObject.IsSupervisorRated">
+                                                <input type="checkbox" disabled="disabled" ng-model="rd.SupervisorRecord" ng-true-value="1" ng-false-value="0" />
+                                            </div>
+                                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated">
+                                                <input type="checkbox" disabled="disabled" />
+                                            </div>
+                                        </div>
+                                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.IsAdmin!=2">
+                                            <input type="checkbox" ng-model="rd.SupervisorRecord" ng-true-value="1" ng-false-value="0" />
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top:none !important"></td>
+                    <td colspan="2" style="font-weight:bold;border-top:none !important">Tổng số điểm</td>
+                    <td style="border-top:none !important"><b>{{totalStaffRecord()}}</b></td>
+                    <td style="border-top:none !important">
+                        <div ng-if="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsAdmin==2">
+                            <div ng-if="staffResultDetaitObject.IsSupervisorRated">
+                                <b>{{totalSupervisorRecord()}}</b>
+                            </div>
+                            <div ng-if="!staffResultDetaitObject.IsSupervisorRated">
+                                {{0}}
+                            </div>
+                        </div>
+                        <div ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsSupervisorRated && staffResultDetaitObject.IsAdmin!=2">
+                            <b>{{totalSupervisorRecord()}}</b>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div class="row">
+                <div style="float: right; margin-right: 30px;">
+                    <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated && !staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsRatingLocked">
+                        <button class="btn btn-primary" ng-click="save()">Lưu</button>
+                        <button class="btn btn-danger" ng-click="lock()">Khóa</button>
+                    </div>
+                    <div ng-if="staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated && !staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsRatingLocked">
+                        <button class="btn btn-primary" ng-click="save()">Lưu</button>
+                        <button class="btn btn-danger" ng-click="lock()">Khóa</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

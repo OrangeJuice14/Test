@@ -1,0 +1,114 @@
+﻿<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var self = this;
+        var session = {};
+        //
+        self.SoLuongCongTac = ko.observable(0);
+        self.SoLuongDonNghi = ko.observable(0);
+        self.SoLuongNgoaiGio = ko.observable(0);
+        //
+
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyNhacViec_Find',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: ko.toJSON({
+                userId: session.UserId
+            }),
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.SoLuongCongTac = obj.SoLuongCongTac;
+                self.SoLuongDonNghi = obj.SoLuongDonNghi;
+                self.SoLuongNgoaiGio = obj.SoLuongNgoaiGio;
+
+            }
+        });
+    }
+
+    var model = new ViewModel();
+    ko.applyBindings(model, $("#quanlynhacviec")[0]);
+
+    //
+    function NhacViec_KhaiBaoCongTac() {
+        window.location = "/kpi/quanlycongtac_nhacviec";
+    }
+    function NhacViec_DonXinNghi() {
+        window.location = "/kpi/chamcongngaynghi_nhacviec";
+    }
+    function NhacViec_DonXinNgoaiGio() {
+        window.location = "/kpi/quanlyngoaigio_nhacviec";
+    }
+</script>
+
+<div class="container" id="quanlynhacviec">
+    <!-- -->
+    <div style="margin-top: 20px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div data-bind="if: SoLuongCongTac > 0 ">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title" style="font-weight:bold">THÔNG BÁO KHAI BÁO CÔNG TÁC</div>
+                </div>
+                <div>
+                    <div style="padding-top: 20px" class="panel-body">
+                        <div class="form-group">
+                            <label class="col-lg-12 control-label">
+                                <a onclick="NhacViec_KhaiBaoCongTac()" href="#" style="color:red;font-weight:bold">
+                                    Có <span data-bind="text: SoLuongCongTac "></span> đơn khai báo công tác cần duyệt
+                                </a>
+                                <img src="../../../../Images/nv_new.gif" /> <span></span>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="if:SoLuongDonNghi != '0'">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title" style="font-weight:bold">THÔNG BÁO ĐƠN XIN NGHỈ</div>
+                </div>
+                <div style="padding-top: 20px" class="panel-body">
+                    <div class="form-group">
+                        <label class="col-lg-12 control-label">
+                            <a onclick="NhacViec_DonXinNghi()" href="#" style="color:red;font-weight:bold">
+                                Có <span data-bind="text: SoLuongDonNghi "></span> đơn xin nghỉ cần duyệt
+                            </a>
+                            <img src="../../../../Images/nv_new.gif" /> <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="if:SoLuongNgoaiGio != '0'">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title" style="font-weight:bold">THÔNG BÁO NGOÀI GIỜ</div>
+                </div>
+                <div style="padding-top: 20px" class="panel-body">
+                    <div class="form-group">
+                        <label class="col-lg-12 control-label">
+                            <a onclick="NhacViec_DonXinNgoaiGio()" href="#" style="color:red;font-weight:bold">
+                                Có <span data-bind="text: SoLuongNgoaiGio "></span> đơn xin làm ngoài giờ
+                            </a>
+                            <img src="../../../../Images/nv_new.gif" /> <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

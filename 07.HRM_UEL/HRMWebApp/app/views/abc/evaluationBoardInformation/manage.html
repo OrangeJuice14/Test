@@ -1,0 +1,29 @@
+﻿
+<style>
+    th, td {
+        text-align: center !important;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">THÔNG TIN ĐÁNH GIÁ</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <select kendo-combo-box k-ng-model="departmentId" k-options="departmentResource" style="width:250px;margin:auto"></select>
+                    <a ng-click="Search()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-plus"></i> Tìm kiếm
+                    </a>
+                </div>
+                <div class="col-md-3"></div>
+
+            </div>
+            <br />
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>

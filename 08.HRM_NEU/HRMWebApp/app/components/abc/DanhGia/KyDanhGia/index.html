@@ -1,0 +1,39 @@
+﻿<div class="widget">
+    <div class="widget-header bg-themeprimary">
+        <span class="widget-caption">Kỳ đánh giá năm: </span>
+        <select kendo-drop-down-list
+                k-options="DataListNam"
+                style="width: 60px;float: left;margin: 3px;"
+                ng-model="nam"
+                ng-change="GetKyDanhGia()">
+        </select>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <div kendo-treelist="grid" options="kyDanhGiaOptions" k-data-source="kyDanhGiaList"></div>
+        </div>
+        <hr />
+        <!--<div class="widget-main">
+            <ul class="nav nav-tabs" id="group-danh-gia">
+                <li ng-repeat="Group in UserDanhGiaRole.ListGroupDanhGia" ng-class="$index == 0 ? 'active' : ''"><a data-toggle="tab" ng-href="#{{Group.Id}}">{{Group.Name}} ({{UserDanhGiaRole.UserDepartmentName}})</a></li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div ng-repeat="Group in UserDanhGiaRole.ListGroupDanhGia" id="{{Group.Id}}" class="tab-pane fade" ng-class="$index == 0 ? 'in active' : ''">
+                    <ul class="nav nav-tabs">
+                        <li ng-if="Group.TuDanhGia" ng-class="Group.TuDanhGia == true ? 'active' : ''"><a data-toggle="tab" ng-href="#TuDanhGia{{Group.Id}}">Tự đánh giá</a></li>
+                        <li ng-if="Group.DanhGiaCapDuoi" ng-class="!Group.TuDanhGia == true ? 'active' : ''"><a data-toggle="tab" ng-href="#DanhGiaCapDuoi{{Group.Id}}">Đánh giá cấp dưới</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="TuDanhGia{{Group.Id}}" ng-if="Group.TuDanhGia" class="tab-pane fade" ng-class="Group.TuDanhGia == true ? 'in active' : ''">
+                            <div kendo-treelist="grid" options="kyDanhGiaOptions" k-data-source="kyDanhGiaList"></div>
+                        </div>
+                        <div id="DanhGiaCapDuoi{{Group.Id}}" ng-if="Group.DanhGiaCapDuoi" class="tab-pane fade" ng-class="!Group.TuDanhGia == true ? 'in active' : ''">
+                            <div kendo-treelist="grid" options="kyDanhGiaCapDuoiOptions" k-data-source="kyDanhGiaList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>

@@ -1,0 +1,15 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">KẾ HOẠCH</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="margin-bottom-10" ng-show="false">
+                <select class="form-control" name="AgentObjectSelect" ng-init="obj.AgentObject.Id = null" ng-change="selectedChange()" ng-model="obj.AgentObject.Id" ng-options="listObj.Id as listObj.Name for listObj in AgentObjects">
+                    <option value="">Chọn đối tượng ...</option>
+                </select>
+            </div>
+            <div kendo-treelist="grid" options="unlockRatingGridOptions" k-data-source="unlockRatingDataSource"></div>
+        </div>
+    </div>
+</div>

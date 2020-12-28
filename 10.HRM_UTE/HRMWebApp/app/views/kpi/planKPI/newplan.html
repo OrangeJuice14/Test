@@ -1,0 +1,35 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="PlanKPIDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': PlanKPIDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6" style="margin-top:5px;">
+                Kế hoạch năm <input type="text" style="width:50px;text-align:center" maxlength="4" required ng-model="obj.FromYear"> - <input type="text" style="width:50px;text-align:center" maxlength="4" required ng-model="obj.ToYear">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Thời gian bắt đầu</label>
+            <div class="col-md-6">
+                <input kendo-date-picker k-ng-model="obj.StartTime" style="width: 100%;" k-format="'dd/MM/yyyy'" />             
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Thời gian kết thúc</label>
+            <div class="col-md-6">
+                <input kendo-date-picker k-ng-model="obj.EndTime" style="width: 100%;" k-format="'dd/MM/yyyy'" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="PlanKPIDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

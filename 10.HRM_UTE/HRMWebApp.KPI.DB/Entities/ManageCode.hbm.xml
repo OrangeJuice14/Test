@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ManageCode, HRMWebApp.KPI.DB" table="KPI_ManageCode">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="StaffType" column="StaffType"></property>
+    <many-to-one name="ProfessorCriterion" class="HRMWebApp.KPI.DB.Entities.ProfessorCriterion" column="ProfessorCriterionId" />
+  </class>
+</hibernate-mapping>

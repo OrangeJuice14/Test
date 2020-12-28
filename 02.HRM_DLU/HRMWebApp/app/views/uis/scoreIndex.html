@@ -1,0 +1,7 @@
+﻿<h1>score index</h1>
+{{myScoreIndex}}
+<h4>{{myObj.TenHocPhan}}</h4>
+<div ng-repeat="a in myObj.HocSinhList">
+    <span>{{a.HoTen}}</span>
+    <input ng-model="a.Score" /><span>{{a.Score}}</span>
+</div>

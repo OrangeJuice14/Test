@@ -1,0 +1,74 @@
+﻿<style>
+    .k-grid .k-grid-header .k-header .k-link {
+        height: auto;
+        text-align: center;
+    }
+
+    .k-grid .k-grid-header .k-header {
+        white-space: normal;
+    }
+
+    .k-grid-header th.k-header {
+        vertical-align: middle !important;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:60px;">
+        <span class="widget-caption" style="font-size:20px; line-height:60px;">ĐÁNH GIÁ TỔNG HỢP TRƯỞNG ĐƠN VỊ</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="text-align:center">
+                    <select kendo-combo-box k-ng-model="yearSelected" k-data-source="yearList" k-value-primitive="true"></select>
+                    <!--<select kendo-combo-box k-ng-model="evaluationId" k-data-source="evaluationDataSource" k-options="evaluationResource" style="width:250px;margin:auto"></select>-->
+                    <select kendo-combo-box 
+                            k-ng-model="evaluationId" 
+                            k-data-source="evaluationDataSource" 
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-value-primitive="true"
+                            style="width:250px;margin:auto"></select>
+                    <!--<select kendo-combo-box k-ng-model="departmentId" k-options="departmentResource" style="width:250px;margin:auto"></select>-->
+                    <a ng-click="Search2()" class="btn btn-labeled btn-blue">
+                        <i class="btn-label fa fa-search"></i> Tìm kiếm
+                    </a>
+
+                </div>
+                <div class="col-md-1"></div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="text-align:center">
+                    <!--<a ng-click="ExportExcel()" class="btn btn-labeled btn-success">
+                        <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+                    </a>-->
+                    <a ng-if="isAdmin!=2" ng-click="ExportExcelDepartment()" class="btn btn-labeled btn-success">
+                        <i class="btn-label fa fa-file-excel-o"></i>Xuất excel các đơn vị
+                    </a>
+                    <!--<a ng-if="isAdmin==1" ng-click="LockRating()" class="btn btn-labeled btn-danger">
+                        <i class="btn-label fa fa-lock"></i> Khóa đánh giá
+                    </a>
+                    <a ng-if="isAdmin==1" ng-click="UnlockRating()" class="btn btn-labeled btn-warning">
+                        <i class="btn-label fa fa-unlock-alt"></i>Mở khóa đánh giá
+                    </a>-->
+                    <a ng-if="isAdmin==1" ng-click="UnlockRatingStaff(2, 1)" class="btn btn-labeled btn-palegreen">
+                        <i class="btn-label fa fa-unlock-alt"></i>Mở khóa Hiệu trưởng
+                    </a>
+                    <a ng-if="isAdmin==1" ng-click="UnlockRatingStaff(2, 2)" class="btn btn-labeled btn-palegreen">
+                        <i class="btn-label fa fa-unlock-alt"></i>Mở khóa cá nhân
+                    </a>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <br />
+            <div class="row" style="text-align:center; color:red;font-weight:bold"><span>{{status}}</span></div>
+            <br />
+            <div kendo-grid="grid" k-data-source="dataSource2" k-options="mainGridOptions2"></div>
+        </div>
+    </div>
+</div>

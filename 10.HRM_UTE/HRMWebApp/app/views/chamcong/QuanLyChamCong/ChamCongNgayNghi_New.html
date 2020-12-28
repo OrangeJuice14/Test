@@ -1,0 +1,73 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Thông tin chấm công ngày nghỉ</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Phòng ban:</label>
+            <div class="col-sm-7">
+                <select data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected_nhansuNew"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Nhân viên:</label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbuttonCCNNNew">
+                    <div style="border-color: transparent;" id="jqxgrid_hosonhanvienCCNNNew">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxFromDateCCNNNew'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+            <div class="col-sm-7">
+                <div id='jqxToDateCCNNNew'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Loại đơn xin nghỉ</label>
+            <div class="col-sm-7">
+                <select id="loaidonxinnghi"  data-bind="options: donXinNghiList, optionsText: 'Name', optionsValue: 'Id', value: donXinNghiSelected"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Hình thức nghỉ</label>
+            <div class="col-sm-7">
+                <select data-bind="options: HinhThucNghiList, optionsText: 'TenHinhThucNghi', optionsValue: 'Oid', value: hinhThucNghiSelected1"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Lý do nghỉ phép:</label>
+            <div class="col-sm-7">
+                <textarea id="txtContentCCNNNew"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Nơi nghỉ phép:</label>
+            <div class="col-sm-7">
+                <textarea id="txtNoiNghiPhep"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Địa chỉ liên hệ:</label>
+            <div class="col-sm-7">
+                <textarea id="txtDiaChiLienHe"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: Create">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+    </div>
+</div>

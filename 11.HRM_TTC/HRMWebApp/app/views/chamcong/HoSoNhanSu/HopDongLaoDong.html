@@ -1,0 +1,187 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content">
+            <div class="hrm_subtitle">
+                Hợp đồng hiện tại
+            </div>
+            <div class="hrm_line">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Số hợp đồng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: SoHopDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Loại hợp đồng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LoaiHopDong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Ngày ký:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NgayKy == null ? NgayKy : formatDate(new Date(NgayKy))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Chức vụ người ký:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucVuNguoiKy">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Người ký:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: NguoiKy">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Từ ngày:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TuNgay == null ? '' : formatDate(new Date(TuNgay))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Đến ngày:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: DenNgay == null ? '' : formatDate(new Date(DenNgay))">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <!--<div class="hrm_box">
+                <div class="hrm_left">
+                    % mức lương được hưởng:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: MucLuongDuocHuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Chức danh chuyên môn:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: ChucDanhChuyenMon">
+                </div>
+            </div>-->
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Mã ngạch lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: MaNgachLuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Tên ngạch lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: TenNgachLuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Bậc lương:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: BacLuong">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Lương cơ bản:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LuongCoBan">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div class="hrm_box">
+                <div class="hrm_left">
+                    Lương kinh doanh:
+                </div>
+                <div class="hrm_right"
+                     data-bind="text: LuongKinhDoanh">
+                </div>
+            </div>
+            <div class="hrm_clear">
+            </div>
+            <div>
+                <div class="hrm_subtitle">
+                    Danh sách các hợp đồng đã ký
+                </div>
+                <div class="hrm_line">
+                </div>
+                <div>
+                    <table width="100%" border="1" style="border-collapse: collapse">
+                        <tr class="backGroundTitle" style="height: 40px;">
+                            <th class="textToCenter">Số hợp đồng</th>
+                            <th class="textToCenter">Loại hợp đồng</th>
+                            <th class="textToCenter">Ngày ký</th>
+                            <th class="textToCenter">Người ký</th>
+                            <th class="textToCenter">Từ ngày</th>
+                            <th class="textToCenter">Đến ngày</th>
+                        </tr>
+                        <tbody data-bind="foreach: DanhSach_HopDongDaKy">
+                            <tr>
+                                <td data-bind="text: SoHopDong" class="textToCenter"></td>
+                                <td data-bind="text: LoaiHopDong" class="textToCenter"></td>
+                                <td data-bind="text: formatDate(new Date(NgayKy))" class="textToCenter"></td>
+                                <td data-bind="text: NguoiKy" class="textToCenter"></td>
+                                <td data-bind="text: TuNgay == null ? '' :formatDate(new Date(TuNgay))" class="textToCenter"></td>
+                                <td data-bind="text: DenNgay ==null ? '' :formatDate(new Date(DenNgay))" class="textToCenter"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

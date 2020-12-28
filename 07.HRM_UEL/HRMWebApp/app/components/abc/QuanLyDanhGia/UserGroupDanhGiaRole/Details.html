@@ -1,0 +1,27 @@
+﻿<div>
+    <form class="form-horizontal" name="GroupDanhGiaDetailsChiForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Phân quyền đánh giá</h3>
+        </div>
+        <div class="modal-body" style="display:flow-root">
+            <div class="col-12">
+                <div>Họ và tên: </div>
+                <input type="text" class="k-textbox" style="width:100%" placeholder="Tên ..." name="name" ng-model="User.WebUserStaffInfoStaffProfileName" ng-disabled="true" />
+            </div>
+            <div class="col-12 margin-top-5">
+                <div>Thuộc nhóm: </div>
+                <select kendo-multi-select
+                        k-options="ListGroupOption"
+                        k-filter="'contains'"
+                        style="width: 100%; background-color:lightblue"
+                        k-ng-model="ListGroupDanhGiaId">
+                </select>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="Save()" ng-disabled="ChiTietDanhGiaForm.$invalid">Lưu</button>
+            <button class="btn btn-warning" style="cursor:pointer" ng-click="$dismiss()">Thoát</button>
+        </div>
+    </form>
+</div>

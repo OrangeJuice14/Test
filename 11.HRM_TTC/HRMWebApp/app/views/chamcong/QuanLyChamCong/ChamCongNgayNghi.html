@@ -1,0 +1,1557 @@
+﻿<script type="text/javascript">
+    var session = {};
+
+    //
+    $("#jqxTuNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+    $("#jqxDenNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/KyChamCong_GetTuNgayDenNgay_ByNgay',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: ko.toJSON({ ngay: $('#jqxTuNgay').jqxDateTimeInput('getDate') }),
+            async: false,
+            success: function (result) {
+                if (result != null) {
+                    $("#jqxTuNgay").jqxDateTimeInput('setDate', result.TuNgay);
+                    $("#jqxDenNgay").jqxDateTimeInput('setDate', result.DenNgay);
+                }
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+        var self = this;
+
+        // nhắc việc
+        self.nhacViec = false;
+        if (window.location.href.indexOf("chamcongngaynghi_nhacviec") != -1) {
+            self.nhacViec = true;
+            self.tatCaDonChuaDuyet = ko.observable(true);
+            $("#jqxTuNgay").jqxDateTimeInput({ disabled: true });
+            $("#jqxDenNgay").jqxDateTimeInput({ disabled: true });
+            self.tatCaDonChuaDuyet.subscribe(function (newValue) {
+                if (newValue) {
+                    $("#jqxTuNgay").jqxDateTimeInput({ disabled: true });
+                    $("#jqxDenNgay").jqxDateTimeInput({ disabled: true });
+                } else {
+                    $("#jqxTuNgay").jqxDateTimeInput({ disabled: false });
+                    $("#jqxDenNgay").jqxDateTimeInput({ disabled: false });
+                }
+            });
+        }
+        // end nhắc việc
+        
+        // chỉ lấy 1 đơn xin nghỉ
+        self.ChiLay1 = false;
+        if (window.location.href.indexOf("chamcongngaynghi?id=") != -1) {
+            self.ChiLay1 = true;
+            var url = new URL(window.location.href);
+            self.ChamCongNgayNghiOid = url.searchParams.get("id");
+        }
+
+        self.SoNgayHieuTruongDuyet = ko.observable(0);
+        self.SoNgayHieuTruongDuyetString = ko.observable("0");
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/CauHinhChamCong_Find',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                if (obj == null)
+                    obj = { SoNgayHieuTruongDuyet: 2 };
+                self.SoNgayHieuTruongDuyet(obj.SoNgayHieuTruongDuyet);
+                self.SoNgayHieuTruongDuyetString(obj.SoNgayHieuTruongDuyet.toString().padStart(2, "0"));
+            }
+        });
+
+        self.IsAdmin = ko.observable(null);
+        self.IsTruongBoPhan = ko.observable(null);
+        //
+        self.WebGroupId = ko.observable(null);
+        self.UserId = ko.observable(null);
+        //
+        var buoiArr = [
+            { Id: 1, Name: "Cả ngày" },
+            { Id: 2, Name: "Sáng" },
+            { Id: 3, Name: "Chiều" }
+        ];
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.UserId(session.UserId);
+                self.WebGroupId(session.WebGroupId);
+            }
+        });
+
+        // Lấy các quyền
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000006"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000007"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000009"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000010"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000001")
+            self.IsAdmin(true);
+        else
+            self.IsAdmin(false);
+
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000011")
+            self.IsTruongBoPhan(true);
+        else
+            self.IsTruongBoPhan(false);
+        //
+        var trangthaiArr = [
+            { Id: 2, Name: "Tất cả" },
+            { Id: -1, Name: "Chờ xét" },
+            { Id: 0, Name: "Không chấp nhận" },
+            { Id: 1, Name: "Chấp nhận" }
+        ];
+        //
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(new Date().getDate()),
+        //self.month = ko.observable(new Date().getMonth() + 1);
+        //self.month = ko.observable();
+        //self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable();
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        self.departmentSelected_nhansu = ko.observable();
+        self.departmentSelected_First = "";
+        self.loaiNhanSu = ko.observableArray();
+        self.loaiNhanSuSelected = ko.observable();
+        self.name = ko.observable("");
+        self.HinhThucNghiList = ko.observableArray();
+        self.hinhThucNghiSelected = ko.observable();
+        self.isEdit = ko.observable(false);
+        self.grid_hosonhanvien = ko.observableArray();
+        self.grid_hosonhanvien1 = ko.observableArray();
+        //
+        self.HoTen = ko.observable();
+        self.NgaySinhString = ko.observable();
+        self.ChucDanh = ko.observable();
+        self.TenPhongBan = ko.observable();
+        self.NamNghiPhep = ko.observable();
+        self.TenHinhThucNghi = ko.observable();
+        self.SoNgay = ko.observable();
+        self.TuNgayString = ko.observable();
+        self.DenNgayString = ko.observable();
+        self.NoiNghiPhep = ko.observable();
+        self.DienGiai = ko.observable();
+        self.DienThoai = ko.observable();
+        self.Email = ko.observable();
+        self.DiaChiLienHe = ko.observable();
+        self.TenGiayXinPhep = ko.observable();
+        self.LoaiNghiPhep = ko.observable();
+        self.NgayThang = ko.observable("ngày " + new Date().getDate() + " tháng " + (new Date().getMonth() + 1) + " năm " + new Date().getFullYear());
+        //
+        self.trangthaiList = ko.observableArray(trangthaiArr);
+        self.trangthaiSelected = ko.observable(2);
+        self.buoiList = ko.observableArray(buoiArr);
+        self.buoiSelected = ko.observable(1);
+        //
+        self.SoHieuCongChuc = ko.observable();
+        self.ChucVu = ko.observable();
+        self.DonVi = ko.observable();
+        self.Khoi = ko.observable();
+        self.NguoiBanGiao = ko.observable();
+        //
+        self.SoNgay = ko.observable();
+        //
+        self.SoNgayPhepNam = ko.observable();
+        self.SoNgayPhepDaDung = ko.observable();
+        self.SoNgayPhepThucTe = ko.observable();
+        //
+        self.SoNgayConKetHonToiDa = ko.observable();
+        self.SoNgayConKetHonThucTe = ko.observable();
+        self.SoNgayKetHonToiDa = ko.observable();
+        self.SoNgayKetHonThucTe = ko.observable();
+        self.SoNgayTangToiDa = ko.observable();
+        self.SoNgayTangThucTe = ko.observable();
+        //
+        self.SoNgayOmDNToiDa = ko.observable();
+        self.SoNgayOmDNThucTe = ko.observable();
+        self.SoNgayOmNNToiDa = ko.observable();
+        self.SoNgayOmNNThucTe = ko.observable();
+        self.SoNgayConOmToiDa = ko.observable();
+        self.SoNgayConOmThucTe = ko.observable();
+        self.SoNgayKhamThaiToiDa = ko.observable();
+        self.SoNgayKhamThaiThucTe = ko.observable();
+        self.SoNgaySayThaiToiDa = ko.observable();
+        self.SoNgaySayThaiThucTe = ko.observable();
+        self.SoNgaySinhConToiDa = ko.observable();
+        self.SoNgaySinhConThucTe = ko.observable();
+        self.SoNgayDuongSucToiDa = ko.observable();
+        self.SoNgayDuongSucThucTe = ko.observable();
+        //
+        self.SoNgayKhongLuongToiDa = ko.observable();
+        self.SoNgayKhongLuongThucTe = ko.observable();
+        //
+        self.departmentSelected_nhansu.subscribe(function (newValue) {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue, company: self.companySelected() }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.grid_hosonhanvien(obj);
+                }
+            });
+            var source =
+            {
+                localdata: self.grid_hosonhanvien(),
+                datafields:
+                [
+                    { name: 'Oid', type: 'string' },
+                    { name: 'MaQuanLy', type: 'string' },
+                    { name: 'Ho', type: 'string' },
+                    { name: 'Ten', type: 'string' }
+                ],
+                datatype: "json"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // initialize jqxGrid
+            $("#jqxdropdownbutton").jqxDropDownButton({ width: 150, height: 25 });
+
+            $("#jqxgrid_hosonhanvien").jqxGrid(
+                {
+                    width: 250,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    columns: [
+                        { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                        { text: 'Họ', datafield: 'Ho', width: 90, },
+                        { text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                    ]
+                });
+
+            $("#jqxgrid_hosonhanvien").on('rowselect', function (event) {
+                var args = event.args;
+                var row = $("#jqxgrid_hosonhanvien").jqxGrid('getrowdata', args.rowindex);
+                if (row == undefined)
+                    return;
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['Ho'] + ' ' + row['Ten'] + '</div>';
+                $("#jqxdropdownbutton").jqxDropDownButton('setContent', dropDownContent);
+            });
+            $("#jqxgrid_hosonhanvien").jqxGrid('selectrow', 0);
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: 'Tất cả' });
+                    self.department(obj);
+                    if (obj.length > 0) {
+                        self.departmentSelected(obj[0].Oid);
+                        self.departmentSelected_First = obj[0].Oid;
+                    }
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+            }
+        });
+
+        self.checkChot = function (ngay) {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_CheckChotTheoNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    ngay: ngay,
+                    boPhanId: self.departmentSelected_First
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_LoaiNhanSu',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.loaiNhanSu(obj);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'HinhThucNghi_Name', type: 'string' },
+                { name: 'TuNgay', type: 'date', format: 'dd-MM-yyyy' },
+                { name: 'Buoi', type: 'string' },
+                { name: 'DenNgay', type: 'date' },
+                { name: 'DienGiai', type: 'string' },
+                { name: 'SoNgay', type: 'decimal' },
+                { name: 'TrangThai_TP', type: 'int' },
+                { name: 'TrangThai_HT', type: 'int' },
+                { name: 'TrangThai_HDQT', type: 'int' },
+                { name: 'IDNhanVien', type: 'string' },
+                { name: 'LaTruongPhong', type: 'string' },
+                { name: 'LaBanGiamHieu', type: 'string' },
+            ],
+            id: 'Id',
+            // sortcolumn: 'HoTen',
+            //sortdirection: 'asc',
+            url: self.ChiLay1 ? "/WebServices/ChamCongNgayNghi_Find_ById" : !self.nhacViec ? "/WebServices/ChamCongNgayNghi_Find" : "/WebServices/ChamCongNgayNghi_Find_NhacViec",
+            formatdata: function (data) {
+                //
+                var date = $('#jqxTuNgay').jqxDateTimeInput('getDate');
+                var tuNgay = $.jqx.dataFormat.formatdate(date, 'd');
+                var date = $('#jqxDenNgay').jqxDateTimeInput('getDate');
+                var denNgay = $.jqx.dataFormat.formatdate(date, 'd');
+                //
+                if (self.ChiLay1) {
+                    return {
+                        chamCongNgayNghiId: self.ChamCongNgayNghiOid
+                    }
+                }
+                else if (!self.nhacViec) {
+                    return {
+                        tungay: tuNgay,
+                        denngay: denNgay,
+                        manhansu: self.name(),
+                        bophanid: self.departmentSelected(),
+                        loainhansuid: self.loaiNhanSuSelected(),
+                        trangthai: self.trangthaiSelected() == undefined ? null : self.trangthaiSelected(),
+                        webUserId: session.UserId,
+                        congTy: self.companySelected()
+                    };
+                }
+                else {
+                    return {
+                        tungay: tuNgay,
+                        denngay: denNgay,
+                        manhansu: self.name(),
+                        bophanid: self.departmentSelected(),
+                        loainhansuid: self.loaiNhanSuSelected(),
+                        trangthai: self.trangthaiSelected() == undefined ? null : self.trangthaiSelected(),
+                        webUserId: session.UserId,
+                        congTy: self.companySelected(),
+                        tatCaDonChuaDuyet: self.tatCaDonChuaDuyet()
+                    };
+                }
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                        }
+                    },
+                     {
+                         text: 'Tr.Đơn vị', datafield: 'TrangThai_TP', align: 'center', cellsalign: "middle", width: 80,
+                         cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties, rowdata) {
+                             var str = "";
+                             if (!rowdata.LaBanGiamHieu)
+                             {
+                                 if (cellvalue == -1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                                 }
+                                 if (cellvalue == 1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                                 }
+                                 if (cellvalue == 0) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                                 }
+                             }
+                             return str;
+                         }
+                     },
+                     {
+                         text: 'H.Trưởng', datafield: 'TrangThai_HT', align: 'center', cellsalign: "middle", width: 80,
+                         cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties, rowdata) {
+                             var str = "";
+                             if ((rowdata.SoNgay > self.SoNgayHieuTruongDuyet() && !rowdata.LaTruongPhong)
+                                  || rowdata.LaTruongPhong || rowdata.LaBanGiamHieu)
+                             {
+                                 if (cellvalue == -1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                                 }
+                                 if (cellvalue == 1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                                 }
+                                 if (cellvalue == 0) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                                 }
+                             }
+                             return str;
+                         }
+                     }, ,
+                     {
+                         text: 'HĐQT/GĐ.Khối', datafield: 'TrangThai_HDQT', align: 'center', cellsalign: "middle", width: 120,
+                         cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties, rowdata) {
+                             var str = "";
+                             if (rowdata.LaBanGiamHieu) {
+                                 if (cellvalue == -1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/InfoSmall.jpg' /></div>";
+                                 }
+                                 if (cellvalue == 1) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_yes.png' /></div>";
+                                 }
+                                 if (cellvalue == 0) {
+                                     str = "<div class='jqx-grid-cell-child'><img src='/Images/TT_no.png' /></div>";
+                                 }
+                             }
+                             return str;
+                         }
+                     },
+                    {
+                        text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 100, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', width: 150, align: 'center'
+                    },
+                     {
+                         text: 'Phòng ban', datafield: 'TenPhongBan', width: 200, align: 'center'
+                     },
+                     {
+                         text: 'Từ ngày', datafield: 'TuNgay', width: 100, align: 'center', cellsalign: "middle", columnGroup: 'NgayCongTac', cellsformat: 'd/M/yyyy'
+                     },
+                     {
+                         text: 'Đến ngày', datafield: 'DenNgay', width: 100, align: 'center', cellsalign: "middle", columnGroup: 'NgayCongTac', cellsformat: 'd/M/yyyy'
+                     },
+                       {
+                           text: 'Buổi', datafield: 'Buoi', width: 80, align: 'center', cellsalign: "middle",
+                       },
+                       {
+                           text: 'Số ngày', datafield: 'SoNgay', width: 80, align: 'center', cellsalign: "middle",
+                       },,
+                     {
+                         text: 'Hình thức nghỉ', datafield: 'HinhThucNghi_Name', width: 250, cellsalign: "left", sortable: false, align: 'center',
+                     },
+                     {
+                         text: 'Nội dung', width: 250, datafield: 'DienGiai', align: 'center', cellsalign: "left"
+                     },
+                     {
+                         text: 'Nhân viên', datafield: 'IDNhanVien', width: 100, align: 'center', hidden: true
+                     }
+                ],
+                columnGroups: [
+                   { text: 'Ngày nghỉ', cellsAlign: 'center', align: 'center', name: 'NgayCongTac' }
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validateFromDateToDate: function (chamCongNgayNghiOid, tuNgay, denNgay, nhanVienID) {
+            var self = this;
+            var check;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChamCongNgayNghi_KiemTraTuNgayDenNgayCoHopLe',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: ko.toJSON({
+                    chamCongNgayNghiOid: chamCongNgayNghiOid,
+                    tuNgay: tuNgay,
+                    denNgay: denNgay,
+                    nhanVienID: nhanVienID,
+                    buoi: self.buoiSelected()
+                }),
+                success: function (result) {
+                    var obj = result;
+                    check = obj;
+                }
+            });
+            return check;
+        },
+        KiemTraSoNgay: function () {
+            var self = this;
+            //var oneDay = 24 * 60 * 60 * 1000;
+            var fromDate = $('#jqxFromDate1').jqxDateTimeInput('getDate');
+            var toDate = $('#jqxToDate1').jqxDateTimeInput('getDate');
+            //
+            //var diffDays = Math.round(Math.abs((start.getTime() - end.getTime()) / (oneDay)));
+            var diffDays = self.getWorkingDay(fromDate, toDate);
+            //
+            var soNgayHopLe = parseFloat($('#txtsongayhople').val());
+            if (soNgayHopLe < diffDays) {
+                alert("Số ngày nghỉ không hợp lệ: " + diffDays);
+                return true;
+            }
+            return false;
+        },
+        //Hàm lấy số ngày nghỉ trừ t7 và cn
+        //var fromDate = new Date("2016-08-14");
+        //var toDate = new Date("2016-08-28");
+        getWorkingDay: function (fromDate, toDate) {
+            var self = this;
+            var diffInMS = toDate - fromDate;
+            var diffInDays = (diffInMS / (24 * 3600) / 1000) + 1; // include both start and end day
+            var fromDayInWeek = fromDate.getDay();
+            fromDayInWeek = fromDayInWeek > 0 ? fromDayInWeek : 7;
+            var weeks = Math.floor(diffInDays / 7);
+            var extraDays = diffInDays % 7;
+            addedDay = 0;
+            for (var i = 1; i <= extraDays; i++) {
+                var refDayInWeek = fromDayInWeek + i;
+                if (refDayInWeek != 7 && refDayInWeek != 8 && refDayInWeek < 11) {
+                    addedDay++;
+                }
+            }
+            var workingDay = (weeks * 5) + addedDay;
+            if (self.buoiSelected() != 1) { // buổi sáng hoặc chiều chỉ lấy 1 nửa số ngày
+                workingDay = workingDay / 2;
+            }
+            //
+            return workingDay;
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.day()) || self.day() < 0 || self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            //if (self.validate())
+            //    return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        New: function () {
+            var self = this;
+            self.departmentSelected_nhansu1 = ko.observable();
+            self.departmentSelected_nhansu1.subscribe(function (newValue) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue, company: self.companySelected() }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.grid_hosonhanvien1(obj);
+                    }
+                });
+                var source =
+                {
+                    localdata: self.grid_hosonhanvien1(),
+                    datafields:
+                    [
+                        { name: 'Oid', type: 'string' },
+                        { name: 'MaQuanLy', type: 'string' },
+                        { name: 'HoTen', type: 'string' }
+                        //{ name: 'Ten', type: 'string' }
+                    ],
+                    datatype: "json"
+                };
+
+                var dataAdapter = new $.jqx.dataAdapter(source);
+
+                // initialize jqxGrid
+                $("#jqxdropdownbutton1").jqxDropDownButton({ width: 252, height: 25 });
+
+                $("#jqxgrid_hosonhanvien1").jqxGrid(
+                    {
+                        width: 250,
+                        source: dataAdapter,
+                        pageable: true,
+                        autoheight: true,
+                        autorowheight: true,
+                        columnsresize: true,
+                        showfilterrow: true,
+                        filterable: true,
+                        columns: [
+                            { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                            { text: 'Họ tên', datafield: 'HoTen', width: 150, }
+                            //{ text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                        ]
+                    });
+
+                $("#jqxgrid_hosonhanvien1").on('rowselect', function (event) {
+                    var args = event.args;
+                    var row = $("#jqxgrid_hosonhanvien1").jqxGrid('getrowdata', args.rowindex);
+                    if (row == undefined)
+                        return;
+                    var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['HoTen'] + '</div>';
+                    $("#jqxdropdownbutton1").jqxDropDownButton('setContent', dropDownContent);
+                });
+                $("#jqxgrid_hosonhanvien1").jqxGrid('selectrow', 0);
+            });
+            //
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgayNghi_New.html', function (data) {
+                $('#popupWindowCCNGNew').html(data);
+                ko.cleanNode($('#popupWindowCCNGNew')[0]);
+                $('#popupWindowCCNGNew').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+
+                });
+                //
+                $("#popupWindowCCNGNew").on('open', function () {
+                    //
+                    $("#jqxComboBox_HinhThucNghi").val('');
+                    $("#txtsongayhople").val('');
+                    $("#txtnguoibangiao").val('');
+                    $("#txtContent1").val('');
+                });
+                //
+                $("#jqxFromDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                //
+
+                //Lấy dữ liệu hình thức nghỉ
+                var sourceHinhThucNghi =
+                {
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    datafields: [
+                        { name: 'Oid' },
+                        { name: 'TenHinhThucNghi' }
+                    ],
+                    url: "/WebServices/ChamCongNgayNghi_GetListHinhThucNghi",
+                    async: false,
+                    id: 'Oid'
+                };
+                var dataAdapter = new $.jqx.dataAdapter(sourceHinhThucNghi);
+                //
+                $("#jqxComboBox_HinhThucNghi").jqxComboBox({ source: dataAdapter, displayMember: "TenHinhThucNghi", valueMember: "Oid", width: '300px', height: '25px' });
+                $('#jqxComboBox_HinhThucNghi').on('select', function (event) {
+                    var args = event.args;
+                    if (args != undefined) {
+                        var item = event.args.item;
+                        if (item != null) {
+                            self.hinhThucNghiSelected(item.value);
+
+                            //Lấy nhân viên
+                            var getselectedrowindexes = $('#jqxgrid_hosonhanvien1').jqxGrid('getselectedrowindexes');
+                            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien1').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+
+                            //Lấy số ngày phép còn lại
+                            $.ajax({
+                                type: 'POST',
+                                url: '/WebServices/ChamCongNgayNghi_SoNgayHopLe',
+                                contentType: "application/json; charset=utf-8",
+                                data: ko.toJSON({
+                                    hinhThucNghi: item.value,
+                                    nhanVien: ID_NhanVien,
+                                    congTy: self.companySelected(),
+                                    tuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate')
+                                }),
+                                dataType: "json",
+                                async: false,
+                                success: function (result) {
+                                    var obj = result;
+                                    //
+                                    $('#txtsongayhople').val(obj);
+                                }
+                            });
+                        }
+                    }
+                });
+                $("#jqxgrid_hosonhanvien1").on('rowselect', function (event) {
+                    //Lấy nhân viên
+                    var args = event.args;
+                    if (args != undefined) {
+                        var row = event.args.row;
+                        if (row != null) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/WebServices/ChamCongNgayNghi_SoNgayHopLe',
+                                contentType: "application/json; charset=utf-8",
+                                data: ko.toJSON({
+                                    hinhThucNghi: self.hinhThucNghiSelected(),
+                                    nhanVien: row.Oid,
+                                    congTy: self.companySelected(),
+                                    tuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate')
+                                }),
+                                dataType: "json",
+                                async: false,
+                                success: function (result) {
+                                    var obj = result;
+                                    $('#txtsongayhople').val(obj);
+                                }
+                            });
+                        }
+                    }
+                });
+                $("#jqxFromDate1").on('change', function (event) {
+                    //Lấy nhân viên
+                    var args = event.args;
+                    if (args != undefined) {
+                        var date = args.date;
+                        if (date != null) {
+                            //Lấy nhân viên
+                            var getselectedrowindexes = $('#jqxgrid_hosonhanvien1').jqxGrid('getselectedrowindexes');
+                            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien1').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+                            $.ajax({
+                                type: 'POST',
+                                url: '/WebServices/ChamCongNgayNghi_SoNgayHopLe',
+                                contentType: "application/json; charset=utf-8",
+                                data: ko.toJSON({
+                                    hinhThucNghi: self.hinhThucNghiSelected(),
+                                    nhanVien: ID_NhanVien,
+                                    congTy: self.companySelected(),
+                                    tuNgay: date
+                                }),
+                                dataType: "json",
+                                async: false,
+                                success: function (result) {
+                                    var obj = result;
+                                    $('#txtsongayhople').val(obj);
+                                }
+                            });
+                        }
+                    }
+                });
+                //
+                $('#popupWindowCCNGNew').data("kendoWindow").open();
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGNew'));
+                self.departmentSelected_nhansu1(self.departmentSelected_First);
+            });
+        },
+        Edit: function () {
+            var self = this;
+            self.isEdit(true);
+            var getselectedrowindexes = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrowindexes[0]);
+            if (getselectedrowindexes.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChamCongNgayNghi_GetListHinhThucNghi',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiList(obj);
+
+                }
+            });
+
+            $.get('/app/views/chamcong/QuanLyChamCong/ChamCongNgayNghi_Update.html', function (data) {
+                $('#popupWindowCCNGEdit').html(data);
+                ko.cleanNode($('#popupWindowCCNGEdit')[0]);
+                $('#popupWindowCCNGEdit').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "15%"
+                    }
+
+                });
+                $("#jqxFromDate").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgayNghi_GetByID',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: selectedrow.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.IDNhanVien = obj.IDNhanVien;
+                        self.departmentSelected_nhansu(obj.IDBoPhan);
+                        $("#txtContent").val(obj.DienGiai);
+                        $('#jqxFromDate ').jqxDateTimeInput('setDate', obj.TuNgay);
+                        $('#jqxToDate ').jqxDateTimeInput('setDate', obj.DenNgay);
+                    }
+                });
+                $('#popupWindowCCNGEdit').data("kendoWindow").open();
+
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGEdit'));
+            });
+        },
+        Update: function () {
+            var self = this;
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien').jqxGrid('getselectedrowindexes');
+            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+            if (self.isEdit()) {
+                if (self.checkChot($('#jqxFromDate').jqxDateTimeInput('getDate'))) {
+                    alert('Tháng này đã chốt chấm công rồi !!');
+                    return;
+                }
+                else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_Save',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            obj:
+                            {
+                                Oid: selectedrow.Oid,
+                                DienGiai: $("#txtContent").val(),
+                                IDHinhThucNghi: self.hinhThucNghiSelected(),
+                                TuNgay: $('#jqxFromDate').jqxDateTimeInput('getDate'),
+                                DenNgay: $('#jqxToDate').jqxDateTimeInput('getDate')
+                            }
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.message == 'success') {
+                                alert("Lưu thành công !!");
+                                self.datagrid.jqxGrid('updatebounddata');
+                                $("#popupWindowCCNGEdit").data("kendoWindow").close();
+                            }
+                            else {
+                                alert("Lưu thất bại !!");
+                                self.datagrid.jqxGrid('updatebounddata');
+                                $("#popupWindowCCNGEdit").data("kendoWindow").close();
+                            }
+                        }
+                    });
+                    return;
+                }
+            }
+        },
+        Create: function () {
+            //
+            var self = this;
+            //
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien1').jqxGrid('getselectedrowindexes');
+            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien1').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+
+            //Kiểm tra từ ngày đến ngày hợp lệ
+            if ($('#jqxFromDate1').jqxDateTimeInput('getDate') > $('#jqxToDate1').jqxDateTimeInput('getDate')) {
+                alert('Từ ngày đến ngày không hợp lệ!');
+                return;
+            }
+
+            //Kiểm tra thời gian đăng ký
+            if (self.validateFromDateToDate(getselectedrow_edit.length > 0 ? selectedrow.Oid : null, $('#jqxFromDate1').jqxDateTimeInput('getDate'), $('#jqxToDate1').jqxDateTimeInput('getDate'), ID_NhanVien)) {
+                alert("Thời gian đăng ký bị trùng!!!");
+                return;
+            }
+
+            //Kiểm tra số ngày nghỉ có vượt mức cho phép hay ?
+            if (self.KiemTraSoNgay()) return;
+
+            //Kiểm tra khóa chấm công chưa
+            if (self.checkChot($('#jqxFromDate1').jqxDateTimeInput('getDate'))) {
+                alert('Tháng này đã chốt chấm công rồi !!');
+                return;
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChamCongNgayNghi_TaoMoi',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        nhanVienId: ID_NhanVien,
+                        noiDung: $("#txtContent1").val(),
+                        nguoibangiao: $("#txtnguoibangiao").val(),
+                        tenDonXinNghi: "",
+                        diaChiLienHe: "",
+                        idHinhThucNghi: self.hinhThucNghiSelected(),
+                        loaiDonXinNghi: 1,
+                        tuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate'),
+                        denNgay: $('#jqxToDate1').jqxDateTimeInput('getDate'),
+                        webUserId: session.UserId,
+                        buoi: self.buoiSelected()
+
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        if (obj.message == 'success') {
+                            alert("Lưu thành công !!");
+                            $("#popupWindowCCNGNew").data("kendoWindow").close();
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                        else {
+                            alert("Lưu thất bại !!");
+                            $("#popupWindowCCNGNew").data("kendoWindow").close();
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                        //
+                        //location.reload();
+                    }
+                });
+            }
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có chắc xóa hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    if (row.TrangThai_Admin == '1' || row.TrangThai_TP == '1'
+                        || row.TrangThai_HT == '1' || row.TrangThai_HDQT == '1') {
+                        alert("Bảng công đã duyệt không được xóa.");
+                        //
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                        return;
+                    }
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.message == 'success') {
+                                alert("Xóa thành công !!");
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                            else {
+                                alert("Xóa thất bại !!");
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+        accept: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có muốn duyệt hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_AcceptList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords,
+                            userId: self.UserId(),
+                        }),
+                        success: function (result) {
+                            alert("Thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+        cancel: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có muốn không chấp nhận hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChamCongNgayNghi_CancelList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords,
+                            userId: self.UserId()
+                        }),
+                        success: function (result) {
+                            alert("Thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+        print: function () {
+            var self = this;
+            var oidlist = '';
+            var nhanvien = '';
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            for (var i = 0, l = rows.length; i < l ; i++) {
+                var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                //
+                oidlist += row.Oid + ';';
+                nhanvien = row.IDNhanVien;
+            }
+
+            //
+            if (oidlist != '') {
+                window.open("/ExcelExport/InGiayNghiPhep.ashx?oidlist=" + oidlist + "&nhanvien=" + nhanvien + "&type=true");
+            }
+        },
+        excel: function () {
+            var self = this;
+            var arr = new Array();
+            this.datagrid.jqxGrid('hidecolumn', 'TrangThai_TP');
+            this.datagrid.jqxGrid('hidecolumn', 'TrangThai_HT');
+            this.datagrid.jqxGrid('hidecolumn', 'TrangThai_HDQT');
+            var rows = self.datagrid.jqxGrid('getrows');
+            for (var i = 0; i < rows.length; i++) {
+                var item = rows[i];
+                arr.push({
+                    SoHieuCongChuc: item.SoHieuCongChuc,
+                    HoTen: item.HoTen,
+                    TenPhongBan: item.TenPhongBan,
+                    TuNgay: item.TuNgay,
+                    DenNgay: item.DenNgay,
+                    Buoi: item.Buoi,
+                    SoNgay: item.SoNgay,
+                    DienGiai: item.DienGiai,
+                    NgayTao: item.NgayTao,
+                    HinhThucNghi_Name: item.HinhThucNghi_Name
+                });
+            }
+            this.datagrid.jqxGrid('exportdata', 'xls', 'Quản lý ngày nghỉ', true, arr);
+            this.datagrid.jqxGrid('showcolumn', 'TrangThai_TP');
+            this.datagrid.jqxGrid('showcolumn', 'TrangThai_HT');
+            this.datagrid.jqxGrid('showcolumn', 'TrangThai_HDQT');
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#ChamCongNgayNghi")[0]);
+    });
+</script>
+<div id="ChamCongNgayNghi">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000">
+        <h4>QUẢN LÝ CHẤM CÔNG NGÀY NGHỈ</h4>
+    </div>
+    <div data-bind="if:!IsTruongBoPhan()">
+        <div class="row">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                    <div class="row">
+                        <div data-bind="if: !nhacViec && !ChiLay1">
+                            <div data-bind="if:IsAdmin">
+                                <div class="col-lg-2 col-xs-12 col-sm-4">
+                                    <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: New">
+                                        <i class="btn-label glyphicon glyphicon-tags"></i>Tạo phiếu
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div data-bind="if:IsAdmin">
+                            <div class="col-lg-2 col-xs-6 col-sm-4">
+                                <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: Edit">
+                                    <i class="btn-label glyphicon glyphicon-pencil"></i>Hiệu chỉnh
+                                </a>
+                            </div>
+                        </div>-->
+                        <div data-bind="if: !nhacViec && !ChiLay1">
+                            <div class="col-lg-2 col-xs-6 col-sm-4">
+                                <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: remove">
+                                    <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-xs-6 col-sm-4">
+                            <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: accept">
+                                <i class="btn-label glyphicon glyphicon-ok"></i>Chấp nhận
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-xs-6 col-sm-4">
+                            <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: cancel">
+                                <i class="btn-label glyphicon glyphicon-remove"></i>Không chấp nhận
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: print">
+                                <i class="btn-label glyphicon glyphicon-chevron-left"></i>In
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-xs-12 col-sm-6">
+                            <a href="#" class="btn btn-info" style="width: 140px;" data-bind="click: excel">
+                                <i class="btn-label glyphicon glyphicon-random"></i>Xuất Excel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px;" class="row">
+        <div style="margin: 10px 0px 10px 0px; text-align: left" class="row" data-bind="visible: !ChiLay1">
+            <div class="form-group">
+                <label class="col-sm-1 control-label no-padding-right" style="padding-top:3px;text-align:left">Từ ngày:</label>
+                <div class="col-sm-2">
+                    <div id='jqxTuNgay'></div>
+                </div>
+                <label class="col-sm-1 control-label no-padding-right" style="padding-top:3px;text-align:left">Đến ngày:</label>
+                <div class="col-sm-2">
+                    <div id='jqxDenNgay'></div>
+                </div>
+                <div class="col-sm-3" data-bind="if: nhacViec">
+                    <input type="checkbox" data-bind="checked: tatCaDonChuaDuyet" />
+                    <label class="control-label">Tất cả đơn chưa duyệt</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible: !ChiLay1">
+            <!-- ko if: company().length > 1 -->
+                <div style="float: left;">
+                    <label class="col-sm-1 control-label no-padding-right" style="padding-top:10px; width: 80px">Trường:</label>
+                    <select style="width: 250px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+                </div>
+            <!-- /ko -->
+            <label class="col-sm-1 control-label no-padding-right" style="padding-top:10px;">Đơn vị:</label>
+            <select style="width: 250px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan  }, optionsValue: 'Oid', value: departmentSelected"></select>
+            <select hidden data-bind="options: loaiNhanSu, optionsText: 'TenLoaiNhanSu', optionsValue: 'Oid', value: loaiNhanSuSelected"></select>
+            <span data-bind="visible: !nhacViec">
+                <select style="width: 115px" data-bind="options: trangthaiList, optionsText: 'Name', optionsValue: 'Id', value: trangthaiSelected"></select>
+            </span>
+            <input type="text" placeholder="Mã nhân sự" data-bind="value: name" style="width: 85px;height:32px; padding:5px;" />
+            <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+        </div>
+        <div style="padding: 0px 0px 0px 0px;">
+            <div id="jqxgrid"></div>
+        </div>
+        <div id="popupWindowCCNGNew"></div>
+        <div id="popupWindowCCNGEdit"></div>
+
+        <div class="row" style="padding-top:20px">
+            <div class="col-lg-12 col-xs-12 col-sm-12">
+                <div class="buttons-preview" style="margin-left: 15px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            <img src='/Images/InfoSmall.jpg' />
+                            <span>Chờ xét</span>
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            <img src='/Images/TT_yes.png' />
+                            <span>Chấp nhận</span>
+
+                        </div>
+
+                        <div class="col-lg-4 col-xs-12 col-sm-4">
+                            <img src='/Images/TT_no.png' />
+                            <span>Không chấp nhận</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding-top:20px;color:#00a6a6">
+                    <div style="padding-top:15px;font-size:24px;font-weight:bold;text-align:center">QUY ĐỊNH ĐĂNG KÝ NGHỈ PHÉP</div>
+                    <div style="padding-left:15px;font-size:16px;font-weight:bold;padding-top:5px;">Quy định chung</div>
+                    <div style="padding-left:15px;font-size:14px;font-weight:bold;font-style:italic">1. Thẩm quyền phê duyệt nghỉ phép:</div>
+                    <div style="padding-left:15px;">- Trưởng Đơn vị: phê duyệt cho CBGVNV khi xin nghỉ từ <span data-bind="text: SoNgayHieuTruongDuyetString"></span> ngày trở xuống.</div>
+                    <div style="padding-left:15px;">- Ban Giám hiệu: phê duyệt cho Trưởng đơn vị hoặc CBGVNV khi xin nghỉ trên <span data-bind="text: SoNgayHieuTruongDuyetString"></span> ngày.</div>
+
+                    <div style="padding-left:15px;font-size:14px;font-weight:bold;font-style:italic">2.	Thời gian báo trước khi nghỉ:</div>
+                    <div style="padding-left:15px;">- Số ngày nghỉ ≤ 02 ngày: thời gian báo trước khi nghỉ ít nhất là 01 ngày.</div>
+                    <div style="padding-left:15px;">- Từ 03 ngày < Số ngày nghỉ ≤ 05 ngày: thời gian báo trước khi nghỉ ít nhất là 02 ngày.</div>
+                    <div style="padding-left:15px;">- Số ngày nghỉ > 05 ngày: thời gian báo trước khi nghỉ ít nhất là 04 ngày.</div>
+
+                    <div style="padding-left:15px;font-size:14px;font-weight:bold;font-style:italic">3.	Quy định ngày phép:</div>
+                    <div style="padding-left:15px;vertical-align: baseline;">
+                        - Đến thời điểm kết thúc năm tài chính, CBGVNV chưa nghỉ hết tiêu chuẩn phép trong năm của mình thì được bảo lưu đến hết quý I của niên độ tiếp theo.
+                        Từ ngày đầu tiên của quý II niên độ tiếp theo, số Ngày phép còn lại của niên độ trước (nếu có) của CBGVNV sẽ tự động hết hiệu lực (ngoại trừ trường hợp
+                        do tính chất công việc đặc biệt hoặc công việc không có người thay thế nên không thể thu xếp nghỉ hết Ngày phép niên độ trước ngày cuối cùng của quý I
+                        của niên độ tiếp theo và đã được Cấp thẩm quyền phê duyệt, thì CBGVNV sẽ được hưởng tiền lương hoặc ngày nghỉ bù theo quy định của Trường cho
+                        những Ngày phép chưa nghỉ và được tính vào kỳ tính lương tháng đầu tiên của quý II niên độ tiếp theo).
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <div id="NghiViecRieng" style="display:none">
+            <table style="border-collapse:collapse; font-family:'Times New Roman';font-size:13pt;text-align:center">
+                <tr>
+                    <td colspan="3" style="font-weight:bold" align="left">
+                        TRƯỜNG ĐẠI HỌC
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="left">
+                        <div style="border-top:1px solid;width:200px;text-align:left">   </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="font-size:18pt;font-weight:bold;padding-top:20px">
+                        ĐƠN XIN NGHỈ PHÉP
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="font-size:14pt; padding-top:20px;padding-left:30px;">
+                        <div style="text-align:left;font-weight:bold">Kính gửi: </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-top:20px;padding-bottom:10px;font-weight:bold">Họ và tên CBNV: <span data-bind="text: HoTen"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Chức vụ: <span data-bind="text: ChucVu"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Phòng/ Bộ phận:  <span data-bind="text: TenPhongBan"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Đơn vị: <span data-bind="text: DonVi"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Khối: <span data-bind="text: Khoi"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Mã số NV: <span data-bind="text: SoHieuCongChuc"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;font-weight:bold;border-bottom:2px solid;">
+                        Đề nghị được giải quyết nghỉ :
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-weight:bold;font-style:italic;border-bottom:1px solid;">Nội dung</td>
+                    <td style="text-align:left;padding-top:10px;font-weight:bold;font-style:italic;border-bottom:1px solid" colspan="2">Chi tiết số ngày nghỉ</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-weight:bold;font-style:italic;border-bottom:1px solid;"> Nghỉ phép có hưởng lương (Phép năm)</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày phép năm: <span data-bind="text: SoNgayPhepNam"></span>  o. Số ngày đã sử dụng: <span data-bind="text: SoNgayPhepDaDung"></span>  <br> o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayPhepThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-top:10px;font-weight:bold;font-style:italic;border-bottom:1px solid;"> Nghỉ chế độ (hưởng nguyên lương)</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ Kết hôn</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayKetHonToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayKetHonThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ con Kết hôn</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayConKetHonToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayConKetHonThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ tang</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayTangToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayTangThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-top:10px;font-weight:bold;font-style:italic;border-bottom:1px solid;"> Nghỉ hưởng BHXH </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ Ốm ngắn ngày</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayOmNNToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayOmNNThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ Ốm dài ngày (Trên 60 ngày)</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayOmDNToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayOmDNThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ con Ốm</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayConOmToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayConOmThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ khám Thai</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayKhamThaiToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayKhamThaiThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ sảy Thai</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgaySayThaiToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgaySayThaiThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ sinh Con</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgaySinhConToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgaySinhConThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid;">- Nghỉ dưỡng Sức</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayDuongSucToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayDuongSucThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;border-bottom:1px solid;"> Nghỉ không hưởng lương</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid" colspan="2">o. Số ngày tối đa/lần: <span data-bind="text: SoNgayKhongLuongToiDa"></span>  o. Số ngày nghỉ thực tế: <span data-bind="text: SoNgayKhongLuongThucTe"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;border-bottom:1px solid;">Tổng số ngày nghỉ:</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;border-bottom:1px solid">Thời gian nghỉ:</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;border-bottom:1px solid">từ <span data-bind="text: TuNgayString"></span> đến <span data-bind="text: DenNgayString"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;" colspan="3"> Bàn giao công việc trước khi nghỉ phép cho người tiếp nhận</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;" colspan="3">Người nhận bàn giao: <span data-bind="text: NguoiBanGiao"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;" colspan="3">Nội dung bàn giao: <span data-bind="text: DienGiai"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left; font-style:italic;padding-top:50px">
+                        Kính đề nghị chấp thuận,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:left; font-style:italic;padding-left:50px;padding-top:20px;">
+                        Ngày.......tháng......năm 20.....
+                    </td>
+                    <td style="text-align:center; font-style:italic;padding-top:20px;">Ngày.......tháng......năm 20.....</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:left; font-weight:bold;padding-left:50px;text-decoration:underline">
+                        Trưởng đơn vị phê duyệt
+                    </td>
+                    <td style="text-align:center; font-weight:bold;text-decoration:underline">Người đề nghị</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="DonXinNghiNew" style="display:none">
+            <table style="width:100px;float:left">
+                <tr>
+                    <td align="left">
+                        <img src="../../../../Images/Logo_CB.png" />
+                    </td>
+                </tr>
+            </table>
+            <table style="width:400px;float:right">
+                <tr>
+                    <td style="font-weight:bold;padding-top:40px" align="center">
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;text-decoration:underline" align="center">
+                        Độc lập - Tự do - Hạnh phúc
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse:collapse; font-family:'Times New Roman';font-size:13pt;text-align:center;clear:both;">
+                <tr>
+                    <td align="center" colspan="4" style="text-align:center;font-weight:bold;font-size:18pt;padding-top:20px;width:800px">
+                        ĐƠN XIN NGHỈ
+                    </td>
+                </tr>
+            </table>
+            <table style="border-collapse:collapse; font-family:'Times New Roman';font-size:13pt;text-align:center;clear:both">
+                <tr>
+                    <td colspan="3" style="font-size:14pt; padding-top:20px;padding-left:30px;">
+                        <div style="text-align:left;font-weight:bold">Kính gửi: </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-top:20px;padding-bottom:10px;font-weight:bold">Họ và tên CBNV: <span data-bind="text: HoTen"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Chức vụ: <span data-bind="text: ChucVu"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Phòng/ Bộ phận:  <span data-bind="text: TenPhongBan"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Đơn vị: <span data-bind="text: DonVi"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Khối: <span data-bind="text: Khoi"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left;padding-bottom:10px;font-weight:bold">Mã số NV: <span data-bind="text: SoHieuCongChuc"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;font-weight:bold;border-bottom:2px solid;">
+                        Đề nghị được giải quyết nghỉ :
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;">Tên hình thức nghỉ:</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;" colspan="2"><span data-bind="text: TenHinhThucNghi"></span></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;">Tổng số ngày nghỉ: <span data-bind="text: SoNgay"></span></td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;">Thời gian nghỉ:</td>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;">từ <span data-bind="text: TuNgayString"></span> đến <span data-bind="text: DenNgayString"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;font-weight:bold;" colspan="3"> Bàn giao công việc trước khi nghỉ phép cho người tiếp nhận</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;" colspan="3">Người nhận bàn giao: <span data-bind="text: NguoiBanGiao"></span></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;padding-top:10px;font-style:italic;" colspan="3">Nội dung bàn giao: <span data-bind="text: DienGiai"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:left; font-style:italic;padding-top:10px">
+                        Kính đề nghị chấp thuận,
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding-left:30px; font-style:italic;padding-top:20px;">Ngày.......tháng......năm 20......</td>
+                    <td colspan="2" style="padding-left:60px; font-style:italic;padding-top:20px;">Ngày.......tháng......năm 20......</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center; font-weight:bold;padding-left:30px;text-decoration:underline">
+                        Trưởng đơn vị phê duyệt
+                    </td>
+                    <td style="text-align:center; font-weight:bold;text-decoration:underline;padding-left:60px;">Người đề nghị</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+

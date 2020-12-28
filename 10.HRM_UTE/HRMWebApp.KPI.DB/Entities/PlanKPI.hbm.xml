@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.PlanKPI, HRMWebApp.KPI.DB" table="KPI_PlanKPI" >
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <!--<many-to-one name="AgentObject" class="HRMWebApp.KPI.DB.Entities.AgentObject" column="AgentObjectId"/>-->
+    <property name="CreateTime" column="CreateTime"></property>
+    <property name="StartTime" column="StartTime"></property>
+    <property name="EndTime" column="EndTime"></property>
+    <property name="RatingStartTime" column="RatingStartTime"></property>
+    <property name="RatingEndTime" column="RatingEndTime"></property>
+    <property name="StudyYear" column="StudyYear"></property>
+    <many-to-one name="StudyYear1" class="HRMWebApp.KPI.DB.Entities.StudyYear" column="StudyYearId"/>
+    <property name="StudyTerm" column="StudyTerm"></property>
+    <many-to-one name="ParentPlan" class="HRMWebApp.KPI.DB.Entities.PlanKPI" column="ParentId"/>
+    <many-to-one name="PlanType" class="HRMWebApp.KPI.DB.Entities.PlanType" column="PlanTypeId"/>
+    <bag name="AgentObjects" table="KPI_PlanKPI_AgentObject">
+      <key column="PlanKPIId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.AgentObject" column="AgentObjectId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

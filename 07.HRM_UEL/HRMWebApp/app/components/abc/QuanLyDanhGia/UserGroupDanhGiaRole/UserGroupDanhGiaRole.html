@@ -1,0 +1,29 @@
+﻿<div class="widget">
+    <div class="widget-header" style="background-color:lightblue">
+        <span class="widget-caption" style="color:black">Phân quyền tài khoản đánh giá</span>
+        <a ng-click="Adds()" class="btn btn-success">Thêm nhiều</a>
+    </div>
+    <div class="widget-body" style="display: flow-root;">
+        <div class="widget-main">
+            <span>Bộ phận: </span>
+            <select kendo-drop-down-list
+                    k-options="ListBoPhan"
+                    style="background-color:lightblue; width: 300px"
+                    k-data-text-field="'Name'"
+                    k-data-value-field="'Id'"
+                    k-ng-model="BoPhanId">
+            </select>
+            <div ng-hide="Loadding || BoPhanId == null" style="margin-top: 5px;">
+                <div kendo-grid="GridUser" k-options="GridUserOptions" k-data-source="GridUserData"></div>
+            </div>
+            <div style="text-align:center; color: red" ng-show="BoPhanId == null">
+                Vui lòng chọn Bộ phận
+            </div>
+            <div ng-show="Loadding && (BoPhanId != null)" style="width:100%; text-align:center">
+                <div class="d-flex align-items-center">
+                    <i style="font-size:30px; color:red" class="fa fa-spinner fa-spin"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

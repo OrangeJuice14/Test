@@ -1,0 +1,618 @@
+18/08/2020 13:32:39, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select TOP (1) historytho0_.Oid as Oid91_, historytho0_.TimeLog as TimeLog91_, historytho0_.ThamGiaGiangDay as ThamGiaG3_91_, historytho0_.ThongTinNhanVien as ThongTin4_91_, historytho0_.WebUserId as WebUserId91_, historytho0_.ChucVu as ChucVu91_, historytho0_.LoaiNhanSu as LoaiNhanSu91_, historytho0_.TaiBoMon as TaiBoMon91_, historytho0_.DonVi as DonVi91_ from HistoryThongTinHoSoNhanVien historytho0_ where historytho0_.ThongTinNhanVien=@p0 and historytho0_.TimeLog<=@p1 order by historytho0_.TimeLog asc ]
+  Name:p1 - Value:bcb12a05-5cc5-4bc1-8d83-64cf2f45aa25  Name:p2 - Value:31/01/2020 00:00:00
+[SQL: select TOP (1) historytho0_.Oid as Oid91_, historytho0_.TimeLog as TimeLog91_, historytho0_.ThamGiaGiangDay as ThamGiaG3_91_, historytho0_.ThongTinNhanVien as ThongTin4_91_, historytho0_.WebUserId as WebUserId91_, historytho0_.ChucVu as ChucVu91_, historytho0_.LoaiNhanSu as LoaiNhanSu91_, historytho0_.TaiBoMon as TaiBoMon91_, historytho0_.DonVi as DonVi91_ from HistoryThongTinHoSoNhanVien historytho0_ where historytho0_.ThongTinNhanVien=@p0 and historytho0_.TimeLog<=@p1 order by historytho0_.TimeLog asc] ---> System.Data.SqlClient.SqlException: Invalid column name 'WebUserId'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 116
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 13:33:45, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 13:36:26, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 116
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 13:38:13, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 116
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 14:21:11, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 123
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 14:22:13, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 14:23:46, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 14:24:32, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 14:25:04, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 14:25:12, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 14:26:43, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\DTO\ABC\New\ABC_UserVMDTO.cs:line 37
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 133
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 14:27:22, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.NullReferenceException: Object reference not set to an instance of an object.
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(WebUser objWebUser, HistoryThongTinHoSoNhanVien objHistoryThongTinHoSoNhanVien, List`1 listUserGroupDanhGiaRole) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\DTO\ABC\New\ABC_UserVMDTO.cs:line 37
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass1_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 133
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 112
+
+18/08/2020 15:04:29, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: AutoMapper.AutoMapperMappingException: 
+
+Mapping types:
+String -> Guid
+System.String -> System.Guid
+
+Destination path:
+ABC_UserVMDTO.Id.Id
+
+Source value:
+D684E92A-F95D-4A61-9115-FA9B750498D5_95D6661E-1220-43CE-AB91-B353DE842983_C5020671-FCA4-44B7-92A6-EB35DCC431FA ---> System.FormatException: Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+   at System.Guid.TryParseGuidWithDashes(String guidString, GuidResult& result)
+   at System.Guid.TryParseGuid(String g, GuidStyles flags, GuidResult& result)
+   at System.Guid..ctor(String g)
+   at System.ComponentModel.GuidConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at AutoMapper.Mappers.TypeConverterMapper.<>c__DisplayClass3.<GetConverter>b__2() in c:\dev\AutoMapper\src\AutoMapper\Mappers\TypeConverterMapper.cs:line 29
+   at AutoMapper.Mappers.TypeConverterMapper.Map(ResolutionContext context, IMappingEngineRunner mapper) in c:\dev\AutoMapper\src\AutoMapper\Mappers\TypeConverterMapper.cs:line 17
+   at AutoMapper.MappingEngine.AutoMapper.IMappingEngineRunner.Map(ResolutionContext context)
+   --- End of inner exception stack trace ---
+   at AutoMapper.MappingEngine.AutoMapper.IMappingEngineRunner.Map(ResolutionContext context)
+   at AutoMapper.Mappers.TypeMapObjectMapperRegistry.PropertyMapMappingStrategy.MapPropertyValue(ResolutionContext context, IMappingEngineRunner mapper, Object mappedObject, PropertyMap propertyMap)
+   at AutoMapper.Mappers.TypeMapObjectMapperRegistry.PropertyMapMappingStrategy.Map(ResolutionContext context, IMappingEngineRunner mapper)
+   at AutoMapper.Mappers.TypeMapMapper.Map(ResolutionContext context, IMappingEngineRunner mapper)
+   at AutoMapper.MappingEngine.AutoMapper.IMappingEngineRunner.Map(ResolutionContext context)
+   at AutoMapper.MappingEngine.MapCore(Object source, Type sourceType, Type destinationType, MappingOperationOptions options)
+   at AutoMapper.MappingEngine.Map(Object source, Type sourceType, Type destinationType, Action`1 opts)
+   at AutoMapper.MappingEngine.Map(Object source, Type sourceType, Type destinationType)
+   at AutoMapper.Mapper.Map(Object source, Type sourceType, Type destinationType)
+   at HRMWebApp.Helpers.Helper.Map[T](Object source) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.Helpers\Helper.cs:line 44
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass2_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWorkNoTransaction(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 45
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId, Guid groupDanhGiaId)
+
+18/08/2020 15:16:33, ABC_DanhGiaApi/InsertDanhGia , Message: NHibernate.Exceptions.GenericADOException: could not execute batch command.[SQL: SQL not available] ---> System.Data.SqlClient.SqlException: The UPDATE statement conflicted with the FOREIGN KEY constraint "fk_UserDanhGiaId_DanhGia_ABC_User". The conflict occurred in database "HRM_UEL_Vinh", table "dbo.ABC_User", column 'Oid'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at System.Data.SqlClient.SqlCommand.ExecuteBatchRPCCommand()
+   at System.Data.SqlClient.SqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientSqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   --- End of inner exception stack trace ---
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatchWithTiming(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatch()
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at NHibernate.Transaction.AdoTransaction.Commit()
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 37
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.InsertDanhGia(String userDuocDanhGiaId, String userDanhGiaId, Guid kyDanhGiaId, Guid boTieuChiId, Guid groupDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 70
+
+18/08/2020 15:50:24, ABC_DanhGiaApi/InsertDanhGia , Message: NHibernate.Exceptions.GenericADOException: could not execute batch command.[SQL: SQL not available] ---> System.Data.SqlClient.SqlException: The UPDATE statement conflicted with the FOREIGN KEY constraint "fk_UserDanhGiaId_DanhGia_WebUsers". The conflict occurred in database "HRM_UEL_Vinh", table "dbo.WebUsers", column 'Oid'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at System.Data.SqlClient.SqlCommand.ExecuteBatchRPCCommand()
+   at System.Data.SqlClient.SqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientSqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   --- End of inner exception stack trace ---
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatchWithTiming(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatch()
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at NHibernate.Transaction.AdoTransaction.Commit()
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 37
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.InsertDanhGia(Guid userDuocDanhGiaId, Guid userDanhGiaId, Guid kyDanhGiaId, Guid boTieuChiId, Guid groupDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 70
+
+18/08/2020 16:06:05, ABC_DanhGiaApi/InsertDanhGia , Message: NHibernate.Exceptions.GenericADOException: could not execute batch command.[SQL: SQL not available] ---> System.Data.SqlClient.SqlException: The UPDATE statement conflicted with the FOREIGN KEY constraint "fk_UserDanhGiaId_DanhGia_WebUsers". The conflict occurred in database "HRM_UEL_Vinh", table "dbo.WebUsers", column 'Oid'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at System.Data.SqlClient.SqlCommand.ExecuteBatchRPCCommand()
+   at System.Data.SqlClient.SqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientSqlCommandSet.ExecuteNonQuery()
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   --- End of inner exception stack trace ---
+   at NHibernate.AdoNet.SqlClientBatchingBatcher.DoExecuteBatch(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatchWithTiming(IDbCommand ps)
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteBatch()
+   at NHibernate.Engine.ActionQueue.ExecuteActions(IList list)
+   at NHibernate.Engine.ActionQueue.ExecuteActions()
+   at NHibernate.Event.Default.AbstractFlushingEventListener.PerformExecutions(IEventSource session)
+   at NHibernate.Event.Default.DefaultFlushEventListener.OnFlush(FlushEvent event)
+   at NHibernate.Impl.SessionImpl.Flush()
+   at NHibernate.Transaction.AdoTransaction.Commit()
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 37
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.InsertDanhGia(Guid userDuocDanhGiaId, Guid userDanhGiaId, Guid kyDanhGiaId, Guid boTieuChiId, Guid groupDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 70
+
+18/08/2020 22:19:41, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:19:53, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:20:03, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:20:32, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:21:09, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:21:22, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 169
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 165
+
+18/08/2020 22:22:45, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 22:23:25, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 22:27:53, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 171
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 167
+
+18/08/2020 22:29:35, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 22:29:42, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+18/08/2020 22:29:58, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+19/08/2020 14:25:00, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+19/08/2020 14:25:28, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session)
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId)
+
+19/08/2020 14:28:18, ABC_UserDanhGiaApi/GetUserByKyDanhGiaId , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.First[TSource](IQueryable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGia(ISession session, Guid userId, ABC_KyDanhGia ojKyDanhGia) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 32
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass3_0.<GetUserByKyDanhGiaId>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 171
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetUserByKyDanhGiaId(Guid userId, Guid kyDanhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 167
+
+19/08/2020 19:28:13, ABC_UserDanhGiaApi/GetListUserDanhGia , Message: System.FormatException: Unrecognized Guid format.
+   at System.Guid.TryParseGuid(String g, GuidStyles flags, GuidResult& result)
+   at System.Guid.Parse(String input)
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(DataRow row) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\DTO\ABC\New\ABC_UserVMDTO.cs:line 27
+   at HRMWebApp.KPI.Core.Helpers.DataClassHelper.spd_DanhGiaABC_GetListThongTinUserInDonVi(Guid kyDanhGiaId, Guid donViId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Helpers\DataClassHelper.cs:line 109
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetListUserDanhGiaInDonVi(Guid boTieuChiId, Guid kyDanhGiaId, Guid userId, Guid groupDanhGiaId, Guid donViId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 88
+
+19/08/2020 19:28:23, ABC_UserDanhGiaApi/GetListUserDanhGia , Message: System.FormatException: Unrecognized Guid format.
+   at System.Guid.TryParseGuid(String g, GuidStyles flags, GuidResult& result)
+   at System.Guid.Parse(String input)
+   at HRMWebApp.KPI.Core.DTO.ABC_UserVMDTO..ctor(DataRow row) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\DTO\ABC\New\ABC_UserVMDTO.cs:line 27
+   at HRMWebApp.KPI.Core.Helpers.DataClassHelper.spd_DanhGiaABC_GetListThongTinUserInDonVi(Guid kyDanhGiaId, Guid donViId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Helpers\DataClassHelper.cs:line 109
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetListUserDanhGiaInDonVi(Guid boTieuChiId, Guid kyDanhGiaId, Guid userId, Guid groupDanhGiaId, Guid donViId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 88
+
+20/08/2020 07:35:21, ABC_UserDanhGiaApi/GetById , Message: System.InvalidOperationException: Sequence contains no elements
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at System.Linq.Queryable.Single[TSource](IQueryable`1 source, Expression`1 predicate)
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.<>c__DisplayClass7_0.<GetById>b__0(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 263
+   at HRMWebApp.KPI.DB.SessionManager.DoWorkNoTransaction(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 45
+   at HRMWebApp.KPI.Core.Controllers.ABC_UserDanhGiaApiController.GetById(Guid ABC_UserId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_UserDanhGiaApiController.cs:line 261
+
+20/08/2020 08:15:08, ABC_DanhGiaApi/GetListKetQuaDanhGia, Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc ]
+  Name:p1 - Value:fad28b98-fa26-4e99-acf7-2b1864d9db2a
+[SQL: select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc] ---> System.Data.SqlClient.SqlException: A column has been specified more than once in the order by list. Columns in the order by list must be unique.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.<>c__DisplayClass4_0.<GetListKetQuaDanhGia>b__4(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 207
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.GetListKetQuaDanhGia(Guid danhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 183
+
+20/08/2020 08:25:44, ABC_DanhGiaApi/GetListKetQuaDanhGia, Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc ]
+  Name:p1 - Value:fad28b98-fa26-4e99-acf7-2b1864d9db2a
+[SQL: select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc] ---> System.Data.SqlClient.SqlException: A column has been specified more than once in the order by list. Columns in the order by list must be unique.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.<>c__DisplayClass4_0.<GetListKetQuaDanhGia>b__4(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 207
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.GetListKetQuaDanhGia(Guid danhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 183
+
+20/08/2020 08:26:26, ABC_DanhGiaApi/GetListKetQuaDanhGia, Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc ]
+  Name:p1 - Value:fad28b98-fa26-4e99-acf7-2b1864d9db2a
+[SQL: select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc] ---> System.Data.SqlClient.SqlException: A column has been specified more than once in the order by list. Columns in the order by list must be unique.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.<>c__DisplayClass4_0.<GetListKetQuaDanhGia>b__4(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 207
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.GetListKetQuaDanhGia(Guid danhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 183
+
+20/08/2020 08:33:31, ABC_DanhGiaApi/GetListKetQuaDanhGia, Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc ]
+  Name:p1 - Value:fad28b98-fa26-4e99-acf7-2b1864d9db2a
+[SQL: select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc] ---> System.Data.SqlClient.SqlException: A column has been specified more than once in the order by list. Columns in the order by list must be unique.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.<>c__DisplayClass4_0.<GetListKetQuaDanhGia>b__4(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 207
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.GetListKetQuaDanhGia(Guid danhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 183
+
+20/08/2020 09:30:01, ABC_DanhGiaApi/GetListKetQuaDanhGia, Message: NHibernate.Exceptions.GenericADOException: could not execute query
+[ select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc ]
+  Name:p1 - Value:fad28b98-fa26-4e99-acf7-2b1864d9db2a
+[SQL: select abc_danhgi0_.Oid as Oid88_, abc_danhgi0_.Diem as Diem88_, abc_danhgi0_.DanhGiaId as DanhGiaId88_, abc_danhgi0_.TieuChiId as TieuChiId88_ from ABC_DanhGiaChiTiet abc_danhgi0_ left outer join ABC_TieuChi abc_tieuch1_ on abc_danhgi0_.TieuChiId=abc_tieuch1_.Oid where abc_danhgi0_.DanhGiaId=@p0 order by abc_tieuch1_.STT asc, abc_tieuch1_.STT asc] ---> System.Data.SqlClient.SqlException: A column has been specified more than once in the order by list. Columns in the order by list must be unique.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader()
+   at NHibernate.AdoNet.AbstractBatcher.ExecuteReader(IDbCommand cmd)
+   at NHibernate.Loader.Loader.GetResultSet(IDbCommand st, Boolean autoDiscoverTypes, Boolean callable, RowSelection selection, ISessionImplementor session)
+   at NHibernate.Loader.Loader.DoQuery(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoQueryAndInitializeNonLazyCollections(ISessionImplementor session, QueryParameters queryParameters, Boolean returnProxies, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   --- End of inner exception stack trace ---
+   at NHibernate.Loader.Loader.DoList(ISessionImplementor session, QueryParameters queryParameters, IResultTransformer forcedResultTransformer)
+   at NHibernate.Loader.Loader.ListIgnoreQueryCache(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Loader.Loader.List(ISessionImplementor session, QueryParameters queryParameters, ISet`1 querySpaces, IType[] resultTypes)
+   at NHibernate.Loader.Hql.QueryLoader.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Hql.Ast.ANTLR.QueryTranslatorImpl.List(ISessionImplementor session, QueryParameters queryParameters)
+   at NHibernate.Engine.Query.HQLQueryPlan.PerformList(QueryParameters queryParameters, ISessionImplementor session, IList results)
+   at NHibernate.Impl.SessionImpl.List(IQueryExpression queryExpression, QueryParameters queryParameters, IList results)
+   at NHibernate.Impl.AbstractSessionImpl.List(IQueryExpression queryExpression, QueryParameters parameters)
+   at NHibernate.Impl.AbstractQueryImpl2.List()
+   at NHibernate.Linq.DefaultQueryProvider.ExecuteQuery(NhLinqExpression nhLinqExpression, IQuery query, NhLinqExpression nhQuery)
+   at NHibernate.Linq.DefaultQueryProvider.Execute(Expression expression)
+   at NHibernate.Linq.DefaultQueryProvider.Execute[TResult](Expression expression)
+   at Remotion.Linq.QueryableBase`1.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.<>c__DisplayClass4_0.<GetListKetQuaDanhGia>b__4(ISession session) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 231
+   at HRMWebApp.KPI.DB.SessionManager.DoWork(Action`1 work) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.DB\SessionManager.cs:line 36
+   at HRMWebApp.KPI.Core.Controllers.ABC_DanhGiaApiController.GetListKetQuaDanhGia(Guid danhGiaId) in D:\FresherInPSC\Workspace\12.HRMWebApp\07.HRM_UEL\HRMWebApp.KPI.Core\Controllers\ABC_DanhGiaApiController.cs:line 183
+

@@ -1,0 +1,23 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+    .modal-content{
+        min-height:200px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Danh sách cá nhân đánh giá hoạt động khác</span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>       
+    </div>
+    <div class="modal-footer">
+        <div style="float: right; margin-right: 70px;margin-top: 25px;">
+            <button class="btn btn-primary" ng-click="cancel()">OK</button>
+        </div>
+    </div>
+</div>

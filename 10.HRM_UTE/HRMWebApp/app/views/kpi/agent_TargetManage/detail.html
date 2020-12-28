@@ -1,0 +1,51 @@
+﻿
+<style>
+    label {
+        font-weight: bold;
+    }
+
+    .formItems textarea {
+        padding-left: 10px;
+    }
+
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #787878 !important;
+    }
+    .agentObjectDetail-dialog .modal-dialog {
+        min-width: 600px;
+    }
+</style>
+
+<form name="agentObjctDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Loại đối tượng</label>
+            <div class="col-md-6">
+                <select class="form-control" ng-model="obj.AgentObjectTypeId" name="AgentObjectTypeSelect" ng-options="listType.Id as listType.Name for listType in agentObjectTypes">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-4 control-label">Nhóm mục tiêu</label>
+            <!--<div class="col-md-6">
+                <select kendo-multi-select k-options="targetGroupDetails" k-ng-model="obj.TargetGroupDetailIds"></select>
+            </div>-->
+            <div class="col-md-6">
+                <select class="form-control" ng-model="obj.TargetGroupDetailTypeId" name="targetGroupDetailsSelect" ng-options="listType.Id as listType.Name for listType in targetGroupDetails"></select>
+            </div>
+        </div>
+        <div class="form-group" ng-show="obj.AgentObjectTypeId != 1">
+            <label class="col-md-4 control-label">Tỷ trọng</label>
+            <div class="col-md-6">
+                <input type="number" ng-model="obj.TiTrong" />
+            </div>
+        </div>      
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="agentObjctDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

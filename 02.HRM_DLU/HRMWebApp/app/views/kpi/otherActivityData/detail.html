@@ -1,0 +1,60 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+<form name="scienceResearchDataForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Nhóm hoạt động</label>
+            <div class="col-md-6">
+                <!--<input type="text" class="form-control" name="ManageCode" required ng-model="obj.ActivityManageCode">-->
+                <select ng-change="selectedChangeActivityGroup()" class="form-control" name="StaffSelect" ng-model="obj.ActivityManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterions">
+                    <option value="">Chọn nhóm hoạt động ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Hoạt động</label>
+            <div class="col-md-6">
+                <!--<input type="text" class="form-control"  name="ManageCode" required ng-model="obj.ManageCode">-->
+                <select class="form-control" name="StaffSelect" ng-model="obj.ManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterionsDictionaries">
+                    <option value="">Chọn hoạt động ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Năm học</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StaffSelect" ng-model="obj.StudyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Chọn năm học ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Học kỳ</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StaffSelect" ng-model="obj.StudyTerm">
+                    <option value="">Chọn học kỳ ...</option>
+                    <option value="HK01">Học kỳ I</option>
+                    <option value="HK02">Học kỳ II</option>
+                    <option value="HK03">Học kỳ III</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Số lần</label>
+            <div class="col-md-6">
+                <input name="NumberOfTime" kendo-numeric-text-box k-options="numericOptions" style="width:70px !important;" k-ng-model="obj.NumberOfTime" />
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="scienceResearchDataForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

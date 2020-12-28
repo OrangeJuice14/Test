@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_EvaluationBoard, HRMWebApp.KPI.DB" table="ABC_EvaluationBoard">
+    <id name="Id" column="Oid"></id>
+    <property name="Quater" column="Quater"></property>
+    <property name="Year" column="Year"></property>
+    <property name="Name" column="Name"></property>
+    <property name="FromDate" column="FromDate"></property>
+    <property name="ToDate" column="ToDate"></property>
+    <property name="StartRating" column="StartRating"></property>
+    <property name="EndRating" column="EndRating"></property>
+  </class>
+</hibernate-mapping>

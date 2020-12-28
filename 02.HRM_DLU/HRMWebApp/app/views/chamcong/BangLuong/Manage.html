@@ -1,0 +1,290 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+    });
+</script>
+<script src="../../../../Components/jqwidgets/jqxdata.export.js"></script>
+<script type="text/javascript">
+
+        function ViewModel(datagrid) {
+            var thangArr = [
+                { Id: 0, Name: "Tất cả" },
+                { Id: 1, Name: "1" },
+                { Id: 2, Name: "2" },
+                { Id: 3, Name: "3" },
+                { Id: 4, Name: "4" },
+                { Id: 5, Name: "5" },
+                { Id: 6, Name: "6" },
+                { Id: 7, Name: "7" },
+                { Id: 8, Name: "8" },
+                { Id: 9, Name: "9" },
+                { Id: 10, Name: "10" },
+                { Id: 11, Name: "11" },
+                { Id: 12, Name: "12" },
+            ];
+            var self = this;
+            self.returnData = [];
+            self.datagrid = datagrid;
+            self.thang = ko.observableArray(thangArr);
+            self.thangSelected = ko.observable(0);
+            self.nam = ko.observableArray();
+            self.namSelected = ko.observable(0);
+            //self.BangLuong = ko.observableArray();
+            //self.BangLuongSelected = ko.observable();
+            self.MaNhanSu = ko.observable();
+            self.HoTen = ko.observable();
+            self.DonVi = ko.observable();
+            self.MaSoThue = ko.observable();
+            self.items = ko.observableArray();
+            self.TongTien = ko.observable();
+            self.TongTienBangChu = ko.observable();
+            //$.ajax({
+            //    type: 'POST',
+            //    dataType: 'json',
+            //    contentType: "application/json;charset=utf-8",
+            //    async: false,
+            //    url: '/WebServices/KyTinhLuong',
+            //    success: function (result) {
+            //        var data = result;
+            //        var arr = new Array();
+            //        data = $.Enumerable.From(data).Where(function (value) {
+            //            return value.Name = 'Bảng lương tháng ' + value.Thang + '/' + value.Nam;
+            //        }).OrderBy(function (value) {
+            //            return value.Thang;
+            //        }).ToArray();
+            //        self.BangLuong(data);
+            //    }
+            //});
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/GetYearKyTinhLuong',
+                success: function (result) {
+                    var data = result;
+                    self.nam(data);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                url: '/WebServices/Get_HoSoNhanVienBy_Id',
+                data: ko.toJSON({
+                    idNhanVien: session.Id
+                }),
+                success: function (result) {
+                    var data = result;
+                    self.MaNhanSu = ko.observable(data.MaQuanLy);
+                    self.HoTen = ko.observable(data.HoTen);
+                    self.DonVi = ko.observable(data.TenBoPhan);
+                    self.MaSoThue = ko.observable(data.MaSoThue);
+                }
+            });
+            //self.BangLuongSelected.subscribe(function (newvalue) {
+            //    $.ajax({
+            //        type: 'POST',
+            //        dataType: 'json',
+            //        contentType: "application/json;charset=utf-8",
+            //        async: false,
+            //        url: '/WebServices/BANGLUONG_DLU',
+            //        data: ko.toJSON({
+            //            webUserId: session.Id,
+            //            kyTinhLuong: newvalue
+            //        }),
+            //        success: function (result) {
+            //            var data = result;
+            //            self.items(data);
+            //            self.source.localdata = data;
+            //            self.dataAdapter = new $.jqx.dataAdapter(self.source);
+            //            self.datagrid.jqxGrid({ source: self.dataAdapter });
+            //        }
+            //    });             
+            //});
+            self.source =
+               {
+                   id: 'Id',
+                   datafields: [
+                      { name: 'NoiDung', type: 'string' },
+                      { name: 'NgayChi', type: 'date' },
+                      { name: 'SoTien', type: 'string' },
+                      { name: 'GhiChu', type: 'string' },
+                      { name: 'TongTien', type: 'string' },
+                      { name: 'TongTienBangChu', type: 'string' }
+                   ],
+                   datatype: "json",
+                   url: "/WebServices/BANGLUONG_DLU",
+                   formatdata: function (data) {
+                       return {
+                           webUserId: session.Id,
+                           thang: self.thangSelected() == undefined ? 0 : self.thangSelected(),
+                           nam: self.namSelected() == undefined ? 0 : self.namSelected()
+                       };
+                   },
+                   beforeprocessing: function (result) {
+                       self.returnData = result;
+                       self.TongTienBangChu("");
+                       if (self.returnData[0] != undefined)
+                       {
+                           self.TongTien(self.returnData[0].TongTien);
+                           self.TongTienBangChu(self.returnData[0].TongTienBangChu);
+                       }                   
+                       return self.returnData;
+                   }
+               };
+            self.dataAdapter = new $.jqx.dataAdapter(self.source);
+            self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                pageable: true,
+                pagesize: 20,
+                sortable: true,
+                filterable: true,
+                autoheight: true,
+                showaggregates: true,
+                showstatusbar: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:5px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    { text: 'Nội dung', datafield: 'NoiDung',  align: 'center' },
+                    { text: 'Ngày chi', datafield: 'NgayChi', cellsalign: "middle", width: 120,cellsformat: 'dd/MM/yyyy', align: 'center' },
+                    {
+                        text: 'Số tiền', datafield: 'SoTien', width: 150, cellsalign: "right", cellsformat: 'd', align: 'center',
+                        aggregates: [{
+                            '<b>Tổng</b>':
+                            function (aggregatedValue, currentValue, column, record) {
+                                var sumPrice = $("#jqxgrid").jqxGrid('getcolumnaggregateddata', 'SoTien', ['sum']);
+                                return sumPrice.sum;
+                            }
+                        }]
+            
+                    },
+                    { text: 'Ghi chú', datafield: 'GhiChu', width: 150, align: 'center' },
+                ]
+            });
+        }
+        ViewModel.prototype = {
+            search: function () {
+                var self = this;
+                self.datagrid.jqxGrid('updatebounddata');
+                //$.ajax({
+                //    type: 'POST',
+                //    dataType: 'json',
+                //    contentType: "application/json;charset=utf-8",
+                //    async: false,
+                //    url: '/WebServices/BANGLUONG_DLU',
+                //    data: ko.toJSON({
+                //        webUserId: session.Id,
+                //        thang: self.thangSelected() == undefined ? 0 : self.thangSelected(),
+                //        nam: self.namSelected() == undefined ? 0 : self.namSelected()
+                //                }),
+                //    success: function (result) {
+                //        var data = result;
+                //        self.nam(data);
+                //    }
+                //});
+            },
+            excel: function () {
+                var self = this;
+                this.datagrid.jqxGrid('hidecolumn', 'Khoa');
+                var arr = new Array();
+                var rows = self.datagrid.jqxGrid('getrows');
+                for (var i = 0; i < rows.length; i++) {
+                    var item = rows[i];
+                    arr.push({
+                        NoiDung: item.NoiDung,
+                        NgayChi: item.NgayChi,
+                        SoTien: item.SoTien,
+                        GhiChu: item.GhiChu                        
+                    });
+                }
+                this.datagrid.jqxGrid('exportdata', 'xls', 'jqxgrid', true, arr);
+                this.datagrid.jqxGrid('showcolumn', 'Khoa');
+            }
+        };
+        $(function () {
+            var model = new ViewModel($("#jqxgrid"), $("#userManage"));
+            ko.applyBindings(model, $("#bangluong")[0]);
+        });
+</script>
+
+<div id="bangluong">
+    <div>
+        <a href="#">Bảng lương và phụ cấp : </a>
+        <select data-bind="options: thang, optionsText: 'Name', optionsValue: 'Id', value: thangSelected"></select>
+        -
+        <select data-bind="options: nam, optionsText: 'Nam', optionsValue: 'Nam', value: namSelected" style="width:120px;"></select>
+        <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+            <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: excel">
+                <i class="btn-label glyphicon glyphicon-random"></i>Xuất Excel
+            </a>
+        <!--<select data-bind="options: BangLuong, optionsText: 'Name', optionsValue: 'Oid', value: BangLuongSelected, optionsCaption: '-- Chọn bảng lương --'"></select>-->
+    </div>
+    <div class="row" style="padding-top:20px;">
+        <div class="col-lg-12"></div>
+        <div class="col-lg-10 col-md-10 padding-bottom-10">
+            <div class="col-lg-4 col-md-4 padding-5">
+                Họ và tên: <b data-bind="    text: HoTen"></b>
+            </div>
+            <div class="col-lg-4 col-md-4 padding-5">
+                Đơn vị: <b data-bind="    text: DonVi"></b>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+    <div class="row" style="padding-top:20px;">
+        <div class="col-lg-12"></div>
+        <div class="col-lg-10 col-md-10 padding-bottom-10">
+            <div class="col-lg-4 col-md-4 padding-5">
+                Mã Viên chức: <b data-bind="text: MaNhanSu"></b>
+            </div>
+            <div class="col-lg-4 col-md-4 padding-5">
+                Mã số thuế: <b data-bind="text: MaSoThue"></b>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+    <div style="padding: 10px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div class="row" style="padding-top:20px;font-size:12pt;">
+        <div class="col-lg-12">
+            Tổng thu nhập bằng chữ: <b data-bind="    text: TongTienBangChu"></b>
+        </div>
+    </div>
+    
+</div>

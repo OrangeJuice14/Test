@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.PlanType, HRMWebApp.KPI.DB" table="KPI_PlanType">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <bag name="AgentObjectTypes" table="KPI_PlanType_AgentObjectType">
+      <key column="PlanTypeId"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.AgentObjectType" column="AgentObjectTypeId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

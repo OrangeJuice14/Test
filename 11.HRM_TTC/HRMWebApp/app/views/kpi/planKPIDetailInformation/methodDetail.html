@@ -1,0 +1,50 @@
+﻿
+<form class="form-horizontal" name="MethodForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Phương pháp</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': MethodForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Tên</label>
+            <div class="col-md-6">
+                <textarea class="form-control" name="name" placeholder="Enter name here ..." required ng-model="obj.Name" rows="10"></textarea>
+                <!--<input type="text" class="form-control" name="name" placeholder="Enter name here ..." required ng-model="obj.Name">-->
+            </div>
+            <div class="col-md-2">
+                <span ng-show="MethodForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+        <div ng-if="isNew">
+            <div class="form-group">
+                <label for="startTime" class="col-md-4 control-label">Thời gian bắt đầu</label>
+                <div class="col-md-6">
+                    <input kendo-date-picker  onkeydown="return false;" style="width:120px" name="startTime" required k-ng-model="obj.StartTime" k-change="dateChange" style="width: 100%;" k-format="'dd/MM/yyyy'" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endTime" class="col-md-4 control-label">Thời gian kết thúc</label>
+                <div class="col-md-6">
+                    <input kendo-date-picker style="width:120px"  onkeydown="return false;" name="endTime" required k-ng-model="obj.EndTime" k-change="dateChange" style="width: 100%;" k-format="'dd/MM/yyyy'" />
+                </div>
+            </div>
+        </div>
+        <div ng-if="!isNew">
+            <div class="form-group">
+                <label for="startTime" class="col-md-4 control-label">Thời gian bắt đầu</label>
+                <div class="col-md-6">
+                    <input kendo-date-picker onkeydown="return false;" style="width:120px" name="startTime" required k-ng-model="obj.StartTime" k-change="dateChange" style="width: 100%;" k-format="'dd/MM/yyyy'" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endTime" class="col-md-4 control-label">Thời gian kết thúc</label>
+                <div class="col-md-6">
+                    <input kendo-date-picker style="width:120px" onkeydown="return false;" name="endTime" required k-ng-model="obj.EndTime" k-change="dateChange" style="width: 100%;" k-format="'dd/MM/yyyy'" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="MethodForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,227 @@
+﻿<style>
+    td {
+        padding: 5px 0 10px 0;
+    }
+</style>
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        $("#mydiv").wordExport();
+        //var mywindow = window.open('', 'Giấy đi đường');
+        //mywindow.document.write('<html><head><title>Giấy đi đường</title>');
+        ///*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        //mywindow.document.write('</head><body >');
+        //mywindow.document.write(data);
+        //mywindow.document.write('</body></html>');
+
+        //mywindow.document.close(); // necessary for IE >= 10
+        //mywindow.focus(); // necessary for IE >= 10
+
+        //mywindow.print();
+        //mywindow.close();
+        return true;
+    }
+
+</script>
+<div id="mydiv">
+    <table style="width:595pt;color:black;font-family:'Times New Roman';font-size:13pt;">
+        <tr>
+            <td style="padding:20px 0 0 0;text-align:center;height:30px;font-weight:bold;">
+                <span style="font-weight:normal">
+                    BỘ GIÁO DỤC VÀ ĐÀO TẠO
+                </span> <br />
+                <div style="padding-bottom:3px">
+                    TRƯỜNG ĐẠI HỌC ĐÀ LẠT
+                </div>
+                <table style="margin:auto"><tr><td style="width:100px;border-top:1px solid; margin:auto"></td></tr></table>
+                <br />
+                <span style="font-weight:normal">Số: <span data-bind="text: So"></span>/GĐĐ-ĐHĐL</span>
+            </td>
+            <td style="text-align:center;padding:20px 0 0 0;height:30px;font-weight:bold;">
+                CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />
+                <div style="padding-bottom:3px">Độc lập - Tự do - Hạnh phúc</div>
+                <table style="margin:auto"><tr><td style="width:200px;border-top:1px solid; margin:auto"></td></tr></table>
+                <br />
+                <div style="font-style:italic;font-weight:normal">Lâm Đồng, ngày <span data-bind="text: day"></span> tháng <span data-bind="text: month"></span> năm <span data-bind="text: year"></span> </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;height:30px;font-weight:bold;font-size:18pt;padding-top:10px;padding-bottom:10px" colspan="2">
+                <div style="padding-bottom:3px">
+                    GIẤY ĐI ĐƯỜNG
+                </div>
+                <table style="margin:auto"><tr><td style="width:100px;border-top:1px solid; margin:auto"></td></tr></table>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:80px">
+                Cấp cho <span data-bind="text:OngBa"></span>:
+            </td>
+            <td style="padding: 0 0 10px 0">
+                <span style=" text-transform: uppercase;font-weight:bold" data-bind="text: HoTen"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;">
+                Đơn vị:
+            </td>
+            <td style="padding: 0 0 10px 0">           
+                <span style="text-transform: uppercase;font-weight:bold" data-bind="text: TenPhongBan"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;">
+                Chức vụ:
+            </td>
+            <td style="padding: 0 0 10px 0">
+                <span style="text-transform: uppercase;font-weight:bold" data-bind="text: ChucVu"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;">
+                Nơi được cử đến công tác:
+            </td>
+            <td style="padding: 0 0 10px 0">
+                <span style="text-transform: uppercase;font-weight:bold" data-bind="text: DiaDiem"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Thời gian công tác:
+            </td>
+            <td style="font-weight:bold">
+                Từ ngày <span data-bind="text: TuNgay"></span> đến ngày <span data-bind="text: DenNgay"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:40%;padding:5px 0 0 0;text-align:center;height:30px;font-weight:bold"></td>
+            <td style="text-align:center;padding:5px 0 0 150px;height:30px;font-weight:bold;">
+                TL. HIỆU TRƯỞNG <br />
+                <!-- ko if:!LaTruongPhong() -->
+                KT. TRƯỞNG PHÒNG TC-HC<br />
+                PHÓ TRƯỞNG PHÒNG<br />
+                <!-- /ko -->
+                <!-- ko if:LaTruongPhong() -->
+                TRƯỞNG PHÒNG TC-HC<br />
+                <!-- /ko -->
+                <!--<span style="text-transform: uppercase;font-weight:bold" data-bind="text: ChucVuNguoiKy"></span>-->
+                <br /><br /><br />
+                <span style="text-transform: uppercase;font-weight:bold" data-bind="text: HoTenNguoiKy"></span>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top:10px">
+                <table style="text-align:center;font-weight:bold;border-collapse:collapse;font-size:13pt;">
+                    <tr>
+                        <td style="border:1px solid; padding:5px;width:120px">
+                            NƠI ĐI <br />VÀ ĐẾN
+                        </td>
+                        <td style="border:1px solid; padding:5px;width:70px">
+                            Ngày tháng
+                        </td>
+                        <td style="border:1px solid; padding:5px;width:90px">
+                            Phương tiện
+                        </td>
+                        <td style="border:1px solid; padding:5px;width:120px">
+                            Độ dài chặng đường (km)
+                        </td>
+                        <td style="border:1px solid; padding:5px;width:120px">
+                            Thời gian <br /> ở nơi đến
+                        </td>
+                        <td style="border:1px solid; padding:5px;width:200px">
+                            Xác nhận của cơ quan <br />(tổ chức) nơi đi, đến
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid; height:50px;padding:5px; text-align:left">
+                            Đi <span style="font-weight:normal">.................</span>
+                        </td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid; height:50px;padding:5px; text-align:left">
+                            Đến <span style="font-weight:normal">...............</span>
+                        </td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid; height:50px;padding:5px; text-align:left">
+                            Đi <span style="font-weight:normal">.................</span>
+                        </td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid; height:50px;padding:5px; text-align:left">
+                            Đến <span style="font-weight:normal">...............</span>
+                        </td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                        <td style="border:1px solid"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top:10px;padding-left:0">
+                <table style="font-size:13pt;">
+                    <tr>
+                        <td style="padding:5px">Vé người: ..................... vé x ..................... đ = ..................... đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">Vé người: ..................... vé x ..................... đ = ..................... đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">Phụ phí lấy vé bằng điện thoại: ..................... vé x ..................... đ = .....................đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">Phòng nghỉ: ..................... vé x ..................... đ = ..................... đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">1. Phụ cấp đi đường: ................................................................................................................................ đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">2. Phụ cấp lưu trú: .................................................................................................................................... đ</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:5px">Tổng cộng: ............................................................................................................................................... đ</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <table style="font-weight:bold">
+                    <tr>
+                        <td style="width:200px;text-align:center;padding:10px">NGƯỜI ĐI CÔNG TÁC</td>
+                        <td style="width:200px;text-align:center;padding:10px">PHỤ TRÁCH BỘ PHẬN</td>
+                        <td style="width:300px;text-align:center;padding:10px">TRƯỞNG PHÒNG TÀI CHÍNH</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:0;"></td>
+        </tr>
+    </table>
+</div>
+<div style="text-align:center"><input type="button" value="In Giấy đi đường" onclick="PrintElem('#mydiv')" /></div>
+

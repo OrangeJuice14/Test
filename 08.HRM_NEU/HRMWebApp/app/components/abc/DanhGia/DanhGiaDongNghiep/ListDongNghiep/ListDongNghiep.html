@@ -1,0 +1,83 @@
+﻿<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span style="padding-right:10px" class="widget-caption">Danh sách nhân viên</span>
+    </div>
+    <div class="widget-body" style="display: flow-root; ">
+        <div ng-if="User.GroupDanhGiaHasQuanLyDonVi">
+            <span>Đơn vị: </span>
+            <select kendo-drop-down-list
+                    k-options="ListBoPhan123"
+                    style="background-color:lightblue; width: 300px; margin-bottom: 10px"
+                    k-data-text-field="'DepartmentName'"
+                    k-data-source="BoPhanDataSource"
+                    k-data-value-field="'DepartmentId'">
+            </select>
+        </div>
+        <div ag-grid="gridOptions" style="max-height:700px ; overflow: auto;min-height: 50px;" class="ag-theme-balham">
+            <div class="spinner-border text-primary" ng-hide="ShowListStaff" role="status" style="width:100%; text-align:center; min-height: 50px">
+                <i style="font-size:30px; color:red" class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div class="spinner-border text-primary" ng-show="ShowListStaff && ListUser.length == 0" role="status" style="width:100%; text-align:center; min-height: 50px">
+                <span style="color:red">Không có nhân viên nào</span>
+            </div>
+            <table class="table-hover" border="1" width="100%" style="border-color:grey" ng-show="ShowListStaff && ListUser.length != 0">
+                <thead>
+                    <tr style="background-color:lightgrey;text-align:center">
+                        <th rowspan="2">STT</th>
+                        <th rowspan="2">Số hiệu công chức</th>
+                        <th rowspan="2">Họ và tên</th>
+                        <th rowspan="2">Đơn vị</th>
+                        <th rowspan="2">Nhóm đánh giá</th>
+                        <th colspan="2" style="width: 100px">Tự đánh giá</th>
+                        <th colspan="2" style="width: 100px" ng-repeat="BoTieuChiRole in ListBoTieuChiRole">{{BoTieuChiRole.GroupDanhGiaName}}</th>
+                    </tr>
+                    <tr style="background-color:lightgrey;text-align:center">
+                        <th style="padding: 5px">Khóa</th>
+                        <th style="padding: 5px">Điểm</th>
+                        <th ng-repeat-start="BoTieuChiRole in ListBoTieuChiRole" style="padding: 5px">Khóa</th>
+                        <th ng-repeat-end style="padding: 5px">Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="User in ListUser">
+                        <td class="text-align-center">{{$index + 1}}</td>
+                        <td>{{User.WebUserUserName}}</td>
+                        <td>
+                            {{ User.ListTuDanhGia.length == 0 ? User.WebUserStaffInfoStaffProfileName : ""}}
+                            <a style="cursor:pointer" ng-click="StaffClick(User)" ng-if=" User.ListTuDanhGia.length != 0">{{User.WebUserStaffInfoStaffProfileName}}</a>
+                        </td>
+                        <td>{{User.DepartmentName}}</td>
+                        <td>{{User.GroupDanhGiaName}}</td>
+
+                        <td ng-if="User.ListTuDanhGia.length == 0" style="text-align:center">
+                            <input type="checkbox" ng-disabled="true" />
+                        </td>
+                        <td ng-if="User.ListTuDanhGia.length == 0" style="text-align:center; vertical-align:middle">
+                            0
+                        </td>
+
+                        <td ng-repeat-start="DanhGia in User.ListTuDanhGia" ng-show="User.ListTuDanhGia.length == 1" style="text-align:center">
+                            <input type="checkbox" ng-model="DanhGia.IsLock" ng-disabled="true" />
+                        </td>
+                        <td ng-repeat-end ng-show="User.ListTuDanhGia.length == 1" style="text-align:center">
+                            {{DanhGia.TongDiem}}
+                        </td>
+
+                        <td ng-repeat-start="DanhGia in User.ListCapTrenDanhGia" style="text-align:center">
+                            <input type="checkbox" ng-model="DanhGia.IsLock" ng-disabled="true" />
+                        </td>
+                        <td ng-repeat-end style="text-align:center">
+                            {{DanhGia.TongDiem}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

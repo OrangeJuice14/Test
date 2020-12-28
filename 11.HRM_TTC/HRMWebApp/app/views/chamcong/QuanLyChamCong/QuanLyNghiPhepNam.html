@@ -1,0 +1,653 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.year = ko.observable(new Date().getFullYear());
+        self.namhientai = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        self.tennamhochientai = ko.observable("");
+        self.isEdit = ko.observable(false);
+        self.WebGroupId = ko.observable(session.WebGroupId.toUpperCase());
+        self.IsAdmin = ko.observable(0);
+        self.namHoc = ko.observableArray();
+        self.namHocHienTai = ko.observableArray();
+        self.namHocSelected = ko.observable();
+        self.nienDoTaiChinh = ko.observableArray();
+        self.nienDoTaiChinhSelected = ko.observable();
+        //
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000001"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000009"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000010") {
+            self.IsAdmin = 1;
+            //
+        }
+        //
+        self.checkExits = function () {
+            var check;
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyNghiPhep_CheckExists',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected(),
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        };
+        // Năm học
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetNamHocList',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.namHoc(obj);
+                if (obj.length > 0) {
+                    self.namHocSelected(obj[0].Oid);
+                }
+            }
+        });
+        // Năm học hiện tại
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetNamHocHienTai',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                if (obj.Oid != null) {
+                    self.namHocHienTai(obj.Oid);
+                    self.namHocSelected(obj.Oid);
+                    self.tennamhochientai(obj.TenNamHoc);
+                }
+
+            }
+        });
+        //Công ty
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        //Phòng ban
+        function GetDepartmentsOfUserAndCompany() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.length > 1)
+                        obj.unshift({ Oid: '00000000-0000-0000-0000-000000000000', STT: 0, TenBoPhan: 'Tất cả' });
+                    self.department(obj);
+                    if (obj.length > 0) {
+                        self.departmentSelected(obj[0].Oid);
+                    }
+                }
+            });
+        }
+        GetDepartmentsOfUserAndCompany();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetDepartmentsOfUserAndCompany();
+                GetNienDoTaiChinh();
+            }
+        });
+
+        function GetNienDoTaiChinh() {
+            // Niên độ tài chính
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetNienDoTaiChinhList',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.nienDoTaiChinh(obj);
+                    if (obj.length > 0) {
+                        self.nienDoTaiChinhSelected(obj[0].Oid);
+                    }
+                    else {
+                        self.nienDoTaiChinhSelected(null);
+                    }    
+                }
+            });
+        }
+        GetNienDoTaiChinh();
+
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'MaQuanLy', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'SoNgayPhepNamTruoc', type: 'string' },
+                { name: 'SoNgayPhepNamHienTai', type: 'string' },
+                { name: 'SoNgayPhepCongThem', type: 'string' },
+                { name: 'TongSoNgayPhep', type: 'string' },
+                { name: 'SoNgayPhepDaNghi', type: 'string' },
+                { name: 'SoNgayPhepConLai', type: 'string' },
+                { name: 'TongSoNgayBu', type: 'string' },
+                { name: 'SoNgayBuDaNghi', type: 'string' },
+                { name: 'SoNgayBuConLai', type: 'string' },
+                { name: 'SoNgayBuNamHienTai', type: 'string' },
+                { name: 'SoNgayBuNamHienTai', type: 'string' }
+            ],
+            id: 'Id',
+            url: "/WebServices/QuanLyNghiPhepNam_Find",
+            formatdata: function (data) {
+                return {
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected() == undefined ? null : self.nienDoTaiChinhSelected(),
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    webGroup: self.WebGroupId,
+                    congTy: self.companySelected()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                columnsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'MaQuanLy', width: 120, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', width: 180, align: 'center'
+                    },
+                    {
+                        text: 'Đơn vị', datafield: 'TenPhongBan', width: 250, align: 'center'
+                    },
+                    {
+                        text: 'Số ngày phép tồn năm trước',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayPhepNamTruoc', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Phép năm',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayPhepNamHienTai', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Phép thâm niên',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayPhepCongThem', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Tổng số ngày phép',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'TongSoNgayPhep', width: 80, align: 'center', cellsalign: "middle",
+                    },
+                    {
+                        text: 'Số ngày đã nghỉ',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayPhepDaNghi', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Số ngày còn lại',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayPhepConLai', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Tổng số ngày bù',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'TongSoNgayBu', width: 80, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Số ngày bù đã nghỉ',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayBuDaNghi', width: 100, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Số ngày bù còn lại',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayBuConLai', width: 100, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Số ngày bù năm hiện tại',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayBuNamHienTai', width: 100, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Số ngày bù năm trước',
+                        renderer: function (text, align) {
+                            return '<div class="jqx-grid-cell-child">' + text + '</div>';
+                        },
+                        datafield: 'SoNgayBuNamTruoc', width: 100, align: 'center', cellsalign: "middle"
+                    }
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validate: function () {
+            var self = this;
+            if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        chotdaunam: function () {
+            var self = this;
+            if (self.nienDoTaiChinhSelected() == null) {
+                alert("Vui lòng chọn niên độ tài chính");
+                return;
+            }
+            //
+            if (self.namHocSelected() != self.namHocHienTai()) { alert('Chỉ được kết chuyển năm học [' + self.tennamhochientai() + '] !!!'); return; }
+
+            var message = confirm("Bạn có chắc tạo hay không ?");
+            if (message == false) { return; }
+           //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyNghiPhepNam_Create',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected(),
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    //
+                    if (obj.message == 'success') {
+                        alert("Kết chuyển thành công !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                    else {
+                        alert("Kết chuyển thất bại !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                }
+            });
+        },
+        huychot: function () {
+            var self = this;
+            if (self.nienDoTaiChinhSelected() == null) {
+                alert("Vui lòng chọn niên độ tài chính");
+                return;
+            }
+            if (!self.checkExits()) {
+                alert('Chưa kết chuyển ngày nghỉ đầu năm !!!');
+                return;
+            }
+
+            //
+            if (self.namHocSelected() != self.namHocHienTai()) { alert('Chỉ được hủy năm học [' + self.tennamhochientai() + '] !!!'); return; }
+
+            //
+            if (self.year() < self.namhientai()) { alert('Năm ' + self.year() + ' không hợp lệ!!!'); return; }
+
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+
+            if (getselectedrow_edit.length > 1) {
+                alert("Chọn quá nhiều dòng");
+                return;
+            }
+
+            //
+            var message = confirm(getselectedrow_edit.length == 0 ? "Bạn có chắc hủy hay không ?" : "Bạn muốn hủy dòng đang được chọn?");
+            if (message == false) { return; }
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyNghiPhepNam_Remove',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nienDoTaiChinh: self.nienDoTaiChinhSelected(),
+                    congTy: self.companySelected(),
+                    chiTietPhepOid: getselectedrow_edit.length == 0 ? '00000000-0000-0000-0000-000000000000' : selectedrow.Oid
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    //
+                    if (obj.message == 'success') {
+                        alert("Hủy thành công !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                    else {
+                        alert("Hủy thất bại !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                }
+            });
+        },
+        capnhatngaynghi: function () {
+            var self = this;
+            if (self.nienDoTaiChinhSelected() == null) {
+                alert("Vui lòng chọn niên độ tài chính");
+                return;
+            }
+            //
+            if (self.namHocSelected() != self.namHocHienTai()) { alert('Chỉ được tính năm học [' + self.tennamhochientai() + '] !!!'); return; }
+            //
+            var message = confirm("Bạn có chắc cập hay không ?");
+            if (message == false) { return; }
+            //           
+            if (!self.checkExits()) {
+                alert('Chưa kết chuyển ngày nghỉ đầu năm !!');
+                return;
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyNghiPhepNam_Update',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        nienDoTaiChinh: self.nienDoTaiChinhSelected(),
+                        congTy: self.companySelected()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        //
+                        if (obj.message == 'success') {
+                            alert("Cập nhật thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                        }
+                        else {
+                            alert("Cập nhật thất bại !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                        }
+                    }
+                });
+            }
+        },
+        update: function () {
+
+            var self = this;
+            //
+            if (self.namHocSelected() != self.namHocHienTai()) { alert('Chỉ được cập nhật năm học [' + self.tennamhochientai() + '] !!!'); return; }
+            //
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+
+            if (getselectedrow_edit.length == 0) {
+                alert("Chưa có dòng nào được chọn");
+                return;
+            }
+            else if (getselectedrow_edit.length > 1) {
+                alert("Chọn quá nhiều dòng");
+                return;
+            }
+            //
+            $.get('/app/views/chamcong/QuanLyChamCong/QuanLyNghiPhepNam_Update.html', function (data) {
+                $('#popupWindowQLNghiPhepNamEdit').html(data);
+                ko.cleanNode($('#popupWindowQLNghiPhepNamEdit')[0]);
+                $('#popupWindowQLNghiPhepNamEdit').kendoWindow({
+                    width: "50%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+
+                });
+                //
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyNghiPhepNam_GetByID',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: selectedrow.Oid }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        //
+                        $("#txttongsongayphep").val(obj.TongSoNgayPhep);
+                        $("#txtsongaynamtruoc").val(obj.SoNgayPhepNamTruoc);
+                        $("#txtsongayhientai").val(obj.SoNgayPhepNamHienTai);
+                        $("#txtsongaycongthem").val(obj.SoNgayPhepCongThem);
+                        $("#txtsongaydanghi").val(obj.SoNgayPhepDaNghi);
+                        $("#txtsongayconlai").val(obj.SoNgayPhepConLai);
+                        $("#txtsongaydanghiqui1").val(obj.SoNgayPhepDaNghi_QuiI);
+                        $("#txtsongaytamungnamtruoc").val(obj.SoNgayTamUngNamTruoc);
+                        $("#txtsongaytamunghientai").val(obj.SoNgayTamUngHienTai);
+                    }
+                });
+                //
+                $('#popupWindowQLNghiPhepNamEdit').data("kendoWindow").open();
+                //
+                ko.applyBindings(self, document.getElementById('popupWindowQLNghiPhepNamEdit'));
+
+            });
+        },
+        saveupdate: function () {
+
+            var self = this;//
+            //
+            if ($("#txtsongaytamunghientai").val() > 0 &&
+                $("#txtsongayconlai").val() > 0) { alert('Chưa hết phép không thể tạm ứng !!!'); return; }
+            //
+            var getselectedrow_edit = $('#jqxgrid').jqxGrid('getselectedrowindexes');
+            var selectedrow = $('#jqxgrid').jqxGrid('getrowdata', getselectedrow_edit[0]);
+
+            if (getselectedrow_edit.length == 0) {
+                alert("Chưa có dòng nào được chọn");
+                return;
+            }
+            else if (getselectedrow_edit.length > 1) {
+                alert("Chọn quá nhiều dòng");
+                return;
+            }
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyNghiPhepNam_Save',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    Oid: selectedrow.Oid,
+                    TongSoNgayPhep: $("#txttongsongayphep").val(),
+                    SoNgayPhepCongThem: $("#txtsongaycongthem").val(),
+                    SoNgayPhepNamTruoc: $("#txtsongaynamtruoc").val(),
+                    SoNgayTamUngHienTai: $("#txtsongaytamunghientai").val()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == "success") {
+                        //
+                        alert("Cập nhật thành công!!!");
+                        $("#popupWindowQLNghiPhepNamEdit").data("kendoWindow").close();
+                        self.datagrid.jqxGrid('updatebounddata');
+                        self.datagrid.jqxGrid('clearselection');
+                    }
+                    else {
+                        alert("Cập nhật thất bại!!!");
+                    }
+                }
+            });
+        },
+        excel: function () {
+
+            var self = this;
+            //var arr = new Array();
+            ////
+            //var rows = self.datagrid.jqxGrid('getrows');
+            //for (var i = 0; i < 10; i++) {
+            //    var item = rows[i];
+            //    arr.push({
+            //        MaQuanLy: item.MaQuanLy,
+            //        HoTen: item.HoTen,
+            //        TenPhongBan: item.TenPhongBan,
+            //        TongSoNgayPhep: item.TongSoNgayPhep,
+            //        SoNgayPhepDaNghi: item.SoNgayPhepDaNghi,
+            //        SoNgayPhepConLai: item.SoNgayPhepConLai
+            //    });
+            //}
+            this.datagrid.jqxGrid('exportdata', 'xls', 'QuanLyNghiPhepNam', true);
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#QuanLyNghiPhepNam")[0]);
+    });
+</script>
+<div id="QuanLyNghiPhepNam">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4>QUẢN LÝ NGHỈ PHÉP NĂM</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div data-bind="if:IsAdmin == '1'">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: chotdaunam">
+                            <i class="btn-label glyphicon glyphicon-tags"></i>Kết chuyển
+                        </a>
+                    </div>
+                </div>
+                <div data-bind="if:IsAdmin == '1'">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: huychot">
+                            <i class="btn-label glyphicon glyphicon-remove"></i>Hủy
+                        </a>
+                    </div>
+                </div>
+                <div data-bind="if:IsAdmin == '1'">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: capnhatngaynghi">
+                            <i class="btn-label glyphicon glyphicon-upload"></i>Tính ngày phép
+                        </a>
+                    </div>
+                </div>
+                <div data-bind="if:IsAdmin == '1'">
+                    <div class="col-lg-2 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: update">
+                            <i class="btn-label glyphicon glyphicon-pencil"></i>Cập nhật
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xs-12 col-sm-6">
+                    <a href="#" class="btn btn-info" style="width: 150px;" data-bind="click: excel">
+                        <i class="btn-label glyphicon glyphicon-random"></i>Xuất Excel
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <!--<select data-bind="options:namHoc, optionsText: 'TenNamHoc', optionsValue: 'Oid',value:namHocSelected"></select>-->
+        <select data-bind="options:nienDoTaiChinh, optionsText: 'TenNienDo', optionsValue: 'Oid',value:nienDoTaiChinhSelected"></select>
+        <!-- ko if: company().length > 1 -->
+            <select style="width: 250px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+        <!-- /ko -->
+        <select style="width: 300px" data-bind="options: department, optionsText: function (type) { return type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="popupWindowQLNghiPhepNamEdit"></div>
+</div>
+

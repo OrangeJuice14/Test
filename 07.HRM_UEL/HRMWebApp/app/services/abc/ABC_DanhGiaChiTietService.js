@@ -1,0 +1,44 @@
+﻿define(['app/app'], function (app) {
+    "use strict";
+    app.factory('ABC_DanhGiaChiTietService', ['$http', '$q', function ($http, $q) {
+        var serviceResult = {};
+        //serviceResult.GetDanhGiaByFK = function (userDuocDanhGiaId, userDanhGiaId, kyDanhGiaId, boTieuChiId, groupDanhGiaId) {
+        //    return $http.get('/Api/ABC_DanhGiaApi/GetDanhGiaByFK?userDuocDanhGiaId=' + userDuocDanhGiaId + '&userDanhGiaId=' + userDanhGiaId + '&kyDanhGiaId=' + kyDanhGiaId + '&boTieuChiId=' + boTieuChiId + '&groupDanhGiaId=' + groupDanhGiaId);
+        //}
+        serviceResult.GetListChiTietDanhGiaByDanhGiaId = function (danhGiaId) {
+            return $http.get('/Api/ABC_DanhGiaChiTietApi/GetListByDanhGiaId?danhGiaId=' + danhGiaId);
+        }
+        //serviceResult.GetListKetQuaDanhGia = function (danhGiaId) {
+        //    return $http.get('/Api/ABC_DanhGiaApi/GetListKetQuaDanhGia?danhGiaId=' + danhGiaId);
+        //}
+        //serviceResult.GetUserById = function (userId, kyDanhGiaId) {
+        //    return $http.get('/Api/ABC_UserDanhGiaApi/GetUserNow?userId=' + userId + '&kyDanhGiaId=' + kyDanhGiaId);
+        //}
+        //serviceResult.CheckIsTeacher = function (userId, kyDanhGiaId, groupDanhGiaId) {
+        //    return $http.get('/Api/ABC_UserDanhGiaApi/GetCheckIsTeacher?userId=' + userId + '&kyDanhGiaId=' + kyDanhGiaId + '&groupDanhGiaId=' + groupDanhGiaId);
+        //}
+        serviceResult.SaveDanhGiaChiTiet = function (list) {
+            var deferred = $q.defer();
+            $http({
+                method: 'Put',
+                url: '/Api/ABC_DanhGiaChiTietApi/Put',
+                data: list
+            }).then(function (result) {
+                deferred.resolve(result);
+            });
+            return deferred.promise;
+        }
+        //serviceResult.SaveDanhGia = function (obj) {
+        //    var deferred = $q.defer();
+        //    $http({
+        //        method: 'Put',
+        //        url: '/Api/ABC_DanhGiaApi/Put',
+        //        data: obj
+        //    }).then(function (result) {
+        //        deferred.resolve(result);
+        //    });
+        //    return deferred.promise;
+        //}
+        return serviceResult;
+    }]);
+});

@@ -1,0 +1,378 @@
+﻿<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });     
+    });
+</script>
+<script type="text/javascript">
+
+    function ViewModel(datagrid) {
+
+        var self = this;
+        self.buoiList = [
+               { Id: 0, Name: "Cả ngày" },
+               { Id: 1, Name: "Buổi sáng" },
+               { Id: 2, Name: "Buổi chiều" }
+        ];
+        self.thuList = ko.observableArray();
+        self.thuList([
+        { Id: 1, Name: "T2" },
+        { Id: 2, Name: "T3" },
+        { Id: 3, Name: "T4" },
+        { Id: 4, Name: "T5" },
+        { Id: 5, Name: "T6" }
+        ]);
+        self.buoiSelected = ko.observable();
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.day = ko.observable(),
+        self.month = ko.observable(new Date().getMonth() + 1);
+        self.year = ko.observable(new Date().getFullYear());
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable();
+        self.departmentSelected_nhansu1 = ko.observable();
+        self.departmentSelected_First = "";
+        self.name = ko.observable("");
+        self.isEdit = ko.observable(false);
+        self.grid_hosonhanvien = ko.observableArray();
+        self.grid_hosonhanvien1 = ko.observableArray();
+        ko.utils.arrayForEach(self.thuList(), function (val) {
+            val.Chon = ko.observable(val.Chon);
+        });
+        self.departmentSelected_nhansu1.subscribe(function (newValue) {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ maBoPhan: newValue == undefined ? null : newValue }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.grid_hosonhanvien1(obj);
+                }
+            });
+            var source =
+            {
+                localdata: self.grid_hosonhanvien1(),
+                datafields:
+                [
+                    { name: 'Oid', type: 'string' },
+                    { name: 'MaQuanLy', type: 'string' },
+                    { name: 'Ho', type: 'string' },
+                    { name: 'Ten', type: 'string' }
+                ],
+                datatype: "json"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // initialize jqxGrid
+            $("#jqxdropdownbutton1").jqxDropDownButton({ width: 150, height: 25 });
+
+            $("#jqxgrid_hosonhanvien1").jqxGrid(
+                {
+                    width: 250,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    columns: [
+                        { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                        { text: 'Họ', datafield: 'Ho', width: 90, },
+                        { text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                    ]
+                });
+
+            $("#jqxgrid_hosonhanvien1").on('rowselect', function (event) {
+                var args = event.args;
+                var row = $("#jqxgrid_hosonhanvien1").jqxGrid('getrowdata', args.rowindex);
+                if (row == undefined)
+                    return;
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['Ho'] + ' ' + row['Ten'] + '</div>';
+                $("#jqxdropdownbutton1").jqxDropDownButton('setContent', dropDownContent);
+            });
+            $("#jqxgrid_hosonhanvien1").jqxGrid('selectrow', 0);
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+                self.departmentSelected(obj[0].Oid);
+                self.departmentSelected_First = obj[0].Oid;
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'Ngay', type: 'date', format: 'dd-MM-yyyy' },
+                { name: 'Buoi', type: 'string' }
+            ],
+            id: 'Id',
+            url: "/WebServices/KhaiBaoChamCong_Find",
+            formatdata: function (data) {
+                return {
+                    ngay: self.day(),
+                    thang: self.month(),
+                    nam: self.year(),
+                    boPhanId: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    maNhanSu: self.name()                   
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                pageable: true,
+                pagesize: 10,
+                sortable: true,
+                rowsheight: 50,
+                filterable: true,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 140, align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', align: 'center'
+                    },
+                    {
+                        text: 'Ngày', datafield: 'Ngay', width: 100, cellsformat: 'd/M/yyyy', align: 'center', cellsalign: "middle"
+                    },
+                    {
+                        text: 'Phòng ban', datafield: 'TenPhongBan', align: 'center'
+                    },
+                    {
+                        text: 'Buổi', datafield: 'Buoi', width: 100, align: 'center',
+                    }
+
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        daysInMonth: function (month, year) {
+            return new Date(year, month, 0).getDate();
+        },
+        validateFromDateToDate: function (tuNgay, denNgay, nhanVienID) {
+            var check;
+            
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/KhaiBaoChamCong_KiemTraTonTaiTuNgayDenNgay',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: ko.toJSON({
+                    tuNgay: tuNgay,
+                    denNgay: denNgay,
+                    nhanVienID: nhanVienID
+                }),
+                success: function (result) {
+                    var obj = result;
+                    check = obj;
+                }
+            });
+            return check;
+        },
+        validate: function () {
+            var self = this;
+            if (self.day() > parseInt(self.daysInMonth(self.month(), self.year()))) {
+                alert("Ngày không hợp lệ !!");
+                return true;
+            } else if (isNaN(self.month()) || self.month() < 0 || self.month() > 12) {
+                alert("Tháng không hợp lệ !!");
+                return true;
+            }
+            else if (isNaN(self.year()) || self.year() < 0) {
+                alert("Năm không hợp lệ !!");
+                return true;
+            }
+            return false;
+        },
+        search: function () {
+            var self = this;
+            if (self.validate())
+                return;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        New: function () {
+            var self = this;
+            self.isEdit(false);
+            $.get('/app/views/chamcong/QuanLyChamCong/KhaiBaoChamCongGiangVien_New.html', function (data) {
+                $('#popupWindowCCNGNew').html(data);
+                ko.cleanNode($('#popupWindowCCNGNew')[0]);
+                $('#popupWindowCCNGNew').kendoWindow({
+                    width: "50%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "15%",
+                        left: "20%"
+                    }
+
+                });
+                $('#popupWindowCCNGNew').data("kendoWindow").open();
+                $("#jqxFromDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                $("#jqxToDate1").jqxDateTimeInput({ width: '250px', height: '25px' });
+                ko.applyBindings(self, document.getElementById('popupWindowCCNGNew'));
+                self.departmentSelected_nhansu1(self.departmentSelected_First);
+            });
+        },
+        save: function () {
+            var self = this;
+            ko.utils.arrayForEach(self.thuList(), function (val) {
+                val.Chon = val.Chon();
+            });
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien1').jqxGrid('getselectedrowindexes');
+            var ID_NhanVien = getselectedrowindexes != undefined ? $('#jqxgrid_hosonhanvien1').jqxGrid('getrowdata', getselectedrowindexes[0]).Oid : self.IDNhanVien;
+            if (self.validateFromDateToDate($('#jqxFromDate1').jqxDateTimeInput('getDate'), $('#jqxToDate1').jqxDateTimeInput('getDate'), ID_NhanVien)) {
+                alert("Trùng hoặc giao ngày với dữ liệu trước");
+                location.reload();
+                return;
+            }
+            var obj =
+            {
+                ThongTinNhanVien: ID_NhanVien,
+                DanhSachDTO_Thu: self.thuList(),
+                TuNgay: $('#jqxFromDate1').jqxDateTimeInput('getDate'),
+                DenNgay: $('#jqxToDate1').jqxDateTimeInput('getDate'),
+                Buoi: self.buoiSelected()
+            };
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ obj: obj }),
+                contentType: "application/json; charset=utf-8",
+                url: '/WebServices/Save_KhaiBaoChamCongGiangVien',
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    alert("Lưu thành công !!");
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                    $("#popupWindowCCNGNew").data("kendoWindow").close();
+                    location.reload();
+                }
+            });
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có chắc xóa hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/KhaiBaoChamCong_DeleteList',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert("Xóa thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        },
+
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#ChamCongNgayNghi")[0]);
+    });
+</script>
+<div id="ChamCongNgayNghi">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>KHAI BÁO CHẤM CÔNG GIẢNG VIÊN</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: New">
+                            <i class="btn-label glyphicon glyphicon-tags"></i>Thêm mới
+                        </a>
+                        <a href="#" class="btn btn-labeled btn-darkorange" style="width: 158px;" data-bind="click: remove">
+                            <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+            <input type="text" placeholder="ngày" data-bind="value: day" style="width: 50px;height:32px; text-align: center;" maxlength="2" />
+            -
+        <input type="text" placeholder="tháng" data-bind="value: month" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        -
+        <input type="text" placeholder="năm" data-bind="value: year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <select style="width: 200px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan  }, optionsValue: 'Oid', value: departmentSelected"></select>
+        <input type="text" placeholder="Mã nhân sự" data-bind="value: name" style="width: 110px;height:32px; padding:5px;" />
+        <input type="button" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <div id="popupWindowCCNGNew"></div>
+    <div id="popupWindowCCNGEdit"></div>
+</div>
+

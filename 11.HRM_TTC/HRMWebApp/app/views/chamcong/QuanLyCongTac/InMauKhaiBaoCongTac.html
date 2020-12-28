@@ -1,0 +1,158 @@
+﻿<style>
+    td {
+        padding: 5px 0 0px 0;
+    }
+</style>
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        //$("#mydiv").wordExport();
+        var mywindow = window.open('', 'Giấy Khai báo công tác');
+        mywindow.document.write('<html><head><title></title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+
+</script>
+<div id="mydiv">
+    <table style="width:100px;float:left">
+        <tr>
+            <td align="left">
+                <img src="../../../../Images/Logo_CB.png" />
+            </td>
+        </tr>
+    </table>
+    <table style="width:400px;float:right;border-collapse:collapse; font-family:'Times New Roman';font-size:13pt;text-align:center;">
+        <tr>
+            <td style="font-weight:bold;padding-top:40px" align="center">
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;text-decoration:underline" align="center">
+                Độc lập - Tự do - Hạnh phúc
+            </td>
+        </tr>
+    </table>
+    <!--<table style="border-collapse:collapse; font-family:'Times New Roman';font-size:13pt;text-align:center;clear:both;">
+        <tr>
+            <td align="center" colspan="4" style="text-align:center;font-weight:bold;font-size:18pt;padding-top:20px;width:800px">
+                ĐƠN XIN NGHỈ PHÉP
+            </td>
+        </tr>
+    </table>-->
+    <table style="width:595pt;color:black;font-family:'Times New Roman';font-size:13pt;clear:both">
+
+        <tr>
+            <td style="text-align:center;height:30px;font-weight:bold;font-size:16pt;padding-top:10px;padding-bottom:10px" colspan="2">
+                <div style="padding-bottom:3px">
+                    KHAI BÁO ĐI CÔNG TÁC
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Cán bộ đi công tác:
+            </td>
+            <td>
+                <span  data-bind="text: HoTen"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Mã số CB:
+            </td>
+            <td>
+                <span  data-bind="text: MaNhanVien"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Chức vụ:
+            </td>
+            <td>
+                <span  data-bind="text: ChucVu"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Đơn vị:
+            </td>
+            <td>
+                <span  data-bind="text: TenPhongBan"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Khối:
+            </td>
+            <td>
+                <span  data-bind="text: TenKhoi"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Địa điểm đi công tác:
+            </td>
+            <td>
+                <span  data-bind="text: DiaDiem"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Mục đích:
+            </td>
+            <td>
+                <span  data-bind="text: NoiDung"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top;width:150px">
+                Đề nghị không được
+            </td>
+            <td>
+                chấm công vân tay: từ ngày <span style="text-transform: uppercase;font-weight:bold" data-bind="text: TuNgayString"></span>
+                đến ngày <span style="text-transform: uppercase;font-weight:bold" data-bind="text: DenNgayString"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top:10px">
+                <div style="width:400px;text-align:center;font-style:italic;float:right">Ngày .... tháng ... năm....</div>
+                <div style="width:400px;text-align:center;font-weight:bold;text-decoration:underline;float:right">Người khai báo</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="width:400px;text-align:center;float:right;padding-top:20px;" data-bind="text: HoTen"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-style:italic;"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-style:italic;">Yêu cầu: Đính kèm bản scan Giấy đi đường hoặc tờ trình phê duyệt đi công tác.</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-style:italic;"></td>
+        </tr>
+    </table>
+</div>
+<div style="text-align:center"><input type="button" value="In Giấy công tác" onclick="PrintElem('#mydiv')" /></div>
+

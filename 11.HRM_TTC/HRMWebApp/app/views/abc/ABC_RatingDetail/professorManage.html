@@ -1,0 +1,563 @@
+﻿<style type="text/css">
+    .overlay {
+        display: table;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: white;
+        z-index: 2;
+    }
+
+    form > table td {
+        padding: 5px;
+        border: 1px solid #808080;
+    }
+
+    .none-border td {
+        border: none;
+    }
+
+    .inner {
+        font-family: sans-serif;
+        font-size: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue ">
+    </div>
+
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <table class="evaluation-info">
+                <tr>
+                    <td style="border: 0px; padding-left: 100px;" colspan=5 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=5> ĐÁNH GIÁ HIỆU QUẢ VÀ NĂNG LỰC LÀM VIỆC QUÝ {{staffResultDetaitObject.Quater}} <br /> NIÊN ĐỘ {{staffResultDetaitObject.Year}}</font>
+                            <!--<br><font face="Times New Roman" size=4>(Dành cho Quản lý cấp cao)</font>-->
+                        </b>
+                    </td>
+                    <td style="border: 0px; padding-left: 80px;" colspan=4 align="right" valign=middle>
+                        <font face="Times New Roman" size=3>Mã số: NSĐT/QT-11/M04A<br>Hiệu lực: 21/12/2018</font>
+                    </td>
+                </tr>
+            </table>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated" style="color:red">(Cấp dưới chưa khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsSupervisorRated" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated" style="color:red">(Đã khóa bảng đánh giá)</h5>
+            <h5 class="title" ng-if="staffResultDetaitObject.IsRatingLocked" style="color:red">(Đơn vị đã bị khóa đánh giá)</h5>
+            <div style="margin-top: 40px; margin-left: 20px; width: 100%; text-align: left; font-family: 'Times New Roman'; font-size: medium;">
+                <div class="row">
+                    <div class="col-md-1 col-sm-1"><b>MSNV</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.MaNhanVien}}</div>
+                    <div class="col-md-3 col-sm-3"><b>Công ty/ Trường/ Trung tâm</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.TenCongTy}}</div>
+                    <div class="col-md-2 col-sm-2"><b>Quản lý trực tiếp</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.QuanLyTrucTiep}}</div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-1 col-sm-1"><b>Họ tên</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.HoTen}}</div>
+                    <div class="col-md-3 col-sm-3"><b>Phòng ban/ Bộ phận</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.TenBoPhan}}</div>
+                    <div class="col-md-2 col-sm-2"><b>Chức danh</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.QuanLyTrucTiep_ChucDanh}}</div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-1 col-sm-1"><b>Chức danh</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.TenChucDanh}}</div>
+                    <div class="col-md-3 col-sm-3"><b>Ngày vào Công ty/ Trường/ Trung tâm</b></div>
+                    <div class="col-md-2 col-sm-2"><format-date-time my-value="staffResultDetaitObject.StaffInfo.thongTinCaNhan.NgayVaoCongTy"></format-date-time></div>
+                    <div class="col-md-2 col-sm-2"><b>Quản lý trên một cấp</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.QuanLyTrenMotCap}}</div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-1 col-sm-1"></div>
+                    <div class="col-md-2 col-sm-2"></div>
+                    <div class="col-md-3 col-sm-3"><b>Ngày bổ nhiệm (nếu có)</b></div>
+                    <div class="col-md-2 col-sm-2"><format-date-time my-value="staffResultDetaitObject.StaffInfo.thongTinCaNhan.NgayBoNhiemChucVu"></format-date-time></div>
+                    <div class="col-md-2 col-sm-2"><b>Chức danh</b></div>
+                    <div class="col-md-2 col-sm-2">{{staffResultDetaitObject.StaffInfo.thongTinCaNhan.QuanLyTrenMotCap_ChucDanh}}</div>
+                </div>
+            </div>
+        </div>
+        <form style="margin-top: 20px;" name="planDetailKPIForm" role="form" class="form-horizontal" novalidate>
+            <div style="margin-bottom: 20px;">
+                <a ng-click="ExportExcel()" class="btn btn-labeled btn-info planButton">
+                    <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+                </a>
+            </div>
+            <p>
+                <b>
+                    <font face="Times New Roman" size=3>
+                        1. ĐÁNH GIÁ HIỆU QUẢ VÀ NĂNG LỰC LÀM VIỆC
+                    </font>
+                </b>
+            </p>
+            <table style="margin-bottom: 20px;" cellspacing="0" border="0">
+                <tr>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 height="41" align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Stt</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Năng lực</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Mô tả năng lực</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Phương pháp đo</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Tỷ trọng</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        colspan=3 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Mức độ thể hiện</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Cá nhân tự đánh giá</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>QLTT đánh giá</font>
+                        </b>
+                    </td>
+                    <!--<td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle >
+                        <b>
+                            <font face="Times New Roman" size=3>Kết quả quy đổi</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;"
+                        rowspan=2 align="center" valign=middle >
+                        <b>
+                            <font face="Times New Roman" size=3>Kết quả trưc tiếp</font>
+                        </b>
+                    </td>-->
+                </tr>
+                <tr>
+                    <td ng-repeat="rl in staffResultDetaitObject.ABC_RatingLevelDTOs track by $index" style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle bgcolor="{{rl.Color}}">
+                        <font face="Times New Roman" size=3>{{rl.Name}}</font>
+                    </td>
+                </tr>
+                <tr ng-repeat="rd in staffResultDetaitObject.ABC_RatingDetailDTOs track by $index">
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        height="181" align="center" valign=middle sdval="1" sdnum="1033;">
+                        <font face="Times New Roman" size=3>{{rd.ABC_CriterionDTO.OrderNumber}}</font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="left" valign=middle>
+                        <font face="Times New Roman" size=3>{{rd.ABC_CriterionDTO.Name}}</font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="left" valign=middle>
+                        <font face="Times New Roman" size=3>
+                            {{rd.ABC_CriterionDTO.CriterionDetail}}
+                        </font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="left" valign=middle>
+                        <font face="Times New Roman" size=3>
+                            {{rd.ABC_CriterionDTO.Methods}}
+                        </font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle sdval="0.05" sdnum="1033;0;0%">
+                        <font face="Times New Roman" size=3>{{rd.ABC_CriterionDTO.Percents}}</font>
+                    </td>
+                    <td ng-repeat="rl in rd.RatingLevelDTOs" style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="left" valign=middle>
+                        <font face="Times New Roman" size=3>
+                            {{rl.Description}}
+                        </font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle>
+                        <div>
+                            <select ng-disabled="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsRatingLocked" ng-model="rd.StaffRecord">
+                                <!--ng-model="rd.StaffRecord"-->
+                                <option ng-repeat="rl in staffResultDetaitObject.ABC_RatingLevelDTOs" ng-selected="rd.StaffRecord == rl.Id" value="{{rl.Id}}">{{rl.Name}}</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle>
+                        <div ng-if="(staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated) || (!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsSupervisorRated)">
+                            <select ng-disabled="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsRatingLocked" ng-model="rd.SupervisorRecord">
+                                <!--ng-model="rd.SupervisorRecord"-->
+                                <option ng-repeat="rl in staffResultDetaitObject.ABC_RatingLevelDTOs" ng-selected="rd.SupervisorRecord == rl.Id" value="{{rl.Id}}">{{rl.Name}}</option>
+                            </select>
+                        </div>
+                    </td>
+                    <!--<td style="border-top: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle bgcolor="#CCFFFF" sdval="0.75" sdnum="1033;">
+                        <font face="Times New Roman" size=3>0.75</font>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;"
+                        align="center" valign=middle bgcolor="#CCFFFF" sdval="0.0375" sdnum="1033;0;0.00%">
+                        <font face="Times New Roman" size=3>3.75%</font>
+                    </td>-->
+                </tr>
+                <tr>
+                    <td colspan="4" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>TỔNG CỘNG</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle bgcolor="#FFCC00" sdval="1" sdnum="1033;0;0%">
+                        <b>
+                            <font face="Times New Roman" size=3>100%</font>
+                        </b>
+                    </td>
+                    <td colspan="7" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <!--<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000;"
+                        align="center" valign=middle bgcolor="#FFCC00" sdval="0.0375" sdnum="1033;0;0.00%">
+                        <b>
+                            <font face="Times New Roman" size=3>3.75%</font>
+                        </b>
+                    </td>-->
+                </tr>
+            </table>
+            <p>
+                <b>
+                    <font face="Times New Roman" size=3>
+                        2. Ý KIẾN/ĐỀ XUẤT CHUNG
+                    </font>
+                </b>
+            </p>
+            <table class="none-border" style="margin-bottom: 20px;">
+                <tr>
+                    <td colspan=5 height="24" align="left" valign=middle>
+                        <font face="Times New Roman" size=3>Ý kiến của Cá nhân:</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=10>
+                        <textarea ng-disabled="staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsRated || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsRatingLocked" ng-model="staffResultDetaitObject.StaffNote" rows="10" cols="90"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=5 height="27" align="left" valign=middle>
+                        <font face="Times New Roman" size=3>Ý kiến của Quản lý trực tiếp:</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=10>
+                        <div ng-if="(staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated) || (!staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsSupervisorRated)">
+                            <textarea ng-disabled="!staffResultDetaitObject.IsSupervisor || staffResultDetaitObject.IsSupervisorRated || staffResultDetaitObject.IsRatingLocked" ng-model="staffResultDetaitObject.SupervisorNote" rows="10" cols="90"></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+            </table>
+            <!--<p>
+                <b>s
+                    <font face="Times New Roman" size=3>
+                        3. KẾT QUẢ ĐÁNH GIÁ (Vui lòng không chỉnh sửa tại mục này)
+                    </font>
+                </b>
+            </p>
+            <table>
+                <tr>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        height="27" align="center" valign=middle bgcolor="#D3D3D3">
+                        <b>
+                            <font face="Times New Roman" size=3>Stt</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        colspan=2 align="center" valign=middle bgcolor="#D3D3D3">
+                        <b>
+                            <font face="Times New Roman" size=3>Nhóm tiêu chí</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        align="center" valign=middle bgcolor="#D3D3D3">
+                        <b>
+                            <font face="Times New Roman" size=3>Kết quả quy đổi</font>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        height="36" align="center" valign=middle sdval="1" sdnum="1033;">
+                        <font face="Times New Roman" size=3>1</font>
+                    </td>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        colspan=2 align="left" valign=middle>
+                        <font face="Times New Roman" size=3>
+                            Kết quả đánh giá hiệu quả và năng lực làm việc
+                        </font>
+                    </td>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        align="center" valign=middle sdval="0.0375" sdnum="1033;0;0.00%">
+                        <font face="Times New Roman" size=3>3.75%</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        colspan=3 height="47" align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>Xếp loại thi đua theo tổng điểm đánh giá</font>
+                        </b>
+                    </td>
+                    <td style="border-top: 1px solid #969696; border-bottom: 1px solid #969696; border-left: 1px solid #969696; border-right: 1px solid #969696"
+                        align="center" valign=middle bgcolor="#FFD700" sdnum="1033;0;0.00%">
+                        <b>
+                            <font face="Times New Roman" size=3 color="#FF6600">Không hoàn thành nhiệm vụ</font>
+                        </b>
+                    </td>
+                </tr>
+            </table>
+            <table class="none-border" style="margin-top: 20px;">
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>CÁ NHÂN</font>
+                        </b>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>QUẢN LÝ TRỰC TIẾP</font>
+                        </b>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>TRƯỞNG ĐƠN VỊ</font>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <i>
+                            <font face="Times New Roman" size=3>(Nếu có)</font>
+                        </i>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>(Họ và tên)</font>
+                        </b>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>(Họ và tên)</font>
+                        </b>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <b>
+                            <font face="Times New Roman" size=3>(Họ và tên)</font>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="21" align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <font face="Times New Roman" size=3>Ngày …./ …./……</font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <font face="Times New Roman" size=3>Ngày …./ …./……</font>
+                    </td>
+                    <td align="left" valign=middle>
+                        <font face="Times New Roman" size=3><br></font>
+                    </td>
+                    <td align="center" valign=middle>
+                        <font face="Times New Roman" size=3>Ngày …./ …./……</font>
+                    </td>
+                </tr>
+            </table>-->
+            <br />
+            <div class="row">
+                <div style="float: right; margin-right: 30px;">
+                    <div ng-if="!staffResultDetaitObject.IsSupervisor && !staffResultDetaitObject.IsRated && !staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsRatingLocked">
+                        <button class="btn btn-info" ng-click="save()">Lưu</button>
+                        <button class="btn btn-info" ng-click="lock()">Khóa</button>
+                    </div>
+                    <div ng-if="staffResultDetaitObject.IsSupervisor && staffResultDetaitObject.IsRated && !staffResultDetaitObject.IsSupervisorRated && !staffResultDetaitObject.IsRatingLocked">
+                        <button class="btn btn-info" ng-click="save()">Lưu</button>
+                        <button class="btn btn-info" ng-click="lock()">Khóa</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

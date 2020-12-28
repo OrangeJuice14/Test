@@ -1,0 +1,210 @@
+﻿<div class="widget ng-scope">
+    <form class="form-horizontal" name="KetQuaDanhGiaForm" role="form" novalidate>
+        <div class="widget-header">
+            <span class="widget-caption">ĐÁNH GIÁ CẤP DƯỚI</span>
+            <button style="float:right; margin-top: 2px; margin-right:5px" ng-click="Lock()" ng-disabled="KetQuaDanhGiaForm.$invalid ||ObjKetQua.isLock" class="btn btn-primary">Khóa</button>
+            <button style="float:right; margin-top: 2px; margin-right:5px" ng-click="Save()" ng-disabled="KetQuaDanhGiaForm.$invalid || ObjKetQua.isLock" class="btn btn-primary"><i class="fa fa-save"></i>Lưu</button>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <div>
+                    <h3 class="text-align-center">ĐÁNH GIÁ VÀ ĐÓNG GÓP Ý KIẾN ĐỐI VỚI CẤP DƯỚI</h3>
+                    <h4 class="text-align-center">{{"Kỳ đánh giá: " + KyDanhGia.Ten}}</h4>
+                </div>
+                <div ng-hide="LoaddingBody" class="d-flex align-items-center text-align-center">
+                    <strong>Loading... <i class="fa fa-circle-o-notch fa-spin"></i></strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+                <div ng-hide="LoaddingTableData || !LoaddingBody" class="d-flex align-items-center text-align-center">
+                    <strong style="color:red">(Chọn đồng nghiệp cần đánh giá).</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+                <div ng-show="LoaddingBody" class="row">
+                    <div class="col-sm-3 col-12">
+                        <div class="text-align-center">
+                            <label>Tìm kiếm</label>
+                            <md-input-container><input ng-model="SearchText" /></md-input-container>
+                        </div>
+                        <div style="height: 500px; overflow: auto">
+                            <a class="btn text-align-left" ng-repeat="item in ListStaff | filter:SearchText" ng-click="ClickedStaff([item])" style="width: 100%; background-color:lightgray; border-bottom: 1px solid white">{{item.StaffProfileName}}</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 col-12">
+                        <div ng-show="HideTableData== true && LoaddingTableData == true" class="d-flex align-items-center text-align-center">
+                            <strong>Loading... <i class="fa fa-circle-o-notch fa-spin"></i></strong>
+                            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                        </div>
+                        <div ng-hide="HideTableData">
+                            <div>
+                                <h4>{{"Họ và tên người được đánh giá: " + NguoiDuocDanhGia.StaffProfileName}}</h4>
+                                <h4>{{"Chức vụ: " + NguoiDuocDanhGia.StaffInfoPositionName}}</h4>
+                            </div>
+                            <div ng-show="Loadding && (LoaddingTableData || !LoaddingBody)" class="d-flex align-items-center text-align-center">
+                                <strong>Loading... <i class="fa fa-circle-o-notch fa-spin"></i></strong>
+                                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                            </div>
+                            <div ng-hide="Loadding ">
+                                <div ng-if="KyDanhGia.Loai == 2">
+                                    <div class="widget-body">
+                                        <table class="table" border="1" style="border-color:lightgrey">
+                                            <thead>
+                                                <tr style="text-align:center">
+                                                    <th class="text-align-center">STT</th>
+                                                    <th>Tiêu chí đánh giá</th>
+                                                    <th>Điểm tối đa</th>
+                                                    <th style="width: 90px;">Điểm Trưởng phòng đánh giá</th>
+                                                    <th style="width: 150px;">Ghi chú Trưởng phòng</th>
+                                                    <th style="width: 90px;" ng-show="ObjKetQuaTuDanhGia.isLock">Điểm Nhân viên tự đánh giá</th>
+                                                    <th style="width: 150px;" ng-show="ObjKetQuaTuDanhGia.isLock">Ghi chú của Nhân viên</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="text-align:center" ng-repeat="row in ListChiTietKetQua" ng-init="row.Search.TieuChiDanhGiaId = row.TieuChiDanhGiaId"> 
+                                                    <td class="text-align-left"><span ng-bind-html="row.TieuChiDanhGiaSTT"></span></td>
+                                                    <td><span class="text-align-left" ng-bind-html="row.TieuChiDanhGiaTenTieuChi"></span></td>
+                                                    <td><span class="text-align-left"><b ng-if="row.IsChildren">{{row.TieuChiDanhGiaDiemToiDa}}</b><span ng-if="!row.IsChildren">{{row.TieuChiDanhGiaDiemToiDa}}</span></span></td>
+
+                                                    <td ng-if="!ObjKetQua.isLock">
+                                                        <md-input-container class="padding-bottom-10" ng-hide="row.IsChildren">
+                                                            <input type="number" style="width: 50px" ng-if="!row.TieuChiDanhGiaParentChildSelectOne" max="{{row.TieuChiDanhGiaDiemToiDa}}" min="0" ng-change="ChangeScore()" ng-model="row.Diem" ng-disabled="row.ParentIsChecked === false|| (row.childRadio  && row.ParentIsChecked != true)" />
+                                                        </md-input-container>
+                                                        <md-input-container class="padding-bottom-10" ng-if="row.TieuChiDanhGiaParentChildSelectOne">
+                                                            <div style="width:50px; text-align:center">
+                                                                <input type="radio" name="{{row.TieuChiDanhGiaParentId}}" value="{{row.TieuChiDanhGiaId}}" ng-click="ChangeRadioScore(row)" ng-checked="row.IsChecked && !ObjKetQua.isLock" />
+                                                            </div>
+                                                        </md-input-container>
+                                                    </td>
+
+                                                    <td ng-if="!ObjKetQua.isLock">
+                                                        <textarea class="form-control" style=" overflow: auto; min-width: 150px" ng-hide="row.IsChildren || row.ParentIsChecked === false || row.IsChecked == false || (row.childRadio && row.ParentIsChecked != true) || (row.TieuChiDanhGiaParentChildSelectOne && !row.IsChecked)" ng-model="row.GhiChu" ng-disabled="DisableEdit"></textarea>
+                                                    </td>
+                                                    <td ng-show="ObjKetQua.isLock">
+                                                        <span ng-hide="row.IsChildren || row.TieuChiDanhGiaParentChildSelectOne">{{row.Diem}}</span>
+                                                        <md-input-container class="padding-bottom-10" ng-if="row.TieuChiDanhGiaParentChildSelectOne">
+                                                            <div style="width:50px; text-align:center">
+                                                                <input type="radio" name="{{row.TieuChiDanhGiaParentId}}" value="{{row.TieuChiDanhGiaId}}" ng-click="ChangeRadioScore(row)" ng-checked="row.IsChecked && ObjKetQua.isLock" ng-disabled="ObjKetQua.isLock" />
+                                                            </div>
+                                                        </md-input-container>
+                                                    </td>
+                                                    <td ng-show="ObjKetQua.isLock"><span ng-hide="row.IsChildren || row.ParentIsChecked === false|| row.ParentIsChecked === false || row.IsChecked ==false ">{{row.GhiChu}}</span></td>
+                                                    <!--Phần tự đánh giá-->
+                                                    <td ng-show="ObjKetQuaTuDanhGia.isLock" ng-repeat="item in ListChiTietKetQuaTuDanhGia| filter: row.Search">
+                                                        <span ng-hide="item.IsChildren || item.TieuChiDanhGiaParentChildSelectOne">{{item.Diem}}</span>
+                                                        <md-input-container class="padding-bottom-10" ng-if="item.TieuChiDanhGiaParentChildSelectOne">
+                                                            <div style="width:50px; text-align:center">
+                                                                <input type="radio" name="{{item.TieuChiDanhGiaParentId+'TuDanhGia'}}" value="{{item.TieuChiDanhGiaId}}" ng-model="item.TieuChiDanhGiaIdChecked" ng-checked="item.IsChecked && ObjKetQuaTuDanhGia.isLock" ng-disabled="ObjKetQuaTuDanhGia.isLock" />
+                                                            </div>
+                                                        </md-input-container>
+                                                    </td>
+                                                    <td ng-show="ObjKetQuaTuDanhGia.isLock"  ng-repeat="item in ListChiTietKetQuaTuDanhGia| filter: row.Search"><span ng-hide="item.IsChildren || item.ParentIsChecked === false|| item.ParentIsChecked === false || item.IsChecked ==false ">{{item.GhiChu}}</span></td>
+
+                                                </tr>
+                                            </tbody>
+                                            <tr class="text-align-center">
+                                                <td></td>
+                                                <td class="text-align-left"><h4><b>TỔNG CỘNG (I+II+III)</b></h4></td>
+                                                <td></td>
+                                                <td><span>{{ObjKetQua.TongDiem}}</span></td>
+                                                <td></td>
+                                                <td  ng-show="ObjKetQuaTuDanhGia.isLock"><span>{{ObjKetQuaTuDanhGia.TongDiem}}</span></td>
+                                                <td  ng-show="ObjKetQuaTuDanhGia.isLock"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="widget-body margin-top-5">
+                                        <table class="table" border="1" style="border-color:lightgrey">
+                                            <thead>
+                                                <tr class="text-align-center">
+                                                    <th>Phân loại mức độ hoàn thành nhiệm vụ</th>
+                                                    <th>Khung điểm</th>
+                                                    <th>Trưởng phòng xếp loại</th>
+                                                    <th  ng-show="ObjKetQuaTuDanhGia.isLock">Nhân viên {{NguoiDuocDanhGia.StaffProfileName}} xếp loại</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in ListXepLoai">
+                                                    <td><span>{{item.TenXepLoai}}</span></td>
+                                                    <td><span>Từ {{item.FromScore}} đến {{item.ToScore}}</span></td>
+                                                    <td class="text-align-center">
+                                                        <md-input-container>
+                                                            <md-checkbox ng-checked="ObjKetQua.TongDiem-item.FromScore >= 0 && ObjKetQua.TongDiem-item.ToScore <= 0" ng-click="this.checked=!this.checked" class="margin-0"></md-checkbox>
+                                                        </md-input-container>
+                                                    </td>
+                                                    <td class="text-align-center" ng-if="ObjKetQuaTuDanhGia.isLock">
+                                                        <md-input-container>
+                                                            <md-checkbox ng-checked="ObjKetQuaTuDanhGia.TongDiem-item.FromScore >= 0 && ObjKetQuaTuDanhGia.TongDiem-item.ToScore <= 0" ng-click="this.checked=!this.checked" class="margin-0"></md-checkbox>
+                                                        </md-input-container>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="widget-body margin-top-5">
+                                        <div class="widget-caption">
+                                            <h4><b>Ý KIẾN ĐÓNG GÓP CỤ THỂ CỦA TRƯỞNG PHÒNG</b></h4>
+                                        </div>
+                                        <div>
+                                            <textarea style="width:100%; height:100px" ng-model="ObjKetQua.YKienDongGop" ng-disabled="ObjKetQua.isLock">{{ObjKetQua.YKienDongGop}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="KyDanhGia.Loai == 1" class="widget-body">
+                                    <table class="table table-hover" border="1" style="border-color:lightgrey">
+                                        <tbody>
+                                            <tr ng-hide="item.TieuChiDanhGiaSTT=='-1' || item.PhanLoaiSTT == 'B' || !ObjKetQuaTuDanhGia.isLock" ng-repeat="item in ListChiTietKetQuaTuDanhGia">
+                                                <td class="row text-align-center" style="font-weight:bold; width:50px; padding:0 inherit">
+                                                    <div style="height:10px" ng-if="item.TieuChiDanhGiaParentSTT=='-1'"></div>
+                                                    <div layout="row" style="width:100%">
+                                                        <div style="width:100%; text-align:center" ng-if="item.TieuChiDanhGiaParentChildSelectOne && item.TieuChiDanhGiaParentSTT=='-1'"><input type="radio" name="{{item.TieuChiDanhGiaParentId}}" value="{{item.TieuChiDanhGiaId}}" ng-disabled=" item.PhanLoaiSTT == 'A'"/></div>
+                                                        <div style="width:100%;text-align:center" ng-if="!item.TieuChiDanhGiaParentChildSelectOne">{{ item.TieuChiDanhGiaSTT}}</div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="height:10px" ng-if="item.TieuChiDanhGiaParentSTT=='-1'"></div>
+                                                    <div layout="row" style="width:100%">
+                                                        <div style="width:50px; text-align:center" ng-if="item.TieuChiDanhGiaParentChildSelectOne && !(item.TieuChiDanhGiaParentSTT=='-1')">
+                                                            <input type="radio" name="{{item.TieuChiDanhGiaParentId}}" value="{{item.TieuChiDanhGiaId}}" ng-click="this.checked=!this.checked" ng-checked="item.IsChecked" ng-disabled="ObjKetQuaTuDanhGia.isLock && !item.IsChecked" />
+                                                        </div>
+                                                        <div ng-bind-html="item.TieuChiDanhGiaTenTieuChi"></div>
+                                                    </div>
+                                                    <div ng-if="!item.IsChildren">
+                                                        <textarea ng-if="!item.TieuChiDanhGiaParentChildSelectOne" ng-model="item.YKienDanhGia" ng-disabled="ObjKetQuaTuDanhGia.isLock" style="width:100%"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-hide="item.TieuChiDanhGiaSTT=='-1' || item.PhanLoaiSTT == 'A'" ng-repeat="item in ListChiTietKetQua">
+                                                <td class="row text-align-center" style="font-weight:bold; width:50px; padding:0 inherit">
+                                                    <div style="height:10px" ng-if="item.TieuChiDanhGiaParentSTT=='-1'"></div>
+                                                    <div layout="row" style="width:100%">
+                                                        <div style="width:100%; text-align:center" ng-if="item.TieuChiDanhGiaParentChildSelectOne && item.TieuChiDanhGiaParentSTT=='-1'"><input type="radio" name="{{item.TieuChiDanhGiaParentId}}" value="{{item.TieuChiDanhGiaId}}" ng-checked="item.TieuChiDanhGiaSTT == 'B'" /></div>
+                                                        <div style="width:100%;text-align:center" ng-if="!item.TieuChiDanhGiaParentChildSelectOne">{{ item.TieuChiDanhGiaSTT}}</div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="height:10px" ng-if="item.TieuChiDanhGiaParentSTT=='-1'"></div>
+                                                    <div layout="row" style="width:100%">
+                                                        <div style="width:50px; text-align:center" ng-if="item.TieuChiDanhGiaParentChildSelectOne && !(item.TieuChiDanhGiaParentSTT=='-1')">
+                                                            <input type="radio" name="{{item.TieuChiDanhGiaParentId}}" value="{{item.TieuChiDanhGiaId}}" ng-click="ChangeRadio(item)" ng-checked="item.IsChecked" ng-disabled="ObjKetQua.isLock && !item.IsChecked" />
+                                                        </div>
+                                                        <div ng-bind-html="item.TieuChiDanhGiaTenTieuChi"></div>
+                                                    </div>
+                                                    <div ng-if="!item.IsChildren">
+                                                        <textarea ng-if="!item.TieuChiDanhGiaParentChildSelectOne" ng-model="item.YKienDanhGia" ng-disabled="ObjKetQua.isLock" style="width:100%"></textarea>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-header" ng-show="LoaddingBody && !HideTableData">
+            <button style="float:right; margin-top: 2px; margin-right:5px" ng-click="Lock()" ng-disabled="KetQuaDanhGiaForm.$invalid || ObjKetQua.isLock" class="btn btn-primary">Khóa</button>
+            <button style="float:right; margin-top: 2px; margin-right:5px" ng-click="Save()" ng-disabled="KetQuaDanhGiaForm.$invalid || ObjKetQua.isLock" class="btn btn-primary"><i class="fa fa-save"></i>Lưu</button>
+        </div>
+    </form>
+</div>

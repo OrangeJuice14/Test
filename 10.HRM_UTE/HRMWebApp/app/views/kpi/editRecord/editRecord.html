@@ -1,0 +1,28 @@
+﻿<form name="staffDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="form-horizontal">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+            <div class="row" style="padding-bottom:10px;">
+                <div class="col-md-4">
+                    Điểm cũ
+                </div>
+                <div class="col-md-8">
+                    <span>{{obj.TotalRecordNumber}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    Điểm chỉnh sửa
+                </div>
+                <div class="col-md-8">
+                    <input kendo-numeric-text-box k-options="options" required k-ng-model="obj.TotalRecordSecondNumber" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</form>

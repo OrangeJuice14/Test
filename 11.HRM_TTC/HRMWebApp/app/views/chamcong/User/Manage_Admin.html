@@ -1,0 +1,737 @@
+﻿
+<style type="text/css">
+    .formGroup {
+        padding: 10px 0px 0px 0px;
+        margin: 0 auto;
+    }
+
+        .formGroup label {
+            float: left;
+            width: 200px;
+        }
+
+        .formGroup span {
+            padding: 0px 10px;
+        }
+
+    .container {
+        border: solid 1px #7F9DB9;
+        width: 400px;
+        height: 300px;
+        overflow-y: scroll;
+    }
+
+    .form_checkbox {
+        padding: 0 5px;
+        width: 500px;
+    }
+
+    h3 {
+        color: #3B6097;
+    }
+
+    .formEvent {
+        float: right;
+    }
+
+        .formEvent a {
+            color: #3B6097;
+            width: 50px;
+            float: left;
+        }
+
+    .validate {
+        color: red;
+    }
+
+    table tr td {
+        padding-bottom: 8px;
+    }
+</style>
+<script type="text/javascript">
+
+    $(function () {
+
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+        //if (check < 0) {
+        //    window.location.href = "../../default.html";
+        //}
+
+    });
+</script>
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var self = this;
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        self.userName = ko.observable();
+        self.passWord = ko.observable();
+        self.fullName = ko.observable();
+        self.email = ko.observable();
+        self.emailhdqt = ko.observable();
+        self.emailht = ko.observable();
+        self.emailtp = ko.observable();
+        self.accountList = ko.observableArray();
+        self.accountSelected = ko.observable('00000000-0000-0000-0000-000000000001');
+        self.status = ko.observable('true');
+        self.departments = ko.observableArray(null);
+        self.companys = ko.observableArray(null);
+        self.departmentSelected = ko.observableArray();
+        self.companySelected = ko.observableArray();
+        self.departments_role = ko.observableArray(null);
+        self.datagrid = datagrid;
+        self.items = ko.observableArray();
+        self.allSelected = ko.observable();
+        //
+        self.grid_hosonhanvien = ko.observableArray();
+        self.departmentSelected_nhansu = ko.observable(null);
+        //
+        self.departmentSelected_nhansu.subscribe(function (newValue) {
+            if (newValue == undefined) {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/HoSoNhanVienBy_MaBoPhan',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ maBoPhan: newValue, company: self.companySelected() }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    obj.push({ Oid: null, MaQuanLy: null, HoTen: '' /*, Ten: ''*/ });
+                    self.grid_hosonhanvien(obj);
+                }
+            });
+
+            var source =
+            {
+                localdata: self.grid_hosonhanvien(),
+                datafields:
+                [
+                    { name: 'Oid', type: 'string' },
+                    { name: 'MaQuanLy', type: 'string' },
+                    { name: 'HoTen', type: 'string' },
+                    //{ name: 'Ten', type: 'string' }
+                ],
+                datatype: "json"
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            // initialize jqxGrid
+            $("#jqxdropdownbutton").jqxDropDownButton({ width: 150, height: 25 });
+            $("#jqxgrid_hosonhanvien").jqxGrid(
+                {
+                    width: 250,
+                    source: dataAdapter,
+                    pageable: true,
+                    autoheight: true,
+                    autorowheight: true,
+                    columnsresize: true,
+                    showfilterrow: true,
+                    filterable: true,
+                    columns: [
+                        { text: 'Mã quản lý', datafield: 'MaQuanLy', width: 90, },
+                        { text: 'Họ tên', datafield: 'HoTen', width: 160, },
+                        //{ text: 'Tên', datafield: 'Ten', columntype: 'textbox', width: 70, },
+                    ]
+                });
+            $("#jqxgrid_hosonhanvien").on('rowselect', function (event) {
+                var args = event.args;
+                var row = $("#jqxgrid_hosonhanvien").jqxGrid('getrowdata', args.rowindex);
+                if (row == undefined)
+                    return;
+                var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + row['HoTen'] /*+ ' ' + row['Ten']*/ + '</div>';
+                $("#jqxdropdownbutton").jqxDropDownButton('setContent', dropDownContent);
+            });
+            var rows = $('#jqxgrid_hosonhanvien').jqxGrid('getrows');
+            $("#jqxgrid_hosonhanvien").jqxGrid('selectrow', rows.length - 1);
+        });
+
+        //Lấy danh sách trường
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.companys(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+
+        //Lấy danh sách phòng ban thuộc trường
+        self.companySelected.subscribe(function (newValue) {
+            if (newValue == undefined) {
+                return;
+            }
+            //Lấy danh sách phòng ban của nhân viên
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUserAndCompany',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId, company: newValue }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.departments(obj);
+                    //
+                    if (obj[0] != null)
+                        self.departmentSelected(obj[0].Oid);
+                    else
+                        self.departmentSelected(null);
+                }
+            });
+
+            //Lấy danh sách phòng ban phân quyền
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/BoPhan_GetLoaiBoPhanByWebGroup',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ webgroupid: self.accountSelected(), company: self.companySelected() }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.departments_role(obj);
+
+                    //
+                    ko.utils.arrayForEach(self.departments_role(), function (val) {
+                        val.Chon = ko.observable(val.Chon);
+                    });
+                }
+            });
+        });
+
+        //
+        self.source =
+        {
+            id: 'Id',
+            datafields: [
+               { name: 'Oid', type: 'string' },
+               { name: 'SoHieuCongChuc', type: 'string' },
+               { name: 'UserName', type: 'string' },
+               { name: 'HoVaTen', type: 'string' },
+               { name: 'Email', type: 'string' },
+               { name: 'HoatDong', type: 'bool' },
+               { name: 'TenBoPhan', type: 'string' },
+               { name: 'LoaiTaiKhoan', type: 'string' }
+            ],
+            datatype: "json",
+            // localdata: self.items()
+            url: "/WebServices/GetList_QuanLyUserQuanTri",
+            formatdata: function (data) {
+                //
+                return {
+                    webgroupid: session.WebGroupId
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+        {
+            source: self.dataAdapter,
+            width: '100%',
+            selectionmode: 'checkbox',
+            pageable: true,
+            pagesize: 20,
+            sortable: true,
+            filterable: true,
+            autorowheight: true,
+            autoheight: true,
+            theme: "darkBlue",
+            columns: [
+                {
+                    text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+
+                        return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 100, align: 'center' },
+                {
+                    text: 'Tên user', datafield: 'UserName', width: 100, align: 'center',
+                    cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                        var item = self.datagrid.jqxGrid('getrowdata', row);
+
+                        return "<div style='padding-left:5px;text-align:left;' class='jqx-grid-cell-child'><a href='/#/kpi/userDetail?Id=" + item.Oid + "' style=''>" + cellvalue + "</a></div>";
+                    }
+                },
+                { text: 'Họ tên', datafield: 'HoVaTen', width: 150, align: 'center' },
+                { text: 'Tên bộ phận', datafield: 'TenBoPhan', width: 250, align: 'center' },
+                { text: 'Loại tài khoản', datafield: 'LoaiTaiKhoan', width: 120, align: 'center' },
+                { text: 'Email', datafield: 'Email', width: 150, align: 'center' },
+                {
+                    text: 'Trạng thái', datafield: 'HoatDong', width: 100, columntype: 'checkbox', align: 'center', cellsalign: "middle"
+                }
+            ]
+        });
+    }
+    ViewModel.prototype = {
+        refreshObj: function () {
+            var self = this;
+            self.userName("");
+            self.passWord("");
+            self.accountSelected("00000000-0000-0000-0000-000000000001");
+            self.status('true');
+            self.departmentSelected_nhansu(undefined);
+            self.allSelected(false);
+        },
+        selectAll: function () {
+            var self = this;
+
+            //Cập nhật data
+            ko.utils.arrayForEach(self.departments_role(), function (val) {
+                //val.Chon(!self.allSelected());
+                val.Chon = ko.observable(!self.allSelected());
+            });
+
+            //Cập nhật phía người dùng
+            var checkboxes = document.getElementsByName("checkbox");
+            for (var i = 0; i < checkboxes.length; i++) {
+                //
+                checkboxes[i].checked = !self.allSelected();
+            };
+
+            return true;
+        },
+        validate: function () {
+            var self = this;
+            return $.trim(self.userName()).length != 0 && $.trim(self.passWord()).length != 0;
+        },
+        validateUsernameExist: function (webUserId, userName) {
+            var temp;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/WebUsers_KiemTraTrungUsername',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ webUserId: webUserId, userName: userName }),
+                async: false,
+                success: function (result) {
+                    temp = result;
+                }
+            });
+            return temp;
+        },
+        save: function () {
+            var self = this;
+            if (!self.validate()) {
+                alert("Tên đăng nhập và mật khẩu không được trống.");
+                return;
+            }
+            if (self.validateUsernameExist(null, self.userName())) {
+                alert("Tên đăng nhập đã tồn tại");
+                $("#txtUserName").focus();
+                return;
+            }
+            if (self.emailht() != "" && self.emailht() != undefined && !isEmail(self.emailht())) {
+                alert("Email Hiệu trưởng không hợp lệ.");
+                $("#emailht").focus();
+                return;
+            }
+            if (self.emailhdqt() != "" && self.emailhdqt() != undefined && !isEmail(self.emailhdqt())) {
+                alert("Email Hội đồng quản trị không hợp lệ.");
+                $("#emailhdqt").focus();
+                return;
+            }
+            if (self.emailtp() != "" && self.emailtp() != undefined && !isEmail(self.emailtp())) {
+                alert("Email trưởng phòng không hợp lệ.");
+                $("#emailtp").focus();
+                return;
+            }
+            //
+            var getselectedrowindexes = $('#jqxgrid_hosonhanvien').jqxGrid('getselectedrowindexes');
+            if (getselectedrowindexes != undefined)
+                var selectedrow_hsnhanvien = $('#jqxgrid_hosonhanvien').jqxGrid('getrowdata', getselectedrowindexes[0]);
+
+            //Lấy đơn vị phân quyền đã chọn
+            self.department_role_selected = ko.observableArray();
+            //
+            if (self.accountSelected() != "00000000-0000-0000-0000-000000000001"
+                && self.accountSelected() != "00000000-0000-0000-0000-000000000008") {
+
+                ko.utils.arrayForEach(self.departments_role(), function (val) {
+                    //
+                    if (val.Chon() == true) {
+                        val.Chon = true;
+                    }
+                    else {
+                        val.Chon = false;
+                    }
+                    self.department_role_selected.push(val);
+                });
+            }
+
+            //
+            if (self.accountSelected() != "00000000-0000-0000-0000-000000000001" &&
+                self.departmentSelected_nhansu() == undefined)
+            {
+                alert('Chọn nhân viên.');
+                return;
+            }
+            //
+            var obj =
+            {
+                ThongTinNhanVien: self.departmentSelected_nhansu() == undefined ? null : selectedrow_hsnhanvien.Oid,
+                UserName: self.userName(),
+                Password: self.passWord(),
+                HoatDong: self.status(),
+                DanhSachDTO_BoPhan: self.department_role_selected(),
+                WebGroupID: self.accountSelected() == undefined ? null : self.accountSelected(),
+                EmailHT: self.emailht(),
+                EmailHDQT: self.emailhdqt(),
+                EmailTP: self.emailtp(),
+                BoPhanId: self.departmentSelected_nhansu()
+            };
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ obj: obj }),
+                contentType: "application/json; charset=utf-8",
+                url: '/WebServices/Save_QuanLyUser',
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    alert("Lưu thành công !!");
+                    $("#jqxgrid").jqxGrid('updatebounddata');
+                    $('#popupWindow').data("kendoWindow").close();
+                    //
+                    location.reload();
+                }
+            });
+        },
+        createNew: function () {
+            var self = this;
+
+            //
+            $.get('/app/views/chamcong/User/AddNew.html', function (data) {
+                $('#popupWindow').html(data);
+                ko.cleanNode($('#popupWindow')[0]);
+                $('#popupWindow').kendoWindow({
+                    width: "60%",
+                    title: "",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "10%",
+                        left: "10%"
+                    }
+
+                });
+                //Lấy dữ liệu Loại tài khoản
+                var sourceLoaiTaiKhoan =
+                {
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    datafields: [
+                        { name: 'Oid' },
+                        { name: 'Name' }
+                    ],
+                    url: "/WebServices/WebGroup_GetList",
+                    async: false,
+                    id: 'Oid'
+                };
+                var dataAdapter = new $.jqx.dataAdapter(sourceLoaiTaiKhoan);
+                //
+                $("#jqxComboBox_LoaiTaiKhoan").jqxComboBox({ source: dataAdapter, displayMember: "Name", valueMember: "Oid", width: '300px', height: '25px' });
+                $("#jqxComboBox_LoaiTaiKhoan").jqxComboBox('selectItem', "00000000-0000-0000-0000-000000000001");
+                //
+                $("#truong").hide();
+                $("#phanquyendonvi").hide();
+                $("#departmentnhanvien").hide();
+                $("#danhsachnhanvien").hide();
+                //
+                $("#emailht").hide();
+                $("#emailhdqt").hide();
+                $("#emailtp").hide();
+                //
+                $('#jqxComboBox_LoaiTaiKhoan').on('select', function (event) {
+                    var args = event.args;
+                    if (args != undefined) {
+                        var item = event.args.item;
+                        //
+                        if (item != null) {
+                            //
+                            if (item.value == "00000000-0000-0000-0000-000000000001") {
+                                $("#phanquyendonvi").hide();
+                                $("#truong").hide();
+                                $("#departmentnhanvien").hide();
+                                $("#danhsachnhanvien").hide();
+                                //
+                                $("#emailht").hide();
+                                $("#emailhdqt").hide();
+                                $("#emailtp").hide();
+                            }
+                            else if (item.value == "00000000-0000-0000-0000-000000000009") {
+                                $("#truong").show();
+                                $("#phanquyendonvi").hide();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").hide();
+                                $("#emailhdqt").hide();
+                                //
+                                $("#emailtp").hide();
+                            }
+                            else if (item.value == "00000000-0000-0000-0000-000000000008")
+                            {
+                                $("#truong").show();
+                                $("#phanquyendonvi").hide();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").hide();
+                                $("#emailhdqt").hide();
+                                //
+                                $("#emailtp").show();
+                            }
+                            else if (item.value == "00000000-0000-0000-0000-000000000006"
+                                     || item.value == "00000000-0000-0000-0000-000000000007") {
+
+                                // Admin thì không cần phân quyền đơn vị
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/WebServices/BoPhan_GetLoaiBoPhanByWebGroup',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: ko.toJSON({ webgroupid: item.value, company: self.companySelected() }),
+                                    dataType: "json",
+                                    async: false,
+                                    success: function (result) {
+                                        var obj = result;
+                                        self.departments_role(obj);
+                                    }
+                                });
+
+                                $("#truong").show();
+                                $("#phanquyendonvi").show();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").show();
+                                $("#emailhdqt").hide();
+                                //
+                                $("#emailtp").hide();
+                            }
+                            else if (item.value == "00000000-0000-0000-0000-000000000004"
+                                     || item.value == "00000000-0000-0000-0000-000000000005") {
+
+                                // Admin thì không cần phân quyền đơn vị
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/WebServices/BoPhan_GetLoaiBoPhanByWebGroup',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: ko.toJSON({ webgroupid: item.value, company: self.companySelected() }),
+                                    dataType: "json",
+                                    async: false,
+                                    success: function (result) {
+                                        var obj = result;
+                                        self.departments_role(obj);
+                                    }
+                                });
+
+                                $("#truong").show();
+                                $("#phanquyendonvi").show();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").hide();
+                                $("#emailhdqt").show();
+                                //
+                                $("#emailtp").hide();
+                            }
+                            else if (item.value == "00000000-0000-0000-0000-000000000002"
+                                     || item.value == "00000000-0000-0000-0000-000000000003") {
+
+                                // Admin thì không cần phân quyền đơn vị
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/WebServices/BoPhan_GetLoaiBoPhanByWebGroup',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: ko.toJSON({ webgroupid: item.value, company: self.companySelected() }),
+                                    dataType: "json",
+                                    async: false,
+                                    success: function (result) {
+                                        var obj = result;
+                                        self.departments_role(obj);
+                                    }
+                                });
+
+                                $("#truong").show();
+                                $("#phanquyendonvi").show();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").hide();
+                                $("#emailhdqt").hide();
+                                //
+                                $("#emailtp").hide();
+                            }
+                            else {
+                                // Admin thì không cần phân quyền đơn vị
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/WebServices/BoPhan_GetLoaiBoPhanByWebGroup',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: ko.toJSON({ webgroupid: item.value, company: self.companySelected()}),
+                                    dataType: "json",
+                                    async: false,
+                                    success: function (result) {
+                                        var obj = result;
+                                        self.departments_role(obj);
+                                    }
+                                });
+                                $("#truong").show();
+                                $("#phanquyendonvi").show();
+                                $("#departmentnhanvien").show();
+                                //
+                                $("#emailht").show();
+                                $("#emailhdqt").show();
+                                //
+                                $("#emailtp").hide();
+                            }
+                            //
+                            self.accountSelected(item.value);
+                            
+                            //
+                            ko.utils.arrayForEach(self.departments_role(), function (val) {
+                                val.Chon = ko.observable(val.Chon);
+                            });
+                        }
+                    }
+                });
+                //
+                $('#popupWindow').data("kendoWindow").open();
+                ko.applyBindings(self, document.getElementById('popupWindow'));
+                self.departmentSelected_nhansu(self.departmentSelected);
+            });
+
+        },
+        xoa: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có chắc xóa hay không ?");
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/WebUsers_XoaUsers',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            userList: selectedRecords,
+                            khoa: true
+                        }),
+                        success: function (result) {
+                            alert("Xóa thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                            self.datagrid.jqxGrid('clearselection');
+
+                        }
+                    });
+                }
+            } else {
+                return;
+            }
+        }
+    };
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#userManage")[0]);
+    });
+
+    //
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+</script>
+
+<div class="row">
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+            <div class="row">
+                <div class="col-lg-2 col-xs-12 col-sm-6">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: createNew">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Tạo mới
+                    </a>
+                </div>
+                <!--<div class="col-lg-2 col-xs-12 col-sm-6">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: edit">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Chỉnh sửa
+                    </a>
+                </div>-->
+                <div class="col-lg-2 col-xs-12 col-sm-6">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: xoa">
+                        <i class="btn-label glyphicon glyphicon-remove"></i>Xóa
+                    </a>
+                </div>
+
+                <!--<div class="col-lg-2 col-xs-12 col-sm-6">
+                    <a href="#/" class="btn btn-info" style="width: 158px;">
+                        <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                    </a>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<div style="padding: 10px 0px 0px 0px;">
+    <div id="jqxgrid"></div>
+</div>
+<div id="popupWindow"></div>

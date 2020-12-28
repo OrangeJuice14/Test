@@ -1,0 +1,13 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue ">
+        <span class="widget-caption" style="font-weight:bold !important;font-size:16px">ĐÁNH GIÁ TỔNG HỢP</span>
+    </div>
+
+    <div class="widget-body">
+        <a ng-click="ExportExcel()" class="btn btn-labeled btn-info planButton">
+            <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+        </a>
+        <br />
+        <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+    </div>
+</div>

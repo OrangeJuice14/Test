@@ -1,0 +1,57 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="agentObjctDetailForm" role="form" class="form-horizontal" novalidate >
+        <div class="modal-header">
+            <h3 class="modal-title">{{title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{'has-error': agentObjctDetailForm.name.$invalid}">
+                <label for="inputFirstName" class="col-md-4 control-label">Tên</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="name" placeholder="Tên ..." required ng-model="obj.Name">
+                </div>
+                <div class="col-md-2">
+                    <span ng-show="agentObjctDetailForm.name.$error.required" class="help-block">*</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selectType" class="col-md-4 control-label">Loại đối tượng</label>
+                <div class="col-md-6">
+                    <select class="form-control" ng-model="obj.AgentObjectTypeId" name="AgentObjectTypeSelect" ng-options="listType.Id as listType.Name for listType in agentObjectTypes">
+                        <option value="">Chọn loại đối tượng ...</option>
+                    </select>                   
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="selectType" class="col-md-4 control-label">Nhóm mục tiêu</label>
+                <div class="col-md-6">
+                    <select kendo-multi-select k-options="targetGroupDetails" k-ng-model="obj.TargetGroupDetailIds"></select>
+                </div>
+            </div>
+            <div ng-show="obj.AgentObjectTypeId == 1">
+                <div class="form-group">
+                    <label for="selectType" class="col-md-4 control-label">Số tiết chuẩn</label>
+                    <div class="col-md-6">
+                        <!--<input type="number" min="0" max="1000" step="10" class="form-control" ng-model="obj.NumberOfSection">-->
+                        <input kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfSection" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectType" class="col-md-4 control-label">Định mức NCKH</label>
+                    <div class="col-md-6">
+                        <!--<input type="number" min="0" max="1000" step="10" class="form-control" ng-model="obj.ScienceResearch">-->
+                        <input kendo-numeric-text-box k-options="options" k-ng-model="obj.ScienceResearch" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()" ng-disabled="agentObjctDetailForm.$invalid">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+</form>

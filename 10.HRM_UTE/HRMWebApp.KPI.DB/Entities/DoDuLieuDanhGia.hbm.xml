@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.DoDuLieuDanhGia, HRMWebApp.KPI.DB" table="dbo.KPI_DoDuLieuGiangDay">
+    <id name="Id" column="Id"></id>
+    <many-to-one name="IdNhanVien" class="HRMWebApp.KPI.DB.Entities.StaffInfo" column="IdNhanVien" />
+    <property name="MaCanBo" column="MaCanBo"></property>
+    <property name="TenCanBo" column="TenCanBo"></property>
+    <property name="NamHoc" column="NamHoc"></property>
+    <property name="HocKy" column="HocKy"></property>
+    <property name="CreationTime" column="CreationTime"></property>
+    <property name="MaTieuChi" column="MaTieuChi"></property>
+    <property name="LoaiGiaTri" column="LoaiGiaTri"></property>
+    <property name="GiaTriThuc" column="GiaTriThuc"></property>
+    <property name="DatMuc" column="DatMuc"></property>
+    <property name="DonViCungCap" column="DonViCungCap"></property>
+    <many-to-one name="CriterionDictionaryId" class="HRMWebApp.KPI.DB.Entities.CriterionDictionary" column="CriterionDictionaryId" />
+    <many-to-one name="Path" class="HRMWebApp.KPI.DB.Entities.FileGiangDay" column="Path" />
+    <property name="DuLieuMinhChung" column="DuLieuMinhChung"></property>
+    <property name="GhiChu" column="GhiChu"></property>
+    <many-to-one name="DonVi" class="HRMWebApp.KPI.DB.Entities.Department" column="DonVi" />
+  </class>
+</hibernate-mapping>

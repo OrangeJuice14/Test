@@ -1,0 +1,118 @@
+﻿<div style="background-color:white; margin:10px;padding:10px;border-radius:10px;">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">STT</th>
+                <th style="text-align: center;">Khoản chi</th>
+                <th style="text-align: center;">Tên môn học</th>
+                <th style="text-align: center;">Lớp học phần</th>
+                <th style="text-align: center;">Số bài quá trình</th>
+                <th style="text-align: center;">Số bài giữa kỳ</th>
+                <th style="text-align: center;">Số bài cuối kỳ</th>
+                <th style="text-align: center;">Đơn giá quá trình</th>
+                <th style="text-align: center;">Đơn giá giữa kỳ</th>
+                <th style="text-align: center;">Đơn giá cuối kỳ</th>
+                <th style="text-align: center;">Tổng tiền</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: DetailPMS().PMS1">
+            <tr data-bind="visible: TenMonHoc != 'Tổng cộng'">
+                <td style="text-align: center;" data-bind="text: $index() + 1"></td>
+                <td data-bind="text: KhoanChi"></td>
+                <td data-bind="text: TenMonHoc"></td>
+                <td data-bind="text: LopHocPhan"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoBaiQuaTrinh)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoBaiGiuaKy)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoBaiCuoiKy)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(DonGiaQuaTrinh)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(DonGiaGiuaKy)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(DonGiaCuoiKy)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(TongTien)"></td>
+            </tr>
+            <tr data-bind="visible: TenMonHoc == 'Tổng cộng'">
+                <td style="font-weight:bold;" colspan="2" data-bind="text: TenMonHoc"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(TongTien)"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center;">STT</th>
+                <th style="text-align: center;">Tên môn học</th>
+                <th style="text-align: center;">Khoản chi</th>
+                <th style="text-align: center;">Lớp học phần</th>
+                <th style="text-align: center;">Số tiết</th>
+                <th style="text-align: center;">Số lượng SV</th>
+                <th style="text-align: center;">Hệ số chức danh</th>
+                <th style="text-align: center;">Hệ số cơ sở</th>
+                <th style="text-align: center;">Hệ số lớp đông</th>
+                <th style="text-align: center;">Hệ số khác</th>
+                <th style="text-align: center;">Tổng hệ số</th>
+                <th style="text-align: center;">Chi phí đi lại</th>
+                <th style="text-align: center;">Đơn giá tiết chuẩn</th>
+                <th style="text-align: center;">Thành tiền</th>
+                <th style="text-align: center;">Tổng tiền</th>
+                <th style="text-align: center;">Nợ giờ HK trước</th>
+                <th style="text-align: center;">Nợ giờ HK này</th>
+                <th style="text-align: center;">Tổng tiền nợ</th>
+                <th style="text-align: center;">Thuế TNCN tạm trừ</th>
+                <th style="text-align: center;">Còn lại</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: DetailPMS().PMS2">
+            <tr data-bind="visible: TenMonHoc != 'Tổng cộng'">
+                <td style="text-align: center;" data-bind="text: $index() + 1"></td>
+                <td data-bind="text: TenMonHoc"></td>
+                <td data-bind="text: KhoanChi"></td>
+                <td data-bind="text: LopHocPhan"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoTiet)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(SoLuongSV)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(HeSo_ChucDanh)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(HeSo_CoSo)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(HeSo_LopDong)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(HeSo_Khac)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(TongHeSo)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(ChiPhiDiLai)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(DonGiaTietChuan)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(ThanhTien)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(TongTien)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(NoGioHKTruoc)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(NoGioHKNay)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(TongTienNo)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(ThueTNCNTamTru)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat(ConLaiThanhToan)"></td>
+            </tr>
+            <tr data-bind="visible: TenMonHoc == 'Tổng cộng'">
+                <td style="font-weight:bold;" colspan="2" data-bind="text: TenMonHoc"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: right;" data-bind="text: numberFormat2(ThanhTien)"></td>
+                <td style="text-align: right;" data-bind="text: numberFormat2(TongTien)"></td>
+                <td></td>
+                <td></td>
+                <td style="text-align: right;" data-bind="text: numberFormat2(TongTienNo)"></td>
+                <td></td>
+                <td style="text-align: right;" data-bind="text: numberFormat2(ConLaiThanhToan)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,245 @@
+﻿
+<script type="text/javascript">
+    //
+    function ViewModel() {
+        var session = {};
+        var self = this;
+        self.SendEmail = ko.observable(); 
+        self.UserId = ko.observable(null);
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.UserId(session.UserId);
+            }
+        });
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                //
+                self.SendEmail(session.Email);
+            }
+        });
+        //
+        $('#txtemailgui').val(self.SendEmail());
+        $('#txtpassgui').val('');
+        $('#txtemailnhan').val('');
+        $('#txttieude').val('');
+        $('#txtuploadfile').val('');
+        $('#message').hide();
+    }
+
+    ViewModel.prototype = {
+        //
+        sendmail: function () {
+            var self = this;
+            //
+            if ($('#txtemailgui').val() == '') {
+                alert(dataLocalize("GUI_EMAIL.ALERT.VUI_LONG_NHAP_EMAIL_GUI"));
+                $('#txtemailgui').focus();
+                return;
+            }
+            if ($('#txtpassgui').val() == '') {
+                alert(dataLocalize("GUI_EMAIL.ALERT.VUI_LONG_NHAP_MAT_KHAU_GUI"));
+                $('#txtpassgui').focus();
+                return;
+            }
+            if ($('#txtemailnhan').val() == '') {
+                alert(dataLocalize("GUI_EMAIL.ALERT.VUI_LONG_NHAP_EMAIL_NHAN"));
+                $('#txtemailnhan').focus();
+                return;
+            }
+
+            //Kiểm tra email gửi
+            if (!isEmail($('#txtemailgui').val())) {
+                alert(dataLocalize("GUI_EMAIL.ALERT.EMAIL_GUI") + $('#txtemailgui').val() + dataLocalize("GUI_EMAIL.ALERT.KHONG_HOP_LE"));
+                $('#txtemailgui').focus();
+                return;
+            }
+            //Kiểm tra email nhận
+            var listEmailNhan = $('#txtemailnhan').val().split(';');
+            //
+            $(listEmailNhan).each(function (index) {
+                if (!isEmail(listEmailNhan[index])) {
+                    alert(dataLocalize("GUI_EMAIL.ALERT.EMAIL_NHAN") + listEmailNhan[index] + dataLocalize("GUI_EMAIL.ALERT.KHONG_HOP_LE"));
+                    $('#txtemailnhan').focus();
+                    return;
+                }
+            });
+
+            //
+            {
+                var filename = $('#txtuploadfile').val().replace(/C:\\fakepath\\/i, '');
+
+                //Mở img lên
+                $('#prosess').show();
+
+                setTimeout(function () {
+                    //
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyGuiEmail_SendMail',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            emailgui: $('#txtemailgui').val(),
+                            passgui: $('#txtpassgui').val(),
+                            emailnhan: $('#txtemailnhan').val(),
+                            tieude: $('#txttieude').val(),
+                            noidung: $('.note-editable').html(),
+                            filename: filename,
+                            idwebuser: self.UserId()
+
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.message == 'success') {
+                                alert(dataLocalize("GUI_EMAIL.ALERT.GUI_EMAIL_THANH_CONG"));
+                                //
+                                $('#prosess').hide();
+                                //
+                                $('#txtemailgui').val(self.SendEmail());
+                                $('#txtpassgui').val('');
+                                $('#txtemailnhan').val('');
+                                $('#txttieude').val('');
+                                $('#txtuploadfile').val('');
+                                $('#message').hide();
+                            }
+                            else {
+                                alert(dataLocalize("GUI_EMAIL.ALERT.GUI_EMAIL_THAT_BAI"));
+                                //
+                                $('#prosess').hide();
+                            }
+                        }
+                    }), 0
+                });
+            }
+        }
+    };
+    //
+    $(document).ready(function () {
+        //
+        $('#summernote').summernote({
+            height: 150,
+            toolbar:
+                [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['style', ['fontname']],
+                    ['style', ['fontsize']],
+                    ['style', ['color']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'hr', 'SaveImageTest', 'hello']],
+                    ['misc', ['fullscreen']]
+                ]
+        });
+    });
+    //
+    $(function () {
+        var model = new ViewModel();
+        ko.applyBindings(model, $("#guimail")[0]);
+
+    });
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        //
+        return regex.test(email);
+    }
+
+</script>
+<div id="guimail">
+    <div class="col-lg-11 col-xs-11 col-sm-11">
+        <div class="form-horizontal form-bordered">
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;font-weight:bold"><span data-i18n="GUI_EMAIL.GUI_EMAIL">GỬI MAIL</span></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"><span data-i18n="GUI_EMAIL.TU">Từ</span><label style="color:red">(*) </label>:</label>
+                <div class="col-sm-9">
+                    <input id="txtemailgui" style="width:300px" placeholder="..abc@gmail.com..." />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"><span data-i18n="GUI_EMAIL.MAT_KHAU">Mật khẩu</span><label style="color:red">(*) </label>:</label>
+                <div class="col-sm-9">
+                    <input id="txtpassgui" style="width:300px" type="password" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"><span data-i18n="GUI_EMAIL.GUI_DEN">Gửi đến </span><label style="color:red">(*) </label>:</label>
+                <div class="col-sm-9">
+                    <input id="txtemailnhan" style="width:500px" placeholder="abc@gmail.com;123c@gmail.com" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"><span data-i18n="GUI_EMAIL.TIEU_DE">Tiêu đề</span> <label style="color:red"></label>:</label>
+                <div class="col-sm-9">
+                    <input id="txttieude" style="width:300px" />
+                    <span id="prosess" data-i18n="GUI_EMAIL.DANG_XU_LY_VUI_LONG_CHO" hidden style="padding-left:10px;font-weight:bold;font-size:16px;font-style:initial;color:blue">Đang xử lý gửi mail vui lòng chờ .......</span>
+                </div>
+            </div>
+            <div class="col-xs-12" style="padding:0px;">
+                <div id="summernote"></div>
+            </div>
+            <div class="span16 fileupload-buttonbar">
+                <span class="btn success fileinput-button">
+                    <input type="file" multiple id="txtuploadfile">
+                </span>
+                <span id="message" style="display:none;font-weight:bold;color:darkgreen"  data-i18n="GUI_EMAIL.TAI_TAP_TIN_THANH_CONG">Tải tập tin thành công !!!</span>
+            </div>
+            <div class="form-group" style="text-align:center">
+                <div class="col-sm-11">
+                    <a href="#" class="btn btn-info" style="width: 158px;text-align:center" data-bind="click: sendmail">
+                        <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="GUI_EMAIL.GUI">Gửi</span>
+                    </a>
+                </div>
+            </div>
+            <div class="form-group">
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $('#txtuploadfile').on('change', function (e) {
+            var files = e.target.files;
+            //
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/WebServices/UploadFiles',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+
+                            //
+                            $("#message").toggle(100, function () {
+                                $('#message').show();
+                            })
+
+                        }
+                    });
+                } else {
+                    alert("This browser doesn't support HTML5 file uploads!");
+                }
+            }
+        });
+    </script>

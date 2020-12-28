@@ -1,0 +1,50 @@
+﻿<style>
+    .workingModeDetail-dialog .modal-dialog {
+        min-width: 500px;
+    }
+</style>
+<form name="workingModeDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Thêm chế độ làm việc</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="workingMode" class="col-md-5 control-label">Chế độ làm việc</label>
+            <div class="col-md-6">
+                <select class="form-control" ng-model="obj.WorkingModeId" name="workingMode" ng-options="list.Id as list.Name for list in workingModeLists">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-5 control-label">Định mức giảng dạy</label>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfSection" style="width:100px" />
+            </div>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="obj.NumberOfSectionDensity" style="width:100px" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-5 control-label">Định mức NCKH</label>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="options" k-ng-model="obj.ScienceResearch" style="width:100px" />
+            </div>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="obj.ScienceResearchDensity" style="width:100px" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="selectType" class="col-md-5 control-label">Định mức hoạt động khác</label>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="otherActivityOptions" k-ng-model="obj.OtherActivity" style="width:100px" />
+            </div>
+            <div class="col-md-3">
+                <input kendo-numeric-text-box k-options="densityOptions" k-ng-model="obj.OtherActivityDensity" style="width:100px" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="workingModeDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,189 @@
+﻿<style>
+    fieldset {
+        border: 1px solid #ddd !important;
+    }
+
+    legend {
+        display: block;
+        width: auto !important;
+        padding: 0;
+        margin-left: 10px;
+        margin-bottom: 0px !important;
+        font-size: 14px;
+        line-height: inherit;
+        color: #333;
+        border: 0 !important;
+    }
+
+    .radio-inline {
+        margin-left: 10px;
+    }
+
+    .template-in-select p {
+        margin-bottom: 0px
+    }
+
+    /*input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+        border-radius: 5px !important;
+    }*/
+</style>
+
+<md-content layout-padding="">
+    <form class="form-horizontal" name="TieuChiForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Tiêu chí</h3>
+            <p class="modal-title">Bộ tiêu chí: {{BoTieuChi.Name}}</p>
+        </div>
+        <div class="modal-body" style="max-height: 700px; overflow:auto">
+            <div style=" margin-bottom:5px;">
+                <div style="width: 170px;display: inline-block;margin-top: 5px">
+                    STT:
+                    <input type="text" class="k-textbox" name="STT" placeholder="STT" ng-model="TieuChi.STT" style="width:130px" />
+                </div>
+                <div style="width:170px; display:inline-block; margin-top: 5px">
+                    Thứ tự sắp xếp:
+                    <input type="number" class="k-textbox" name="STTSapXep" style="text-align:center; width: 70px" ng-model="TieuChi.STTSapXep" />
+                </div>
+                <div style="width:150px; display:inline-block; margin-top: 5px">
+                    Điểm tối đa:
+                    <input type="number" class="k-textbox" name="Diem" style="text-align:center; width: 70px" ng-model="TieuChi.DiemToiDa" />
+                </div>
+                <div style="width:170px; display:inline-block; margin-top: 5px">
+                    Hệ số điểm(%):
+                    <input type="number" class="k-textbox" name="HeSoTieuChiCon" min="0" style="text-align:center; width: 70px" ng-model="TieuChi.HeSoTieuChiCon" />
+                </div>
+                <div style="width: 80px;display: inline-block; margin-top: 5px">
+                    <input type="checkbox" id="eq1" class="k-checkbox" ng-model="TieuChi.DiemTru">
+                    <label class="k-checkbox-label" for="eq1">Điểm trừ</label>
+                </div>
+                <div style="width:100px; display:inline-block; margin-top: 5px">
+                    <input type="checkbox" id="eq2" class="k-checkbox" ng-model="CheckedChil" ng-change="CheckParent()">
+                    <label class="k-checkbox-label" for="eq2">Tiêu chí con</label>
+                </div>
+            </div>
+            <div style="margin-bottom:5px;" ng-show="CheckedChil">
+                <div style="width:100px;">Con của tiêu chí: </div>
+                <select kendo-drop-down-list
+                        k-options="CbListTieuChiData"
+                        k-filter="'contains'"
+                        style="width: calc(100% - 110px)"
+                        ng-model="TieuChi.ParentId"
+                        ng-change="getMaxDiem()">
+                </select>
+            </div>
+            <div>
+                Nội dung tiêu chí
+                <textarea required="" ckeditor name="NoiDung" ng-model="TieuChi.NoiDung"></textarea>
+            </div>
+            <div class="padding-top-10">
+                <input type="checkbox" id="eq3" class="k-checkbox" ng-model="TieuChi.IsAutoScore">
+                <label class="k-checkbox-label" for="eq3">Điểm tự động tính theo mục khác</label>
+            </div>
+            <fieldset style="vertical-align:middle" ng-show="TieuChi.IsAutoScore">
+                <legend><b>Công thức tính điểm</b></legend>
+                <div class="padding-5-10">
+                    <label style="vertical-align:middle; display:inline-block; margin: 0px; width: 100px">
+                        Bộ tiêu chí: <i class="glyphicon glyphicon-question-sign" style="color:#206D9A" title="Chọn bộ tiêu chí tính điểm"></i>
+                    </label>
+                    <select kendo-drop-down-list
+                            k-options="ListBoTieuChiOption"
+                            style="background-color:lightblue; width: calc(100% - 220px)"
+                            k-data-text-field="'Name'"
+                            k-data-value-field="'Id'"
+                            k-filter="'contains'"
+                            k-ng-model="SelectDieuKienBoTieuChiId"></select>
+                </div>
+                <div class="padding-5-10">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="TieuChi.DieuKienLoaiDiem" value="0">
+                        Điểm tổng
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="TieuChi.DieuKienLoaiDiem" value="1">
+                        Điểm tiêu chí <i class="glyphicon glyphicon-question-sign" style="color:#206D9A" title="Điểm sẽ được tính tổng các tiêu chí được chọn"></i>
+                    </label>
+                </div>
+                <div class="padding-5-10" ng-show="TieuChi.DieuKienLoaiDiem == 1">
+                    <label style="vertical-align:top; display:inline-block; margin: 0px; width: 100px">
+                        Tiêu chí: <i class="glyphicon glyphicon-question-sign" style="color:#206D9A" title="Chọn bộ tiêu chí hoàn thành trước khi đánh giá bộ tiêu chí này"></i>
+                    </label>
+                    <div style=" width: calc(100% - 120px); display:inline-block;">
+                        <div ng-repeat="DieuKienTieuChi in ListDieuKienTieuChi">
+                            <select kendo-drop-down-list
+                                    id="{{$index}}"
+                                    k-options="ListTieuChiOption"
+                                    k-data-source="TieuChiDataSource"
+                                    k-ng-model="DieuKienTieuChi.DieuKienDiemTieuChiId"
+                                    style="width: calc(100% - 100px);"></select>
+                            <button class="btn btn-success" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="AddNewRow()" ng-show="$index == 0"><i class="fa fa-plus" style='margin-right: 0px;vertical-align:middle'></i></button>
+                            <button class="btn btn-danger" style="width:40px; padding:0px 5px;vertical-align:middle" ng-click="DelRow(DieuKienTieuChi)"><i class="fa fa-times" style='margin-right: 0px;'></i></button>
+                            <hr style="margin:5px 0px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="padding-5-10">
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="TieuChi.DieuKienDiemNhanVien" value="1">
+                        Điểm của mỗi nhân viên
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="TieuChi.DieuKienDiemNhanVien" value="2">
+                        Điểm trung bình các thành viên trong đơn vị
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="TieuChi.DieuKienDiemNhanVien" value="3">
+                        Điểm trung bình các thành viên trong bộ môn
+                    </label>
+                </div>
+                <div class="padding-5-10">
+                    <div style="display:none">
+                        <label class="radio-inline" ng-if="BoTieuChi.LoaiBoTieuChi == 0 && BoTieuChiSelected.LoaiBoTieuChi == 0" ng-init="BoTieuChi.LoaiBoTieuChi == 0 && BoTieuChiSelected.LoaiBoTieuChi == 0 ? TieuChi.DieuKienThoiGian = 0 : ''">
+                            <input type="radio" ng-model="TieuChi.DieuKienThoiGian" ng-value="0">
+                            Năm
+                        </label>
+                        <label class="radio-inline" ng-if="BoTieuChi.LoaiBoTieuChi == 3 &&  BoTieuChiSelected.LoaiBoTieuChi == 3" ng-init="TieuChi.DieuKienThoiGian = BoTieuChi.LoaiBoTieuChi == 3 && BoTieuChiSelected.LoaiBoTieuChi == 3 ?  1 : ''">
+                            <input type="radio" ng-model="TieuChi.DieuKienThoiGian" ng-value="1">
+                            Tháng
+                        </label>
+                        <label class="radio-inline" ng-if="BoTieuChi.LoaiBoTieuChi == 0 &&  BoTieuChiSelected.LoaiBoTieuChi == 3">
+                            <input type="radio" ng-model="TieuChi.DieuKienThoiGian" ng-value="12" ng-init="BoTieuChi.LoaiBoTieuChi == 0 && BoTieuChiSelected.LoaiBoTieuChi == 3 ? TieuChi.DieuKienThoiGian = 12 : ''">
+                            Trung bình 12 tháng
+                        </label>
+                    </div>
+                    <div style="display:none;" ng-show="TieuChi.DieuKienThoiGian == 1">
+                        <div style="background-color:lightblue; vertical-align:middle; display:inline-block;">
+                            <select kendo-multi-select
+                                    k-filter="'contains'"
+                                    k-ng-model="thang"
+                                    style="background-color:lightblue; width: 200px;">
+                                <option value="1">Tháng 1</option>
+                                <option value="2">Tháng 2</option>
+                                <option value="3">Tháng 3</option>
+                                <option value="4">Tháng 4</option>
+                                <option value="5">Tháng 5</option>
+                                <option value="6">Tháng 6</option>
+                                <option value="7">Tháng 7</option>
+                                <option value="8">Tháng 8</option>
+                                <option value="9">Tháng 9</option>
+                                <option value="10">Tháng 10</option>
+                                <option value="11">Tháng 11</option>
+                                <option value="12">Tháng 12</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="padding-5-10">
+                    <label style="vertical-align:middle; margin: 0px;  width: 100px">Công thức: </label>
+                    <input ng-model="TieuChi.CongThucTinhDiem" class="k-textbox" type="text" name="CongThuc" value="" placeholder="Nhập công thức" />
+                    <input type="checkbox" id="eq4" class="k-checkbox" ng-model="TieuChi.IsTeacher">
+                    <label class="k-checkbox-label" for="eq4">Kiêm giảng viên</label>
+                    <input ng-show="TieuChi.IsTeacher" ng-model="TieuChi.CongThucTinhDiemTeacher" class="k-textbox" type="text" name="CongThuc" value="" placeholder="Nhập công thức" />
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="save()" ng-disabled="TieuChiForm.$invalid">Lưu</button>
+            <button class="btn btn-warning" style="cursor: pointer" ng-click="$dismiss()">Thoát</button>
+        </div>
+    </form>
+</md-content>

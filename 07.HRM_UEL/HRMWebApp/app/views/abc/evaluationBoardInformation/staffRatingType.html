@@ -1,0 +1,23 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+<form class="form-horizontal" name="RatingTypeForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': RatingLevelForm.ratingType.$invalid}">
+            <label for="name" class="col-md-3 control-label">Chọn đối tượng đánh giá</label>
+            <select kendo-combo-box k-ng-model="obj.ratingTypeId" k-options="ratingTypeResource" k-filter="'contains'" style="width: 250px;"></select>
+            <div class="col-md-2">
+                <span ng-show="RatingTypeForm.ratingType.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="save()" ng-disabled="RatingTypeForm.$invalid">Lưu</button>
+        <button class="btn btn-info" ng-click="cancel()">Hủy</button>
+    </div>
+</form>

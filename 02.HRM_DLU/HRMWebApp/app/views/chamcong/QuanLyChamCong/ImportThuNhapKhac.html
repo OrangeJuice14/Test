@@ -1,0 +1,46 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Import thu nhập khác</span>
+    </div>
+    <div class="widget-body">
+        <div class="row">
+            <form method="get" id="down" action="../../../../Files/Import_ThuNhapKhac.xlsx">
+                <a href="#" class="btn btn-labeled btn-palegreen" onclick="document.getElementById('down').submit()" style="width: 158px; margin-left:15px;">
+                    <i class="btn-label fa fa-download"></i>Tải mẫu lương
+                </a>
+            </form>
+            <br />
+            <label for="selectType" class="col-md-2 control-label">Kỳ tính lương :</label>
+            <div class="col-md-10">
+                <select kendo-combo-box k-ng-model="kyTinhLuong" k-options="kyTinhLuongResource"></select>
+            </div>
+            <!--<br /><br /><br />
+            <label for="selectType" class="col-md-2 control-label">Loại thu nhập khác :</label>
+            <div class="col-md-4">
+                <select ng-model="loaiThuNhap" name="StaffRoleSelect" ng-options="listRole.Oid as listRole.TenLoaiThuNhapKhac for listRole in loaiThuNhapList">
+                    <option value="">Chọn Loại thu nhập khác ...</option>
+                </select>
+                <button style="height:30px;width:38px;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+            </div>-->
+            <!--<br /><br /><br />
+            <label for="selectType" class="col-md-2 control-label">Loại thu nhập khác :</label>
+            <div class="col-md-4">
+                <button style="height:30px;width:38px;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+            </div>-->
+            <br /><br /><br />
+            <label for="selectType" class="col-md-2 control-label">Chọn file :</label>
+            <div class="col-md-6">
+                <input name="files" k-placeholder="'Select product'" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+            </div>
+            <div class="col-md-4">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+

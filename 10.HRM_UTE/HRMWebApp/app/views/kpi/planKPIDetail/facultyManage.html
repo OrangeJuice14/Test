@@ -1,0 +1,336 @@
+﻿<link href="CSS/kpimain.css" rel="stylesheet" />
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption captionTitle" style="font-weight: bold;"><b> {{planName}} - {{staffPlanDetailMakingObject.StaffDTO.Name}}</b></span>
+        <span class="widget-caption captionTitle" style="color: red" ng-if="isExpired"><b style="padding-left: 5px">(Quá thời hạn quy định)</b></span>
+        <span class="widget-caption captionTitle" style="color: forestgreen" ng-if="staffPlanDetailMakingObject.IsLocked"><b style="padding-left: 5px">(Kế hoạch đã được duyệt)</b></span>
+    </div>
+    <div class="widget-body">
+        <div class="overlay" loading>
+            <div class="inner">
+                <img height="60" src="/Images/loader.gif" /><br />
+                Đang xử lý ...
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <div style="float:right;width:200px;" ng-if="planType==1"><b>MẪU 04/KHNH</b></div>
+            <div style="float:right;width:200px;" ng-if="planType==2"><b>MẪU 04/KHHK</b></div>
+            <div style="float:right;width:200px;" ng-if="planType==3"><b>MẪU 04/KHTH</b></div>
+            <br />
+            <h3 class="title" ng-if="planType==1">BẢN KẾ HOẠCH MỤC TIÊU CHẤT LƯỢNG NĂM HỌC</h3>
+            <h3 class="title" ng-if="planType==2">BẢN KẾ HOẠCH MỤC TIÊU CHẤT LƯỢNG HỌC KỲ</h3>
+            <h3 class="title" ng-if="planType==3">BẢN KẾ HOẠCH MỤC TIÊU CHẤT LƯỢNG HÀNG THÁNG</h3>
+            <h3 class="title">ÁP DỤNG CHO KHOA/VIỆN/TRƯỜNG</h3>
+        </div>
+        <form name="resultDetailKPIForm" role="form" class="form-horizontal" novalidate>
+            <div id="infoTable">
+                <table class="table table-striped table-bordered" style="width: 100%">
+                    <tbody>
+                        <!--<tr>
+                            <td class="td1">Tầm nhìn</td>
+                            <td><textarea style="width:100%; min-height:28px" rows="3" ng-auto-expand ng-model-onblur ng-change="UpdateVision()" required ng-model="staffPlanDetailMakingObject.Vision" placeholder="Tầm nhìn ..."></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Sứ mạng</td>
+                            <td><textarea style="width:100%; min-height:28px" rows="3" ng-auto-expand ng-model-onblur ng-change="UpdateMission()" required ng-model="staffPlanDetailMakingObject.Mission" placeholder="Sứ mạng ..."></textarea></td>
+                        </tr>-->
+                        <tr>
+                            <td class="td1">Khoa/Viện/Trường</td>
+                            <td>{{staffPlanDetailMakingObject.StaffDTO.Department.Name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Người lập</td>
+                            <td><b>{{staffPlanDetailMakingObject.StaffDTO.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Vị trí</td>
+                            <td>Trưởng khoa</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Cấp trên trực tiếp</td>
+                            <td>Ban Giám hiệu</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Thời gian thực hiện</td>
+                            <td>{{startPlanTime}} - {{endPlanTime}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div ng-if="staffPlanDetailMakingObject.IsSupervisor">Duyệt kế hoạch: {{staffPlanDetailMakingObject.StaffDTO.StaffProfile.Name}}</div>
+
+            <div style="width:100%; overflow-x:scroll;">
+                <div style="width:100%;">
+                    <div id="mainTabId" k-content-urls="[ null, null]">
+                        <ul>
+                            <li style="color: #fff !important;" ng-repeat="(index,tg) in staffPlanDetailMakingObject.TargetGroupPlanMakings" ng-class="{'k-state-active': index==0}" ng-style="{'background-color': TABLECOLORS[index]}">
+                                NMT# {{$index +1}}: {{tg.TargetGroupName}}
+                            </li>
+                        </ul>
+
+                        <div ng-repeat="tg in staffPlanDetailMakingObject.TargetGroupPlanMakings">
+                            <div style="width: 100%;">
+                                <div style="float: left; padding: 5px 5px 5px 5px; margin-right: 10px; width: 99%; " ng-style="{'background-color': TABLECOLORS[$index] }" ng-if="!staffPlanDetailMakingObject.IsSupervisor">
+                                    <div style="float: left">
+                                        <fieldset ng-disabled="staffPlanDetailMakingObject.IsLocked || isExpired" style="clear:both;">
+                                            <a ng-click="newPlan(tg.TargetGroupId,1)" ng-if="!CanDelete && !staffPlanDetailMakingObject.IsSupervisor && tg.TargetGroupDetailTypeId ==1" class="btn btn-labeled btn-primary planButton">
+                                                <i class="btn-label fa fa-plus"></i>Thêm mới
+                                            </a>
+                                            <a ng-click="newPlan(tg.TargetGroupId,2)" ng-if="!CanDelete && !staffPlanDetailMakingObject.IsSupervisor && tg.TargetGroupDetailTypeId ==1" class="btn btn-labeled btn-warning planButton">
+                                                <i class="btn-label fa fa-plus"></i>Bổ sung
+                                            </a>
+                                        </fieldset>
+                                    </div>
+                                    <div style="float: right">
+                                        <a ng-click="ExportExcel()" class="btn btn-labeled btn-success planButton">
+                                            <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+                                        </a>
+                                        <!-- Trường hợp 1: Đánh giá kế hoạch chính chủ  -->
+                                        <button class="btn btn-primary planButton" ng-click="saveProfessor()" ng-if="!staffPlanDetailMakingObject.IsSupervisor && tg.TargetGroupDetailTypeId==0">Lưu</button>
+                                        <a ng-if="isSupervisor==0" href="/#/kpi/facultyRatingKPI/{{planId}}/{{agentObjectId}}/{{''}}/{{''}}/{{departmentId}}/{{0}}/{{0}}" class="btn btn-labeled btn-darkorange planButton">
+                                            <i class="btn-label glyphicon glyphicon-edit"></i>Đánh giá kế hoạch
+                                        </a>
+                                        <!-- Trường hợp 1: Đánh giá kế hoạch dành cho cấp trên -->
+                                        <a ng-if="isSupervisor==1" href="/#/kpi/facultyRatingKPI/{{planId}}/{{agentObjectId}}/{{normalStaffId}}/{{staffId}}/{{departmentId}}/{{0}}/{{0}}" class="btn btn-labeled btn-darkorange planButton">
+                                            <i class="btn-label glyphicon glyphicon-edit"></i>Đánh giá kế hoạch
+                                        </a>
+                                        <a ng-if="isAdmin==1" href="/#/kpi/planKPI" class="btn btn-labeled btn-blue planButton">
+                                            <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                        </a>
+                                        <a ng-if="isAdmin==0 && isConfig==0" href="/#/kpi/userPlan" class="btn btn-labeled btn-blue planButton">
+                                            <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                        </a>
+                                        <a ng-if="isAdmin==0 && isConfig==1" href="/#/kpi/userPlanKPI" class="btn btn-labeled btn-blue planButton">
+                                            <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                        </a>
+                                    </div>
+                                </div>
+                                <fieldset ng-disabled="staffPlanDetailMakingObject.IsLocked || isExpired" style="clear:both;">
+                                    <table class="table  table-bordered planTable">
+                                        <thead style="color:white">
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==1 || tg.TargetGroupDetailTypeId==6 || tg.TargetGroupDetailTypeId==7">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width:56px;" rowspan="3">
+                                                    <div style="width: 56px;"></div>
+                                                </th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width:50px;" rowspan="3">STT</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width:100px;" rowspan="3">Mã công việc</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle;" colspan="17">
+                                                    NMT# {{$index +1}}: {{tg.TargetGroupName}}
+                                                </th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==0 || tg.TargetGroupDetailTypeId==4 || tg.TargetGroupDetailTypeId==5">
+                                                <th ng-if="tg.TargetGroupDetailTypeId!=0 && !staffPlanDetailMakingObject.IsSupervisor" ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width: 56px;" rowspan="2"><div style="width: 56px;"></div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width: 60px;" rowspan="2">STT</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;" rowspan="2"><div>Mục tiêu Kpis</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;" rowspan="2"><div>Điểm tối đa</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle;" colspan="8">
+                                                    NMT#{{$index +1}}: {{tg.TargetGroupName}}
+                                                </th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==0">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:300px"><div style="width: 300px;">Kết quả thực hiện  năm học trước</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:300px"><div style="width: 300px;">Chỉ tiêu đăng ký thực hiện năm nay</div></th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==4">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:400px"><div style="width: 400px;">Nội dung cụ thể</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:50px"><div style="width: 50px;">Số giờ</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:120px"><div style="width: 120px;">Chỉ tiêu đăng ký thực hiện</div></th>
+                                            </tr>
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==5">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:400px"><div style="width: 400px;">Nội dung cụ thể</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:50px"><div style="width: 50px;">Số tiết</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:120px"><div style="width: 120px;">Chỉ tiêu đăng ký thực hiện</div></th>
+                                            </tr>
+
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==1 || tg.TargetGroupDetailTypeId==6 || tg.TargetGroupDetailTypeId==7">
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width: 150px;" rowspan="2">Mã công việc con</th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width: 200px;" rowspan="2"><div style="width: 200px;">Mục tiêu Kpis</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width: 250px;" rowspan="2"><div style="width: 250px;">Mục tiêu chi tiết</div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width: 90px;" rowspan="2"><div style="width:90px;"><span style="width:100px; display:block;margin:auto">Thời gian thực hiện</span></div></th>
+                                                <th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center;width:165px" rowspan="2"><div style="width:165px">Thực hiện</div></th>
+                                                <!--<th ng-style="{'background-color': TABLECOLORS[$index] }" style="vertical-align:middle; text-align:center; width: 80px;" rowspan="2"><div style="width: 50px;">Ngừng sử dụng</div></th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!--Loại thường-->
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==0" ng-repeat="pl in tg.PlanKPIDetails track by $index | orderBy:'OrderNumber'">
+                                                <td style="text-align:center">{{$index +1}}</td>
+                                                <td><p style="vertical-align:middle;"><b>{{pl.TargetDetail}}</b></p>   </td>
+                                                <td style="text-align:center">{{pl.Record}}</td>
+                                                <td>
+                                                    <input ng-if="pl.CriterionTypeId==2 || pl.CriterionTypeId==4" ng-attr-tooltip="{{pl.Tooltip}}" kendo-numeric-text-box k-options="options" k-ng-model="pl.PreviousKPI" />
+                                                    <textarea style="width:300px" ng-auto-expand ng-if="pl.CriterionTypeId==1" ng-attr-tooltip="{{pl.Tooltip}}" required class="col-xs-12" ng-model="pl.PreviousKPI"></textarea>
+                                                    <select style="width:300px" class="form-control col-md-12" ng-if="pl.CriterionTypeId==3" ng-attr-tooltip="{{pl.Tooltip}}" name="selectTarget" required ng-model="pl.PreviousKPI" ng-options="listobj.Id as listobj.Name for listobj in pl.CriterionDictionaries"></select>
+                                                </td>
+                                                <td>
+                                                    <input ng-if="pl.CriterionTypeId==2 || pl.CriterionTypeId==4" ng-attr-tooltip="{{pl.Tooltip}}" kendo-numeric-text-box k-options="options" k-ng-model="pl.CurrentKPI" />
+                                                    <textarea style="width:300px" ng-auto-expand ng-if="pl.CriterionTypeId==1" ng-attr-tooltip="{{pl.Tooltip}}" required class="col-xs-12" ng-model="pl.CurrentKPI"></textarea>
+                                                    <select style="width:300px" class="form-control col-md-12" ng-if="pl.CriterionTypeId==3" ng-attr-tooltip="{{pl.Tooltip}}" name="selectTarget" required ng-model="pl.CurrentKPI" ng-options="listobj.Id as listobj.Name for listobj in pl.CriterionDictionaries"></select>
+                                                </td>
+                                                <!--<td ng-if="agentObjectTypeId==3"><textarea ng-auto-expand required class="col-xs-12" ng-model="pl.MaxRecord"></textarea></td>-->
+                                            </tr>
+
+                                            <!--Loại tổng kết-->
+                                            <tr ng-if="tg.TargetGroupDetailTypeId==1 || tg.TargetGroupDetailTypeId==6 || tg.TargetGroupDetailTypeId==7" ng-repeat="pl in tg.PlanKPIDetails track by $index | orderBy:'OrderNumber'" ng-class="{isDisable: pl.IsDisable == true,isNotLocked: !pl.IsLocked}">
+                                                <td style="width: 50px;">
+                                                    <button style="float:right;" ng-if="!staffPlanDetailMakingObject.IsSupervisor && !pl.IsDisable" ng-click="editPlan(tg.TargetGroupId, pl.Id)" class="btn btn-success col-md-12"><i class='fa fa-pencil'></i>  </button>
+                                                    <button style="float:right;" ng-click="delete(tg.TargetGroupId,pl.Id)" class="btn btn-danger col-md-12"><i class="fa fa-trash-o"></i> </button>
+                                                    <!--<button style="float:right;" ng-click="disable(tg.TargetGroupId,pl.Id)" tooltip="Dừng sử dụng" ng-if="!staffPlanDetailMakingObject.IsSupervisor && pl.FromCriterion==null && !pl.CanDelete && !pl.IsDisable" class="btn btn-warning col-md-12"><i class="fa fa-stop"></i> </button>-->
+                                                    <!--<button style="float:right;" ng-click="disable(tg.TargetGroupId,pl.Id)" tooltip="Tái sử dụng" ng-if="!staffPlanDetailMakingObject.IsSupervisor && pl.FromCriterion==null && !pl.CanDelete && pl.IsDisable" class="btn btn-primary col-md-12"><i class="fa fa-recycle"></i> </button>-->
+                                                </td>
+                                                <td><div style="width:50px">{{pl.OrderNumber}}</div></td>
+                                                <td><div style="width:100px">{{pl.ManageCode.Id}} - {{pl.ManageCode.Name}}</div></td>
+                                                <td><div style="width:150px"></div>{{pl.DanhMucMTCL.MaDanhMuc}} - {{pl.DanhMucMTCL.TenDanhMuc}}</td>
+                                                <td>
+                                                    <div>
+                                                        <p><b>{{pl.TargetDetail}}</b></p>
+                                                        <span ng-show="pl.IsAddition">&nbsp;&nbsp;<img src="../../../../Images/bosung.gif" /></span>
+                                                        <span ng-show="!pl.IsLocked ">&nbsp;&nbsp;<img src="../../../../Images/new.gif" /></span>
+                                                        <span ng-show="pl.IsDisable">&nbsp;&nbsp;<img src="../../../../Images/ngungSuDung.gif" /></span>
+                                                        <span ng-show="pl.IsMoved && !pl.IsLocked">&nbsp;&nbsp;<img src="../../../../Images/DaChuyen.gif" /> </span>
+                                                        <ul style="padding-right:10px;">
+                                                            <li ng-repeat="f in pl.PlanFileDTOs"><i class="fa fa-paperclip"></i> <a ng-click="downloadFile(f.Id)" href="javascript:void(0)">{{f.FileName}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div ng-repeat="m in pl.Methods">
+                                                            <p>{{$index +1}}. {{m.Name}} </p>
+                                                            <p ng-show="m.SubStaff.length > '0'">  - Cá nhân thực hiện: <p ng-repeat="n in m.SubStaff">     + {{n.Name}}</p>
+                                                            <p ng-show="m.LeadDepartment >'0'">  - Đơn vị cùng thực hiện: <p ng-repeat="l in m.LeadDepartment">     + {{l.DepartmentId.Name}}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div ng-repeat="m in pl.Methods">
+                                                        <p>{{$index +1}}. Từ {{ m.StartTimeString}} đến {{m.EndTimeString}}</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Đơn vị chỉ đạo: {{pl.LeadDepartment.Name}}</p>
+                                                    <p>Người chỉ đạo: {{pl.StaffLeader.StaffProfile.Name}}</p>
+                                                </td>
+                                                <!--<td style="text-align:center;"><input ng-if="pl.IsLockable" type="checkbox" ng-model="pl.IsDisable" disabled /></td>-->
+                                            </tr>
+                                            <!--Loại khác-->
+                                            <tr ng-class="'tr-equal_height tr-' + {{$index + 1}}" ng-if="tg.TargetGroupDetailTypeId==5" ng-repeat="pl in tg.PlanKPIDetails track by $index | orderBy:'OrderNumber'">
+                                                <td style="text-align:center" ng-if="!staffPlanDetailMakingObject.IsSupervisor">
+                                                    <button style="float:right;" ng-if="!staffPlanDetailMakingObject.IsSupervisor && index!=0" ng-click="editPlan(tg.TargetGroupId, pl.Id)" class="btn btn-success col-md-12"><i class='fa fa-pencil'></i>  </button>
+                                                </td>
+                                                <td style="text-align:center">{{$index +1}}</td>
+                                                <td><p style="vertical-align:middle;"><b>{{pl.TargetDetail}}</b></p>   </td>
+                                                <td class="equal_height one">
+                                                    <div>
+                                                        <div ng-repeat="pa in pl.ScienceResearches">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}"> -&nbsp;&nbsp;{{pa.Name}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="equal_height">
+                                                    <div style="text-align:center;">
+                                                        <div ng-repeat="pa in pl.ScienceResearches">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}">{{pa.NumberOfHour}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="equal_height">
+                                                    <div style="text-align:center;">
+                                                        <div ng-repeat="pa in pl.ScienceResearches">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}">{{pa.NumberOfResearch}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr ng-class="'tr-equal_height tr-' + {{$index + 1}}" ng-if="tg.TargetGroupDetailTypeId==4" ng-repeat="pl in tg.PlanKPIDetails track by $index | orderBy:'OrderNumber'">
+                                                <td style="text-align:center" ng-if="!staffPlanDetailMakingObject.IsSupervisor">
+                                                    <button style="float:right;" ng-if="!staffPlanDetailMakingObject.IsSupervisor" ng-click="editPlan(tg.TargetGroupId, pl.Id)" class="btn btn-success col-md-12"><i class='fa fa-pencil'></i>  </button>
+                                                </td>
+                                                <td style="text-align:center">{{$index +1}}</td>
+                                                <td><p style="vertical-align:middle;"><b>{{pl.TargetDetail}}</b></p>   </td>
+                                                <td class="equal_height one">
+                                                    <div>
+                                                        <div ng-repeat="pa in pl.ProfessorOtherActivities">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}"> -&nbsp;&nbsp;{{pa.Name}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="equal_height">
+                                                    <div style="text-align:center;">
+                                                        <div ng-repeat="pa in pl.ProfessorOtherActivities">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}">{{pa.NumberOfHour}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="equal_height">
+                                                    <div style="text-align:center;">
+                                                        <div ng-repeat="pa in pl.ProfessorOtherActivities">
+                                                            <p ng-class="'row-height row-'+{{$index + 1}}">{{pa.NumberOfTime}}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!--<tr ng-if="tg.TargetGroupDetailTypeId==5||tg.TargetGroupDetailTypeId==4">
+                                                <td ng-if="!staffPlanDetailMakingObject.IsSupervisor" colspan="4" style="text-align:right">Tổng số giờ đã đăng ký:</td>
+                                                <td ng-if="staffPlanDetailMakingObject.IsSupervisor" colspan="3" style="text-align:right">Tổng số giờ đã đăng ký:</td>
+                                                <td ng-if="tg.TargetGroupDetailTypeId==5" colspan="2" style="text-align:center">{{totalScienceResearchHour()}}</td>
+                                                <td ng-if="tg.TargetGroupDetailTypeId==4" colspan="2" style="text-align:center">{{totalOtherActivityHour()}}</td>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                </fieldset>
+                                <div style="width: 100%;" ng-if="!staffPlanDetailMakingObject.IsSupervisor">
+                                    <div style="float: left; padding: 0 5px 0 5px; margin-right: 10px; width: 99%;" ng-if="!staffPlanDetailMakingObject.IsSupervisor">
+                                        <div style="float: left">
+                                            <fieldset ng-disabled="staffPlanDetailMakingObject.IsLocked || isExpired" style="clear:both;">
+                                                <a ng-click="newPlan(tg.TargetGroupId,1)" ng-if="!CanDelete && !staffPlanDetailMakingObject.IsSupervisor && tg.TargetGroupDetailTypeId==1 " class="btn btn-labeled btn-primary">
+                                                    <i class="btn-label fa fa-plus"></i>Thêm mới
+                                                </a>
+                                                <a ng-click="newPlan(tg.TargetGroupId,2)" ng-if="!CanDelete && !staffPlanDetailMakingObject.IsSupervisor && tg.TargetGroupDetailTypeId==1" class="btn btn-labeled btn-warning">
+                                                    <i class="btn-label fa fa-plus"></i>Bổ sung
+                                                </a>
+
+                                            </fieldset>
+                                        </div>
+                                        <div style="float: right">
+                                            <!--<a ng-click="ExportExcel()" class="btn btn-labeled btn-success">
+                                                <i class="btn-label fa fa-file-excel-o"></i>Xuất excel
+                                            </a>-->
+                                            <!-- Trường hợp 1: Đánh giá kế hoạch chính chủ  -->
+                                            <a ng-if="isSupervisor==0" href="/#/kpi/facultyRatingKPI/{{planId}}/{{agentObjectId}}/{{''}}/{{''}}/{{departmentId}}/{{0}}/{{0}}" class="btn btn-labeled btn-darkorange planButton">
+                                                <i class="btn-label glyphicon glyphicon-edit"></i>Đánh giá kế hoạch
+                                            </a>
+                                            <!-- Trường hợp 1: Đánh giá kế hoạch dành cho cấp trên -->
+                                            <a ng-if="isSupervisor==1" href="/#/kpi/facultyRatingKPI/{{planId}}/{{agentObjectId}}/{{normalStaffId}}/{{staffId}}/{{departmentId}}/{{0}}/{{0}}" class="btn btn-labeled btn-darkorange planButton">
+                                                <i class="btn-label glyphicon glyphicon-edit"></i>Đánh giá kế hoạch
+                                            </a>
+                                            <a ng-if="isAdmin==1" href="/#/kpi/planKPI" class="btn btn-labeled btn-blue planButton">
+                                                <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                            </a>
+                                            <a ng-if="isAdmin==0 && isConfig==0" href="/#/kpi/userPlan" class="btn btn-labeled btn-blue planButton">
+                                                <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                            </a>
+                                            <a ng-if="isAdmin==0 && isConfig==1" href="/#/kpi/userPlanKPI" class="btn btn-labeled btn-blue planButton">
+                                                <i class="btn-label glyphicon glyphicon-chevron-left"></i>Trở về
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="float: right; margin-right: 30px;">
+                    <button class="btn btn-primary" ng-if="!staffPlanDetailMakingObject.IsSupervisor && !isDisable" ng-click="lock(staffPlanDetailMakingObject.PlanStaffId)">Khóa</button>
+                    <button class="btn btn-primary" ng-if="staffPlanDetailMakingObject.IsSupervisor && staffPlanDetailMakingObject.IsViewer==false && !staffPlanDetailMakingObject.IsLocked && isAdmin" ng-click="LockPlanStaff(staffPlanDetailMakingObject.PlanStaffId)">Duyệt</button>
+                    <button class="btn btn-primary" ng-if="staffPlanDetailMakingObject.IsSupervisor && staffPlanDetailMakingObject.IsViewer==false && staffPlanDetailMakingObject.IsLocked && isAdmin" ng-click="LockPlanStaff(staffPlanDetailMakingObject.PlanStaffId)">Mở khóa</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

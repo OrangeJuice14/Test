@@ -1,0 +1,113 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Thông Tin Người Dùng</div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Loại tài khoản:</label>
+            <div class="col-sm-7">
+                <div id="jqxComboBox_LoaiTaiKhoan"></div>
+                <!--  <select id="accountlist" data-bind="options: accountList, optionsText: 'Name', optionsValue: 'ID', value: accountSelected" onchange="HidePhanQuyenDonVi()"></select>-->
+            </div>
+        </div>
+
+        <div class="form-group" id="truong">
+            <label class="col-sm-3 control-label no-padding-right">Trường:</label>
+            <div class="col-sm-7">
+                <select style="width: 300px" data-bind="options: companys, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+            </div>
+        </div>
+
+        <div class="form-group" id="departmentnhanvien">
+            <label class="col-sm-3 control-label no-padding-right">Phòng ban:</label>
+            <div class="col-sm-7">
+                <select  style="width: 300px" data-bind="options: departments, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected_nhansu, optionsCaption: 'Không chọn'"></select>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible: departmentSelected_nhansu() !== undefined" id="danhsachnhanvien">
+            <label class="col-sm-3 control-label no-padding-right">Nhân viên:</label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton">
+                    <div style="border-color: transparent;" id="jqxgrid_hosonhanvien">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Tên đăng nhập:</label>
+            <div class="col-sm-7">
+                <input type="text" data-bind="value: userName" id="txtUserName" />
+                <span class="validate" data-bind="visible: $.trim(userName()).length == 0">(*)</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Mật khẩu:</label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton">
+                    <input type="password" data-bind="value: passWord" />
+                    <span class="validate" data-bind="visible: $.trim(passWord()).length == 0">(*)</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Trạng thái:</label>
+            <div class="col-sm-7">
+                <input type="radio" data-bind="checked: status" value="true" name="rStatus" checked /><span>Hoạt động</span>
+                <input type="radio" data-bind="checked: status" value="false" name="rStatus" /><span>Khóa lại</span>
+            </div>
+        </div>
+        <div class="form-group" id="emailtp">
+            <label class="col-sm-3 control-label no-padding-right">Email TP:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailtp" style="height:10px;" />
+            </div>
+        </div>
+        <div class="form-group" id="emailht" >
+            <label class="col-sm-3 control-label no-padding-right">Email HT:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailht" style="height:10px;"/>
+            </div>
+        </div>
+        <div class="form-group" id="emailhdqt">
+            <label class="col-sm-3 control-label no-padding-right">Email HĐQT:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailhdqt" style="height:10px;"/>
+            </div>
+        </div>
+        <div class="form-group" id="phanquyendonvi">
+            <label class="col-sm-3 control-label no-padding-right">Phân quyền Trường | đơn vị:</label>
+            <div class="col-sm-7">
+                <div class="container">
+                    <div class="form_checkbox">
+                        <input type="checkbox" data-bind="click: selectAll, checked: allSelected" />
+                        <span>Chọn tất cả</span>
+                    </div>
+                    <!-- ko foreach: departments_role -->
+                    <!-- ko if:Oid != null -->
+                    <div class="form_checkbox">
+                        <input type="checkbox" data-bind="checked: Chon" name="checkbox"/>
+                        <span data-bind="text: STT + '. ' + TenBoPhan"></span>
+                    </div>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <br />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-7">
+                <span>Lưu ý : <span style="color: red">(*)</span> bắt buộc nhập</span>
+            </div>
+        </div>
+    </div>
+</div>

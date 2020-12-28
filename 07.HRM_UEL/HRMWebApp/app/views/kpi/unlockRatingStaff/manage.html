@@ -1,0 +1,28 @@
+﻿
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:36px;">
+        <span class="widget-caption">Cá nhân</span>
+        <a ng-click="UnlockRating()"style="float:right;height:36px;"class='btn btn-labeled btn-success'><i class="btn-label fa fa-unlock-alt"></i>Mở khóa</a>       
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div class="row">
+                <span class="col-md-3" style="padding-right:0px">Chọn cả Đơn vị</span>
+                <input class="col-md-7" type="checkbox" ng-model="unlockRating.IsDepartment">
+            </div>
+            <!--<span class="text">Chọn cả Đơn vị</span>
+            <label>
+                <input class="checkbox-slider colored-darkorange" style="width:0px" type="checkbox" ng-model="unlockRating.IsDepartment">
+                <span class="text">&nbsp;</span>
+            </label>-->
+            <br />
+            Thời gian : Từ
+            <input kendo-date-picker onkeydown="return false;" style="width:120px" name="startTime" required k-ng-model="unlockRating.RatingStartTime" k-format="'dd/MM/yyyy'" /> đến
+            <input kendo-date-picker onkeydown="return false;" style="width:120px" name="startTime" required k-ng-model="unlockRating.RatingEndTime" k-format="'dd/MM/yyyy'" />
+            <br />
+            <br />
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="unlockRatingOptions"></div>
+  
+        </div>
+    </div>
+</div>

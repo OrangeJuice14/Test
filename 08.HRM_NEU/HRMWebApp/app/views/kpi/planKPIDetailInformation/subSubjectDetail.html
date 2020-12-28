@@ -1,0 +1,119 @@
+﻿<style>
+    .warningPoint {
+        color: red;
+    }
+
+    .formItems textarea {
+        padding-left: 10px;
+    }
+
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #787878 !important;
+    }
+</style>
+<form name="CriterionDetailForm" role="form" class="form-horizontal" novalidate>
+    <script type="text/x-kendo-template" id="template">
+        <div class="mainGrid"> </div>
+    </script>
+    <div class="modal-header">
+        <h3 class="modal-title">Kế hoạch chi tiết Phó Bộ môn</h3>
+    </div>
+    <div class="modal-body" style="padding: 20px 20px 20px 20px">
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+
+            <div kendo-tab-strip="mainTab" id="mainInformationTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">Thông tin</li>
+                    <li ng-show="!isNew && obj.FromCriterion==null">Kế hoạch / Các bước thực hiện</li>
+                    <li ng-show="!isNew">KPI đăng ký thực hiện</li>
+                    <li ng-show="!isNew">Tập tin đính kèm</li>
+                </ul>
+                <div style="overflow: hidden" class="formItems">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.OrderNumber.$invalid}">
+                                <label class="col-md-3 control-label">Số thứ tự</label>
+                                <div class="col-md-7">
+                                    <input name="OrderNumber" kendo-numeric-text-box k-options="orders" required k-ng-model="obj.OrderNumber" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.TargetDetail.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Mục tiêu chi tiết</label>
+                                <div class="col-md-7" ng-if="obj.FromCriterion==null">
+                                    <textarea class="form-control" name="TargetDetail" required ng-model="obj.TargetDetail" rows="4"></textarea>
+                                </div>
+                                <div class="col-md-7" ng-if="obj.FromCriterion!=null" style="margin-top:6px;"><span style="text-align:justify;">{{ obj.TargetDetail}}</span></div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.BasicResource.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Nguồn lực cần có</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" name="BasicResource" ng-model="obj.BasicResource" rows="4"></textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+
+                            <div class="form-group">
+                                <label for="ManageId" class="col-md-3 control-label">Mã công việc</label>
+                                <div class="col-md-7" ng-if="obj.FromCriterion==null">
+                                    <select style="width: 100%" name="selectManageCode" required ng-model="obj.ManageCode.Id" ng-options="listobj.Id as listobj.Id + ' - ' + listobj.Name for listobj in ManageCodes">
+                                        <option value="">...Chọn Mã công việc...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-7" style="margin-top:6px;" ng-if="obj.FromCriterion!=null"><span style="text-align:justify;">{{obj.ManageCode.Id}} - {{obj.ManageCode.Name}}</span></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm trước</label>
+                                <div class="col-md-7">
+                                    <input name="PreviousKPI" kendo-numeric-text-box k-options="options" k-ng-model="obj.PreviousKPI" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="obj.FromCriterion==null">
+                                <label for="ManageId" class="col-md-3 control-label">Ngừng sử dụng</label>
+                                <div class="col-md-7">
+                                    <input type="checkbox" ng-model="obj.IsDisable" />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="obj.FromCriterion==null">
+                                <label for="IsAddition" class="col-md-3 control-label">Bổ sung</label>
+                                <div class="col-md-7">
+                                    <input type="checkbox" disabled="disabled" ng-model="obj.IsAddition" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: block; height: 50px;">
+                        <button style="height: 30px; width:30px; float: right" ng-click="newMethod()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>
+                    <div style="display: block;"><div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div></div>
+                </div>
+                <div>
+                    <div style="display: block; height: 50px;">
+                        <button style="height: 30px; width:30px; float: right" ng-disabled="fromCriterion!=null" ng-click="newKPI()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>
+                    <div style="display: block;"><div kendo-grid="grid1" k-data-source="kpiDataSource" k-options="kpiMainGridOptions"></div></div>
+                </div>
+                <div>
+                    <div style="display: block; min-height: 50px;">
+                        <div class="col-md-10">
+                            <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+                        </div>
+                    </div>
+                    <br />
+                    <div style="display: inline-table;">
+                        <div kendo-grid="fileGrid" k-data-source="fileDataSource" k-options="fileMainGridOptions"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+
+</form>

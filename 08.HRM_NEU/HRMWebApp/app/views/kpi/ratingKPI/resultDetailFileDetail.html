@@ -1,0 +1,22 @@
+﻿
+<form class="form-horizontal" name="resultDetailFileForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Tập tin đính kèm</h3>
+    </div>
+    <div class="modal-body">  
+        <div class="form-group">
+            <div style="display: block; min-height: 50px;">
+                <div class="col-md-10">
+                    <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+                </div>
+            </div>
+            <br />
+            <div style="display: inline-table;">
+                <div kendo-grid="fileGrid" k-data-source="fileDataSource" k-options="fileMainGridOptions"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+    </div>
+</form>

@@ -1,0 +1,56 @@
+﻿<style>
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #fff !important;
+        font-size: 16px;
+        background-color: #517D12 !important;
+        border-color: white !important;
+    }
+
+    .k-tabstrip-items .k-state-default, .k-ie7 .k-tabstrip-items .k-state-default .k-loading {
+        border-color: white !important;
+    }
+
+    .k-tabstrip-items .k-state-hover .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: white !important;
+        font-size: 16px;
+        border-color: white !important;
+    }
+
+    .k-tabstrip-items .k-state-active, .k-panelbar .k-tabstrip-items .k-state-active, .k-ie7 .k-tabstrip-items .k-state-active .k-loading {
+        background-color: white !important;
+        border-color: black !important;
+    }
+
+    .year {
+        cursor: pointer;
+    }
+
+    .semester {
+        cursor: pointer;
+    }
+
+    .month {
+        cursor: pointer;
+    }
+</style>
+
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <div kendo-tab-strip="mainTab" id="mainTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">
+                        Lập kế hoạch và đánh giá
+                    </li>
+                    <li>
+                        Xem kế hoạch đơn vị
+                    </li>
+                </ul>
+                <div kendo-treelist="grid" options="mainGridOptions" k-data-source="dataSource"></div>
+                <div kendo-treelist="grid" options="mainGridOptions2" k-data-source="dataSource"></div>
+            </div>
+        </div>
+    </div>
+</div>

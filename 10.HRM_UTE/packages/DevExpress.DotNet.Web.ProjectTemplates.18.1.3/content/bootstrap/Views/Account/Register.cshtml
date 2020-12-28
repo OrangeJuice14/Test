@@ -1,0 +1,38 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                @(Html.DevExpress()
+                    .BootstrapTextBoxFor(m => m.Email))
+            </div>
+            <div class="form-group">
+                @(Html.DevExpress()
+                    .BootstrapTextBoxFor(m => m.Password).Password(true))
+            </div>
+            <div class="form-group">
+                @(Html.DevExpress()
+                    .BootstrapTextBoxFor(m => m.ConfirmPassword).Password(true))
+            </div>
+            @(Html.DevExpress()
+                .BootstrapButton()
+                .Name("RegisterBtn")
+                .Text("Register")
+                .UseSubmitBehavior(true)
+                .SettingsBootstrap(bootstrap => bootstrap.RenderOption(BootstrapRenderOption.Primary)))
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

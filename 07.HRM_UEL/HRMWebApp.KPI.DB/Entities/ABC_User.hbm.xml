@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_User, HRMWebApp.KPI.DB" table="ABC_User">
+    <id name="Id" column="Oid"></id>
+    <property name="ThamGiaGiangDay" column="ThamGiaGiangDay"></property>
+    <property name="Status" column="Status"></property>
+	  <property name="DeleteTime" column="DeleteTime"></property>
+	  <property name="DeleteUserId" column="DeleteUserId"></property>
+	  <property name="AddTime" column="AddTime"></property>
+	  <property name="AddUserId" column="AddUserId"></property>
+    <many-to-one name="WebUser" class="HRMWebApp.KPI.DB.Entities.WebUser" column="WebUserId"/>
+    <many-to-one name="Position" class="HRMWebApp.KPI.DB.Entities.Position" column="ChucVu" />
+    <many-to-one name="StaffType" class="HRMWebApp.KPI.DB.Entities.StaffType" column="LoaiNhanSu" />
+    <many-to-one name="Subject" class="HRMWebApp.KPI.DB.Entities.Department" column="TaiBoMon" />
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DonVi" />
+    <many-to-one name="KyDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_KyDanhGia" column="KyDanhGiaId" />
+    <many-to-one name="GroupDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_GroupDanhGia" column="GroupDanhGiaId" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{19810A28-C55C-4C59-B82C-61337C0987A7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HRMWebApp.KPI.DB</RootNamespace>
+    <AssemblyName>HRMWebApp.KPI.DB</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate">
+      <HintPath>..\HRMWebApp\dll\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\ABC_Classifications.cs" />
+    <Compile Include="Entities\ABC_ClassificationSet.cs" />
+    <Compile Include="Entities\ABC_Criterion_RatingLevel.cs" />
+    <Compile Include="Entities\ABC_Criterion_RatingType.cs" />
+    <Compile Include="Entities\ABC_RatingType.cs" />
+    <Compile Include="Entities\ABC_EvaluationBoard.cs" />
+    <Compile Include="Entities\ABC_LockedRatingDepartment.cs" />
+    <Compile Include="Entities\ABC_RatingLevel.cs" />
+    <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Position.cs" />
+    <Compile Include="Entities\Staff.cs" />
+    <Compile Include="Entities\StaffInfo.cs" />
+    <Compile Include="Entities\StaffProfile.cs" />
+    <Compile Include="Entities\StaffStatus.cs" />
+    <Compile Include="Entities\StaffType.cs" />
+    <Compile Include="Entities\ThongTinDanhGia.cs" />
+    <Compile Include="Entities\Title.cs" />
+    <Compile Include="Entities\WebGroup.cs" />
+    <Compile Include="Entities\WebUser.cs" />
+    <Compile Include="SessionManager.cs" />
+    <Compile Include="Entities\ABC_Criterion.cs" />
+    <Compile Include="Entities\ABC_Rating.cs" />
+    <Compile Include="Entities\ABC_RatingDetail.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\ABC_Criterion.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\ABC_EvaluationBoard.hbm.xml" />
+    <EmbeddedResource Include="Entities\ABC_Rating.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\ABC_RatingDetail.hbm.xml" />
+    <EmbeddedResource Include="Entities\Department.hbm.xml" />
+    <EmbeddedResource Include="Entities\Position.hbm.xml" />
+    <EmbeddedResource Include="Entities\Staff.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffInfo.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffProfile.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffStatus.hbm.xml" />
+    <EmbeddedResource Include="Entities\StaffType.hbm.xml" />
+    <EmbeddedResource Include="Entities\ThongTinDanhGia.hbm.xml" />
+    <EmbeddedResource Include="Entities\Title.hbm.xml" />
+    <EmbeddedResource Include="Entities\WebUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\WebGroup.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\Company.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entities\ABC_RatingLevel.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\ABC_RatingType.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Entities\ABC_Criterion_RatingType.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="Entities\ABC_Classifications.hbm.xml" />
+    <Content Include="Entities\ABC_ClassificationSet.hbm.xml" />
+    <EmbeddedResource Include="Entities\ABC_Criterion_RatingLevel.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="Entities\ABC_LockedRatingDepartment.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

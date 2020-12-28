@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.WorkingMode, HRMWebApp.KPI.DB" table="KPI_WorkingMode">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+  </class>
+</hibernate-mapping>

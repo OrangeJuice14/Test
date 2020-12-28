@@ -1,0 +1,398 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <!--<link href="/Components/jqwidgets/jqx.base.css" rel="stylesheet" />
+    <link href="/Components/jqwidgets/jqx.darkBlue.css" rel="stylesheet" />-->
+    <!--<script src="/Scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="/Scripts/knockout-3.2.0.js"></script>-->
+    <script src="/Scripts/jquery.linq.min.js"></script>
+    <script type="text/javascript">
+        var session = {};
+        $(function () {
+            var source;
+            $.ajax({
+                type: 'POST',
+                url: '/Authentication/GetUserSessionInfo',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    session = result;
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function getDaysInMonth(m, y) {
+            var daysArray = [];
+            daysInWeek = ['<span style="color:red">CN</span>', 'T2', 'T3', 'T4', 'T5', 'T6', '<span style="color:red">T7</span>'];
+            daysIndex = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
+            index = daysIndex[(new Date(y, m - 1, 1)).toString().split(' ')[0]];
+            var numDaysInMonth = /8|3|5|10/.test(--m) ? 30 : m == 1 ? (!(y % 4) && y % 100) || !(y % 400) ? 29 : 28 : 31;
+            for (i = 0, l = numDaysInMonth  ; i < l  ; i++) {
+                daysArray.push((i + 1) + '<br/>' + daysInWeek[index++]);
+                if (index == 7) index = 0;
+            }
+            return daysArray;
+        }
+        
+        function getHinhThucNghi() {
+            var resultArray;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghiKyHieu',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    resultArray = result;
+                }
+            });
+            return resultArray;
+        }
+        var ListHinhThucNghi = getHinhThucNghi();
+
+        function viewModel_Update(item, phongban, manhansu, idloainhansu, month, year) {
+            var self = this;
+            self.items = ko.observableArray(item);
+            self.dayInMonth = getDaysInMonth(month, year);
+            //self.HinhThucNghiList = ko.observableArray(["", "+", "Cô", "NDC", "VR", "NDT", "1/2", "K", "P", "Ô", "Ro", "TS"]);
+            self.HinhThucNghiList = ko.observableArray([]);
+            self.HinhThucNghiListForUpdate = ko.observableArray([]);
+            self.TenPhongBan = ko.observable();
+            self.CheckChot = ko.observable();
+            self.month = ko.observable(month);
+            self.year = ko.observable(year);
+            self.thang = month;
+            self.nam = year;
+            self.phongban = ko.observable(phongban);
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetPhongBan_ById',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ id: phongban }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.TenPhongBan(obj.TenBoPhan);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghiKyHieu',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiList(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghiForUpdate',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiListForUpdate(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_CheckChot',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: self.month(),
+                    nam: self.year(),
+                    boPhanId: self.phongban()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    self.CheckChot = result;
+                }
+            });
+            self.checkChot = function () {
+                var check;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/QuanLyChamCong_CheckChot',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        thang: self.month(),
+                        nam: self.year(),
+                        boPhanId: self.phongban()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        check = result;
+                    }
+                });
+                return check;
+            }
+            self.checkExits = function () {
+                var check;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChotChamCongThang_CheckExists',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        thang: self.month(),
+                        nam: self.year(),
+                        boPhanId: self.phongban()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        check = result;
+                    }
+                });
+                return check;
+            }
+            self.checkLock = function () {
+                var check;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/ChotChamCongThang_CheckLock',
+                    contentType: "application/json; charset=utf-8",
+                    data: ko.toJSON({
+                        thang: self.month(),
+                        nam: self.year()
+                    }),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        check = result;
+                    }
+                });
+                return check;
+            }
+            self.save = function (val) {
+                var self = this;
+                //if (self.checkChot()) {
+                    //alert('Tháng này đã chốt chấm công rồi !!');
+                    //return;
+                //} else {
+                    var item = new Array();
+                    $(val.items()).each(function (index, value) {
+                        value.ChamCongNgay = new Array();
+                        $(value.ChiTietChamCong).each(function (index1, value1) {
+                            if (value1.OldValue != value1.MaHinhThucNghi)
+                                value.ChamCongNgay.push({ CC_ChamCongTheoNgayOid: value1.CC_ChamCongTheoNgayOid, MaHinhThucNghi: value1.MaHinhThucNghi });
+                        });
+                        item.push({ ChiTietChamCong: value.ChamCongNgay });
+                    });
+                    var obj = $.Enumerable.From(item).Where(function (x) {
+                        return x.ChiTietChamCong.length > 0;
+                    }).ToArray();
+                    if (obj.length == 0)
+                        return;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyChamCong_ChamCongThang_Save',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: ko.toJSON({
+                            chamcongthang: obj,
+                            thang: self.month,
+                            nam: self.year,
+                            bophanId: phongban,
+                            maNhanSu: manhansu,
+                            idLoaiNhanSu: idloainhansu == undefined ? null : idloainhansu,
+                            idWebUsers: session.UserId
+                        }),
+                        async: false,
+                        success: function (result) {
+                            alert("Lưu thành công !!");
+                            self.items(result);
+                            //location.reload();
+                        }
+                    });
+                //}
+            };
+            self.chot = function () {
+                if (self.checkExits()) {
+                    alert('Tháng này đã khóa chấm công rồi !!');
+                    return;
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/ChotChamCongThang_Create',
+                        contentType: "application/json; charset=utf-8",
+                        data: ko.toJSON({
+                            thang: self.month(),
+                            nam: self.year(),
+                            boPhanId: self.phongban(),
+                            userId: session.UserId
+                        }),
+                        dataType: "json",
+                        async: false,
+                        success: function (result) {
+                            alert("Khóa chấm công thành công !!");
+                        }
+                    });
+                }
+            };
+            self.huychot = function () {
+                if (self.checkLock()) {
+                    alert('Đã khóa chấm công trên phần mềm HRM!!');
+                    return;
+                }
+                else {
+                    if (self.checkExits()) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/WebServices/ChotChamCongThang_Delete',
+                            contentType: "application/json; charset=utf-8",
+                            data: ko.toJSON({
+                                thang: self.month(),
+                                nam: self.year(),
+                                boPhanId: self.phongban(),
+                                userId: session.UserId
+                            }),
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                alert("Mở khóa chấm công thành công !!");
+                            }
+                        });
+
+                    } else {
+                        alert("Chưa có dữ liệu để mở khóa chấm công !!");
+                        return;
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="chamcongupdate">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="font-family: Arial,Tahoma; font-size: 20pt; color:black; font-weight: bold;text-align:center; text-transform: uppercase;">TRƯỜNG ĐẠI HỌC QUY NHƠN</td>
+                </tr>
+                <tr>
+                    <td><div align="center" style="font-family: Arial, Tahoma; font-size: 14pt;color:black; font-weight: bold; padding-bottom: 5px;text-align:center">BẢNG CHI TIẾT CHẤM CÔNG - <span data-bind="text:thang +'/'+ nam"></span></div></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table border="0" cellpadding="1" cellspacing="0" style="color:black; font-family: Arial, Tahoma; font-size: 10pt; border: solid 1px #CCCCCC;">
+            <tr>
+                <td colspan="38" style="background-color: grey; color: White; font-weight: bold; font-size: 14pt;" data-bind="text:TenPhongBan"></td>
+            </tr>
+            <tr style="height: 30px; border-top: solid 1px #CCCCCC;">
+                <th style="width: 25px; border-right: solid 1px #CCCCCC;text-align:center;" rowspan="2">STT</th>
+                <th style="width: 200px; text-align:center; border-right: solid 1px #CCCCCC;" rowspan="2">Họ tên</th>
+                <th style="border-bottom: solid 1px #CCCCCC;text-align:center;" data-bind="attr: { colspan: dayInMonth.length }">Ngày trong tháng</th>
+                <!-- ko if: CheckChot -->
+                <th rowspan="2" style="border-left: solid 1px #CCCCCC;text-align:center;">Số ngày công</th>
+                <th rowspan="2" style="border-left: solid 1px #CCCCCC;text-align:center;">Nghỉ có phép</th>
+                <th rowspan="2" style="border-left: solid 1px #CCCCCC;text-align:center;">Nghỉ trừ lương</th>
+                <th rowspan="2" style="border-left: solid 1px #CCCCCC;text-align:center;">Nghỉ chế độ ốm đau</th>
+                <th rowspan="2" style="border-left: solid 1px #CCCCCC;border-right: solid 1px #CCCCCC;text-align:center;">Nghỉ chế độ thai sản</th>
+                <!-- /ko -->
+            </tr>
+            <tr data-bind="foreach:dayInMonth">
+                <td style="border-bottom: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;" data-bind="html:$data" align="center"></td>
+            </tr>
+            <tbody data-bind="foreach:items">
+                <tr>
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC;" align="center" data-bind="text: $index() + 1, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <td style="border-top: solid 1px #CCCCCC; border-right: solid 1px #CCCCCC; width: 140px; white-space: nowrap; padding-left:6px" data-bind="text: HoTen, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <!-- ko if:LaNhanVienToChucHanhChinh -->
+                    <!-- ko foreach: ChiTietChamCong -->
+                    <td>
+                        <!--<input data-bind="rename: $data.MaHinhThucNghi, value: $data.MaHinhThucNghi" style="width: 30px; text-align: center;" />-->
+                        <select data-bind="options: ListHinhThucNghi, rename: $data.MaHinhThucNghi, value: $data.MaHinhThucNghi" style="width: 20px; text-align-last: center; padding:6px 3px; -webkit-appearance: none; -moz-appearance: none;"></select>
+                    </td>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if:!LaNhanVienToChucHanhChinh -->
+                    <!-- ko foreach: ChiTietChamCong -->
+                    <td>
+                        <!--<input data-bind="rename: $data.MaHinhThucNghi, value: $data.MaHinhThucNghi" style="width: 30px; text-align: center; background-color:#f99191" />-->
+                        <select data-bind="options: ListHinhThucNghi, rename: $data.MaHinhThucNghi, value: $data.MaHinhThucNghi" style="width: 20px; text-align-last: center; background-color:#f99191; padding:6px 3px; -webkit-appearance: none; -moz-appearance: none;"></select>
+                    </td>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: $parent.CheckChot -->
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;" data-bind="text: NgayCong, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;" data-bind="text: NghiPhep, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;" data-bind="text: NghiTruLuong, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;" data-bind="text: NghiOmDau, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <td style="text-align: center; border-top: solid 1px #CCCCCC; border-left: solid 1px #CCCCCC;border-right: solid 1px #CCCCCC;" data-bind="text: NghiThaiSan, style: { backgroundColor: LaNhanVienToChucHanhChinh == false ? '#f99191' : '' }"></td>
+                    <!-- /ko -->
+                </tr>
+            </tbody>
+        </table>
+        <div style="color:black">
+            <center style="padding-top: 10px;">
+                <input type="button" name="btnSave" value="Lưu" data-bind="click:save" style="font-family:Times New Roman;font-size:14pt;width:80px;font-weight:bold;">
+
+                <!-- ko if:!CheckChot -->
+                <!--<input type="button" name="btnSave" value="Lưu" data-bind="click:save" style="font-family:Times New Roman;font-size:14pt;width:80px;font-weight:bold;">
+                <input type="button" name="btnSave" value="Khóa" data-bind="click: chot" style="font-family: Times New Roman; font-size: 14pt; width: 80px; font-weight: bold;" />-->
+                <!-- /ko -->
+                <!-- ko if:CheckChot -->
+                <!--<span style="color:red">(*)Tháng này đã khóa chấm công!!</span>
+                <input type="button" name="btnSave" value="Mở khóa" data-bind="click: huychot" style="font-family: Times New Roman; font-size: 14pt; width: 80px; font-weight: bold;" />-->
+                <!-- /ko -->
+            </center>
+            <div style="width: 100%;" align="left">
+                <div style="font-family: Tahoma,Arial; font-size: 10pt; padding-top: 10px;" align="left">
+                    <span style="font-weight: bold;">Ghi chú:</span><br />
+                    <table style="float: left; width:33%">
+                        <thead>
+                            <tr>
+                                <td>+:</td>
+                                <td>Đi làm, hội họp cả ngày</td>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                            <!-- ko if: $index() < 4  -->
+                            <tr>
+                                <td data-bind="html: $data.KyHieu + ':'"></td>
+                                <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                    <table style="float: left; width:33%">
+                        <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                            <!-- ko if: ($index() >= 4) && ($index() <= 8) -->
+                            <tr>
+                                <td data-bind="html: $data.KyHieu + ':'"></td>
+                                <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                    <table style="float: left; width:33%">
+                        <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                            <!-- ko if: $index() > 8 -->
+                            <tr>
+                                <td data-bind="html: $data.KyHieu + ':'"></td>
+                                <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

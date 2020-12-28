@@ -1,0 +1,134 @@
+﻿
+<link href="/CSS/uiscss.css" rel="stylesheet" /><div class="divmain">
+    <div class="bgtitle">Thông tin giảng viên</div>
+    <div>
+        <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+            <tbody>
+                <tr>
+                    <td colspan="2" width="50%" style="background-color: #1B88C8; color:#FFF">Thông tin giảng viên</td>
+                    <td colspan="2" width="50%"></td>
+                </tr>
+                <tr>
+                    <th width="14%" style="text-align:left">Mã giảng viên: </th>
+                    <td>{{obj.Id}}</td>
+                    <th width="14%" rowspan="4"></th>
+                    <td rowspan="4">
+                        <img src="/Images/Student_error.png" class="img-thumbnail" alt="Cinque Terre" width="106" height="134">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Họ tên:</th>
+                    <td>{{obj.HoTen}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Học vị: </th>
+                    <td>{{obj.HocVi}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Học hàm: </th>
+                    <td>{{obj.HocHam}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Ngày sinh: </th>
+                    <td>{{obj.NgaySinh}}</td>
+                    <td colspan="2" style="background-color: #ff0000; color:#FFF">Thông tin liên lạc</td>
+
+                </tr>
+                <tr>
+                    <th style="text-align:left">Chức vụ: </th>
+                    <td>{{obj.ChucVu}}</td>
+                    <th style="text-align:left">Điện thoại:</th>
+                    <td>{{obj.DienThoai}}</td>
+
+                </tr>
+                <tr>
+                    <th style="text-align:left">Nơi sinh:</th>
+                    <td>{{obj.NoiSinh}}</td>
+                    <th style="text-align:left">Di động:</th>
+                    <td>{{obj.DiDong}}</td>
+
+                </tr>
+                <tr>
+                    <th style="text-align:left">Giới tính:</th>
+                    <td>{{obj.GioiTinh}}</td>
+                    <th style="text-align:left">Email:</th>
+                    <td>{{obj.Email}}</td>
+
+                </tr>
+                <tr>
+                    <th style="text-align:left">Dân tộc:</th>
+                    <td>{{obj.DanToc}}</td>
+                    <th style="text-align:left">Địa chỉ:</th>
+                    <td>{{obj.DiaChi}} </td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Tôn giáo:</th>
+                    <td>{{obj.TonGiao}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Số CMND:</th>
+                    <td>{{obj.CMND}}</td>
+                    <td colspan="2" style="background-color: #1B88C8; color:#FFF">
+                        <a href="javascript:void(0)" style="color:#FFF" onclick="ShowFormProfessorInfo()">[Cập nhật]</a>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <th style="text-align:left">Ngày cấp:</th>
+                    <td>{{obj.NgayCap}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Nơi cấp:</th>
+                    <td>{{obj.NoiCap}}</td>
+                    <th></th>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th style="text-align:left">
+                        Loại giảng viên:
+                    </th>
+                    <td>{{obj.LoaiGiangVien}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Chuyên ngành:</th>
+                    <td>{{obj.ChuyenNganh}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Số tài khoản:</th>
+                    <td>{{obj.SoTaiKhoan}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Tên ngân hàng:</th>
+                    <td>{{obj.NganHang}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Mã số thuế:</th>
+                    <td>{{obj.MaSoThue}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:left">Đc thường trú:</th>
+                    <td>{{obj.DiaChiThuongTru}}</td>
+                    <th style="text-align:left"></th>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

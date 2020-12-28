@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_ChiTietNhanVienDanhGia, HRMWebApp.KPI.DB" table="ABC_ChiTietNhanVienDanhGia">
+    <id name="Id" column="Oid"></id>
+    
+    <many-to-one name="KetQua" class="HRMWebApp.KPI.DB.Entities.ABC_KetQua" column="KetQuaId"></many-to-one>
+    <many-to-one name="NhanVienDanhGia" class="HRMWebApp.KPI.DB.Entities.Staff" column="NhanVienDanhGiaId"></many-to-one>
+    <many-to-one name="LoaiDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_LoaiDanhGia" column="LoaiDanhGiaId"></many-to-one>
+    <many-to-one name="DanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_DanhGia" column="DanhGiaId"></many-to-one>
+
+    <property name="isLock" column="isLock"></property>
+    <property name="YKienDongGop" column="YKienDongGop"></property>
+    <property name="TongDiem" column="TongDiem"></property>
+    <property name="TimeLock" column="TimeLock"></property>
+  </class>
+</hibernate-mapping>

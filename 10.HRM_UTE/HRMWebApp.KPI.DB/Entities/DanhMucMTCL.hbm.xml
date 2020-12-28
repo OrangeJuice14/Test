@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.DanhMucMTCL, HRMWebApp.KPI.DB" table="KPI_DanhMucMTCL">
+    <id name="Id" column="OidDanhMuc"></id>
+    <property name="MaDanhMuc" column="MaDanhMuc"></property>
+    <property name="TenDanhMuc" column="TenDanhMuc"></property>
+    <property name="CapDanhMuc" column="CapDanhMuc"></property>
+    <many-to-one name="DonViPhuTrach" class="HRMWebApp.KPI.DB.Entities.Department" column="DonViPhuTrach"/>
+    <many-to-one name="BGHPhuTrach" class="HRMWebApp.KPI.DB.Entities.Staff" column="BGHPhuTrach"/>
+    <many-to-one name="OidDanhMucCha" class="HRMWebApp.KPI.DB.Entities.ManageCode" column="OidDanhMucCha"/>
+    <bag name="NamHoc" table="KPI_DanhMucMTCL_StudyYear" lazy="false">
+      <key column="OidDanhMuc"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.StudyYear" column="StudyYearId"/>
+    </bag>
+  </class>
+</hibernate-mapping>

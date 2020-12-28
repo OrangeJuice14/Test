@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <edmx:Designer>
+    <edmx:Diagrams>
+      <edmx:Diagram Name="Main" ZoomLevel="30" ShowGrid="true" DisplayType="false">
+        <edmx:EntityTypeShape EntityType="ERPModel.Demo" Width="1.5" PointX="10.75" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.Test1" Width="1.5" PointX="5.75" PointY="8.125" />
+        <edmx:EntityTypeShape EntityType="ERPModel.Test2" Width="1.5" PointX="8" PointY="7" />
+        <edmx:EntityTypeShape EntityType="ERPModel.Test3" Width="1.5" PointX="8" PointY="9.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_Test2_Test1" />
+        <edmx:AssociationConnector Association="ERPModel.FK_Test3_Test1" />
+        <edmx:EntityTypeShape EntityType="ERPModel.app_users" Width="1.5" PointX="4.1882814207059713" PointY="15.575284398894423" />
+        <edmx:EntityTypeShape EntityType="ERPModel.AppMenusRight" Width="1.5" PointX="5.8384147350855242" PointY="17.522859045082171" />
+        <edmx:AssociationConnector Association="ERPModel.FK_app_users_app_users" />
+        <edmx:AssociationConnector Association="ERPModel.FK_AppMenusRights_app_users" />
+        <edmx:AssociationConnector Association="ERPModel.FK_AppTracingLogs_app_users" />
+        <edmx:AssociationConnector Association="ERPModel.FK_EntityTrackingLogs_app_users" />
+        <edmx:AssociationConnector Association="ERPModel.FK_Reports_app_users" />
+        <edmx:EntityTypeShape EntityType="ERPModel.WebUser_BoPhan" Width="1.5" PointX="6" PointY="11.125" />
+        <edmx:EntityTypeShape EntityType="ERPModel.WebGroup" Width="1.5" PointX="4.125" PointY="9" />
+        <edmx:EntityTypeShape EntityType="ERPModel.WebMenu" Width="1.5" PointX="4.5" PointY="22.625" />
+        <edmx:EntityTypeShape EntityType="ERPModel.WebMenu_Role" Width="1.5" PointX="6.75" PointY="1.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebMenu_Role_webRole" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebMenu_Role_WebMenu1" />
+        <edmx:EntityTypeShape EntityType="ERPModel.LoaiNhanSu" Width="1.5" PointX="9.22425207925227" PointY="17.226067402039686" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TinhTrang" Width="1.5" PointX="8.1080651637669945" PointY="23.74131950351471" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCong" Width="1.5" PointX="0.5" PointY="3.25" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebMenu_WebMenu" />
+        <edmx:EntityTypeShape EntityType="ERPModel.BangChotThongTinTinhLuong" Width="1.5" PointX="9.125" PointY="36.375" />
+        <edmx:EntityTypeShape EntityType="ERPModel.BangLuongNhanVien" Width="1.5" PointX="3.125" PointY="35.375" />
+        <edmx:EntityTypeShape EntityType="ERPModel.DangLuuTru" Width="1.5" PointX="18.5" PointY="4.875" />
+        <edmx:EntityTypeShape EntityType="ERPModel.GiayToHoSo" Width="1.5" PointX="20.75" PointY="13" />
+        <edmx:AssociationConnector Association="ERPModel.FK_GiayToHoSo_DangLuuTru" />
+        <edmx:EntityTypeShape EntityType="ERPModel.GiayTo" Width="1.5" PointX="5.375" PointY="5" />
+        <edmx:AssociationConnector Association="ERPModel.FK_GiayToHoSo_GiayTo" />
+        <edmx:EntityTypeShape EntityType="ERPModel.WebUser" Width="1.5" PointX="17.75" PointY="8.25" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebUsers_WebGroup" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebUser_BoPhan_WebUsers" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_KyChamCong" Width="1.5" PointX="1.5" PointY="39.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ChucVu" Width="1.5" PointX="9.375" PointY="1" />
+        <edmx:EntityTypeShape EntityType="ERPModel.KyTinhLuong" Width="1.5" PointX="11.375" PointY="35.625" />
+        <edmx:AssociationConnector Association="ERPModel.FK_KyTinhLuong_BangChotThongTinTinhLuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BangLuongNhanVien_KyTinhLuong" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCongNgayNghi" Width="1.5" PointX="23" PointY="13.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_IDWebUsers" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_WebUsers" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CauHinhXetABC" Width="1.5" PointX="0.75" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.Web_GiayChungNhan_AutoNumber" Width="1.5" PointX="2.75" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ChiTietChamCongNhanVien" Width="1.5" PointX="17.5" PointY="20" />
+        <edmx:EntityTypeShape EntityType="ERPModel.HinhThucNghi" Width="1.5" PointX="20.75" PointY="18.625" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_HinhThucNghi" />
+        <edmx:EntityTypeShape EntityType="ERPModel.NhanVien" Width="1.5" PointX="12.375" PointY="13.25" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ThongTinNhanVien" Width="1.5" PointX="14.625" PointY="6.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_IDNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_ThongTinNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_ChucVu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_ChucVuCoQuanCaoNhat" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_ChucVuKiemNhiem" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_LoaiNhanSu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_TinhTrang" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_Oid" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebUsers_ThongTinNhanVien" />
+        <edmx:EntityTypeShape EntityType="ERPModel.HoSo" Width="1.5" PointX="3" PointY="12" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuanLyChamCongNhanVien" Width="1.5" PointX="13.625" PointY="37.125" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_HoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuanLyChamCongNhanVien_CC_KyChamCong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_QuanLyChamCongNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_GiayToHoSo_HoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_Oid" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebUsers_HoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuanLyChamCongNhanVien_KyTinhLuong" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChiTietChamCongNhanVien_DonVi" Width="1.5" PointX="19.875" PointY="22.875" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_DonVi_QuanLyChamCongNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_DonVi_ThongTinNhanVien" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChiTietNghiPhep" Width="1.5" PointX="21.125" PointY="8.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_QuanLyNghiPhep" Width="1.5" PointX="18.875" PointY="1.5" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietNghiPhep_CC_QuanLyNghiPhep" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietNghiPhep_ThongTinNhanVien" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ChiTietChamCongNgoaiGio" Width="1.5" PointX="23.875" PointY="8.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNgoaiGio_ThongTinNhanVien" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCongNgoaiGioTheoNgay" Width="1.5" PointX="23.875" PointY="3.625" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCongNgoaiGioTheoNgayThayDoi" Width="1.5" PointX="26.125" PointY="3.625" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCongTheoNgayThayDoi" Width="1.5" PointX="28.25" PointY="16" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgoaiGioTheoNgay_ThongTinNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgoaiGioTheoNgayThayDoi_CC_ChamCongNgoaiGioTheoNgay" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ThongTinTinhLuong" Width="1.5" PointX="23.875" PointY="20.75" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_BangChotThongTinTinhLuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_ChucVu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_ChucVuKiemNhiem" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_LoaiNhanSu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_ThongTinNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_TinhTrang" />
+        <edmx:EntityTypeShape EntityType="ERPModel.BangChamCongNgoaiGio" Width="1.5" PointX="16.625" PointY="37.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BangChamCongNgoaiGio_CC_KyChamCong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BangChamCongNgoaiGio_KyTinhLuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNgoaiGio_BangChamCongNgoaiGio" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ChucDanh" Width="1.5" PointX="0.75" PointY="7" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_ChucDanh" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_ChucDanh" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuyetDinh" Width="1.5" PointX="21.875" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuyetDinhCaNhan" Width="1.5" PointX="26.125" PointY="12.75" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinh_ChucVuNguoiKy" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhCaNhan_GiayToHoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinh_NguoiKy" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhCaNhan_Oid" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhCaNhan_ThongTinNhanVien" />
+        <edmx:EntityTypeShape EntityType="ERPModel.NhanVienThongTinLuong" Width="1.5" PointX="26.375" PointY="22" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_NhanVienThongTinLuong" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuyetDinhThoiViec" Width="1.5" PointX="29.375" PointY="19.25" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhThoiViec_Oid" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhThoiViec_TinhTrang" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuyetDinhNghiHuu" Width="1.5" PointX="31.375" PointY="15.625" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhNghiHuu_Oid" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhNghiHuu_TinhTrang" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_KhaiBaoCongTac" Width="1.5" PointX="5.25" PointY="14.75" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_KhaiBaoCongTac_HoSo" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChiTietChamCongNgoaiGio_DonVi" Width="1.5" PointX="19.125" PointY="31.375" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_DangKyKhungGioLamViec" Width="1.5" PointX="17.125" PointY="13.625" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_HinhThucViPham" Width="1.5" PointX="27.25" PointY="9.25" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_KyDangKyKhungGio" Width="1.5" PointX="14.875" PointY="18.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_QuanLyViPham" Width="1.5" PointX="29.5" PointY="12" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietChamCongNgoaiGio_DonVi_BangChamCongNgoaiGio" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietChamCongNgoaiGio_DonVi_ThongTinNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_DangKyKhungGioLamViec_CC_KyDangKyKhungGio" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_DangKyKhungGioLamViec_ThongTinNhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_cc_QuanLyViPham_cc_HinhThucViPham" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ThoiGianDangKyKhungGioLamViec" Width="1.5" PointX="7.375" PointY="6.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_CaChamCong" Width="1.5" PointX="9.375" PointY="7" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_DangKyKhungGioLamViec_CC_CaChamCong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_CaChamCong" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CC_ChamCongTheoNgay" Width="1.5" PointX="30.25" PointY="6" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongTheoNgay_CC_CaChamCong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongTheoNgay_HinhThucNghi" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongTheoNgay_HoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongTheoNgayThayDoi_CC_ChamCongTheoNgay" />
+        <edmx:AssociationConnector Association="ERPModel.FK_cc_QuanLyViPham_CC_ChamCongTheoNgay" />
+        <edmx:EntityTypeShape EntityType="ERPModel.GiangVienThinhGiang" Width="1.5" PointX="14.625" PointY="22.375" />
+        <edmx:AssociationConnector Association="ERPModel.FK_GiangVienThinhGiang_Oid" />
+        <edmx:EntityTypeShape EntityType="ERPModel.BoPhan" Width="1.5" PointX="11.375" PointY="1.25" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BoPhan_BoPhanCha" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BoPhan_BoPhanChaOld" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgayNghi_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongNgoaiGioTheoNgay_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChamCongTheoNgay_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietChamCongNgoaiGio_DonVi_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CC_ChiTietNghiPhep_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNgoaiGio_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ChiTietChamCongNhanVien_DonVi_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_GiangVienThinhGiang_TaiBoMon" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_BoPhanCu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_BoPhanTinhLuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhCaNhan_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinNhanVien_TaiBoMon" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_BoMon" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_BoPhanTinhLuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_WebUser_BoPhan_BoPhan" />
+        <edmx:EntityTypeShape EntityType="ERPModel.DanToc" Width="1.5" PointX="0.75" PointY="11" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuocGia" Width="1.5" PointX="0.75" PointY="14.125" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TinhTrangHonNhan" Width="1.5" PointX="0.75" PointY="17" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TonGiao" Width="1.5" PointX="0.75" PointY="20" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_DanToc" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_QuocTich" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_TinhTrangHonNhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_TonGiao" />
+        <edmx:EntityTypeShape EntityType="ERPModel.ChuyenMonDaoTao" Width="1.5" PointX="8.375" PointY="12.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.NgoaiNgu" Width="1.5" PointX="13.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.QuanHuyen" Width="1.5" PointX="5.25" PointY="43.625" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TinhThanh" Width="1.5" PointX="3" PointY="43.5" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TrinhDoChuyenMon" Width="1.5" PointX="9.125" PointY="28.5" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TrinhDoNgoaiNgu" Width="1.5" PointX="15.375" PointY="0.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TruongDaoTao" Width="1.5" PointX="3" PointY="5.375" />
+        <edmx:EntityTypeShape EntityType="ERPModel.XaPhuong" Width="1.5" PointX="7.5" PointY="43.75" />
+        <edmx:AssociationConnector Association="ERPModel.FK_BoPhan_TrinhDoChuyenMonCaoNhat" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_NoiCap" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuanHuyen_TinhThanh" />
+        <edmx:AssociationConnector Association="ERPModel.FK_XaPhuong_QuanHuyen" />
+        <edmx:AssociationConnector Association="ERPModel.FK_TinhThanh_QuocGia" />
+        <edmx:AssociationConnector Association="ERPModel.FK_TruongDaoTao_QuocGia" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_TrinhDoChuyenMon" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TrinhDoVanHoa" Width="1.5" PointX="17.375" PointY="16.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.DiaChi" Width="1.5" PointX="11.75" PointY="30" />
+        <edmx:AssociationConnector Association="ERPModel.FK_DiaChi_QuanHuyen" />
+        <edmx:AssociationConnector Association="ERPModel.FK_DiaChi_QuocGia" />
+        <edmx:AssociationConnector Association="ERPModel.FK_DiaChi_TinhThanh" />
+        <edmx:AssociationConnector Association="ERPModel.FK_DiaChi_XaPhuong" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_DiaChiThuongTru" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_NoiOHienNay" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_NoiSinh" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HoSo_QueQuan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhNghiHuu_NoiCuTruSauKhiThoiViec" />
+        <edmx:AssociationConnector Association="ERPModel.FK_QuyetDinhThoiViec_NoiCuTruSauKhiThoiViec" />
+        <edmx:EntityTypeShape EntityType="ERPModel.HopDong" Width="1.5" PointX="29" PointY="23.5" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_BoPhan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_ChucVuNguoiKy" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_NoiSinh" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_GiayToHoSo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_NguoiKy" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_NhanVien" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_NoiCap" />
+        <edmx:AssociationConnector Association="ERPModel.FK_HopDong_QuocTich" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_HopDongHienTai" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TrinhDoTinHoc" Width="1.5" PointX="5.375" PointY="18.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.HinhThucDaoTao" Width="1.5" PointX="7.375" PointY="20.75" />
+        <edmx:EntityTypeShape EntityType="ERPModel.HocHam" Width="1.5" PointX="10.375" PointY="23" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_HocHam" />
+        <edmx:EntityTypeShape EntityType="ERPModel.NhanVienTrinhDo" Width="1.5" PointX="31.625" PointY="19" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_ChuyenMonDaoTao" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_HinhThucDaoTao" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_HocHam" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_NgoaiNgu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVien_NhanVienTrinhDo" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_QuocGiaHoc" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_TrinhDoChuyenMon" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_TrinhDoNgoaiNgu" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_TrinhDoTinHoc" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_TrinhDoVanHoa" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienTrinhDo_TruongDaoTao" />
+        <edmx:EntityTypeShape EntityType="ERPModel.CoQuanThue" Width="1.5" PointX="24.5" PointY="52.375" />
+        <edmx:EntityTypeShape EntityType="ERPModel.NganHang" Width="1.5" PointX="0.75" PointY="24" />
+        <edmx:AssociationConnector Association="ERPModel.FK_CoQuanThue_DonViChuQuan" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NhanVienThongTinLuong_CoQuanThue" />
+        <edmx:AssociationConnector Association="ERPModel.FK_NganHang_TrucThuoc" />
+        <edmx:AssociationConnector Association="ERPModel.FK_ThongTinTinhLuong_NganHang" />
+        <edmx:EntityTypeShape EntityType="ERPModel.TaiKhoanNganHang" Width="1.5" PointX="14.625" PointY="25.75" />
+        <edmx:AssociationConnector Association="ERPModel.FK_TaiKhoanNganHang_NganHang" />
+        <edmx:AssociationConnector Association="ERPModel.FK_TaiKhoanNganHang_NhanVien" />
+        </edmx:Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

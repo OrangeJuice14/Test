@@ -1,0 +1,37 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+<form class="form-horizontal" name="RatingLevelForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group" ng-class="{'has-error': RatingLevelForm.name.$invalid}">
+            <label for="name" class="col-md-3 control-label">Mức độ đánh giá</label>
+            <div class="col-md-7">
+                <input type="text" style="min-height:50px" class="form-control" name="name" disabled ng-model="obj.Name"/>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="RatingLevelForm.name.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': RatingLevelForm.detail.$invalid}">
+            <label for="detail" class="col-md-3 control-label">Mô tả</label>
+            <div class="col-md-7">
+                <textarea type="text" style="min-height:150px" class="form-control" name="detail" required ng-model="obj.Description"></textarea>
+            </div>
+            <div class="col-md-2">
+                <span ng-show="RatingLevelForm.detail.$error.required" class="help-block">*</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="saveRatingLevel()" ng-disabled="RatingLevelForm.$invalid">OK</button>
+        <button class="btn btn-info" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,363 @@
+﻿
+<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        var source;
+        var pathname = window.location.href;
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/WebMenu_GetURLListBy_WebUserId',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({
+                webUserId: session.UserId
+            }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var data = result;
+                source = data;
+            }
+        });
+        var check = $.inArray(pathname.split("/")[4], source);
+    });
+</script>
+<script src="../../../../Components/jqwidgets/jqxdata.export.js"></script>
+<script type="text/javascript">
+        function ViewModel(datagrid) {
+            var self = this;
+            self.returnData = [];
+            self.datagrid = datagrid;
+            self.fromMonth = ko.observable(new Date().getMonth() + 1);
+            self.fromYear = ko.observable(new Date().getFullYear());
+            self.month = ko.observable(new Date().getMonth() + 1);
+            self.year = ko.observable(new Date().getFullYear());
+            self.loaiNhanSu = ko.observableArray();
+            self.loaiNhanSuSelected = ko.observable();
+            self.bophan = ko.observableArray();
+            self.bophanSelected = ko.observable(null);
+            self.name = ko.observable("");
+            self.webGroupId = ko.observable(session.WebGroupId.toUpperCase());
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({ userId: session.UserId }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.bophan(obj);
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_LoaiNhanSu',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.loaiNhanSu(obj);
+                    if (obj.length > 0)
+                        self.loaiNhanSuSelected(obj[0].Oid);
+                }
+            });
+            self.categoriesSource =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'Name', type: 'string' }
+                ],
+                localdata:
+                    [
+                      { Name: "A" },
+                      { Name: "B" }
+                    ]
+            };
+            self.categoriesAdapter = new $.jqx.dataAdapter(self.categoriesSource, { contentType: 'application/json; charset=utf-8', autoBind: true });
+            self.source =
+            {
+                datatype: "json",
+                datafields: [
+                   { name: 'Oid', type: 'string' },
+                   { name: 'MaNhanSu', type: 'string' },
+                   { name: 'HoVaTen', type: 'string' },
+                   { name: 'TenPhongBan', type: 'string' },
+                   { name: 'LoaiA', type: 'int' },
+                   { name: 'LoaiB', type: 'int' },
+                   { name: 'LoaiC', type: 'int' },
+                   { name: 'LoaiD', type: 'int' },
+                   { name: 'LoaiKhongXet', type: 'int' }
+                ],
+                id: 'Id',
+                //sortcolumn: 'Name',
+                //sortdirection: 'asc',
+                url: "/WebServices/ThongKeXetABCTheoNam_Find",
+                formatdata: function (data) {
+                    return {
+                        //tuThang:self.fromMonth(),
+                        //tuNam:self.fromYear(),
+                        //thang:self.month(),
+                        nam: self.year(),
+                        bophan: self.bophanSelected() == undefined ? null : self.bophanSelected(),
+                        idLoaiNhanSu: self.loaiNhanSuSelected() == undefined ? null : self.loaiNhanSuSelected(),
+                        maNhanSu: self.name(),
+                        webUserId: session.UserId
+                    };
+                },
+                beforeprocessing: function (result) {
+                    self.returnData = result;
+                    return self.returnData;
+                }
+            };
+
+            self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+            self.datagrid.jqxGrid(
+               {
+                   source: self.dataAdapter,
+                   width: '100%',
+                   //selectionmode: 'checkbox',
+                   pageable: true,
+                   pagesize: 20,
+                   sortable: true,
+                   filterable: true,
+                   autoheight: true,
+                   autorowheight: true,
+                   theme: "darkBlue",
+                   columns: [
+                       {
+                           text: 'STT', columntype: 'number', width: 35, editable: false,
+                           cellsrenderer: function (row, column, value) {
+                               return "<div style='text-align:center;margin-top:5px;'>" + (value + 1) + "</div>";
+                           }
+                       },
+                       { text: 'Mã nhân sự', datafield: 'MaNhanSu', width: 120, align: 'center',cellsalign: "middle" },
+                       {
+                           text: 'Họ và tên', datafield: 'HoVaTen', align: 'center',
+                           //cellsrenderer: function (row, columnfield, cellvalue, defaulthtml, columnproperties) {
+                           //    var item = self.datagrid.jqxGrid('getrowdata', row);
+                           //    return "<div style='padding:5px 0px 0px 5px;'><a href='/Views/QuanLyXetABC/ChiTietThongKeXetABC.aspx?Id=" + item.Oid + "' style=''>" + cellvalue + "</a></div>";
+                           //}
+                       },
+                       { text: 'Tên phòng ban', datafield: 'TenPhongBan', width: 220, align: 'center' },
+                       { text: 'Loại A', datafield: 'LoaiA', width: 100, align: 'center', cellsalign: "middle" },
+                       { text: 'Loại B', datafield: 'LoaiB', width: 100, align: 'center', cellsalign: "middle" }
+                   ]
+               });
+        }
+        ViewModel.prototype = {
+            validate: function () {
+                var self = this;
+                //if (isNaN(self.month()) || self.month() < 0 || self.month() > 12 || isNaN(self.fromMonth()) || self.fromMonth() < 0 || self.fromMonth() > 12) {
+                //    alert("Tháng không hợp lệ");
+                //    return true;
+                //}
+                //else if (isNaN(self.year()) || self.year() < 0 || isNaN(self.fromYear()) || self.fromYear() < 0) {
+                //    alert("Năm không hợp lệ");
+                //    return true;
+                //}
+                //return false;
+                if (isNaN(self.year()) || self.year() < 0) {
+                    alert("Năm không hợp lệ");
+                    return true;
+                }
+                return false;
+            },
+            search: function () {
+                var self = this;
+                if (self.validate())
+                    return;
+                self.datagrid.jqxGrid('updatebounddata');
+            },
+
+            //In chiều dọc
+            print: function () {
+                var self = this;
+                if (self.bophanSelected() == undefined || self.bophanSelected() == "") {
+                    alert("Vui lòng chọn phòng ban !!");
+                    return;
+                }
+
+                self.TenBoPhan = ko.observable();
+                self.STT = ko.observable();
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/GetPhongBan_ById',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: ko.toJSON({ id: self.bophanSelected() }),
+                    async: false,
+                    success: function (result) {
+                        var obj = result;
+                        self.TenBoPhan = obj.TenBoPhan;
+                        self.STT = obj.STT;
+                    }
+                });
+                var str = '<table style="border-collapse: collapse;border-color:black;" border="1"cellspacing="0" cellpadding="0">';
+                str += '<tr style="font-size:13px;">';
+                str += '<th style="padding:5px;width: 40px">STT</th>';
+                str += '<th style="padding:5px;width: 80px">Mã</th>';
+                str += '<th style="padding:5px;width: 160px">Họ tên</th>';
+                str += '<th style="padding:5px;width: 175px">Tên phòng ban</th>';
+                str += '<th style="padding:5px;width: 45px">Loại A</th>';
+                str += '<th style="padding:5px;width: 45px">Loại B</th>';
+                str += '</tr>';
+                for (var i = 0; i < this.dataAdapter.records.length; i++) {
+                    var item = this.dataAdapter.records[i];
+                    str += '<tr style="font-size:13px;">';
+                    str += '<td style="text-align:center;padding:5px;">' + (i + 1) + '</td>';
+                    str += '<td style="padding:5px;">' + item.MaNhanSu + '</td>';
+                    str += '<td style="padding:5px;">' + item.HoVaTen + '</td>';
+                    str += '<td style="padding:5px;">' + item.TenPhongBan + '</td>';
+                    str += '<td style="text-align:center;padding:5px;">' + item.LoaiA + '</td>';
+                    str += '<td style="text-align:center;padding:5px;">' + item.LoaiB + '</td>';
+                    str += '</tr>';
+                };
+                str += '</table>';
+                var newWindow = window.open('', '', 'width=800, height=500'),
+                document = newWindow.document.open(),
+                pageContent =
+                    '<!DOCTYPE html>\n' +
+                    '<html>\n' +
+                    '<head>\n' +
+                    '<meta charset="utf-8" />\n' +
+                    '<title>IUH chấm công</title>\n' +
+                    '</head>\n' +
+                    '<body>' +
+                    '<style>@page {size: 21cm 29.7cm; margin: 5mm 10mm 15mm 15mm;}</style>' +
+                    '<div style="width:680px; text-align:center;font-size:20px;text-transform: uppercase;">TRƯỜNG ĐẠI HỌC QUY NHƠN<br/></div>' +
+                    '<div style="text-align:center;font-weight:bold;font-size:16px;width:680px;padding:10px 0px 0px 0px">DANH SÁCH THỐNG KÊ XÉT ABC TỪ ' + this.fromMonth() + "/" + this.fromYear() + ' ĐẾN ' + this.month() + "/" + this.year() + '</div>' +
+                    '<div style="font-weight:bold;font-size:16px;width:680px;padding:10px 0px 10px 0px">' + self.STT + '. ' + self.TenBoPhan + '</div>' +
+                    str +
+                    '\n</body>\n</html>';
+                document.write(pageContent);
+                document.close();
+                newWindow.print();
+            },
+
+            //In chiều ngang
+            //print: function () {
+            //    var self = this;
+            //    if (self.bophanSelected() == undefined || self.bophanSelected() == "") {
+            //        alert("Vui lòng chọn phòng ban !!");
+            //        return;
+            //    }
+            //    self.TenBoPhan = ko.observable();
+            //    self.STT = ko.observable();
+            //    $.ajax({
+            //    type: 'POST',
+            //    url: '/WebServices/GetPhongBan_ById',
+            //    contentType: "application/json; charset=utf-8",
+            //    dataType: "json",
+            //    data: ko.toJSON({ id: self.bophanSelected() }),
+            //    async: false,
+            //    success: function (result) {
+            //        var obj = result;
+            //        self.TenBoPhan = obj.TenBoPhan;
+            //        self.STT = obj.STT;
+            //    }
+            //});
+            //    var self = this;
+            //    var str = '<table style="border-collapse: collapse;border-color:black;" border="1"cellspacing="0" cellpadding="0">';
+            //    str += '<tr style="font-size:13px;">';
+            //    str += '<th style="padding:5px;">STT</th>';
+            //    str += '<th style="padding:5px;">Mã</th>';
+            //    str += '<th style="padding:5px;">Họ tên</th>';
+            //    str += '<th style="padding:5px;">Tên phòng ban</th>';
+            //    str += '<th style="padding:5px;">Loại A</th>';
+            //    str += '<th style="padding:5px;">Loại B</th>';
+            //    //str += '<th style="padding:5px;">Loại C</th>';
+            //    //str += '<th style="padding:5px;">Loại D</th>';
+            //    //str += '<th style="padding:5px;">Không xét</th>';
+            //    str += '</tr>';
+            //    for (var i = 0; i < this.dataAdapter.records.length; i++) {
+            //        var item = this.dataAdapter.records[i];
+            //        str += '<tr style="font-size:13px;">';
+            //        str += '<td style="text-align:center;padding:5px;vertical-align:middle;width: 50px">' + (i + 1) + '</td>';
+            //        str += '<td style="padding:5px;vertical-align:middle;width: 90px">' + item.MaNhanSu + '</td>';
+            //        str += '<td style="padding:5px;vertical-align:middle;width: 240x">' + item.HoVaTen + '</td>';
+            //        str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 220px">' + item.TenPhongBan + '</td>';
+            //        str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 60px">' + item.LoaiA + '</td>';
+            //        str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 60px">' + item.LoaiB + '</td>';
+            //        //str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 60px">' + item.LoaiC + '</td>';
+            //        //str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 60px">' + item.LoaiD + '</td>';
+            //        //str += '<td style="text-align:center;vertical-align:middle;padding:5px;width: 60px">' + item.LoaiKhongXet + '</td>';
+            //        str += '</tr>';
+            //    };
+            //    str += '</table>';
+            //    var newWindow = window.open('', '', 'width=900, height=500'),
+            //    document = newWindow.document.open(),
+            //    pageContent =
+            //        '<!DOCTYPE html>\n' +
+            //        '<html>\n' +
+            //        '<head>\n' +
+            //        '<meta charset="utf-8" />\n' +
+            //        '<title></title>\n' +
+            //        '</head>\n' +
+            //        '<body>' +
+            //        '<style>@page {size: 29.7cm 21cm ; margin: 10mm 15mm 20mm 20mm;}</style>' +
+            //        '<div style="width:900px; text-align:center;font-size:20px;">TRƯỜNG ĐẠI HỌC QUY NHƠN<br/></div>' +
+            //        '<div style="text-align:center;font-weight:bold;font-size:14px;width:900px;padding:10px 0px 0px 0px">DANH SÁCH THỐNG KÊ XÉT ABC THEO NĂM­ ' + this.year() + '</div>' +
+            //        '<div style="font-weight:bold;font-size:16px;width:900px;padding:10px 0px 10px 0px">' + self.STT + '. ' + self.TenBoPhan + '</div>' +
+            //        str +
+
+            //        '\n</body>\n</html>';
+            //    document.write(pageContent);
+            //    document.close();
+            //    newWindow.print();
+            //},
+            excel: function () {
+                var self = this;
+                this.datagrid.jqxGrid('exportdata', 'xls', 'jqxgrid');
+            }
+        };
+        $(function () {
+            var model = new ViewModel($("#jqxgrid"));
+            ko.applyBindings(model, $("#thongkeabctheonam")[0]);
+        });
+</script>
+
+<div id="thongkeabctheonam">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>THỐNG KÊ XÉT ABC THEO NĂM</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left:15px;">
+                <div class="row">
+
+                    <div class="col-md-12" style="text-align:center">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: print">
+                            <i class="btn-label glyphicon glyphicon-print"></i>In
+                        </a>
+                        <a href="#" class="btn btn-labeled btn-yellow" style="width: 158px;" data-bind="click: excel">
+                            <i class="btn-label glyphicon glyphicon-random"></i>Xuất Excel
+                        </a>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <!--<input type="text" placeholder="tháng" data-bind="value:fromMonth" style="width: 50px;height:32px; text-align: center" maxlength="2" />
+        <input type="text" placeholder="năm" data-bind="value:fromYear" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        -
+        <input type="text" placeholder="tháng" data-bind="value:month" style="width: 50px;height:32px; text-align: center" maxlength="2" />-->
+        <input type="text" placeholder="năm" data-bind="value:year" style="width: 50px;height:32px; text-align: center" maxlength="4" />
+        <select style="width: 150px; " data-bind="options: bophan, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: bophanSelected, optionsCaption: 'Tất cả phòng ban', visible: webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21'"></select>
+        <input type="text" placeholder="Mã nhân sự" data-bind="value: name, visible: webGroupId() != '53D57298-1933-4E4B-B4C8-98AFED036E21'" style="width: 110px;height:32px;padding:5px;" />
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+</div>

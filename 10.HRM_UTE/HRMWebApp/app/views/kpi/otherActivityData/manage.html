@@ -1,0 +1,90 @@
+﻿<style type="text/css">
+    .k-grid-content {
+        max-height: 723px;
+    }
+</style>
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Đổ dữ liệu hoạt động</span>
+        <button style="float:right;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+    </div>
+    <div class="widget-body">
+        <!--<input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />-->
+        <div class="row" style="padding-top:15px">
+            <div class="col-md-3">
+                <select ng-change="selectedChangeActivityGroup()" class="form-control" name="StaffSelect" ng-model="ActivityManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterions">
+                    <option value="">Nhóm hoạt động ...</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                    <select class="form-control" name="StaffSelect" ng-model="ManageCode" ng-options="listObj.ManageCode as listObj.Name for listObj in professorCriterionsDictionaries">
+                        <option value="">Hoạt động ...</option>
+                    </select>
+            </div>
+            <!--<div class="col-md-4">
+                <select class="form-control" name="selectGroup" required ng-model="$scope.departmentId " ng-options="listobj.Id as listobj.Name for listobj in departments">
+                    <option value="">... Tất cả đơn vị ...</option>
+                </select>
+            </div>--> 
+            <div class="col-md-2">
+                <select class="form-control" name="StaffSelect" ng-model="studyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Năm học ...</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <!--<select class="form-control" name="StaffSelect" ng-model="StudyTerm">
+                    <option value="">Học kỳ ...</option>
+                    <option value="CaNam">Cả Năm</option>
+                    <option value="HK01">Học kỳ I</option>
+                    <option value="HK02">Học kỳ II</option>
+                    <option value="HK03">Học kỳ III</option>
+                </select>-->
+                <select class="form-control" name="StudyYearSelect" required ng-model="StudyTerm" ng-options="listObj.Id as listObj.Name for listObj in StudyTerms">
+                    <option value="">Chọn học kỳ ...</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="SearchDept()" class="btn btn-primary" ng-disabled="CriterionForm.$invalid"><i class="fa fa-search"></i> </button>
+            </div>
+        </div>
+       
+        <!--<div class="row" style="padding-top:15px">
+            <div class="col-md-3">
+            </div>  
+            <div class="col-md-2">
+                <select class="form-control" name="StaffSelect" ng-model="studyYear" ng-options="listObj.StudyYear as listObj.StudyYear for listObj in studyYears">
+                    <option value="">Năm học ...</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="StaffSelect" ng-model="StudyTerm">
+                    <option value="">Học kỳ ...</option>
+                    <option value="HK01">Học kỳ I</option>
+                    <option value="HK02">Học kỳ II</option>
+                    <option value="HK03">Học kỳ III</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button ng-click="SearchDept()" class="btn btn-primary" ng-disabled="CriterionForm.$invalid"><i class="fa fa-search"></i> </button>
+            </div>
+            <div class="col-md-3">
+            </div>  
+        </div>-->
+        <br />
+        <div class="row">
+            <label for="inputFirstName" class="col-md-6 control-label" style="font-size:16px;">Danh sách hoạt động</label>         
+        </div>     
+        <div class="widget-main" >                   
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div></br>
+        <div  class="row">
+            <label for="inputNV" class="col-md-6 control-label" style="font-size:16px;">Danh sách nhân viên</label>
+        </div>
+        <div class="widget-main">
+            <div kendo-grid="grid1" k-data-source="dataSource1" k-options="mainGridOptionsUser"></div>
+        </div>
+    </div>
+</div>
+
+
+

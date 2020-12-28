@@ -1,0 +1,66 @@
+﻿<style>
+    table th {
+        text-align: center;
+        color: #fff;
+    }
+</style>
+<link href="/CSS/uiscss.css" rel="stylesheet" /><div class="divmain">
+    <div class="bgtitle">Lớp học phần nhập điểm thi</div>
+    <div>
+        Năm học:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyYearId" ng-options="listobj.Id as listobj.Name for listobj in studyYears"></select>
+        Học kỳ:
+        <select style="width:115px" ng-change="selectedChangeStudyYear()" ng-model="studyTermId" ng-options="listobj.Id as listobj.Name for listobj in studyTerms"></select>
+    </div>
+    <br />
+    <div>
+        <table class="table table-bordered table-striped table-responsive tbProfessorinfo">
+            <thead>
+                <tr style="background:#0094FF">
+                    <th>Mã học phần</th>
+                    <th>Tên học phần</th>
+                    <th>Lớp sinh viên</th>
+                    <th>Thời hạn NĐ</th>
+                    <th>Nhập điểm</th>
+                    <th>Xem điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="sd in obj">
+                    <td>
+                        <div>
+                            {{sd.ScheduleStudyUnitID}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.CurriculumName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.ListOfClassStudentName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{sd.ThoiHanNhapDiemThi}}
+                        </div>
+                    </td>
+                    <td style="text-align:center">
+                        <a href="/Pages/Professor/NhapDiemThiTheoLHP.aspx?SCH={{sd.ScheduleStudyUnitID}}" target="_blank">
+                            <img src="/images/Diem.png" width="16px" height="16px" />
+                        </a>
+                    </td>
+                    <td style="text-align:center">
+                        <a onclick="" class="" href="/Pages/Report.aspx?ScheduleStudyUnitID={{sd.ScheduleStudyUnitID}}&Loai=3" target="_blank">
+                            <img src="/images/LichHoc.png" />
+                        </a>
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

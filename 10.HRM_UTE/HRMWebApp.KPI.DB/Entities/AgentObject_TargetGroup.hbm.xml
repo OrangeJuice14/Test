@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.AgentObject_TargetGroup, HRMWebApp.KPI.DB" table="KPI_TargetGroup">
+    <id name="Id" column="ID"></id>
+    <property name="TiTrong" column="TiTrong"></property>
+    <many-to-one name="AgentObjectId" class="HRMWebApp.KPI.DB.Entities.AgentObject" column="AgentObjectId" />
+    <many-to-one name="TargetGroupDetailId" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId" />
+    <property name="AgentObjectName" column="AgentObjectName"></property>
+    <property name="TargetGroupDetailName" column="TargetGroupDetailName"></property>
+  </class>
+</hibernate-mapping>

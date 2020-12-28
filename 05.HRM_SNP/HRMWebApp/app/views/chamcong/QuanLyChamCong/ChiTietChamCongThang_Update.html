@@ -1,0 +1,96 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">Chi tiết chấm công</div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày công chuẩn:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongChuan" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày công thực tế:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongThucTe" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày công cảng trả:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongCangTra" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày công nghỉ:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongNghi" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày công sửa chữa:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongSuaChua" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày công làm lễ:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongLamLe" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày công nghỉ lễ:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongNghiLe" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày công ăn ca:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongAnCa" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày công độc hại:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongDocHai" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày công làm đêm:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayCongLamDem" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày nghỉ phép:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayNghiPhep" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Ngày nghỉ không phép:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayNghiKhongPhep" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Ngày nghỉ thai sản:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:40px;text-align:center" id="NgayNghiThaiSan" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Xếp loại:</label>
+            <div class="col-sm-2">
+                <select data-bind="options: XepLoaiList, optionsText: 'TenXepLoai', optionsValue: 'Oid', value: xepLoaiSelected"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right">Hệ số xếp loại:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:60px;text-align:center" id="HeSoXepLoai" />
+            </div>
+            <label class="col-sm-3 control-label no-padding-right">Hệ số ngày công:</label>
+            <div class="col-sm-2">
+                <input type="number" maxlength="2" min="1" step="any" style="height:28px;width:60px;text-align:center" id="HeSoNgayCong" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-labeled btn-palegreen" style="width: 158px;" data-bind="click: Update">
+                    <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+    </div>
+</div>

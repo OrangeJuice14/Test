@@ -1,0 +1,13 @@
+﻿
+<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue" style="height:36px;">
+        <span class="widget-caption">Nhân viên</span>
+        <button style="float:right;height:36px;" ng-click="Search()" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
+        <input kendo-auto-complete ng-model="staffName" k-data-source="staffNames" k-data-text-field="'Name'" k-options="options" style="width:150px;float:right;height:28px;" />
+    </div>
+    <div class="widget-body">
+        <div class="widget-main ">
+            <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+        </div>
+    </div>
+</div>

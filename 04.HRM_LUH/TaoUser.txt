@@ -1,0 +1,29 @@
+
+-- Tao webuser UTE--
+DELETE FROM WebUsers
+
+  INSERT INTO dbo.WebUsers
+          ( Oid,
+            UserName ,
+            Password ,
+            HoatDong ,
+            WebGroupID, 
+			ThongTinNhanVien
+          )
+
+  SELECT 
+	NEWID(),
+	TKNH.SoTaiKhoan,
+	'123456',
+	1,
+	 '53D57298-1933-4E4B-B4C8-98AFED036E21',
+	 TTNV.Oid
+  FROM NHANVIEN AS NV
+  INNER JOIN dbo.HoSo AS HS ON NV.Oid = HS.Oid
+  INNER JOIN ThongTinNhanVien AS TTNV ON HS.Oid = TTNV.Oid
+  INNER JOIN dbo.TinhTrang AS TT ON NV.TinhTrang = TT.Oid
+  INNER JOIN TaiKhoanNganHang AS TKNH ON TKNH.NhanVien = NV.Oid
+  WHERE HS.GCRecord IS NULL AND TT.KhongConCongTacTaiTruong =0
+	AND TKNH.GCRecord IS NULL AND TKNH.TaiKhoanChinh=1
+
+	-----------------------

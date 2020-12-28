@@ -1,0 +1,20 @@
+﻿<div class="widget">
+    <div class="widget-header bordered-bottom bordered-blue">
+        <span class="widget-caption">Nhóm mục tiêu chi tiết</span>
+        <button style="float:right; height:36px;" ng-click="New()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+        <div class="widget-buttons">
+            <a href="" onclick="maxtargetGroupDetail()">
+                <i class="fa fa-expand"></i>
+            </a>
+            <a href="" onclick="mintargetGroupDetail()">
+                <i class="fa fa-minus"></i>
+            </a>
+            <a href="" ng-click="Show()">
+                <i class="fa fa-caret-square-o-down"></i>
+            </a>  
+        </div>
+    </div>
+    <div class="widget-body">
+        <div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+﻿<style>
+    td
+    {
+        padding: 10px 0 10px 40px;
+    }
+</style>
+<script type="text/javascript">
+
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data)
+    {
+        var mywindow = window.open('', 'my div', 'height=400,width=600');
+        mywindow.document.write('<html><head><title></title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+
+</script>
+<div id="mydiv">
+    <table style="width:550px;color:black;font-family:'Times New Roman';font-size:11pt;">
+        <tr>
+            <td style="width:40%;padding:20px 0 0 0;text-align:center;height:30px;font-weight:bold">
+                QUÂN CHỦNG HẢI QUÂN <br />
+                TCT TÂN CẢNG SÀI GÒN<br /><br />
+                <span style="font-weight:normal">Số:&nbsp;&nbsp;&nbsp;/ GP - IDI</span>
+            </td>
+            <td style="text-align:center;padding:20px 0 0 0;height:30px;font-weight:bold;">
+                CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM <br />
+                Độc lập - Tự do - Hạnh phúc<br /><br />
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;height:30px;font-weight:bold;font-size:16pt;" colspan="2">
+                GIẤY NGHỈ PHÉP
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Họ và tên
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: HoTen"></span> - Mã NV :
+                <span data-bind="text: MaNhanSu"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Số hiệu quân nhân
+            </td>
+            <td>
+                :
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Cấp bậc
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: ChucVu"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Đơn vị
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: TenPhongBan"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0 0 0 40px">
+                Được nghỉ phép từ ngày
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: TuNgay"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 0 0 0 40px">
+                Đến hết ngày
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: DenNgay"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Nơi nghỉ phép
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: TinhThanh"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px 0 0 40px; vertical-align:top;">
+                Lí do
+            </td>
+            <td>
+                :&nbsp;&nbsp;&nbsp;&nbsp;<span data-bind="text: DienGiai"></span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align:right; padding-right:40px">
+                Ngày .... tháng .... năm 2017
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:10pt">
+                <span style="font-weight:bold">Ghi chú:</span>
+                <span style="font-style:italic">- Nơi nghỉ phép, ngày về, ngày đi địa phương chứng thực ở mặt sau.</span>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="height:40px;"></td>
+        </tr>
+    </table>
+    </div>
+<div style="text-align:right"><input type="button" value="In Giấy nghỉ phép" onclick="PrintElem('#mydiv')" /></div>

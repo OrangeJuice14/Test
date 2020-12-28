@@ -1,0 +1,178 @@
+﻿<style>
+    .warningPoint {
+        color: red;
+    }
+
+    .formItems textarea {
+        padding-left: 10px;
+    }
+
+    .k-tabstrip-items .k-state-default .k-link, .k-panelbar > li.k-state-default > .k-link {
+        color: #787878 !important;
+    }
+</style>
+<form name="CriterionDetailForm" role="form" class="form-horizontal" novalidate>
+    <script type="text/x-kendo-template" id="template">
+        <div class="mainGrid"> </div>
+    </script>
+    <div class="modal-header">
+        <h3 class="modal-title">Kế hoạch chi tiết Phòng/ban</h3>
+    </div>
+    <div class="modal-body" style="padding: 20px 20px 20px 20px">
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+
+            <div kendo-tab-strip="mainTab" id="mainInformationTabId" k-content-urls="[ null, null]">
+                <ul>
+                    <li class="k-state-active">Thông tin</li>
+                    <li ng-show="!isNew">Mục tiêu chi tiết</li>
+                    <li ng-show="!isNew && targetGroupDetailTypeId!=3">KPI đăng ký thực hiện</li>
+                    <li ng-show="!isNew && canEditMethods">Tập tin đính kèm</li>
+                </ul>
+                <div style="overflow: hidden" class="formItems">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.OrderNumber.$invalid}">
+                                <label class="col-md-3 control-label">Số thứ tự</label>
+                                <div class="col-md-7">
+                                    <div ng-if="targetGroupDetailTypeId!=3">
+                                        <input name="OrderNumber" kendo-numeric-text-box k-options="orders" k-ng-model="obj.OrderNumber" />
+                                    </div>
+                                    <div ng-if="targetGroupDetailTypeId==3">
+                                        <input name="OrderNumber" kendo-numeric-text-box k-options="orders" disabled value="1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.TargetDetail.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Mục tiêu chi tiết</label>
+                                <div class="col-md-7">
+                                    <p ng-if="!canEditMethods">{{obj.TargetDetail}}</p>
+                                    <select class="form-control col-md-12" ng-if="targetGroupDetailTypeId==3" ng-attr-tooltip="{{obj.Tooltip}}" name="selectTarget" required ng-model="obj.TargetDetail" ng-options="listobj.Id as listobj.Name for listobj in targetGroupDetailDictionaries">
+                                        <option value="">...Chọn mục tiêu...</option>
+                                    </select>
+                                    <textarea ng-if="canEditMethods && targetGroupDetailTypeId!=3" class="form-control" name="TargetDetail" required ng-model="obj.TargetDetail" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CriterionDetailForm.BasicResource.$invalid}">
+                                <label for="BasicResource" class="col-md-3 control-label">Nguồn lực cần có</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" name="BasicResource" ng-model="obj.BasicResource" rows="4"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ManageId" class="col-md-3 control-label">Chỉ đạo</label>
+                                <div class="col-md-7">
+                                    <select class="col-md-7 " name="selectLeader" required ng-model="obj.StaffLeader.Id" ng-options="listobj.Id as listobj.Name for listobj in StaffLeaders">
+                                        <option value="">...Chọn người chỉ đạo...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="ManageId" class="col-md-3 control-label">Người thưc hiện</label>
+                                <div class="col-md-7">
+                                    <select kendo-multi-select k-options="staffResource" style="width: 150px;" k-ng-model="obj.SubStaffIds"></select>
+                                </div>
+                            </div>-->
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="ManageId" class="col-md-3 control-label">Mã công việc</label>
+                                <div class="col-md-7">
+                                    <p ng-if="!canEditMethods">{{obj.ManageCode.Id}} - {{obj.ManageCode.Name}}</p>
+                                    <select style="width: 100%" name="selectManageCode" ng-if="canEditMethods" required ng-model="obj.ManageCode.Id" ng-options="listobj.Id as listobj.Id + ' - ' + listobj.Name for listobj in ManageCodes">
+                                        <option value="">...Chọn Mã công việc...</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="col-md-5">
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm trước</label>
+                                <div class="col-md-7">
+                                    <input name="PreviousKPI" kendo-numeric-text-box k-options="options" k-ng-model="obj.PreviousKPI" />
+                                </div>
+                            </div>-->
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="PreviousKPI" class="col-md-3 control-label">KPI thực hiện năm nay</label>
+                                <div class="col-md-7">
+                                    <select class="form-control col-md-12" ng-attr-tooltip="{{obj.Tooltip}}" name="selectTarget" required ng-model="obj.CurrentKPI" ng-options="listobj.Id as listobj.Name for listobj in targetGroupDetailDictionaries">
+                                        <option value="">...Chọn KPI đăng ký thực hiện...</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="MaxRecord" class="col-md-3 control-label" style="text-align: right">Định mức trọng số</label>
+                                <div class="col-md-7">
+                                    <select class="form-control col-md-12" name="selectTarget" required ng-model="density" ng-options="listobj.Id as listobj.Name for listobj in densityDictionaries" ng-change="changeDensity(density)">
+                                        <option value="">...Chọn định mức...</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label for="ManageId" class="col-md-3 control-label">Mã công việc cha</label>
+                                <div class="col-md-7">
+                                    <select style="width: 100%" ng-change="selectManageCode()" name="selectManageCode" required ng-model="obj.ManageCode.Id" ng-options="listobj.Id as listobj.Id + ' - ' + listobj.Name for listobj in ManageCodes">
+                                        <option value="">...Chọn Mã công việc cha...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ManageId" class="col-md-3 control-label">Mã công việc con</label>
+                                <div class="col-md-7">
+                                    <select style="width: 100%" required ng-model="obj.DanhMucMTCL.Id" ng-options="listobj.Id as listobj.MaDanhMuc + ' - ' + listobj.TenDanhMuc for listobj in DanhMucMTCLs">
+                                        <option value="">...Chọn Mã công việc con...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="MaxRecord" class="col-md-3 control-label" style="text-align: right">Trọng số</label>
+                                <div class="col-md-7">
+                                    <input name="MaxRecord" k-min="minValue" k-max="maxValue" k-rebind='minValue' kendo-numeric-text-box k-options="MaxRecordOptions" required k-ng-model="obj.MaxRecord" />
+                                </div>
+                            </div>
+                            <!--<div class="form-group" ng-if="targetGroupDetailTypeId!=3">
+                                <label for="IsAddition" class="col-md-3 control-label">Bổ sung</label>
+                                <div class="col-md-7">
+                                    <input type="checkbox" disabled="disabled" ng-model="obj.IsAddition" />
+                                </div>
+                            </div>-->
+                            <!--<div class="form-group" ng-if="obj.FromCriterion != null && obj.IsMoved == false">
+                                <label for="chuyennhom" class="col-md-3 control-label">Chuyển nhóm chi tiết nhiệm vụ</label>
+                                <div class="col-md-7">
+                                    <input type="checkbox" ng-model="obj.chuyennhom" />
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                    <!--<div class="row" ng-hide="plan.planType!=3">--> <!-- chỉ kế hoạch tháng mới được giao cho nhân viên -->
+                </div>
+                <div>
+                    <div style="display: block; height: 50px;">
+                        <button style="height: 30px; width:30px; float: right" ng-click="newMethod()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>
+                    <div style="display: block;"><div kendo-grid="grid" k-data-source="dataSource" k-options="mainGridOptions"></div></div>
+                </div>
+                <div>
+                    <div style="display: block; height: 50px;">
+                        <button style="height: 30px; width:30px; float: right" ng-disabled="fromCriterion!=null" ng-click="newKPI()" class="btn btn-primary"><i class="fa fa-plus"></i> </button>
+                    </div>
+                    <div style="display: block;"><div kendo-grid="grid1" k-data-source="kpiDataSource" k-options="kpiMainGridOptions"></div></div>
+                </div>
+                <div ng-show="canEditMethods">
+                    <div style="display: block; min-height: 50px;">
+                        <div class="col-md-10">
+                            <input name="files" type="file" kendo-upload="uploadFiles" k-options="uploadOptions" />
+                        </div>
+                    </div>
+                    <br />
+                    <div style="display: inline-table;">
+                        <div kendo-grid="fileGrid" k-data-source="fileDataSource" k-options="fileMainGridOptions"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()" ng-disabled="(targetGroupDetailTypeId==3 && obj.MaxRecord==0) ">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

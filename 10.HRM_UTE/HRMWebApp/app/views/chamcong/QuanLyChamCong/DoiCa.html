@@ -1,0 +1,407 @@
+﻿
+<script type="text/javascript">
+    var session = {};
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var trangThaiArr = [
+            { Id: -1, Name: "Tất cả trạng thái" },
+            { Id: 1, Name: "Đã đăng ký" },
+            { Id: 0, Name: "Chưa đăng ký" }
+        ];
+        var trangThaiDoiCaArr = [
+            { Id: 0, Name: "Không đổi khung giờ" },
+            { Id: 1, Name: "Đã đổi khung giờ" }
+        ];
+        var self = this;
+        self.returnData = [];
+        self.datagrid = datagrid;
+        self.trangThai = ko.observableArray(trangThaiArr);
+        self.trangThaiSelected = ko.observable(-1);
+        self.trangThaiDoiCa = ko.observableArray(trangThaiDoiCaArr);
+        self.trangThaiDoiCaSelected = ko.observable(0);
+        self.department = ko.observableArray();
+        self.departmentSelected = ko.observable(null);
+        self.kyDangKy = ko.observableArray();
+        self.kyDangKySelected = ko.observable();
+        self.caChamCong = ko.observableArray();
+        self.caChamCongSelected = ko.observable();
+        self.nhanVienChuaDangKy = ko.observableArray();
+        self.nhanVienChuaDangKySelected = ko.observable();
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetDepartmentsOfUser_All',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.department(obj);
+            }
+        });
+        self.checkChot = function () {
+            var check;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/DangKyKhungGio_CheckNgoaiThoiGian',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    check = result;
+                }
+            });
+            return check;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_KyDangKy',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.kyDangKy(obj);
+                self.kyDangKySelected(obj[0].Oid);
+            }
+        });
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'Oid', type: 'string' },
+                { name: 'SoHieuCongChuc', type: 'string' },
+                { name: 'HoTen', type: 'string' },
+                { name: 'TenPhongBan', type: 'string' },
+                { name: 'TenCa', type: 'string' },
+                { name: 'TuNgay', type: 'date' },
+                { name: 'DenNgay', type: 'date' },
+                { name: 'TrangThai', type: 'string' },
+                { name: 'DuLieuDaThayDoi', type: 'string' },
+                { name: 'TrangThaiDoiCa', type: 'string' }
+            ],
+            id: 'Id',
+            //sortcolumn: 'HoTen',
+            //sortdirection: 'asc',
+            url: "/WebServices/DangKyChamCong_Find",
+            formatdata: function (data) {
+                return {
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    ky: self.kyDangKySelected(),
+                    trangthai: self.trangThaiSelected(),
+                    trangthaidoica: self.trangThaiDoiCaSelected(),
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+            {
+                source: self.dataAdapter,
+                width: '100%',
+                selectionmode: 'checkbox',
+                editable: false,
+                pageable: true,
+                pagesize: 5,
+                sortable: true,
+                filterable: true,
+                rowsheight: 80,
+                autorowheight: true,
+                autoheight: true,
+                theme: "darkBlue",
+                columns: [
+                    {
+                        text: 'STT', columntype: 'number', width: 35, editable: false, cellsrenderer: function (row, column, value) {
+                            return "<div style='text-align:center;margin-top:30px;'>" + (value + 1) + "</div>";
+                        }
+                    },
+                    {
+                        text: 'Mã nhân sự', datafield: 'SoHieuCongChuc', width: 120, align: 'center', cellsalign: "middle",
+                    },
+                    {
+                        text: 'Họ tên', datafield: 'HoTen', align: 'center', width: 130
+                    },
+                    {
+                        text: 'Từ ngày', datafield: 'TuNgay', width: 80, align: 'center', cellsformat: 'd/M/yyyy', cellsalign: "middle",
+                    },
+                    {
+                        text: 'Đến ngày', datafield: 'DenNgay', width: 80, align: 'center', cellsformat: 'd/M/yyyy', cellsalign: "middle",
+                    },
+                    {
+                        text: 'Phòng ban', datafield: 'TenPhongBan', width: 200, align: 'center',
+                    },
+                    {
+                        text: 'Khung giờ', datafield: 'TenCa', width: 100, align: 'center',
+                    },
+                    {
+                        text: 'Trạng thái', datafield: 'TrangThai', align: 'center', width: 100,
+                    },
+                    {
+                        text: 'Ghi chú', datafield: 'DuLieuDaThayDoi', align: 'center', width: 150,
+                    },
+                    {
+                        text: 'Chấp nhận', datafield: 'TrangThaiDoiCa', align: 'center', width: 80,
+                    }
+                ]
+            });
+    }
+    ViewModel.prototype = {
+        search: function () {
+            var self = this;
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        doica: function () {
+            var self = this;
+
+            if (!self.checkChot()) {
+                alert('Chưa hết thời gian đăng ký !!');
+                return;
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/WebServices/DangKyChamCong_UpdateAll',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: false,
+                    data: ko.toJSON({
+                        ky: self.kyDangKySelected()
+                    }),
+                    success: function (result) {
+                        alert("Lưu thành công !!");
+                        self.datagrid.jqxGrid('updatebounddata');
+                    }
+                });
+            }
+        },
+        themmoi: function () {
+            var self = this;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_CaChamCong',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.caChamCong(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/DangKyChamCong_Find',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    bophan: self.departmentSelected() == undefined ? null : self.departmentSelected(),
+                    ky: self.kyDangKySelected(),
+                    trangthai: 0, //Chưa đăng ký
+                    trangthaidoica: 0 //Không đổi khung giờ (tất nhiên rồi)
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.nhanVienChuaDangKy(obj);
+                }
+            });
+            $.get('/app/views/chamcong/QuanLyChamCong/DoiCa_New.html', function (data) {
+                $('#popupWindowManageDoiCa_New').html(data);
+                ko.cleanNode($('#popupWindowManageDoiCa_New')[0]);
+                $('#popupWindowManageDoiCa_New').kendoWindow({
+                    width: "40%",
+                    actions: [
+                        "Pin",
+                        "Minimize",
+                        "Maximize",
+                        "Close"
+                    ],
+                    position: {
+                        top: "10%",
+                        left: "30%"
+                    }
+
+                });
+                $('#popupWindowManageDoiCa_New').data("kendoWindow").open();
+                ko.applyBindings(self, document.getElementById('popupWindowManageDoiCa_New'));
+            });
+        },
+        themmoi_save: function () {
+            var self = this;
+            if (self.nhanVienChuaDangKySelected() == null || self.caChamCongSelected() == null) {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/DangKyKhungGioLamViec_Save',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: ko.toJSON({
+                    obj: {
+                        ThongTinNhanVien: self.nhanVienChuaDangKySelected(),
+                        CaChamCong: self.caChamCongSelected(),
+                        KyDangKy: self.kyDangKySelected()
+                    }
+                }),
+                success: function (result) {
+                    alert("Đăng ký thành công !!");
+                    self.datagrid.jqxGrid('updatebounddata');
+                    $("#popupWindowManageDoiCa_New").data("kendoWindow").close();
+                }
+            });
+        },
+        chapnhan: function () {
+            var self = this;
+            //
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có muốn duyệt hay không ?");
+            if (r == true) {
+                //
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid,
+                        ChoPhepDoi: 1
+                    });
+                }
+                if (selectedRecords.length > 0) {
+                    //
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyKhungGio_DoiKhungGio',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert("Duyệt thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                        }
+                    });
+                }
+            }
+        },
+        khongchapnhan: function () {
+            var self = this;
+            //
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert("Chưa có dòng nào được chọn !!");
+                return;
+            }
+            var r = confirm("Bạn có muốn hủy duyệt hay không ?");
+            if (r == true) {
+                //
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+                    selectedRecords.push({
+                        Oid: row.Oid,
+                        ChoPhepDoi: 0
+                    });
+                }
+                if (selectedRecords.length > 0) {
+                    //
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyKhungGio_DoiKhungGio',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            obj: selectedRecords
+                        }),
+                        success: function (result) {
+                            alert("Hủy thành công !!");
+                            self.datagrid.jqxGrid('updatebounddata');
+                        }
+                    });
+                }
+            }
+        }
+    };
+    $(function () {
+        var self = this;
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlychamcong")[0]);
+    });
+</script>
+<div id="quanlychamcong">
+    <div class="alert alert-info" style="height:36px; background-color:#4450A0; border-color:#000000"><h4>KHUNG GIỜ LÀM VIỆC</h4></div>
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12 col-sm-4 ">
+                        <a href="#" class="btn btn-labeled btn-blue" style="width: 150px;" data-bind="click: themmoi">
+                            <i class="btn-label glyphicon glyphicon-pencil"></i>Thêm mới
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-xs-12 col-sm-4 ">
+                        <a href="#" class="btn btn-labeled btn-palegreen" style="width: 150px;" data-bind="click: chapnhan">
+                            <i class="btn-label glyphicon glyphicon-tags"></i>Chấp nhận
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-xs-6 col-sm-4">
+                        <a href="#" class="btn btn-labeled btn-yellow" style="width: 150px;" data-bind="click: khongchapnhan">
+                            <i class="btn-label glyphicon glyphicon-remove"></i>Không chấp nhận
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 10px 0px 10px 0px; text-align: center">
+        <select style="width: 150px" data-bind="options: department, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected, , optionsCaption: '-- Tất cả --'"></select>
+        <select data-bind="options:kyDangKy, optionsText: 'TenKy', optionsValue: 'Oid',value:kyDangKySelected"></select>
+        <select data-bind="options:trangThai, optionsText: 'Name', optionsValue: 'Id',value:trangThaiSelected"></select>
+        <select data-bind="options:trangThaiDoiCa, optionsText: 'Name', optionsValue: 'Id',value:trangThaiDoiCaSelected"></select>
+        <input type="button" value="Tìm" data-bind="click:search" style="width: 60px;height:32px;" />
+    </div>
+    <div style="padding: 0px 0px 0px 0px;">
+        <div id="jqxgrid"></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-xs-12 col-sm-12">
+            <div class="buttons-preview" id="userManage" style="margin-left: 15px;">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-12 col-sm-6">
+                        <a href="#" class="btn btn-labeled btn-palegreen" data-bind="click: doica">
+                            <i class="btn-label glyphicon glyphicon-ok"></i>Gán khung giờ làm việc
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-xs-12 col-sm-6">
+                        <select data-bind="options:kyDangKy, optionsText: 'TenKy', optionsValue: 'Oid',value:kyDangKySelected"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popupWindowManageDoiCa_New"></div>

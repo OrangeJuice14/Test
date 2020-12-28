@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.OtherActivityDataDetail, HRMWebApp.KPI.DB" table="dbo.KPI_OtherActivityDataDetail">
+    <id name="Id" column="ID"></id>
+    <property name="NumberOfTime" column="SoLan"></property>
+    <property name="StaffCode" column="MaCanBo"></property>
+    <property name="StaffName" column="TenCanBo"></property>
+    <many-to-one name="Khoa" class="HRMWebApp.KPI.DB.Entities.Department" column="Khoa"/>
+    <property name="IdCanBo" column="IdCanBo"></property>
+  </class>
+</hibernate-mapping>

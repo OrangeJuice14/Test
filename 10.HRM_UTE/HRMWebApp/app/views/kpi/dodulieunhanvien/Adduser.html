@@ -1,0 +1,35 @@
+﻿<form name="scienceResearchDataForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Thêm nhân viên</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+            <label for="inputFirstName" class="control-label" ng-show="scienceResearchDataForm.Name.$error.required" style="color:red">( * )</label>
+            <label for="inputFirstName" class="col-md-4 control-label">Mã cán bộ</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="StaffName" required ng-model="obj.StaffCode">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+            <label for="inputFirstName" class="control-label" ng-show="scienceResearchDataForm.Name.$error.required" style="color:red">( * )</label>
+            <label for="inputFirstName" class="col-md-4 control-label">Tên cán bộ</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="StaffName" required ng-model="obj.StaffName">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': methodForm.$invalid}">
+            <label for="inputFirstName" class="control-label" ng-show="scienceResearchDataForm.Name.$error.required" style="color:red">( * )</label>
+            <label for="inputFirstName" class="col-md-4 control-label">Số lần/Số điểm</label>
+            <div class="col-md-6">
+                <input type="number" class="form-control" name="NumberOfTime" required ng-model="obj.NumberOfTime">
+                <span ng-show="scienceResearchDataForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

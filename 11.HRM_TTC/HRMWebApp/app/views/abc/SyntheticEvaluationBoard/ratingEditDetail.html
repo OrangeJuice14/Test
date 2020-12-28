@@ -1,0 +1,52 @@
+﻿
+<form class="form-horizontal" name="CriterionDetailForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Điều chỉnh xếp loại</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Xếp loại cá nhân</label>
+            <div class="col-md-6">
+                <span>{{obj.Classification}}</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Trưởng đơn vị chỉnh sửa</label>
+            <div class="col-md-6">
+                <select ng-if="isAdmin==2" class="form-control" name="selectGroup" required ng-model="obj.ClassificationSecond" ng-options="listobj.Id as listobj.Name for listobj in classifications">
+                    <option value="">Chọn xếp loại</option>
+                </select>
+                <span ng-if="isAdmin==1">{{obj.ClassificationSecond}}</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Trưởng đơn vị ghi chú</label>
+            <div class="col-md-6">
+                <textarea style="width:100%" rows="4"  ng-if="isAdmin==2" ng-model="obj.NoteSecond" required></textarea>   
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>            
+                <span ng-if="isAdmin==1">{{obj.NoteSecond}}</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Hội đồng trường đánh giá</label>
+            <div class="col-md-6">
+                <select ng-if="isAdmin==1" class="form-control" name="selectGroup" required ng-model="obj.ClassificationThird" ng-options="listobj.Id as listobj.Name for listobj in classifications">
+                    <option value="">Chọn xếp loại</option>
+                </select>
+                <span ng-if="isAdmin==2">{{obj.ClassificationThird}}</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': CriterionDetailForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Hội đồng trường ghi chú </label>
+            <div class="col-md-6">
+                <textarea style="width:100%" rows="4" ng-if="isAdmin==1" ng-model="obj.NoteThird" required></textarea>
+                <span ng-show="CriterionDetailForm.name.$error.required" class="help-block">*</span>
+                <span ng-if="isAdmin==2">{{obj.NoteThird}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="save()" ng-disabled="CriterionDetailForm.$invalid">OK</button>
+        <button class="btn btn-info" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -1,0 +1,67 @@
+﻿<style>
+    label {
+        font-weight: bold;
+    }
+</style>
+
+<form name="departmentDetailForm" role="form" class="form-horizontal" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Mã danh mục</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.MaDanhMuc">
+                <span ng-show="departmentDetailForm.name.$error.required" class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Tên danh mục</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="name" required ng-model="obj.TenDanhMuc">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Cấp danh mục</label>
+            <div class="col-md-6">
+                <input min="1" max="3" type="number" class="form-control" name="name" required ng-model="obj.CapDanhMuc">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Danh mục cấp trên</label>
+            <div class="col-md-6">
+                <select class="form-control" name="StudyYearSelect" required ng-model="obj.OidDanhMucCha.Id" ng-options="listObj.Id as listObj.Name for listObj in DanhMucCha">
+                    <option value="">Chọn danh mục cấp trên ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="order" class="col-md-4 control-label">Năm học</label>
+            <div class="col-md-6">
+                <select kendo-multi-select k-options="Namhoc" k-ng-model="obj.StudyYearIds"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">Đơn vị phụ trách</label>
+            <div class="col-md-6">
+                <!--<input type="text" class="form-control" name="name" required ng-model="obj.DonViPhuTrach">-->
+                <select class="form-control" name="DVPTSelect" required ng-model="obj.DonViPhuTrach.Id" ng-options="listObj.Id as listObj.Name for listObj in DonViPhuTrach">
+                    <option value="">Chọn đơn vị phụ trách ...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">BGH phụ trách</label>
+            <div class="col-md-6">
+                <select class="form-control" name="DVPTSelect" required ng-model="obj.BGHPhuTrach.Id" ng-options="listObj.Id as listObj.Name for listObj in BGHPhuTrach">
+                    <option value="">Chọn BGH phụ trách ...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

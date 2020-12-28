@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_Role_BoTieuChi, HRMWebApp.KPI.DB" table="ABC_Role_BoTieuChi" dynamic-update="true">
+    <id name="Id" column="Oid"></id>
+    <property name="UserDanhGiaNgangHang" column="UserDanhGiaNgangHang"></property>
+    <many-to-one name="GroupTuDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_GroupDanhGia" column="GroupTuDanhGiaId" />
+    <many-to-one name="GroupDanhGia" class="HRMWebApp.KPI.DB.Entities.ABC_GroupDanhGia" column="GroupDanhGiaId" />
+    <many-to-one name="BoTieuChi" class="HRMWebApp.KPI.DB.Entities.ABC_BoTieuChi" column="BoTieuChiId" />
+  </class>
+</hibernate-mapping>

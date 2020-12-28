@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <title></title>
+    <script src="/Scripts/jquery.linq.min.js"></script>
+    <script type="text/javascript">
+        function formatDate(date) {
+            return date.getDate() + "/" + parseInt(date.getMonth() + 1) + "/" + date.getFullYear();
+        }
+        function viewModel() {
+            var self = this;
+            self.ChiTietChamCong = ko.observableArray();
+            self.HinhThucNghiList = ko.observableArray();
+            self.HoTen = ko.observable();
+            self.MaNhanSu = ko.observable();
+            self.KXD = 0;
+            self.CN = 0;
+            self.NN = 0;
+            self.P = 0;
+            self.He = 0;
+            self.Ro = 0;
+            self.TS = 0;
+            self.P = 0;
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghi',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    obj.push({ Oid: null, TenHinhThucNghi: "Làm cả ngày" });
+                    var data = $.Enumerable.From(obj).OrderBy(function (x) {
+                        return x.TenHinhThucNghi;
+                    }).ToArray();
+                    self.HinhThucNghiList(data);
+
+                }
+            });
+            
+        }
+
+        //$(function () {
+        //    var view;
+        //    view = new viewModel();
+        //    ko.applyBindings(view, $("#abc_detail")[0]);
+        //});
+    </script>
+</head>
+<body>
+    <div id="abc_detail">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <img alt="" src="/Images/logo.png" align="middle">
+                    </td>
+                    <td style="font-family: Arial,Tahoma; font-size: 20pt; font-weight: bold; text-transform: uppercase;">TRƯỜNG ĐẠI HỌC KINH TẾ QUỐC DÂN</td>
+                </tr>
+            </tbody>
+        </table>
+        <div align="center" style="font-family: Arial, Tahoma; font-size: 14pt; font-weight: bold; padding-bottom: 5px;">Bảng chấm công của <span data-bind="text:HoTen() + ' ('+MaNhanSu()+')'"></span></div>
+        <table border="1" width="100%" cellpadding="3" cellspacing="0" style="font-family: Arial, Tahoma; font-size: 10pt">
+            <tbody>
+                <tr style="height: 30px;">
+                    <th>STT</th>
+                    <th>Ngày chấm công</th>
+                    <!-- ko foreach:HinhThucNghiList -->
+                    <th data-bind="text:TenHinhThucNghi"></th>
+                    <!-- /ko -->
+                </tr>
+                <!-- ko foreach:ChiTietChamCong -->
+
+                <tr>
+                    <td style="text-align: center; width: 50px;" data-bind="text:$index()+1"></td>
+                    <td style="text-align: center;" data-bind="text:formatDate(new Date(Ngay))"></td>
+                    <!-- ko foreach:$parent.HinhThucNghiList -->
+                    <td style="text-align: center;" data-bind="text:$data.Oid == $parent.IDHinhThucNghi ? 'X' : ''"></td>
+                    <!-- /ko -->
+                </tr>
+
+                <!-- /ko -->
+
+            </tbody>
+        </table>
+        <table border="0" width="100%" cellpadding="3" cellspacing="0" style="font-family: Arial, Tahoma; font-size: 10pt; padding-top: 7px;">
+            <tbody>
+                <tr>
+                    <td style="text-align: right; padding-right: 5px;">
+                        Không xác định
+                        <br>
+                        Số ngày làm cả ngày:
+                        <br>
+                        Số ngày làm nửa ngày:
+                        <br>
+                        Số ngày nghỉ có phép:
+                        <br>
+                        Số ngày nghỉ không phép:
+                        <br>
+                        Số ngày nghỉ thai sản:
+                        <br>
+                        Số ngày nghỉ hè:
+                    </td>
+                    <td style="font-weight: bold; text-align: left; padding-left: 5px; width: 60px;">
+                        <span data-bind="text:KXD"></span>
+                        <br>
+                        <span data-bind="text:CN"></span>
+                        <br>
+                        <span data-bind="text:NN"></span>
+                        <br>
+                        <span data-bind="text:P"></span>
+                        <br>
+                        <span data-bind="text:Ro"></span>
+                        <br>
+                        <span data-bind="text:TS"></span>
+                        <br>
+                        <span data-bind="text:He"></span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

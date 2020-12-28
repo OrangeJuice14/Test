@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.WebMenu, HRMWebApp.KPI.DB" table="WebMenu">
+    <id name="Id" column="Oid"></id>
+    <property name="Name" column="Name"></property>
+    <property name="Index" column="Global_idx"></property>
+    <many-to-one name="ParentMenu" class="HRMWebApp.KPI.DB.Entities.WebMenu" column="ParentId" />
+    <bag name="WebGroups" table="WebMenu_Role">
+      <key column="WebMenuID"/>
+      <many-to-many class="HRMWebApp.KPI.DB.Entities.WebGroup" column="WebGroupID"/>
+    </bag>
+  </class>
+</hibernate-mapping>

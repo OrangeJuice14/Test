@@ -1,0 +1,1572 @@
+﻿{
+  "LOGIN": {
+    "WEBSITE_HRM_CHAM_CONG": "Website HRM - Chấm công",
+    "TEN_DANG_NHAP": "Tên đăng nhập",
+    "MAT_KHAU": "Mật khẩu",
+    "NHAP_MA_CAPTCHA": "Nhập mã captcha",
+    "DANG_NHAP": "Đăng nhập",
+    "DANG_NHAP_EMAIL": "Đăng nhập Email",
+    "ALERT": {
+      "VUI_LONG_NHAP_TEN_NGUOI_DUNG_VA_MAT_KHAU": "Vui lòng nhập tên người dùng và mật khẩu",
+      "TEN_DANG_NHAP_HOAC_MAT_KHAU_KHONG_HOP_LE": "Tên đăng nhập hoặc mật khẩu không hợp lệ."
+    }
+  },
+  "SHELL": {
+    "WEBSITE_HRM_CHAM_CONG": "Website HRM - Chấm công",
+    "DOI_MAT_KHAU": "Đổi mật khẩu",
+    "DANG_XUAT": "Đăng xuất",
+    "DOI_NGON_NGU": "English"
+  },
+  "BANG_LUONG": {
+    "BANG_LUONG_VA_PHU_CAP": "Bảng lương và phụ cấp:",
+    "BANG_LUONG_THANG": "Bảng lương tháng ",
+    "IN": "In",
+    "PHIEU_THANH_TOAN_LUONG": "PHIẾU LƯƠNG",
+    "THANG": "THÁNG",
+    "NAM": "NĂM",
+    "DON_VI": "ĐƠN VỊ:",
+    "TABLE": {
+      "HO_TEN": "Họ tên:",
+      "MA_NHAN_VIEN": "Mã nhân viên:",
+      "NGAY_CONG_CHUAN": "Ngày làm việc chuẩn:",
+      "CHUC_VU": "Chức vụ:",
+      "NGAY_NGHI_KHONG_HUONG_LUONG": "Ngày nghỉ không hưởng lương:",
+      "NGAY_LAM_VIEC_THUC_TE": "Ngày làm việc thực tế:",
+      "NOI_DUNG": "Nội dung",
+      "SO_TIEN_VND": "Số tiền VNĐ",
+      "GHI_CHU": "Ghi chú",
+      "LUONG_HOP_DONG": "Lương hợp đồng",
+      "PHU_CAP": "Phụ cấp",
+      "LUONG_DONG_BAO_HIEM": "Lương đóng Bảo hiểm",
+      "LUONG_THANG_NAY": "Lương tháng này",
+      "DIEU_CHINH_LUONG_CAC_KHOAN_KHAC": "Điều chỉnh lương / Các khoản khác",
+      "LUONG_THANG_13_KHAC": "Lương tháng 13 / Khác",
+      "PHU_CAP_CHIU_THUE": "Phụ cấp chịu thuế",
+      "LUONG_TANG_CA_CHIU_THUE": "Lương tăng ca chịu thuế",
+      "TONG_CAC_KHOAN_CHIU_THUE_NGOAI_LUONG": "Tổng các khoản chịu thuế ngoài lương",
+      "PHU_CAP_MIEN_THUE": "Phụ cấp miễn thuế",
+      "LUONG_TANG_CA_MIEN_THUE": "Lương tăng ca miễn thuế",
+      "TONG_CAC_KHOAN_MIEN_THUE_NGOAI_LUONG": "Tổng các khoản miễn thuế ngoài lương",
+      "THU_NHAP_CHIU_THUE": "Thu nhập chịu thuế",
+      "MUC_DONG_BHXH": "Mức đóng BHXH (8%)",
+      "MUC_DONG_BHYT": "Mức đóng BHYT (1.5%)",
+      "MUC_DONG_BHTN": "Mức đóng BHTN (1%)",
+      "MUC_DONG_CONG_DOAN": "Mức đóng công đoàn",
+      "TONG_MUC_DONG_BAO_HIEM": "Tổng mức đóng BHXH-YT-TN(10.5%)",
+      "TONG_GIAM_TRU": "Tổng giảm trừ(cá nhân-người phụ thuộc)",
+      "TONG_GIAM_TRU_GHI_CHU": "(11)=Cá nhân:9.000.000+số NPT*3.600.000",
+      "THUE_TNCN": "Thuế TNCN",
+      "CAC_KHOAN_DIEU_CHINH_SAU_THUE": "Các khoản điều chỉnh sau thuế",
+      "LUONG_THUC_NHAN": "Lương thực nhận"
+    },
+    "THANG_DA_CHON_KHONG_CO_DU_LIEU_LUONG": "Tháng đã chọn không có dữ liệu lương!"
+  },
+  "HO_SO_NHAN_SU": {
+    "SO_YEU_LI_LICH": {
+      "SO_YEU_LI_LICH": "Sơ yếu lí lịch",
+      "HO_SO_CA_NHAN": {
+        "HO_SO_CA_NHAN": "Hồ Sơ Cá Nhân",
+        "MA_QUAN_LY": "Mã quản lý",
+        "HO_VA_TEN": "Họ và tên",
+        "TEN_GOI_KHAC": "Tên gọi khác",
+        "GIOI_TINH": "Giới tính",
+        "NGAY_SINH": "Ngày sinh",
+        "NOI_SINH": "Nơi sinh",
+        "DAN_TOC": "Dân tộc",
+        "TON_GIAO": "Tôn giáo",
+        "DIA_CHI_THUONG_TRU": "Địa chỉ thường trú",
+        "NOI_O_HIEN_NAY": "Nơi ở hiện nay",
+        "SO_CMND": "Số CMND",
+        "NGAY_CAP": "Ngày cấp",
+        "NOI_CAP": "Nơi cấp",
+        "QUOC_TICH": "Quốc tịch",
+        "TINH_TRANG_HON_NHAN": "Tình trạng hôn nhân",
+        "DIEN_THOAI_DI_DONG": "Điện thoại di động",
+        "EMAIL": "Email",
+        "EMAIL_NOI_BO": "Email nội bộ"
+      },
+      "CONG_VIEC": {
+        "CONG_VIEC": "Công việc",
+        "CHUC_DANH": "Chức danh",
+        "DON_VI_CONG_TAC": "Đơn vị công tác",
+        "CHUC_VU_HIEN_TAI": "Chức vụ hiện tại",
+        "NGAY_BO_NHIEM": "Ngày bổ nhiệm",
+        "CHUC_VU_KIEM_NHIEM": "Chức vụ kiêm nhiệm",
+        "NGAY_VAO_TRUONG": "Ngày vào công ty",
+        "CONG_VIEC_HIEN_NAY": "Công việc hiện nay"
+      }
+    },
+    "THONG_TIN_LUONG": {
+      "THONG_TIN_LUONG": "Thông tin lương",
+      "THONG_TIN_NGACH_BAC": {
+        "THONG_TIN_NGACH_BAC": "Thông Tin Lương",
+        "TONG_THU_NHAP": "Tổng thu nhập",
+        "LUONG_CHINH": "Lương chính",
+        "LUONG_BO_SUNG": "Lương bổ sung (bao gồm các khoản hỗ trợ)",
+        "NGAY_HUONG_LUONG": "Ngày hưởng lương",
+        "MOC_NANG_LUONG_LAN_SAU": "Mốc nâng lương lần sau",
+        "%_MUC_LUONG_DUOC_HUONG": "% mức lương được hưởng"
+      },
+      "THUE_TNCN": {
+        "THUE_TNCN": "Thuế TNCN",
+        "MA_SO_THUE": "Mã số thuế",
+        "NGAY_CAP": "Ngày cấp",
+        "SO_NGUOI_PHU_THUOC": "Số người phụ thuộc",
+        "SO_THANG_GIAM_TRU": "Số tháng giảm trừ"
+      },
+      "TAI_KHOAN_NGAN_HANG": {
+        "TAI_KHOAN_NGAN_HANG": "Tài khoản ngân hàng",
+        "SO_TAI_KHOAN": "Số tài khoản",
+        "NGAN_HANG": "Ngân hàng",
+        "TAI_KHOAN_CHINH": "Tài khoản chính"
+      },
+      "DANH_SACH_NGUOI_PHU_THUOC": {
+        "DANH_SACH_NGUOI_PHU_THUOC": "Danh sách người phụ thuộc",
+        "HO_TEN": "Họ tên",
+        "QUAN_HE": "Quan hệ",
+        "TU_NGAY": "Từ ngày",
+        "DEN_NGAY": "Đến ngày"
+      }
+    },
+    "TRINH_DO_CHUYEN_MON": {
+      "TRINH_DO_CHUYEN_MON": "Trình độ chuyên môn",
+      "TRINH_DO": {
+        "TRINH_DO": "Trình Độ",
+        "TRINH_DO_VAN_HOA": "Trình độ văn hóa",
+        "TRINH_DO_TIN_HOC": "Trình độ tin học"
+      },
+      "CHUYEN_MON_CAO_NHAT": {
+        "CHUYEN_MON_CAO_NHAT": "Chuyên Môn Cao Nhất",
+        "HOC_HAM": "Học hàm",
+        "TRINH_DO_CHUYEN_MON": "Trình độ chuyên môn",
+        "CHUYEN_NGANH": "Chuyên ngành",
+        "TRUONG_DAO_TAO": "Trường đào tạo",
+        "HINH_THUC_DAO_TAO": "Hình thức đào tạo",
+        "NAM_TOT_NGHIEP": "Năm tốt nghiệp",
+        "NGOAI_NGU_CHINH": "Ngoại ngữ chính",
+        "TRINH_DO_NGOAI_NGU_CHINH": "Trình độ ngoại ngữ chính"
+      },
+      "DANH_SACH_VAN_BANG": {
+        "DANH_SACH_VAN_BANG": "Danh sách văn bằng",
+        "TRINH_DO_CHUYEN_MON": "Trình độ chuyên môn",
+        "CHUYEN_NGANH_DAO_TAO": "Chuyên ngành đào tạo",
+        "TRUONG_DAO_TAO": "Trường đào tạo",
+        "NAM_TOT_NGHIEP": "Năm tốt nghiệp",
+        "HINH_THUC_DAO_TAO": "Hình thức đào tạo",
+        "XEP_LOAI": "Xếp loại",
+        "DIEM_TRUNG_BINH": "Điểm trung bình"
+      },
+      "DANH_SACH_CHUNG_CHI": {
+        "DANH_SACH_CHUNG_CHI": "Danh sách chứng chỉ",
+        "LOAI_CHUNG_CHI": "Loại chứng chỉ",
+        "TRINH_DO": "Trình độ",
+        "XEP_LOAI": "Xếp loại",
+        "DIEM": "Điểm",
+        "NGAY_CAP": "Ngày cấp",
+        "NOI_CAP": "Nơi cấp"
+      },
+      "DANH_SACH_CHUNG_CHI_NGOAI_NGU": {
+        "DANH_SACH_CHUNG_CHI_NGOAI_NGU": "Danh sách chứng chỉ ngoại ngữ",
+        "NGOAI_NGU": "Ngoại ngữ",
+        "TRINH_DO": "Trình độ",
+        "XEP_LOAI": "Xếp loại",
+        "DIEM": "Điểm",
+        "NGAY_CAP": "Ngày cấp"
+      }
+    },
+    "HOP_DONG_LAO_DONG": {
+      "HOP_DONG_LAO_DONG": "Hợp đồng lao động",
+      "HOP_DONG_HIEN_TAI": {
+        "HOP_DONG_HIEN_TAI": "Hợp đồng hiện tại",
+        "SO_HOP_DONG": "Số hợp đồng",
+        "LOAI_HOP_DONG": "Loại hợp đồng",
+        "NGAY_KY": "Ngày ký",
+        "CHUC_VU_NGUOI_KY": "Chức vụ người ký",
+        "NGUOI_KY": "Người ký",
+        "TU_NGAY": "Từ ngày",
+        "DEN_NGAY": "Đến ngày",
+        "LUONG_CHINH": "Lương chính",
+        "LUONG_BO_SUNG": "Lương bổ sung (bao gồm các khoản hỗ trợ)"
+      },
+      "DANH_SACH_CAC_HOP_DONG_DA_KY": {
+        "DANH_SACH_CAC_HOP_DONG_DA_KY": "Danh sách các hợp đồng đã ký",
+        "SO_HOP_DONG": "Số hợp đồng",
+        "LOAI_HOP_DONG": "Loại hợp đồng",
+        "NGAY_KY": "Ngày ký",
+        "NGUOI_KY": "Người ký",
+        "TU_NGAY": "Từ ngày",
+        "DEN_NGAY": "Đến ngày"
+      }
+    },
+    "QUAN_HE_GIA_DINH": {
+      "QUAN_HE_GIA_DINH": "Quan hệ gia đình",
+      "TEN_NGUOI_THAN": "Tên người thân",
+      "NAM_SINH": "Năm sinh",
+      "QUAN_HE": "Quan hệ",
+      "NOI_O_HIEN_NAY": "Nơi ở hiện nay",
+      "NGHE_NGHIEP": "Nghề nghiệp",
+      "NOI_LAM_VIEC": "Nơi làm việc",
+      "TINH_TRANG": "Tình trạng",
+      "DIEN_THOAI": "Điện thoại"
+    },
+    "GIAY_TO_HO_SO": {
+      "GIAY_TO_HO_SO": "Giấy tờ hồ sơ",
+      "STT": "STT",
+      "TEN_LOAI_GIAY_TO": "Tên loại giấy tờ",
+      "TEN_GIAY_TO": "Tên giấy tờ",
+      "NGAY_TAO": "Ngày tạo"
+    }
+  },
+  "CAC_QUA_TRINH": {
+    "LICH_SU_BAN_THAN": {
+      "LICH_SU_BAN_THAN": "Lịch sử bản thân",
+      "TU_NAM": "Từ năm",
+      "DEN_NAM": "Đến năm",
+      "NOI_DUNG": "Nội dung"
+    },
+    "DIEN_BIEN_LUONG": {
+      "DIEN_BIEN_LUONG": "Diễn biến lương",
+      "NGAY_QD": "Ngày QĐ",
+      "SO_QD": "Số QĐ",
+      "NOI_DUNG": "Nội dung",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "NGACH_LUONG": "Ngạch lương",
+      "BAC_LUONG": "Bậc lương",
+      "LUONG_CB": "Lương CB",
+      "LUONG_KD": "Lương KD",
+      "TONG_PC": "Tổng PC"
+    },
+    "QUA_TRINH_CONG_TAC": {
+      "QUA_TRINH_CONG_TAC": "Quá trình công tác",
+      "STT": "STT",
+      "LOAI_QD": "Loại QĐ",
+      "SO_QD": "Số QĐ",
+      "NGAY_QD": "Ngày QĐ",
+      "NGAY_BH": "Ngày BH",
+      "TU_NAM": "Từ năm",
+      "DEN_NAM": "Đến năm",
+      "NOI_DUNG": "Nội dung"
+    },
+    "QUA_TRINH_DIEU_DONG": {
+      "QUA_TRINH_DIEU_DONG": "Quá trình điều động",
+      "SO_QUYET_DINH": "Số quyết định",
+      "NGAY_QUYET_DINH": "Ngày quyết định",
+      "DON_VI_CU": "Đơn vị cũ",
+      "DON_VI_MOI": "Đơn vị mới",
+      "NGAY_DIEU_CHUYEN": "Ngày điều chuyển"
+    },
+    "QUA_TRINH_BO_NHIEM": {
+      "QUA_TRINH_BO_NHIEM": "Quá trình bổ nhiệm",
+      "SO_QUYET_DINH": "Số quyết định",
+      "TU_NAM": "Từ năm",
+      "DEN_NAM": "Đến năm",
+      "CHUC_VU": "Chức vụ",
+      "PHU_CAP_CHUC_VU": "Phụ cấp chức vụ",
+      "NGAY_HUONG_CHUC_VU": "Ngày hưởng chức vụ"
+    },
+    "QUA_TRINH_KIEM_NHIEM": {
+      "QUA_TRINH_KIEM_NHIEM": "Quá trình kiêm nhiệm",
+      "SO_QUYET_DINH": "Số quyết định",
+      "TU_NAM": "Từ năm",
+      "DEN_NAM": "Đến năm",
+      "CHUC_VU": "Chức vụ",
+      "PHU_CAP_CHUC_VU": "Phụ cấp chức vụ",
+      "NGAY_HUONG_CHUC_VU": "Ngày hưởng chức vụ"
+    }
+  },
+  "QUAN_LY_NGHI_PHEP_NAM": {
+    "QUAN_LY_NGHI_PHEP_NAM": "QUẢN LÝ NGHỈ PHÉP NĂM",
+    "KET_CHUYEN": "Kết chuyển",
+    "HUY": "Hủy",
+    "TINH_NGAY_PHEP": "Tính ngày phép",
+    "CAP_NHAT": "Cập nhật",
+    "XUAT_EXCEL": "Xuất Excel",
+    "TIM": "Tìm",
+    "TEN_BO_PHAN_TAT_CA": "Tất cả",
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "HO_TEN": "Họ tên",
+      "DON_VI": "Đơn vị",
+      "SO_NGAY_NAM_TRUOC": "Số ngày phép tồn năm trước",
+      "SO_NGAY_HIEN_TAI": "Số ngày phép năm nay",
+      "SO_NGAY_CONG_THEM": "Số ngày phép theo thâm niên",
+      "TONG_SO_NGAY_PHEP": "Tổng số ngày phép được sử dụng",
+      "SO_NGAY_DA_NGHI": "Số ngày phép đã nghỉ",
+      "SO_NGAY_CON_LAI": "Số ngày phép còn lại",
+      "SO_NGAY_PHEP_DA_NGHI_QUI_1": "Số ngày giảm trừ sau quý 1",
+      "TONG_SO_NGAY_BU": "Tổng số ngày nghỉ bù được sử dụng",
+      "SO_NGAY_BU_DA_NGHI": "Số ngày nghỉ bù đã sử dụng",
+      "SO_NGAY_BU_CON_LAI": "Số ngày nghỉ bù còn lại",
+      "SO_NGAY_BU_NAM_HIEN_TAI": "Số ngày nghỉ bù năm hiện tại",
+      "SO_NGAY_BU_NAM_TRUOC": "Số ngày nghỉ bù tồn năm trước"
+    },
+    "ALERT": {
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "CHI_DUOC_KET_CHUYEN_NAM_HOC": "Chỉ được kết chuyển năm học [{{TenNamHoc}}] !!!",
+      "KET_CHUYEN_THANH_CONG": "Kết chuyển thành công !!",
+      "KET_CHUYEN_THAT_BAI": "Kết chuyển thất bại !!",
+      "CHUA_KET_CHUYEN_NGAY_NGHI_DAU_NAM": "Chưa kết chuyển ngày nghỉ đầu năm !!!",
+      "CHI_DUOC_HUY_NAM_HOC": "Chỉ được hủy năm học [{{TenNamHoc}}] !!!",
+      "NAM_KHONG_HOP_LE2": "Năm {{TenNamHoc}} không hợp lệ!!!",
+      "HUY_THANH_CONG": "Hủy thành công !!",
+      "HUY_THAT_BAI": "Hủy thất bại !!",
+      "CHI_DUOC_TINH_NAM_HOC": "Chỉ được tính năm học [{{TenNamHoc}}] !!!",
+      "CAP_NHAT_THANH_CONG": "Cập nhật thành công !!",
+      "CAP_NHAT_THAT_BAI": "Cập nhật thất bại !!",
+      "CHI_DUOC_CAP_NHAT_NAM_HOC": "Chỉ được cập nhật năm học [{{TenNamHoc}}] !!!",
+      "CHUA_HET_PHEP_KHONG_THE_TAM_UNG": "Chưa hết phép không thể tạm ứng !!!",
+      "VUI_LONG_CHON_NIEN_DO_TAI_CHINH": "Vui lòng chọn niên độ tài chính",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn",
+      "CHON_QUA_NHIEU_DONG": "Chọn quá nhiều dòng"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_TAO_HAY_KHONG": "Bạn có chắc tạo hay không?",
+      "BAN_CO_CHAC_HUY_HAY_KHONG": "Bạn có chắc hủy hay không?",
+      "BAN_CO_CHAC_CAP_NHAT_HAY_KHONG": "Bạn có chắc cập nhật hay không?"
+    },
+    "UPDATE_HTML": {
+      "CAP_NHAT_THONG_TIN_NGAY_PHEP_NAM": "Cập nhật thông tin ngày phép năm",
+      "SO_NGAY_PHEP_NAM_TRUOC": "Số ngày phép tồn năm trước:",
+      "SO_NGAY_DA_NGHI_QUY_I": "Số ngày giảm trừ sau quý 1:",
+      "SO_NGAY_NAM_HIEN_TAI": "Số ngày phép năm nay:",
+      "SO_NGAY_CONG_THEM": "Số ngày phép theo thâm niên:",
+      "SO_NGAY_TAM_UNG_NAM_TRUOC": "Số ngày tạm ứng năm trước:",
+      "TONG_SO_NGAY_PHEP_NAM": "Tổng số ngày phép được sử dụng:",
+      "SO_NGAY_DA_NGHI": "Số ngày phép đã nghỉ:",
+      "SO_NGAY_TAM_UNG_HIEN_TAI": "Số ngày tạm ứng hiện tại:",
+      "SO_NGAY_CON_LAI": "Số ngày phép còn lại:",
+      "SO_NGAY_BU_NAM_HIEN_TAI": "Số ngày nghỉ bù năm hiện tại",
+      "LUU": "Lưu"
+    }
+  },
+  "DANG_KY_NGAY_NGHI": {
+    "DANG_KY_NGAY_NGHI": "Đăng ký ngày nghỉ",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "IN": "In",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "TRUONG_PHONG": "Tr.Phòng",
+      "HIEU_TRUONG": "H.Trưởng",
+      "HDQT": "HĐQT/GĐ.Khối",
+      "NGAY_NGHI": "Ngày nghỉ",
+      "NGAY_NGHI_TU_NGAY": "Từ ngày",
+      "NGAY_NGHI_DEN_NGAY": "Đến ngày",
+      "BUOI": "Buổi",
+      "SO_NGAY": "Số ngày",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "NOI_DUNG": "Nội dung",
+      "NGAY_TAO": "Ngày tạo",
+      "NHAN_VIEN": "Nhân viên",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận",
+      "PHAN_HOI_TP": "Tr.Phòng phản hồi",
+      "PHAN_HOI_HT": "H.Trưởng phản hồi",
+      "PHAN_HOI_HDQT": "HĐQT phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_NGHI_PHEP": "QUY ĐỊNH ĐĂNG KÝ NGÀY NGHỈ",
+      "QUY_DINH_1": "1. Thẩm quyền phê duyệt ngày nghỉ:",
+      "QUY_DINH_1_1": "- Khi Nhân viên xin nghỉ Trưởng bộ phận/ Quản lý/Ban Giám hiệu phê duyệt.\n- Đối với Giám đốc và Trưởng bộ phận, việc nghỉ phép sẽ do Phó Tổng Giám đốc phê duyệt.\n- Đối với Phó Tổng Giám đốc, việc nghỉ phép sẽ do Tổng Giám đốc/ Chủ tịch Hội đồng quản trị phê duyệt.",
+      "QUY_DINH_2": "2. Thời gian báo trước khi nghỉ:",
+      "QUY_DINH_2_1": "- Số ngày nghỉ dưới 02 ngày: thời gian báo trước khi nghỉ ít nhất là 02 ngày.\n- Số ngày nghỉ từ 02 ngày đến dưới 04 ngày: thời gian báo trước khi nghỉ ít nhất là 01 tuần.\n- Số ngày nghỉ từ 04 ngày trở lên: thời gian báo trước khi nghỉ ít nhất là 02 tuần.",
+      "QUY_DINH_3": "3. Quy định ngày phép năm:",
+      "QUY_DINH_3_1": "- Nhân viên chỉ được nghỉ phép năm khi đã qua thời gian thử việc.\n- Nhân viên chỉ được nghỉ phép theo đúng số ngày phép căn cứ trên số tháng làm việc thực tế tại Công ty. Tuy nhiên, trong một số trường hợp, Nhân viên có thể ứng trước ngày phép năm nhưng không quá 03 ngày và tổng số ngày phép năm đã nghỉ không vượt quá số ngày được nghỉ phép của mình.\n- Ví dụ:\n     • Nếu đang thử việc thì ngày nghỉ được tính không lương.\n     • Nếu qua thời gian thử việc là 02 tháng thì tại tháng thứ 3, Nhân viên sẽ có 03 ngày phép năm.\n     • Nếu Tổng số tháng làm việc trong năm là 03 tháng thì trong một số trường hợp, nhân viên có thể ứng trước phép năm 03 ngày -> Tổng số ngày được xin nghỉ phép năm hợp lệ là 06 ngày. Nếu làm việc đến tháng thứ 4 mà Nhân viên nghỉ việc thì số ngày phép đã ứng trước đó sẽ bị trừ lại.\n- Nếu có việc đột xuất cần xin nghỉ thì phải báo cho Trưởng bộ phận/ Quản lý/Ban Giám hiệu biết trước giờ vào làm việc ít nhất là 01 tiếng. Sau đó phải đăng kí bổ sung những ngày nghỉ đó chậm nhất là 03 ngày kể từ ngày nghỉ đó.\n- Đến thời điểm kết thúc năm tài chính, Nhân viên chưa nghỉ hết tiêu chuẩn phép trong năm của mình thì được bảo lưu đến hết quý I của niên độ tiếp theo. Từ ngày đầu tiên của quý II niên độ tiếp theo, số Ngày phép còn lại của niên độ trước (nếu có) của CBNV sẽ tự động hết hiệu lực.\n- Việc chấm công bằng vân tay cần được thực hiện nghiêm túc vì sẽ trực tiếp ảnh hưởng đến dữ liệu chấm công hàng tháng của từng Nhân viên.",
+      "LUU_Y": "Lưu ý: Việc đăng kí ngày nghỉ chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "JS": {
+      "CA_NGAY": "Cả ngày",
+      "SANG": "Sáng",
+      "CHIEU": "Chiều",
+      "TAT_CA": "Tất cả",
+      "CHO_XET": "Chờ xét",
+      "KHONG_CHAP_NHAN": "Không chấp nhận",
+      "CHAP_NHAN": "Chấp nhận",
+      "DON_XIN_NGHI": "Đơn xin nghỉ",
+      "DON_XIN_NGHI_VIEC_RIENG": "Đơn xin nghỉ việc riêng",
+      "NGAY_THANG_NAM": "ngày {{ngay}} tháng {{thang}} năm {{nam}}"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Số ngày nghỉ không hợp lệ: "
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    },
+    "TAO_MOI_MODAL": {
+      "DANG_KY_NGAY_NGHI": "Đăng ký ngày nghỉ",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "BUOI": "Buổi",
+      "SO_NGAY_HOP_LE": "Số ngày hợp lệ",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "NGUOI_NHAN_BAN_GIAO": "Người nhận bàn giao",
+      "NOI_DUNG": "Nội dung",
+      "SAVE": "Lưu"
+    }
+  },
+  "DANG_KY_NGOAI_GIO": {
+    "DANG_KY_NGOAI_GIO": "Đăng ký ngoài giờ",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "THANG": "Tháng",
+    "NAM": "Năm",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "TRUONG_PHONG": "Tr.Phòng",
+      "BGH": "BGH",
+      "HDQT": "HĐQT",
+      "NGAY": "Ngày",
+      "TU_GIO_DK": "Từ giờ ĐK",
+      "DEN_GIO_DK": "Đến giờ ĐK",
+      "TU_GIO_TT": "Từ giờ TT",
+      "DEN_GIO_TT": "Đến giờ TT",
+      "SO_GIO_DK": "Số giờ ĐK",
+      "SO_GIO_TT": "Số giờ TT",
+      "LY_DO": "Lý do",
+      "LOAI_NGAY": "Loại ngày",
+      "NGAY_TAO": "Ngày tạo",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận",
+      "PHAN_HOI_TP": "Tr.Phòng phản hồi",
+      "PHAN_HOI_BGH": "BGH phản hồi",
+      "PHAN_HOI_ADMIN": "QT.Công phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_LAM_NGOAI_GIO": "Quy định đăng ký làm ngoài giờ",
+      "QUY_DINH_1": "1. Việc tính công ngoài giờ chỉ thực hiện cho trường hợp làm thêm giờ theo yêu cầu của Trưởng Bộ phận/Quản lý/Ban Giám hiệu và có xác nhận của Trưởng Bộ phận/Quản lý/Ban Giám hiệu; không tính công ngoài giờ đối với các trường hợp làm thêm giờ để hoàn thành công việc thường nhật hoặc công việc theo kế hoạch, dự án đã được phân công, hoặc đối với Nhân viên có tính chất công việc thường xuyên làm thêm giờ đã được khoán vào lương, hoặc đối với cấp từ Trưởng bộ phận trở lên.",
+      "QUY_DINH_2": "2. Trưởng bộ phận/ Quản lý/Ban giám hiệu có trách nhiệm gửi \"Kế hoạch làm ngoài giờ\" / \"Phiếu đề xuất làm ngoài\" giờ được sự phê duyệt của Ban Tổng Giám đốc cho Bộ phận Nhân sự để xác minh tính hợp lệ của việc đăng kí làm ngoài giờ.",
+      "QUY_DINH_3": "3. Nhân viên phải thực hiện chấm công khi làm thêm giờ trừ trường hợp làm thêm giờ bên ngoài Trường. Trường hợp này phải có xác nhận từ Trưởng bộ phận/ Quản lý/Ban giám hiệu.",
+      "QUY_DINH_4": "4. Trưởng bộ phận/ Quản lý/Ban giám hiệu có trách nhiệm cuối cùng trong việc xác minh tính chính xác và phù hợp với yêu cầu công việc của các ngày/ giờ làm thêm của Nhân viên thuộc đơn vị mình quản lý.",
+      "QUY_DINH_5": "5. Việc đăng kí làm ngoài giờ chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "GIO_KHONG_HOP_LE": "Giờ không hợp lệ!",
+      "GIO_PHUT_KHONG_HOP_LE": "Giờ phút không hợp lệ!",
+      "PHUT_KHONG_HOP_LE": "Phút không hợp lệ!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "KHONG_THANH_CONG": "Không thành công",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Bạn có chắc chắn xoá hay không ?"
+    },
+    "TAO_MOI_MODAL": {
+      "DANG_KY_CHAM_CONG_NGOAI_GIO": "Đăng ký chấm công ngoài giờ",
+      "THU": "Thứ:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "GIO_BAT_DAU": "Giờ bắt đầu:",
+      "GIO_KET_THUC": "Giờ kết thúc:",
+      "LY_DO": "Lý do:",
+      "LUU": "Lưu"
+    }
+  },
+  "DANG_KY_CONG_TAC": {
+    "DANG_KY_CONG_TAC": "Đăng ký công tác",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "IN": "In",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "TIM": "Tìm",
+    "CHO_XET": "Chờ xét",
+    "CHAP_NHAN": "Chấp nhận",
+    "KHONG_CHAP_NHAN": "Không chấp nhận",
+    "CONFIRM": "Bạn có chắc chắn xoá hay không ?",
+    "ALERT": {
+      "CHUA_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Số ngày nghỉ không hợp lệ: ",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "Trưởng đơn vị đã duyệt không được xóa."
+    },
+    "TABLE": {
+      "STT": "STT",
+      "NGAY_CONG_TAC": "Ngày công tác",
+      "NGAY_CONG_TAC_TU_NGAY": "Từ ngày",
+      "NGAY_CONG_TAC_DEN_NGAY": "Đến ngày",
+      "SO_NGAY": "Số ngày",
+      "BUOI": "Buổi",
+      "NOI_DUNG": "Nội dung",
+      "DIA_DIEM": "Địa điểm",
+      "NGAY_TAO": "Ngày tạo",
+      "TRANG_THAI": "Trạng thái",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận",
+      "NHAN_VIEN": "Nhân viên",
+      "PHAN_HOI": "Phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_DI_CONG_TAC": "Quy định đăng ký đi công tác",
+      "QUY_DINH_1": "1. Việc đăng kí đi công tác chỉ được thực hiện khi có yêu cầu phải xử lý công việc phục vụ cho Công ty (Không áp dụng cho việc làm giấy tờ cá nhân) ở bên ngoài và phải được Trưởng bộ phận/ Quản lý/Ban giám hiệu chấp thuận.",
+      "QUY_DINH_2": "2. Thẩm quyền duyệt đăng kí đi công tác: Ban Giám đốc / Trưởng bộ phận /Quản lý/ Ban Giám hiệu của đơn vị mình quản lý.",
+      "QUY_DINH_3": "3. Việc đăng kí đi công tác chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "NEW": {
+      "KHAI_BAO_CONG_TAC": "Khai báo công tác ",
+      "CA_NGAY": "Cả ngày",
+      "BUOI_SANG": "Buổi sáng",
+      "BUOI_CHIEU": "Buổi chiều",
+      "DIA_DIEM": "Địa điểm",
+      "BUOI": "Buổi",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "MUC_DICH": "Mục đích",
+      "LUU": "Lưu"
+    }
+  },
+  "QUAN_LY_BO_SUNG_CONG": {
+    "QUAN_LY_BO_SUNG_CONG": "Quản lý bổ sung công",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "CHAP_NHAN": "Chấp nhận",
+    "KHONG_CHAP_NHAN": "Không chấp nhận",
+    "XUAT_EXCEL": "Xuất Excel",
+    "TU_NGAY": "Từ ngày:",
+    "DEN_NGAY": "Đến ngày:",
+    "TAT_CA_DON_CHUA_DUYET": "Tất cả đơn chưa duyệt",
+    "TRUONG": "Trường",
+    "DON_VI": "Đơn vị",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "HO_TEN": "Họ tên",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "NGAY_DANG_KY": "Ngày đăng ký",
+      "NGAY_DANG_KY_TU_NGAY": "Từ ngày",
+      "NGAY_DANG_KY_DEN_NGAY": "Đến ngày",
+      "BUOI": "Buổi",
+      "LY_DO": "Lý do",
+      "NGAY_TAO": "Ngày tạo",
+      "NHAN_VIEN": "Nhân viên",
+      "TRANG_THAI": "Trạng thái",
+      "PHAN_HOI": "Phản hồi",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_BO_SUNG_CONG": "QUY ĐỊNH BỔ SUNG CÔNG",
+      "QUY_DINH_1": "1. Việc bổ sung công chỉ được thực hiện trong trường hợp không bấm được vân tay do lỗi hệ thống hoặc quên bấm vân tay",
+      "QUY_DINH_2": "2. Thẩm quyền duyệt bổ sung công: Ban Giám đốc / Trưởng bộ phận /Quản lý/ Ban Giám hiệu của đơn vị mình quản lý",
+      "QUY_DINH_3": "3. Nếu quên bấm vân tay từ 4 lần trở lên trong tháng sẽ bị nhắc nhở và xem xét trong quá trình đánh giá KPIs.",
+      "QUY_DINH_4": "4. Những ngày không bấm vân tay nhưng không được Trưởng bộ phận/ Quản lý/Ban giám hiệu xác nhận thì sẽ được coi là nghỉ không lương ngày đó.",
+      "QUY_DINH_5": "5. Nếu vào trễ từ 2h đến 4h mà không có lý do chính đáng thì sẽ được coi là nghỉ nửa ngày không lương.",
+      "QUY_DINH_6": "6. Việc Bổ sung công chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "JS": {
+      "CA_NGAY": "Cả ngày",
+      "SANG": "Sáng",
+      "CHIEU": "Chiều",
+      "TAT_CA": "Tất cả",
+      "CHO_XET": "Chờ xét",
+      "KHONG_CHAP_NHAN": "Không chấp nhận",
+      "CHAP_NHAN": "Chấp nhận",
+      "TEN_BO_PHAN_TAT_CA": "Tất cả"
+    },
+    "TAO_MOI_MODAL": {
+      "BO_SUNG_CONG": "Bổ sung công",
+      "DON_VI": "Đơn vị:",
+      "CA_NHAN": "Cá nhân:",
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên",
+      "BUOI": "Buổi:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "LY_DO": "Lý do:",
+      "LUU": "Lưu",
+      "HUY": "Hủy"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "KHONG_DUOC_TRUNG_HOAC_GIAO_NGAY_VOI_DU_LIEU_TRUOC": "Không được trùng hoặc giao ngày với dữ liệu trước !!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!",
+      "CHAP_NHAN_THANH_CONG": "Chấp nhận thành công !",
+      "THANH_CONG": "Thành công !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    }
+  },
+  "XEM_THONG_TIN_CHAM_CONG": {
+    "XEM_THONG_TIN_CHAM_CONG": "XEM THÔNG TIN CHẤM CÔNG",
+    "IN": "In",
+    "BIEU_DO": "Biểu đồ",
+    "IN_TAT_CA": "In tất cả",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "TIM": "Tìm",
+    "NGAY": "Ngày",
+    "THANG": "Tháng",
+    "NAM": "Năm",
+    "TABLE": {
+      "STT": "STT",
+      "HO_TEN": "Họ tên",
+      "TEN_DON_VI": "Tên đơn vị",
+      "NGAY_TRONG_THANG": "Ngày trong tháng"
+    },
+    "JS": {
+      "CHI_TIET_CHAM_CONG": "Chi tiết chấm công"
+    },
+    "ALERT": {
+      "VUI_LONG_CHON_PHONG_BAN": "Vui lòng chọn phòng ban !!"
+    },
+    "GHI_CHU": "Ghi chú:",
+    "CHART": {
+      "NHAN_VIEN": "Nhân viên: ",
+      "THOI_GIAN_VAO": "Thời gian vào: ",
+      "THOI_GIAN_RA": "Thời gian ra: ",
+      "THONG_KE_GIO_DI_LAM": "Thống kê giờ đi làm - ",
+      "GIO": "Giờ [h]",
+      "THOI_GIAN_CHAM_CONG": "Thời gian chấm công",
+      "CHUA_QUET_VAN_TAY": " Chưa quét vân tay"
+    }
+  },
+  "CAU_HINH_CHAM_CONG": {
+    "CAU_HINH_CHAM_CONG": "CẤU HÌNH CHẤM CÔNG",
+    "TRUONG": "Trường:",
+    "SO_NGAY_NGHI_PHEP": "Số ngày nghỉ phép",
+    "HIEU_TRUONG_DUYET_KHI_NGHI_TREN_NGAY": "HT duyệt khi nghỉ trên ... ngày:",
+    "DANG_KY_NGOAI_GIO_TRUOC": "Đăng ký ngoài giờ trước:",
+    "CAU_HINH_GUI_EMAIL": "CẤU HÌNH GỬI EMAIL",
+    "Email": "Email:",
+    "Password": "Password:",
+    "LUU": "Lưu",
+    "ALERT": {
+      "EMAIL_KHONG_HOP_LE": "Email không hợp lệ.",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "THOI_GIAN_KHONG_HOP_LE_VUI_LONG_KIEM_TRA_LAI": "Thời gian không hợp lệ. Vui lòng kiểm tra lại.",
+      "LAY_DU_LIEU_THANH_CONG": "Lấy dữ liệu thành công !!",
+      "LAY_DU_LIEU_THAT_BAI": "Lấy dữ liệu thất bại !!",
+      "CHOT_DU_LIEU_THANH_CONG": "Chốt dữ liệu thành công !!",
+      "CHOT_DU_LIEU_THAT_BAI": "Chốt dữ liệu thất bại !!",
+      "HUY_CHOT_DU_LIEU_THANH_CONG": "Hủy chốt dữ liệu thành công !!",
+      "HUY_CHOT_DU_LIEU_THAT_BAI": "Hủy chốt dữ liệu thất bại !!"
+    }
+  },
+  "QUAN_LY_PHEP_HE": {
+    "QUAN_LY_PHEP_HE": "Quản lý phép hè",
+    "CHOT_PHEP_HE": "Chốt phép hè",
+    "XUAT_EXCEL": "Xuất excel",
+    "TEN_BO_PHAN_TAT_CA": "Tất cả",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "HO_TEN": "Họ tên",
+      "DON_VI": "Đơn vị",
+      "NGAY_VAO_CO_QUAN": "Ngày vào cơ quan",
+      "SO_PHEP_HE": "Số phép hè"
+    },
+    "ALERT": {
+      "THANH_CONG": "Thành công !!",
+      "THAT_BAI": "Thất bại !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHOT_HAY_KHONG": "Bạn có chắc chốt hay không ?"
+    }
+  },
+  "DO_DU_LIEU_CHAM_CONG_THANG": {
+    "DO_DU_LIEU_CHAM_CONG_THANG": "Đổ dữ liệu chấm công tháng",
+    "TRUONG": "Trường:",
+    "THANG": "Tháng",
+    "COMBOBOX_THANG": {
+      "THANG": "---Tháng---",
+      "THANG_1": "Tháng 1",
+      "THANG_2": "Tháng 2",
+      "THANG_3": "Tháng 3",
+      "THANG_4": "Tháng 4",
+      "THANG_5": "Tháng 5",
+      "THANG_6": "Tháng 6",
+      "THANG_7": "Tháng 7",
+      "THANG_8": "Tháng 8",
+      "THANG_9": "Tháng 9",
+      "THANG_10": "Tháng 10",
+      "THANG_11": "Tháng 11",
+      "THANG_12": "Tháng 12"
+    },
+    "NAM": "Năm",
+    "TRANG_THAI": "Trạng thái",
+    "LUU": "Lưu",
+    "HUY": "Hủy",
+    "DANG_XU_LY_VUI_LONG_CHO": "Đang xử lý vui lòng chờ ..........",
+    "ALERT": {
+      "VUI_LONG_CHON_THANG": "Vui lòng chọn tháng !!",
+      "VUI_LONG_NHAP_NAM": "Vui lòng nhập năm !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "KY_CHAM_CONG_THANG_CHUA_TAO": "Kỳ chấm công tháng {{thang}}/{{nam}} chưa tạo.",
+      "DO_DU_LIEU_CHAM_CONG_THANH_CONG": "Đổ dữ liệu chấm công thành công !!",
+      "XOA_DU_LIEU_CHAM_CONG_THANH_CONG": "Xóa dữ liệu chấm công thành công !!"
+    }
+  },
+  "QUAN_LY_CHAM_CONG": {
+    "QUAN_LY_CHAM_CONG": "Quản lý chấm công",
+    "LUU": "Lưu",
+    "HUY_CHAM_CONG": "Hủy chấm công",
+    "BIEU_DO": "Biểu đồ",
+    "CHAM_CONG_THANG": "Chấm công tháng",
+    "CHI_TIET": "Chi tiết",
+    "IN_BANG_CONG": "In bảng công",
+    "DOI_KHUNG_GIO_CA_THANG": "Đổi khung giờ cả tháng",
+    "DOI_KHUNG_GIO_THEO_NGAY": "Đổi khung giờ theo ngày",
+    "NGAY": "ngày",
+    "THANG": "tháng",
+    "NAM": "năm",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "HO_TEN": "Họ tên",
+      "NGAY": "Ngày",
+      "PHONG_BAN": "Phòng ban",
+      "KHUNG_GIO": "Khung giờ",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "CHAM_CONG": "Chấm công"
+    },
+    "JS": {
+      "TRANG_THAI_CHAM_CONG_ARRAY": {
+        "TAT_CA_TRANG_THAI": "Tất cả trạng thái",
+        "CHUA_CHAM_CONG": "Chưa chấm công",
+        "DA_CHAM_CONG": "Đã chấm công"
+      },
+      "DI_HOC_ARRAY": {
+        "TAT_CA_TRANG_THAI": "Tất cả trạng thái",
+        "LAM_VIEC": "Làm việc",
+        "DI_HOC": "Đi học"
+      }
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Ngày không hợp lệ !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "CHUA_CO_DU_LIEU_NAO_THAY_DOI": "Chưa có dữ liệu nào thay đổi !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Tháng này đã chốt chấm công rồi !!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "HUY_THANH_CONG": "Hủy thành công !!",
+      "VUI_LONG_CHON_PHONG_BAN": "Vui lòng chọn phòng ban !!",
+      "KY_HIEU_KHONG_HOP_LE": "Ký hiệu không hợp lệ: ",
+      "CHUA_DANG_KY_KHUNG_GIO_LAM_VIEC": "Chưa đăng ký khung giờ làm việc !!",
+      "THANH_CONG": "Thành công !!",
+      "CHON_QUA_NHIEU_DONG": "Chọn quá nhiều dòng !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_HUY_HAY_KHONG": "Bạn có chắc hủy hay không ?",
+      "BAN_CO_MUON_CAP_NHAT_KHUNG_GIO_LAM_VIEC_CHO_CA_THANG_HAY_KHONG": "Bạn có muốn cập nhật khung giờ làm việc cho cả tháng hay không ?",
+      "BAN_CO_MUON_CAP_NHAT_KHUNG_GIO_LAM_VIEC_CHO_HOM_NAY_HAY_KHONG": "Bạn có muốn cập nhật khung giờ làm việc cho hôm nay hay không ?"
+    },
+    "UPDATE_HTML": {
+      "BANG_CHAM_CONG": "Bảng chấm công",
+      "THANG": "Tháng",
+      "NAM": "năm",
+      "ALERT": {
+        "CHUA_CO_KY_CHAM_CONG_THANG_NAY": "Chưa có kỳ chấm công tháng này!",
+        "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Tháng này đã chốt chấm công rồi !!",
+        "HINH_THUC_NGHI_KHONG_HOP_LE": "Hình thức nghỉ không hợp lệ",
+        "LUU_THANH_CONG": "Lưu thành công !!",
+        "THANG_NAY_DA_KHOA_CHAM_CONG_ROI": "Tháng này đã khóa chấm công rồi !!",
+        "KHOA_CHAM_CONG_THANH_CONG": "Khóa chấm công thành công !!",
+        "DA_KHOA_CHAM_CONG_TREN_PHAM_MEM_HRM": "Đã khóa chấm công trên phần mềm HRM!!",
+        "MO_KHOA_CHAM_CONG_THANH_CONG": "Mở khóa chấm công thành công !!",
+        "CHUA_CO_DU_LIEU_DE_MO_KHOA_CHAM_CONG": "Chưa có dữ liệu để mở khóa chấm công !!"
+      },
+      "TABLE": {
+        "STT": "STT",
+        "HO_TEN": "Họ tên",
+        "NGAY_TRONG_THANG": "Ngày trong tháng",
+        "TONG": "Tổng",
+        "THANG_NAY_DA_KHOA_CHAM_CONG": "(*)Tháng này đã khóa chấm công!!",
+        "LUU": "Lưu",
+        "CHAM_NHANH": "Chấm nhanh",
+        "KHOA": "Khóa",
+        "MO_KHOA": "Mở khóa",
+        "GHI_CHU": "Ghi chú"
+      }
+    },
+    "DETAIL_HTML": {
+      "BANG_CHAM_CONG": "Bảng chấm công",
+      "THANG": "Tháng",
+      "NAM": "năm",
+      "TABLE": {
+        "STT": "STT",
+        "HO_TEN": "Họ tên",
+        "NGAY_TRONG_THANG": "Ngày trong tháng",
+        "TONG": "Tổng",
+        "VI_PHAM": "- Vi phạm: ",
+        "THOI_GIAN_TRE": "- Thời gian trễ: ",
+        "THOI_GIAN_SOM": "- Thời gian sớm: ",
+        "PHUT": " phút",
+        "NGUOI_CHAM_CONG": "Người chấm công",
+        "PHU_TRACH_BO_PHAN": "Phụ trách bộ phận",
+        "NGUOI_DUYET": "Người duyệt",
+        "KY_HO_TEN": "(Ký, họ tên)",
+        "GHI_CHU": "Ghi chú"
+      }
+    },
+    "CHART_HTML": {
+      "NHAN_VIEN": "Nhân viên: ",
+      "THOI_GIAN": "Thời gian: ",
+      "THOI_GIAN_VAO": "Thời gian vào: ",
+      "THOI_GIAN_RA": "Thời gian ra: ",
+      "THONG_KE_GIO_DI_LAM": "Thống kê giờ đi làm - ",
+      "GIO": "Giờ [h]",
+      "THOI_GIAN_CHAM_CONG": "Thời gian chấm công",
+      "CHUA_QUET_VAN_TAY": " Chưa quét vân tay"
+    }
+  },
+  "QUAN_LY_NGAY_NGHI": {
+    "QUAN_LY_CHAM_CONG_NGAY_NGHI": "Quản lý chấm công ngày nghỉ",
+    "TAO_MOI": "Tạo mới",
+    "HIEU_CHINH": "Hiệu chỉnh",
+    "XOA": "Xóa",
+    "CHAP_NHAN": "Chấp nhận",
+    "KHONG_CHAP_NHAN": "Không chấp nhận",
+    "IN": "In",
+    "XUAT_EXCEL": "Xuất excel",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "TAT_CA_DON_CHUA_DUYET": "Tất cả đơn chưa duyệt",
+    "TRUONG": "Trường",
+    "DON_VI": "Đơn vị",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "TIM": "Tìm",
+    "JS": {
+      "BUOI_ARRAY": {
+        "CA_NGAY": "Cả ngày",
+        "SANG": "Sáng",
+        "CHIEU": "Chiều"
+      },
+      "TRANG_THAI_ARRAY": {
+        "TAT_CA": "Tất cả",
+        "CHO_XET": "Chờ xét",
+        "KHONG_CHAP_NHAN": "Không chấp nhận",
+        "CHAP_NHAN": "Chấp nhận"
+      },
+      "NGAY_THANG_NAM": "ngày {{ngay}} tháng {{thang}} năm {{nam}}",
+      "TEN_BO_PHAN_TAT_CA": "Tất cả"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Ngày không hợp lệ !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Tháng này đã chốt chấm công rồi !!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!",
+      "THANH_CONG": "Thành công !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Số ngày nghỉ không hợp lệ: "
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?",
+      "BAN_CO_MUON_DUYET_HAY_KHONG": "Bạn có muốn duyệt hay không ?",
+      "BAN_CO_MUON_KHONG_CHAP_NHAN_HAY_KHONG": "Bạn có muốn không chấp nhận hay không ?"
+    },
+    "TABLE": {
+      "STT": "STT",
+      "TRUONG_DON_VI": "Tr.Đơn vị",
+      "HIEU_TRUONG": "H.Trưởng",
+      "HDQT": "HĐQT/GĐ.Khối",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "HO_TEN": "Họ tên",
+      "PHONG_BAN": "Phòng ban",
+      "NGAY_NGHI": "Ngày nghỉ",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "BUOI": "Buổi",
+      "SO_NGAY": "Số ngày",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "NOI_DUNG": "Nội dung",
+      "NGAY_TAO": "Ngày tạo",
+      "NHAN_VIEN": "Nhân viên",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận",
+      "PHAN_HOI_TP": "Tr.Phòng phản hồi",
+      "PHAN_HOI_HT": "H.Trưởng phản hồi",
+      "PHAN_HOI_HDQT": "HĐQT phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_NGHI_PHEP": "QUY ĐỊNH ĐĂNG KÝ NGÀY NGHỈ",
+      "QUY_DINH_1": "1. Thẩm quyền phê duyệt ngày nghỉ:",
+      "QUY_DINH_1_1": "- Khi Nhân viên xin nghỉ Trưởng bộ phận/ Quản lý/Ban Giám hiệu phê duyệt.\n- Đối với Giám đốc và Trưởng bộ phận, việc nghỉ phép sẽ do Phó Tổng Giám đốc phê duyệt.\n- Đối với Phó Tổng Giám đốc, việc nghỉ phép sẽ do Tổng Giám đốc/ Chủ tịch Hội đồng quản trị phê duyệt.",
+      "QUY_DINH_2": "2. Thời gian báo trước khi nghỉ:",
+      "QUY_DINH_2_1": "- Số ngày nghỉ dưới 02 ngày: thời gian báo trước khi nghỉ ít nhất là 02 ngày.\n- Số ngày nghỉ từ 02 ngày đến dưới 04 ngày: thời gian báo trước khi nghỉ ít nhất là 01 tuần.\n- Số ngày nghỉ từ 04 ngày trở lên: thời gian báo trước khi nghỉ ít nhất là 02 tuần.",
+      "QUY_DINH_3": "3. Quy định ngày phép năm:",
+      "QUY_DINH_3_1": "- Nhân viên chỉ được nghỉ phép năm khi đã qua thời gian thử việc.\n- Nhân viên chỉ được nghỉ phép theo đúng số ngày phép căn cứ trên số tháng làm việc thực tế tại Công ty. Tuy nhiên, trong một số trường hợp, Nhân viên có thể ứng trước ngày phép năm nhưng không quá 03 ngày và tổng số ngày phép năm đã nghỉ không vượt quá số ngày được nghỉ phép của mình.\n- Ví dụ:\n     • Nếu đang thử việc thì ngày nghỉ được tính không lương.\n     • Nếu qua thời gian thử việc là 02 tháng thì tại tháng thứ 3, Nhân viên sẽ có 03 ngày phép năm.\n     • Nếu Tổng số tháng làm việc trong năm là 03 tháng thì trong một số trường hợp, nhân viên có thể ứng trước phép năm 03 ngày -> Tổng số ngày được xin nghỉ phép năm hợp lệ là 06 ngày. Nếu làm việc đến tháng thứ 4 mà Nhân viên nghỉ việc thì số ngày phép đã ứng trước đó sẽ bị trừ lại.\n- Nếu có việc đột xuất cần xin nghỉ thì phải báo cho Trưởng bộ phận/ Quản lý/Ban Giám hiệu biết trước giờ vào làm việc ít nhất là 01 tiếng. Sau đó phải đăng kí bổ sung những ngày nghỉ đó chậm nhất là 03 ngày kể từ ngày nghỉ đó.\n- Đến thời điểm kết thúc năm tài chính, Nhân viên chưa nghỉ hết tiêu chuẩn phép trong năm của mình thì được bảo lưu đến hết quý I của niên độ tiếp theo. Từ ngày đầu tiên của quý II niên độ tiếp theo, số Ngày phép còn lại của niên độ trước (nếu có) của CBNV sẽ tự động hết hiệu lực.\n- Việc chấm công bằng vân tay cần được thực hiện nghiêm túc vì sẽ trực tiếp ảnh hưởng đến dữ liệu chấm công hàng tháng của từng Nhân viên.",
+      "LUU_Y": "Lưu ý: Việc đăng kí ngày nghỉ chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "TAO_MOI_MODAL": {
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên",
+      "TEN": "Tên",
+      "THONG_TIN_CHAM_CONG_NGAY_NGHI": "Thông tin chấm công ngày nghỉ",
+      "PHONG_BAN": "Phòng ban:",
+      "NHAN_VIEN": "Nhân viên:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "BUOI": "Buổi",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "SO_NGAY_HOP_LE": "Số ngày hợp lệ:",
+      "NGUOI_NHAN_BAN_GIAO": "Người nhận bàn giao:",
+      "NOI_DUNG": "Nội dung:",
+      "NOI_NGHI": "Nơi nghỉ:",
+      "DIA_CHI_LIEN_HE": "Địa chỉ liên hệ:",
+      "LUU": "Lưu",
+      "TRO_VE": "Trở về"
+    },
+    "HIEU_CHINH_MODAL": {
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO": "Họ",
+      "TEN": "Tên",
+      "THONG_TIN_CHAM_CONG_NGAY_NGHI": "Thông tin chấm công ngày nghỉ",
+      "PHONG_BAN": "Phòng ban:",
+      "NHAN_VIEN": "Nhân viên:",
+      "NOI_DUNG": "Nội dung:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "HINH_THUC_NGHI": "Hình thức nghỉ",
+      "LUU": "Lưu",
+      "TRO_VE": "Trở về"
+    }
+  },
+  "QUAN_LY_NGOAI_GIO": {
+    "QUAN_LY_NGOAI_GIO": "Quản lý ngoài giờ",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "DUYET": "Duyệt",
+    "HUY_DUYET": "Hủy duyệt",
+    "CAP_NHAT": "Cập nhật",
+    "XUAT_EXCEL": "Xuất Excel",
+    "NGAY": "ngày",
+    "THANG": "tháng",
+    "NAM": "năm",
+    "TAT_CA_DON_CHUA_DUYET": "Tất cả đơn chưa duyệt",
+    "TRUONG": "Trường",
+    "DON_VI": "Đơn vị",
+    "TIM": "Tìm",
+    "JS": {
+      "TRANG_THAI_ARRAY": {
+        "TAT_CA": "Tất cả",
+        "CHO_DUYET": "Chờ duyệt",
+        "CHAP_NHAN": "Chấp nhận",
+        "KHONG_CHAP_NHAN": "Không chấp nhận"
+      },
+      "TEN_BO_PHAN_TAT_CA": "Tất cả"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Ngày không hợp lệ !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "THANH_CONG": "Thành công !!",
+      "CAP_CAO_HON_DA_DUYET": "Cấp cao hơn đã duyệt.",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "NHAN_VIEN_KHONG_DUOC_TRONG": "Nhân viên không được trống !!!",
+      "THOI_GIAN_DANG_KY_KHONG_HOP_LE": "Thời gian đăng ký không hợp lệ !!!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DU_LIEU_NAO_THAY_DOI": "Chưa có dữ liệu nào thay đổi !!",
+      "CAP_NHAT_THANH_CONG": "Cập nhật thành công!!!",
+      "CAP_NHAT_THAT_BAI": "Cập nhật thất bại!!!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?",
+      "BAN_CO_MUON_DUYET_HAY_KHONG": "Bạn có muốn duyệt hay không ?",
+      "BAN_CO_MUON_KHONG_CHAP_NHAN_HAY_KHONG": "Bạn có muốn không chấp nhận hay không ?"
+    },
+    "TABLE": {
+      "STT": "STT",
+      "TRANG_THAI_TP": "Tr.Phòng",
+      "TRANG_THAI_BGH": "BGH",
+      "TRANG_THAI_ADMIN": "HĐQT",
+      "HO_TEN": "Họ tên",
+      "MA_NHAN_VIEN": "Mã nhân viên",
+      "DON_VI": "Đơn vị",
+      "NGAY": "Ngày",
+      "TU_GIO_DK": "Từ giờ ĐK",
+      "DEN_GIO_DK": "Đến giờ ĐK",
+      "TU_GIO_TT": "Từ giờ TT",
+      "DEN_GIO_TT": "Đến giờ TT",
+      "SO_GIO_DK": "Số giờ ĐK",
+      "SO_GIO_TT": "Số giờ TT",
+      "LOAI_NGAY": "Loại ngày",
+      "LY_DO": "Lý do",
+      "NGAY_TAO": "Ngày tạo",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận",
+      "PHAN_HOI_TP": "Tr.Phòng phản hồi",
+      "PHAN_HOI_BGH": "BGH phản hồi",
+      "PHAN_HOI_ADMIN": "QT.Công phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_LAM_NGOAI_GIO": "Quy định đăng ký làm ngoài giờ",
+      "QUY_DINH_1": "1. Việc tính công ngoài giờ chỉ thực hiện cho trường hợp làm thêm giờ theo yêu cầu của Trưởng Bộ phận/Quản lý/Ban Giám hiệu và có xác nhận của Trưởng Bộ phận/Quản lý/Ban Giám hiệu; không tính công ngoài giờ đối với các trường hợp làm thêm giờ để hoàn thành công việc thường nhật hoặc công việc theo kế hoạch, dự án đã được phân công, hoặc đối với Nhân viên có tính chất công việc thường xuyên làm thêm giờ đã được khoán vào lương, hoặc đối với cấp từ Trưởng bộ phận trở lên.",
+      "QUY_DINH_2": "2. Trưởng bộ phận/ Quản lý / Ban giám hiệu có trách nhiệm gửi \"Kế hoạch làm ngoài giờ\" / \"Phiếu đề xuất làm ngoài\" giờ được sự phê duyệt của Ban Tổng Giám đốc cho Bộ phận Nhân sự để xác minh tính hợp lệ của việc đăng kí làm ngoài giờ.",
+      "QUY_DINH_3": "3. Nhân viên phải thực hiện chấm công khi làm thêm giờ trừ trường hợp làm thêm giờ bên ngoài Trường. Trường hợp này phải có xác nhận từ Trưởng bộ phận/ Quản lý/Ban giám hiệu.",
+      "QUY_DINH_4": "4. Trưởng bộ phận/ Quản lý / Ban giám hiệu có trách nhiệm cuối cùng trong việc xác minh tính chính xác và phù hợp với yêu cầu công việc của các ngày/ giờ làm thêm của Nhân viên thuộc đơn vị mình quản lý.",
+      "QUY_DINH_5": "5. Việc đăng kí làm ngoài giờ chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "TAO_MOI_MODAL": {
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên",
+      "TEN": "Tên",
+      "DANG_KY_CHAM_CONG_NGOAI_GIO": "Đăng ký chấm công ngoài giờ",
+      "THU": "Thứ:",
+      "PHONG_BAN": "Phòng ban:",
+      "NHAN_VIEN": "Nhân viên:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "GIO_BAT_DAU": "Giờ bắt đầu:",
+      "GIO_KET_THUC": "Giờ kết thúc:",
+      "LY_DO": "Lý do",
+      "LUU": "Lưu"
+    }
+  },
+  "QUAN_LY_VI_PHAM": {
+    "QUAN_LY_VI_PHAM": "Quản lý vi phạm",
+    "NGAY": "ngày",
+    "THANG": "tháng",
+    "NAM": "năm",
+    "TIM": "Tìm",
+    "XUAT_EXCEL": "Xuất Excel",
+    "JS": {
+      "TEN_BO_PHAN_TAT_CA": "Tất cả"
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Ngày không hợp lệ !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!"
+    },
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "HO_TEN": "Họ tên",
+      "DON_VI": "Đơn vị",
+      "NGAY": "Ngày",
+      "HINH_THUC_VI_PHAM": "Hình thức vi phạm",
+      "TG_VAO_SANG_QUY_DINH": "Vào sáng QĐ",
+      "TG_VAO_SANG": "TG vào sáng",
+      "TG_RA_CHIEU_QUY_DINH": "Ra chiều QĐ",
+      "TG_RA_CHIEU": "TG ra chiều",
+      "TG_VAO_TRE": "TG vào trễ",
+      "TG_RA_SOM": "TG ra sớm"
+    }
+  },
+  "DANG_KY_BO_SUNG_CONG": {
+    "DANG_KY_BO_SUNG_CONG": "Đăng ký bổ sung công",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "TIM": "Tìm",
+    "JS": {
+      "TRANG_THAI_ARRAY": {
+        "CHO_XET": "Chờ xét",
+        "KHONG_CHAP_NHAN": "Không chấp nhận",
+        "CHAP_NHAN": "Chấp nhận"
+      },
+      "BUOI_ARRAY": {
+        "CA_NGAY": "Cả ngày",
+        "SANG": "Sáng",
+        "CHIEU": "Chiều"
+      }
+    },
+    "ALERT": {
+      "NGAY_KHONG_HOP_LE": "Ngày không hợp lệ !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !!",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "Trưởng đơn vị đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    },
+    "TABLE": {
+      "STT": "STT",
+      "NGAY_DANG_KY": "Ngày đăng ký",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "BUOI": "Buổi",
+      "LY_DO": "Lý do",
+      "NGAY_TAO": "Ngày tạo",
+      "NHAN_VIEN": "Nhân viên",
+      "TRANG_THAI": "Trạng thái",
+      "PHAN_HOI": "Phản hồi",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_BO_SUNG_CONG": "QUY ĐỊNH BỔ SUNG CÔNG",
+      "QUY_DINH_1": "1. Việc bổ sung công chỉ được thực hiện trong trường hợp không bấm được vân tay do lỗi hệ thống hoặc quên bấm vân tay",
+      "QUY_DINH_2": "2. Thẩm quyền duyệt bổ sung công: Ban Giám đốc / Trưởng bộ phận /Quản lý/ Ban Giám hiệu của đơn vị mình quản lý",
+      "QUY_DINH_3": "3. Nếu quên bấm vân tay từ 4 lần trở lên trong tháng sẽ bị nhắc nhở và xem xét trong quá trình đánh giá KPIs.",
+      "QUY_DINH_4": "4. Những ngày không bấm vân tay nhưng không được Trưởng bộ phận/ Quản lý/Ban giám hiệu xác nhận thì sẽ được coi là nghỉ không lương ngày đó.",
+      "QUY_DINH_5": "5. Nếu vào trễ từ 2h đến 4h mà không có lý do chính đáng thì sẽ được coi là nghỉ nửa ngày không lương.",
+      "QUY_DINH_6": "6. Việc Bổ sung công chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "TAO_MOI_MODAL": {
+      "BO_SUNG_CONG": "Bổ sung công",
+      "BUOI": "Buổi:",
+      "TU_NGAY": "Từ ngày:",
+      "DEN_NGAY": "Đến ngày:",
+      "LY_DO": "Lý do:",
+      "LUU": "Lưu"
+    }
+  },
+  "QUAN_LY_KHAI_BAO_CONG_TAC": {
+    "QUAN_LY_KHAI_BAO_CONG_TAC": "Quản lý khai báo công tác",
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "IN": "In",
+    "CHO_XET": "Chờ xét",
+    "CHAP_NHAN": "Chấp nhận",
+    "KHONG_CHAP_NHAN": "Không chấp nhận",
+    "BUTON_CHAP_NHAN": "Chấp nhận",
+    "BUTON_KHONG_CHAP_NHAN": "Không chấp nhận",
+    "XUAT_EXCEL": "Xuất Excel",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "DON_VI": "Đơn vị",
+    "TIM": "Tìm",
+    "TAT_CA_DON_CHUA_DUYET": "Tất cả đơn chưa duyệt",
+    "TRUONG": "Trường",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "DANH_SACH_TAP_TIN": "Danh sách tập tin",
+    "CONFIRM": "Bạn có chắc chắn xoá hay không ?",
+    "ALERT": {
+      "CHUA_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ",
+      "TU_NGAY_DEN_NGAY_KHONG_HOP_LE": "Từ ngày đến ngày không hợp lệ!",
+      "THOI_GIAN_DANG_KY_BI_TRUNG": "Thời gian đăng ký bị trùng!!!",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "LUU_THAT_BAI": "Lưu thất bại !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn !!",
+      "BANG_CONG_DA_DUYET_KHONG_DUOC_XOA": "Bảng công đã duyệt không được xóa.",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại !!",
+      "SO_NGAY_NGHI_KHONG_HOP_LE": "Số ngày nghỉ không hợp lệ: ",
+      "TRUONG_DON_VI_DA_DUYET_KHONG_DUOC_XOA": "Trưởng đơn vị đã duyệt không được xóa.",
+      "CHAP_NHAN_THANH_CONG": "Chấp nhận thành công !!",
+      "THANH_CONG": "Thành công !!"
+    },
+    "TABLE": {
+      "STT": "STT",
+      "HO_TEN": "Họ tên",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "NGAY_CONG_TAC": "Ngày công tác",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "SO_NGAY": "Số ngày",
+      "BUOI": "Buổi",
+      "NOI_DUNG": "Nội dung",
+      "DIA_DIEM": "Địa điểm",
+      "NGAY_TAO": "Ngày tạo",
+      "NHAN_VIEN": "Nhân viên",
+      "TRANG_THAI": "Trạng thái",
+      "PHAN_HOI": "Phản hồi"
+    },
+    "QUY_DINH": {
+      "QUY_DINH_DANG_KY_DI_CONG_TAC": "Quy định đăng ký đi công tác",
+      "QUY_DINH_1": "1. Việc đăng kí đi công tác chỉ được thực hiện khi có yêu cầu phải xử lý công việc phục vụ cho Công ty (Không áp dụng cho việc làm giấy tờ cá nhân) ở bên ngoài và phải được Trưởng bộ phận/ Quản lý/Ban giám hiệu chấp thuận.",
+      "QUY_DINH_2": "2. Thẩm quyền duyệt đăng kí đi công tác: Ban Giám đốc / Trưởng bộ phận /Quản lý/ Ban Giám hiệu của đơn vị mình quản lý.",
+      "QUY_DINH_3": "3. Việc đăng kí đi công tác chỉ được thực hiện trong kì chấm công, khi đã chốt chấm công thì không được đăng kí."
+    },
+    "NEW": {
+      "KHAI_BAO_CONG_TAC": "Khai báo công tác ",
+      "DON_VI": "Đơn vị",
+      "CA_NHAN": "Cá nhân",
+      "DIA_DIEM": "Địa điểm",
+      "BUOI": "Buổi",
+      "CA_NGAY": "Cả ngày",
+      "BUOI_SANG": "Buổi sáng",
+      "BUOI_CHIEU": "Buổi chiều",
+      "TU_NGAY": "Từ ngày",
+      "DEN_NGAY": "Đến ngày",
+      "MUC_DICH": "Mục đích",
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên"
+    },
+    "TRANG_THAI": {
+      "TT_TAT_CA": "Tất cả",
+      "TT_CHO_XET": "Chờ xét",
+      "TT_CHAP_NHAN": "Chấp nhận",
+      "TT_KHONG_CHAP_NHAN": "Không chấp nhận"
+    }
+  },
+  "CHOT_CHAM_CONG_THANG": {
+    "CHOT_CHAM_CONG_THANG": "CHỐT CHẤM CÔNG THÁNG",
+    "THANG": {
+      "THANG": "Tháng:",
+      "THANG1": "Tháng 1",
+      "THANG2": "Tháng 2",
+      "THANG3": "Tháng 3",
+      "THANG4": "Tháng 4",
+      "THANG5": "Tháng 5",
+      "THANG6": "Tháng 6",
+      "THANG7": "Tháng 7",
+      "THANG8": "Tháng 8",
+      "THANG9": "Tháng 9",
+      "THANG10": "Tháng 10",
+      "THANG11": "Tháng 11",
+      "THANG12": "Tháng 12"
+    },
+    "NAM": "Năm:",
+    "DON_VI": "Đơn vị:",
+    "TRANG_THAI": "Trạng thái:",
+    "CHOT_CONG": "Chốt công",
+    "HUY_CHOT": "Hủy chốt",
+    "CONG_HANH_CHINH": "Công hành chính",
+    "CONG_NGOAI_GIO": "Công ngoài giờ",
+    "TRUONG": "Trường",
+    "DANG_XU_LY_VUI_LONG_CHO": "Đang xử lý vui lòng chờ...",
+    "TAT_CA": "Tất cả",
+    "DON_VI_BOX": "Đơn vị",
+    "ALERT": {
+      "VUI_LONG_CHON_THANG": "Vui lòng chọn tháng !!",
+      "VUI_LONG_NHAP_NAM": "Vui lòng nhập năm !!",
+      "KY_CHAM_CONG_THANG": "Kỳ chấm công tháng",
+      "CHUA_DO_DU_LIEU_CHAM_CONG_THANG": "Chưa đổ dữ liệu chấm công tháng",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !!",
+      "THANG_NAY_DA_CHOT_CHAM_CONG_ROI": "Tháng này đã chốt chấm công rồi !!",
+      "DA_KHOA_CHAM_CONG": "Đã khóa chấm công trên phần mềm HRM !!",
+      "THANH_CONG": "Thành công !!",
+      "THAT_BAI": "Thất bại !!",
+      "CHUA_CO_DU_LIEU": "Chưa có dữ liệu !!",
+      "HUY_THANH_CONG": "Hủy thành công",
+      "THAT_BAI_CHUA_HUY_KY_TINH_LUONG": "Thất bại. Chưa hủy liên kết kỳ tính lương !!",
+      "BAN_THAT_SU_MUON_CHOT_CONG_NGOAI_GIO": "Bạn có thật sự muốn chốt công ngoài giờ?",
+      "CHOT_CONG_NGOAI_GIO_THANH_CONG": "Chốt công ngoài giờ thành công !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_THAT_SU_MUON_CHOT_CONG": "Bạn có thật sự muốn chốt công?"
+    }
+  },
+  "KIEM_TRA_CHOT_CONG_DON_VI": {
+    "KIEM_TRA_CHOT_CONG_DON_VI": "KIỂM TRA CHỐT CÔNG ĐƠN VỊ",
+    "XUAT_EXCEL": "Xuất excel",
+    "TAT_CA": "Tất cả",
+    "CHUA_XET": "Chưa xét",
+    "DA_XET": "Đã xét",
+    "THANG": "tháng",
+    "NAM": "năm",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "PHONG_BAN": "Phòng ban",
+      "THANG": "Tháng",
+      "TRANG_THAI": "Trạng thái"
+    },
+    "ALERT": {
+      "THANG_KHONG_HOP_LE": "Tháng không hợp lệ !",
+      "NAM_KHONG_HOP_LE": "Năm không hợp lệ !"
+    }
+  },
+  "QUAN_LY_USER": {
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "TEN_USER": "Tên user",
+      "HO_TEN": "Họ tên",
+      "TEN_BO_PHAN": "Tên bộ phận",
+      "LOAI_TAI_KHOAN": "Loại tài khoản",
+      "TRANG_THAI": "Trạng thái"
+    },
+    "ADD": {
+      "THONG_TIN_NGUOI_DUNG": "Thông Tin Người Dùng",
+      "LOAI_TAI_KHOAN": "Loại tài khoản",
+      "TRUONG": "Trường",
+      "PHONG_BAN": "Phòng ban",
+      "NHAN_VIEN": "Nhân viên",
+      "KHONG_CHON": "Không chọn",
+      "TEN_DANG_NHAP": "Tên đăng nhập",
+      "MAT_KHAU": "Mật khẩu",
+      "TRANG_THAI": "Trạng thái",
+      "TT_HOAT_DONG": "Hoạt động",
+      "TT_KHOA_LAI": "Khóa lại",
+      "LUU": "Lưu",
+      "LUU_Y": "Lưu ý:",
+      "BAT_BUOC_NHAP": " Bắt buộc nhập",
+      "PHAN_QUYEN_TRUONG_DON_VI": "Phân quyền trường | đơn vị",
+      "CHON_TAT_CA": "Chọn tất cả"
+    },
+    "HO_SO_NHAN_VIEN": {
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên"
+    },
+    "ALERT": {
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "Tên đăng nhập và mật khẩu không được trống.",
+      "TEN_DANG_NHAP_DA_TON_TAI": "Tên đăng nhập đã tồn tại",
+      "EMAIL_GIAM_DOC_CHI_NHANH_KHONG_HOP_LE": "Email giám đốc chi nhánh không hợp lệ.",
+      "EMAIL_GIAM_DOC_KHOI_KHONG_HOP_LE": "Email giám đốc khối không hợp lệ.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email trưởng phòng không hợp lệ.",
+      "CHON_NHAN_VIEN": "Chọn nhân viên.",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn!!",
+      "XOA_THANH_CONG": "Xóa thành công !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    },
+    "THONG_TIN_NGUOI_DUNG_VIEW": {
+      "THONG_TIN_NGUOI_DUNG": "Thông tin người dùng",
+      "LOAI_TAI_KHOAN": "Loại tải khoản",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "TEN_USER": "Tên user",
+      "MAT_KHAU": "Mật khẩu",
+      "DOI_MAT_KHAU": "Đổi mật khẩu",
+      "XAC_NHAN_MAT_KHAU": "Xác nhận mật khẩu",
+      "HO_TEN": "Họ tên",
+      "EMAIL": "Email",
+      "EMAIL_TP": "Email TP",
+      "EMAIL_HT": "Email HT",
+      "EMAIL_HDQT": "Email HĐQT",
+      "BO_PHAN": "Bộ phận",
+      "TRANG_THAI": "Trạng thái",
+      "HOAT_DONG": "Hoạt động",
+      "KHOA_LAI": "Khóa lại",
+      "PHAN_QUYEN_DON_VI": "Phân quyền đơn vị",
+      "CHON_TAT_CA": "Chọn tất cả",
+      "LUU_Y": "Lưu ý ",
+      "BAT_BUOC_NHAP": "Bắt buộc nhập",
+      "LUU": "Lưu",
+      "TRO_VE": "Trở về",
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "Tên đăng nhập và mật khẩu không được trống",
+      "MAT_KHAU_KHONG_KHOP": "Mật khẩu không khớp",
+      "TEN_DANG_NHAP_DA_TON_TAI": "Tên đăng nhập đã tồn tại",
+      "CHON_LOAI_TAI_KHOAN": "Chọn loại tài khoản.",
+      "EMAIL_HIEU_TRUONG_KHONG_HOP_LE": "Email hiệu trưởng không hợp lệ",
+      "EMAIL_HOI_DONG_QUAN_TRI_KHONG_HOP_LE": "Email Hội đồng quản trị không hợp lệ.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email trưởng phòng không hợp lệ.",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "CO_LOI_XAY_RA": "Có lỗi xảy ra"
+    }
+  },
+  "QUAN_LY_USER_ADMIN": {
+    "TAO_MOI": "Tạo mới",
+    "XOA": "Xóa",
+    "TABLE": {
+      "STT": "STT",
+      "MA_NHAN_SU": "Mã nhân sự",
+      "TEN_USER": "Tên user",
+      "HO_TEN": "Họ tên",
+      "TEN_BO_PHAN": "Tên bộ phận",
+      "LOAI_TAI_KHOAN": "Loại tài khoản",
+      "TRANG_THAI": "Trạng thái"
+    },
+    "ADD": {
+      "THONG_TIN_NGUOI_DUNG": "Thông Tin Người Dùng",
+      "LOAI_TAI_KHOAN": "Loại tài khoản",
+      "TRUONG": "Trường",
+      "PHONG_BAN": "Phòng ban",
+      "NHAN_VIEN": "Nhân viên",
+      "KHONG_CHON": "Không chọn",
+      "TEN_DANG_NHAP": "Tên đăng nhập",
+      "MAT_KHAU": "Mật khẩu",
+      "TRANG_THAI": "Trạng thái",
+      "TT_HOAT_DONG": "Hoạt động",
+      "TT_KHOA_LAI": "Khóa lại",
+      "LUU": "Lưu",
+      "LUU_Y": "Lưu ý:",
+      "BAT_BUOC_NHAP": " Bắt buộc nhập",
+      "PHAN_QUYEN_TRUONG_DON_VI": "Phân quyền trường | đơn vị",
+      "CHON_TAT_CA": "Chọn tất cả"
+    },
+    "HO_SO_NHAN_VIEN": {
+      "MA_QUAN_LY": "Mã quản lý",
+      "HO_TEN": "Họ tên"
+    },
+    "ALERT": {
+      "TEN_DANG_NHAP_VA_MAT_KHAU_KHONG_DUOC_TRONG": "Tên đăng nhập và mật khẩu không được trống.",
+      "TEN_DANG_NHAP_DA_TON_TAI": "Tên đăng nhập đã tồn tại",
+      "EMAIL_HIEU_TRUONG_KHONG_HOP_LE": "Email Hiệu trưởng không hợp lệ.",
+      "EMAIL_HOI_DONG_QUAN_TRI_KHONG_HOP_LE": "Email Hội đồng quản trị không hợp lệ.",
+      "EMAIL_TRUONG_PHONG_KHONG_HOP_LE": "Email trưởng phòng không hợp lệ.",
+      "CHON_NHAN_VIEN": "Chọn nhân viên.",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn!!",
+      "XOA_THANH_CONG": "Xóa thành công !!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    }
+  },
+  "QUAN_LY_GUI_MAIL": {
+    "QUAN_LY_GUI_MAIL": "QUẢN LÝ GỬI MAIL",
+    "TU_NGAY": "Từ ngày",
+    "DEN_NGAY": "Đến ngày",
+    "XOA": "Xóa",
+    "TIM": "Tìm",
+    "TABLE": {
+      "STT": "STT",
+      "TIEU_DE": "Tiêu đề",
+      "NOI_DUNG": "Nội dung",
+      "EMAIL_GUI": "Email gửi",
+      "EMAIL_NHAN": "Email nhận",
+      "NGAY_GUI": "Ngày gửi"
+    },
+    "ALERT": {
+      "CHON_NHAN_VIEN": "Chọn nhân viên.",
+      "LUU_THANH_CONG": "Lưu thành công !!",
+      "CHUA_CO_DONG_NAO_DUOC_CHON": "Chưa có dòng nào được chọn!!",
+      "XOA_THANH_CONG": "Xóa thành công !!",
+      "XOA_THAT_BAI": "Xóa thất bại!!"
+    },
+    "CONFIRM": {
+      "BAN_CO_CHAC_CHAN_XOA_HAY_KHONG": "Bạn có chắc xóa hay không ?"
+    }
+  },
+  "GUI_EMAIL": {
+    "GUI_EMAIL": "GỬI EMAIL",
+    "TU": "Từ",
+    "MAT_KHAU": "Mật khẩu",
+    "GUI_DEN": "Gửi đến",
+    "TIEU_DE": "Tiêu đề",
+    "GUI": "Gửi",
+    "DANG_XU_LY_VUI_LONG_CHO": "Đang xử lý gửi mail vui lòng chờ .......",
+    "TAI_TAP_TIN_THANH_CONG": "Tải tập tin thành công !!!",
+    "ALERT": {
+      "VUI_LONG_NHAP_EMAIL_GUI": "Vui lòng nhập email gửi.",
+      "VUI_LONG_NHAP_MAT_KHAU_GUI": "Vui lòng nhập mật khẩu gửi.",
+      "VUI_LONG_NHAP_EMAIL_NHAN": "Vui lòng nhập email nhận!",
+      "EMAIL_GUI": "Email gửi: [",
+      "KHONG_HOP_LE": "] Không hợp lệ",
+      "EMAIL_NHAN": "Email nhận: [",
+      "GUI_EMAIL_THANH_CONG": "Gửi mail thành công !!",
+      "GUI_EMAIL_THAT_BAI": "Gửi mail thất bại. Vui lòng kiểm tra Email gửi và mật khẩu"
+    }
+  },
+  "QUAN_LY_NHAC_VIEC": {
+    "THONG_BAO_NGOAI_GIO": {
+      "THONG_BAO_NGOAI_GIO": "THÔNG BÁO NGOÀI GIỜ",
+      "CO": "Có",
+      "DON_XIN_LAM_NGOAI_GIO": "đơn xin làm ngoài giờ"
+    },
+    "THONG_BAO_KHAI_BAO_CONG_TAC": {
+      "THONG_BAO_KHAI_BAO_CONG_TAC": "THÔNG BÁO KHAI BÁO CÔNG TÁC",
+      "CO": "Có",
+      "DON_KHAI_BAO_CONG_TAC_CAN_DUYET": "đơn khai báo công tác cần duyệt"
+    },
+    "THONG_BAO_DON_XIN_NGHI": {
+      "THONG_BAO_DON_XIN_NGHI": "THÔNG BÁO ĐƠN XIN NGHỈ",
+      "CO": "Có",
+      "DON_XIN_NGHI_CAN_DUYET": "Đơn xin nghỉ cần duyệt"
+    }
+  },
+  "QUAN_LY_MENU_VA_PHAN_QUYEN": {
+    "PHAN_QUYEN": {
+      "PHAN_QUYEN": "Phân quyền",
+      "DANH_SACH_NHOM_NGUOI_DUNG": "Danh sách nhóm người dùng",
+      "ALERT": {
+        "BAN_CHUA_CHON_PHAN_TU": "Bạn chưa chọn phần tử!",
+        "THANH_CONG": "Thành công!",
+        "THAT_BAI": "Thất bại!"
+      },
+      "EDIT": {
+        "PHAN_QUYEN_MENU": "Phân quyền menu",
+        "TEN_NHOM": "Tên nhóm",
+        "DANH_SACH_MENU": "Danh sách Menu",
+        "DONG_Y": "Đồng ý",
+        "HUY": "Hủy"
+      }
+    },
+    "QUAN_LY_MENU": {
+      "QUAN_LY_MENU": "Quản lý Menu",
+      "DANH_SACH_MENU": "Danh sách Menu",
+      "LOC_BOI": "Lọc bởi:",
+      "LOC": "Lọc",
+      "XOA": "Xóa",
+      "TU_KHOA": "Từ khóa",
+      "ALERT": {
+        "BAN_CHUA_CHON_PHAN_TU": "Bạn chưa chọn phần tử!",
+        "THANH_CONG": "Thành công!",
+        "THAT_BAI": "Thất bại!"
+      },
+      "EDIT": {
+        "QUAN_LY": "Quản lý",
+        "TEN": "Tên",
+        "THU_TU": "Thứ tự",
+        "MENU_CHA": "Menu cha",
+        "CHON_MENU": "Chọn Menu ...",
+        "DONG_Y": "Đồng ý",
+        "HUY": "Hủy"
+      }
+    }
+  },
+  "THONG_TIN_TAI_KHOAN": {
+    "ALERT": {
+      "LUU_THANH_CONG": "Lưu thành công !!"
+    },
+    "THONG_TIN_NGUOI_QUAN-TRI": "THÔNG TIN NGƯỜI QUẢN TRỊ",
+    "MA_NHAN_SU": "Mã nhân sự",
+    "TEN_USER": "Tên user",
+    "MAT_KHAU": "Mật khẩu",
+    "DOI_MAT_KHAU": "Đổi mật khẩu",
+    "XAC_NHAN_MAT_KHAU": "Xác nhận mật khẩu",
+    "HO_TEN": "Họ tên",
+    "EMAIL": "Email",
+    "EMAIL_TP": "Email TP",
+    "EMAIL_HT": "Email HT",
+    "EMAIL_HDQT": "Email HĐQT",
+    "LUU": "Lưu",
+    "TRO_VE": "Trở về"
+  }
+}

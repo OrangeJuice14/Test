@@ -1,0 +1,108 @@
+﻿<style>
+    fieldset {
+        border: 1px solid #ddd !important;
+    }
+
+    legend {
+        display: block;
+        width: auto !important;
+        padding: 0;
+        margin-left: 10px;
+        margin-bottom: 0px !important;
+        font-size: 14px;
+        line-height: inherit;
+        color: #333;
+        border: 0 !important;
+    }
+
+    .radio-inline {
+        margin-left: 10px;
+    }
+
+    .template-in-select p {
+        margin-bottom: 0px
+    }
+
+    /*input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+        border-radius: 5px !important;
+    }*/
+</style>
+
+<md-content layout-padding="">
+    <form class="form-horizontal" name="TieuChiForm" role="form" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Tiêu chí</h3>
+            <p class="modal-title">Bộ tiêu chí: {{BoTieuChi.Name}}</p>
+        </div>
+        <div class="modal-body" style="max-height: 700px; overflow:auto">
+
+            <div style=" margin-bottom:5px;">
+                <div style="width: 120px; display: inline-block; margin-top: 5px">
+                    STT:
+                    <input type="number" class="k-textbox" name="STT" placeholder="STT" style="text-align:center; width: 70px" ng-model="TieuChi.STT" />
+                </div>
+                <div style="width:200px; display:inline-block; margin-top: 5px">
+                    Chỉ mục:
+                    <input type="text" class="k-textbox" name="ChiMuc" placeholder="Chỉ mục" ng-model="TieuChi.ChiMuc" style="width:130px" />
+                </div>
+                <div style="width:150px; display:inline-block; margin-top: 5px">
+                    Điểm tối đa:
+                    <input type="number" class="k-textbox" name="Diem" style="text-align:center; width: 70px" ng-model="TieuChi.DiemToiDa" />
+                </div>
+                <div style="width:200px; display:inline-block; margin-top: 5px">
+                    Điểm:
+                    <input type="text" class="k-textbox" name="Diem" style="text-align:center; width: 150px" ng-model="TieuChi.ListDiem" />
+                </div>
+                <div ng-show="TieuChi.ParentId == null">
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="TieuChi.IsDiemDanhGiaCongTac" ng-disabled="TieuChi.IsDiemThuong" value="">Điểm đánh giá công tác</label>
+                    <label class="checkbox-inline"><input type="checkbox" ng-model="TieuChi.IsDiemThuong" ng-disabled="TieuChi.IsDiemDanhGiaCongTac" value="">Điểm thưởng</label>
+                </div>
+
+            </div>
+
+            <div style="display: flow-root;color:red" ng-show="ShowErrorsListDiem">
+                <b>Lỗi điểm: </b>
+                <p>- Phải là số, các số cách nhau bằng 1 dấu ';' và không có khoảng trắng, kết thúc bằng dấu ';'.</p>
+                <p>VD: 0.5;1;2;3.25;4;</p>
+            </div>
+            <div>
+                Nội dung tiêu chí
+                <textarea required="" ckeditor name="NoiDung" ng-model="TieuChi.NoiDung"></textarea>
+            </div>
+            <div ng-if="TieuChiId != null;">
+                <fieldset>
+                    <legend>Danh sách tiêu chí con</legend>
+                    <div style="display:flow-root; margin: 10px 10px;">
+                        <label class="checkbox-inline"><input type="checkbox" ng-model="TieuChi.ChildSelectOne" value="">Tiêu chí con chọn 1</label>
+                        <button style="float:right; margin: 2px 2px 0 0" ng-click="Modify(null)" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <table class="table table-bordered table-hover table-striped" ng-if="ListTieuChiChild.length != 0">
+                        <thead>
+                            <tr class="text-align-center" style="font-weight:bold">
+                                <td style="width: 80px">Chỉ mục</td>
+                                <td>Nội dung</td>
+                                <td style="width: 100px">Điểm tối đa</td>
+                                <td style="width: 105px"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="Child in ListTieuChiChild">
+                                <td class="text-align-center" style="vertical-align:middle">{{Child.ChiMuc}}</td>
+                                <td ng-bind-html="Child.NoiDung"></td>
+                                <td>{{Child.DiemToiDa}}</td>
+                                <td>
+                                    <button ng-click='Modify(Child.Id)' class='btn btn-success btn-xs' style='padding: 0px 5px; width:40px'><i class='fa fa-pencil'></i>  </button>
+                                    <button ng-click='Delete(Child.Id)' class='btn btn-danger btn-xs' style='padding: 0px 5px; width:40px'><i class='fa fa-times'></i>  </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" style="cursor:pointer" ng-click="save()" ng-disabled="TieuChiForm.$invalid || ShowErrorsListDiem || Saving">Lưu</button>
+            <button class="btn btn-warning" style="cursor: pointer" ng-click="cancel()">Thoát</button>
+        </div>
+    </form>
+</md-content>

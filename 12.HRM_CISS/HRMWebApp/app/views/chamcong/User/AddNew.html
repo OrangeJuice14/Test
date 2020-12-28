@@ -1,0 +1,101 @@
+﻿
+<div class="col-lg-12 col-xs-12 col-sm-12">
+    <div class="form-horizontal form-bordered">
+        <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;"><span data-i18n="QUAN_LY_USER.ADD.THONG_TIN_NGUOI_DUNG">Thông Tin Người Dùng</span></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.LOAI_TAI_KHOAN">Loại tài khoản:</span></label>
+            <div class="col-sm-7">
+                <div id="jqxComboBox_LoaiTaiKhoan"></div>
+                <!--  <select id="accountlist" data-bind="options: accountList, optionsText: 'Name', optionsValue: 'ID', value: accountSelected" onchange="HidePhanQuyenDonVi()"></select>-->
+            </div>
+        </div>
+
+        <div class="form-group" id="truong">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.TRUONG">Trường:</span></label>
+            <div class="col-sm-7">
+                <select style="width: 300px" data-bind="options: companys, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+            </div>
+        </div>
+
+        <div class="form-group" id="departmentnhanvien">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.PHONG_BAN">Phòng ban:</span></label>
+            <div class="col-sm-7">
+                <select style="width: 300px" data-bind="options: departments, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: departmentSelected_nhansu, optionsCaption: dataLocalize('QUAN_LY_USER.ADD.KHONG_CHON')"></select>
+            </div>
+        </div>
+        <div class="form-group" data-bind="visible: departmentSelected_nhansu() !== undefined" id="danhsachnhanvien">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.NHAN_VIEN">Nhân viên:</span></label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton">
+                    <div style="border-color: transparent;" id="jqxgrid_hosonhanvien">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.TEN_DANG_NHAP">Tên đăng nhập:</span></label>
+            <div class="col-sm-7">
+                <input type="text" data-bind="value: userName" id="txtUserName" />
+                <span class="validate" data-bind="visible: $.trim(userName()).length == 0">(*)</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.MAT_KHAU">Mật khẩu:</span></label>
+            <div class="col-sm-7">
+                <div id="jqxdropdownbutton">
+                    <input type="password" data-bind="value: passWord" />
+                    <span class="validate" data-bind="visible: $.trim(passWord()).length == 0">(*)</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.TRANG_THAI">Trạng thái:</span></label>
+            <div class="col-sm-7">
+                <input type="radio" data-bind="checked: status" value="true" name="rStatus" checked /><span data-i18n="QUAN_LY_USER.ADD.TT_HOAT_DONG">Hoạt động</span>
+                <input type="radio" data-bind="checked: status" value="false" name="rStatus" /><span data-i18n="QUAN_LY_USER.ADD.TT_KHOA_LAI">Khóa lại</span>
+            </div>
+        </div>
+        <div class="form-group" id="emailtp">
+            <label class="col-sm-3 control-label no-padding-right">Email TP:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailtp" style="height:10px;" />
+            </div>
+        </div>
+        <div class="form-group" id="emailht">
+            <label class="col-sm-3 control-label no-padding-right">Email HT:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailht" style="height:10px;" />
+            </div>
+        </div>
+        <div class="form-group" id="emailhdqt">
+            <label class="col-sm-3 control-label no-padding-right">Email HĐQT:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="value: emailhdqt" style="height:10px;" />
+            </div>
+        </div>
+        <div class="form-group" id="phanquyendonvi">
+            <label class="col-sm-3 control-label no-padding-right"><span data-i18n="QUAN_LY_USER.ADD.PHAN_QUYEN_TRUONG_DON_VI">Phân quyền Trường | đơn vị:</span></label>
+            <div class="col-sm-7">
+                <div class="container">
+                    <div id="phanquyendonvi_treeview"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right"></label>
+            <div class="col-sm-7">
+                <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save">
+                    <i class="btn-label glyphicon glyphicon-ok"></i><span data-i18n="QUAN_LY_USER.ADD.LUU">Lưu</span>
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-7">
+                <span data-i18n="QUAN_LY_USER.ADD.LUU_Y">Lưu ý : </span><span style="color: red">(*)</span><span data-i18n="QUAN_LY_USER.ADD.BAT_BUOC_NHAP"> bắt buộc nhập</span>
+            </div>
+        </div>
+    </div>
+</div>

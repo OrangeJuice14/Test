@@ -1,0 +1,17 @@
+﻿<form class="form-horizontal" name="KPIForm" role="form" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': KPIForm.name.$invalid}">
+            <label for="name" class="col-md-4 control-label">Số lượng</label>
+            <div class="col-md-6">
+                <input name="PreviousKPI" kendo-numeric-text-box k-options="options" k-ng-model="obj.NumberOfResearch" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="Save()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

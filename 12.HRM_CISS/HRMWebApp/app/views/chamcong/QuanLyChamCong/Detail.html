@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head id="Head1">
+    <title></title>
+    <style type="text/css">
+        @media print {
+            body > * {
+                display: none !important;
+            }
+
+            body > .k-window {
+                display: block !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                width: auto !important;
+                height: auto !important;
+                border-width: 0;
+                box-shadow: none !important;
+            }
+
+            .k-window .k-window-titlebar {
+                display: none;
+            }
+        }
+        /* Hover tooltips */
+        .field-tip {
+            position: relative;
+            cursor: help;
+        }
+
+            .field-tip .tip-content {
+                position: absolute;
+                top: -10px;
+                right: 9999px;
+                width: 200px;
+                margin-right: -220px;
+                padding: 10px;
+                color: #fff;
+                background: #333;
+                -webkit-box-shadow: 2px 2px 5px #aaa;
+                -moz-box-shadow: 2px 2px 5px #aaa;
+                box-shadow: 2px 2px 5px #aaa;
+                opacity: 1;
+                z-index: 999;
+            }
+
+                .field-tip .tip-content:before {
+                    content: ' '; /* Must have content to display */
+                    position: absolute;
+                    top: 50%;
+                    left: -16px;
+                    width: 0;
+                    height: 0;
+                    margin-top: -8px;
+                    border: 8px solid;
+                    border-right-color: #333;
+                }
+
+            .field-tip:hover .tip-content {
+                right: -20px;
+                opacity: 1;
+            }
+    </style>
+    <script type="text/javascript">
+        var session = {};
+        $(function () {
+            var source;
+            $.ajax({
+                type: 'POST',
+                url: '/Authentication/GetUserSessionInfo',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    session = result;
+                }
+            });
+        });
+
+        function getDaysInMonth(m, y) {
+            var daysArray = [];
+            daysInWeek = ['<span style="color:red">CN</span>', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            daysIndex = { 'Sun': 0, 'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5, 'Sat': 6 };
+            index = daysIndex[(new Date(y, m - 1, 1)).toString().split(' ')[0]];
+            var numDaysInMonth = /8|3|5|10/.test(--m) ? 30 : m == 1 ? (!(y % 4) && y % 100) || !(y % 400) ? 29 : 28 : 31;
+            for (i = 0, l = numDaysInMonth  ; i < l  ; i++) {
+                daysArray.push((i + 1) + '<br/>' + daysInWeek[index++]);
+                if (index == 7) index = 0;
+            }
+            return daysArray;
+        }
+
+        function viewModel(item, phongban, month, year) {
+            var self = this;
+            self.items = ko.observableArray(item);
+            self.CheckChot = ko.observable();
+            self.HinhThucNghiList = ko.observableArray();
+            self.HinhThucNghiListForUpdate = ko.observableArray([]);
+            self.TenPhongBan = ko.observable();
+            self.month = month;
+            self.year = year;
+            self.phongban = phongban;
+            self.webGroupId = ko.observable(session.WebGroupId.toUpperCase());
+            //
+            self.daylength = ko.observable();
+            self.spanlength = ko.observable();
+            self.days = ko.observableArray([]);
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetPhongBan_ById',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: ko.toJSON({ id: self.phongban }),
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.TenPhongBan(obj.TenBoPhan);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_CheckChot',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: month,
+                    nam: year,
+                    boPhanId: phongban
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    self.CheckChot = result;
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghi',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiList(obj);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/QuanLyChamCong_GetListHinhThucNghiForUpdate',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    self.HinhThucNghiListForUpdate(obj);
+                }
+            });
+            self.dayInMonth = getDaysInMonth(self.month, self.year);
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetList_NgayTrongKyChamCong',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    thang: self.month,
+                    nam: self.year,
+                    bophanId: phongban,
+                    webGroupId: self.webGroupId()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    data = result;
+                    //
+                    self.days(data);
+                    self.daylength(data.length);
+                    self.spanlength(data.length + 7);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="chamcong_detail">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="font-family: Arial,Tahoma; font-size: 20pt; color:black; font-weight: bold;text-align:center;text-transform:uppercase;"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.BANG_CHAM_CONG">BẢNG CHẤM CÔNG</span></td>
+                </tr>
+                <tr>
+                    <td><div align="center" style="font-family: Arial, Tahoma; font-size: 14pt;color:black; font-weight: bold; padding-bottom: 5px;text-align:center"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.THANG">Tháng</span> <span data-bind="text:month"></span> <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.NAM">năm</span> <span data-bind="text:year"></span></div></td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="1" cellpadding="1" cellspacing="0" style="color:black;">
+            <tr>
+                <td colspan="39" style="background-color: grey; color: White; font-weight: bold; font-size: 14pt;" data-bind="text:TenPhongBan"></td>
+            </tr>
+            <tr style="height: 30px;">
+                <th style="width: 25px;text-align:center;" rowspan="2"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.STT">STT</span></th>
+                <th style="width: 200px;text-align:center;" rowspan="2"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.HO_TEN">Họ tên</span></th>
+               <!-- <th data-bind="attr: { colspan: dayInMonth.length }" style="text-align:center;padding:4px;">Ngày trong tháng</th>-->
+                <th style="text-align:center" data-bind="attr: { colspan: $root.daylength }"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.NGAY_TRONG_THANG">Ngày trong tháng</span></th>
+                <!-- ko if: CheckChot -->
+                <th rowspan="2" style="padding:5px;text-align:center;">HL</th>
+                <th rowspan="2" style="padding:5px;text-align:center;">BH</th>
+                <th rowspan="2" style="padding:5px;text-align:center;">NP</th>
+                <th rowspan="2" style="padding:5px;text-align:center;">KL</th>
+                <th rowspan="2" style="padding:5px;text-align:center;"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.TONG">Tổng</span></th>
+                <!-- /ko -->
+            </tr>
+            <!--<tr data-bind="foreach:dayInMonth">
+                <td data-bind="html:$data" style="text-align:center;padding:2px;"></td>
+            </tr>-->
+            <tr>
+                <!-- ko foreach: $root.days -->
+                <!-- ko if:T7CN -->
+                <td style="width: 25px; background-color: lightgrey;color:red" data-bind="html: $data.Ngay + '<br>' + $data.Thu" align="center"></td>
+                <!-- /ko -->
+                <!-- ko if:!T7CN -->
+                <td style="width: 25px;" data-bind="html: $data.Ngay + '<br>' + $data.Thu" align="center"></td>
+                <!-- /ko -->
+                <!-- /ko -->
+            </tr>
+            <tbody data-bind="foreach:items">
+                <tr>
+                    <td align="center" data-bind="text:$index()+1"></td>
+                    <td data-bind="text:HoTen" style="padding:2px;"></td>
+                    <!-- ko if:!LaNhanVienToChucHanhChinh -->
+                    <td data-bind="attr: { colspan: $root.daylength }"></td>
+                    <!-- /ko -->
+                    <!-- ko if:LaNhanVienToChucHanhChinh -->
+                    <!-- ko foreach: ChiTietChamCong -->
+                    <td align="center">
+                        <!--ko if:$data.MaHinhThucNghi == '' -->
+                        <div style="width: 100%; height: 100%; background-color: #FF9393">&nbsp;</div>
+                        <!-- /ko -->
+                        <!--ko if:$data.MaHinhThucNghi != '' -->
+                        <!-- ko if:$data.QuanLyViPhamCount<=0 -->
+                            <span data-bind="text:$data.MaHinhThucNghi"></span>
+                        <!-- /ko -->
+                        <!-- ko if:$data.QuanLyViPhamCount>0 -->
+                        <span class="field-tip">
+                            <span data-bind="text:$data.MaHinhThucNghi"></span>                            
+                            <span class="tip-content" style="text-align:left;" data-bind="foreach: $data.QuanLyViPham">
+                                <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.VI_PHAM">- Vi phạm:</span> <span data-bind="text: HinhThucViPham"></span><br />
+                                <!--ko if: ThoiGianTre != '' -->
+                                <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.THOI_GIAN_TRE">- Thời gian trễ:</span> <span data-bind="text: ThoiGianTre"></span> <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.PHUT">phút</span><br />
+                                <!-- /ko -->
+                                <!--ko if: ThoiGianSom != '' -->
+                                <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.THOI_GIAN_SOM">- Thời gian sớm:</span> <span data-bind="text: ThoiGianSom"></span> <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.PHUT">phút</span>
+                                <!-- /ko -->
+                            </span>
+                        </span>
+                        <!-- /ko -->
+                        <!-- /ko -->
+
+                    </td>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: $parent.CheckChot -->
+                    <td data-bind="text:NgayHuongLuong" style="font-weight: bold; text-align: center"></td>
+                    <td data-bind="text:NgayHuongBHXH" style="font-weight: bold; text-align: center"></td>
+                    <td data-bind="text:NgayPhep" style="font-weight: bold;text-align: center;"></td>
+                    <!--<td data-bind="text:NghiBHXH" style="font-weight: bold;text-align: center;"></td>-->
+                    <td data-bind="text:NgayKhongLuong" style="font-weight: bold;text-align: center;"></td>
+                    <td data-bind="text:TongCong" style="font-weight: bold;text-align: center;"></td>
+                    <!-- /ko -->
+                </tr>
+            </tbody>
+        </table>
+        <table border="0" style="width:100%; height: 100px; font-family: Arial, Tahoma; font-size: 10pt;color:black">
+            <tbody>
+                <tr>
+                    <td height="41" align="center" width="329">
+                        <b><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.NGUOI_CHAM_CONG">Người chấm công</span></b><br>
+                        <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.KY_HO_TEN">(Ký, họ tên)</span>
+                    </td>
+                    <td height="41" align="center">
+                        <b><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.PHU_TRACH_BO_PHAN">Phụ trách bộ phận</span></b><br>
+                        <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.KY_HO_TEN">(Ký, họ tên)</span>
+                    </td>
+                    <td height="41" align="center" width="327">
+                        <b><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.NGUOI_DUYET">Người duyệt</span></b><br>
+                        <span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.KY_HO_TEN">(Ký, họ tên)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" width="329">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center" width="327">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="width: 100%;" align="left">
+            <div style="font-family: Tahoma,Arial; font-size: 10pt;color:black; padding-top: 10px;" align="left">
+                <span style="font-weight: bold;"><span data-i18n="QUAN_LY_CHAM_CONG.DETAIL_HTML.TABLE.GHI_CHU">Ghi chú:</span></span><br/><br/><br/>
+                <table style="float: left; width:33%">    
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: $index() < 8 -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu"></td>
+                            <td>:</td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <table style="float: left; width:33%">
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: ($index() >=8) && ($index() < 16) -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu"></td>
+                            <td>:</td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+                <table style="float: left; width:33%">
+                    <tbody data-bind="foreach: HinhThucNghiListForUpdate">
+                        <!-- ko if: $index() >=16 -->
+                        <tr>
+                            <td data-bind="html: $data.KyHieu"></td>
+                            <td>:</td>
+                            <td style="width:80%" data-bind="html: $data.TenHinhThucNghi"></td>
+                        </tr>
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

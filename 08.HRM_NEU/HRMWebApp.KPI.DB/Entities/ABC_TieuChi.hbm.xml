@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_TieuChi, HRMWebApp.KPI.DB" table="ABC_TieuChi">
+    <id name="Id" column="Oid"></id>
+    <property name="STT" column="STT"></property>
+    <property name="STTSapXep" column="STTSapXep"></property>
+    <property name="NoiDung" column="NoiDung"></property>
+    <property name="DiemToiDa" column="DiemToiDa"></property>
+    <property name="HeSoTieuChiCon" column="HeSoTieuChiCon"></property>
+    <property name="DiemTru" column="DiemTru"></property>
+    <property name="IsAutoScore" column="IsAutoScore"></property>
+    <property name="CongThucTinhDiem" column="CongThucTinhDiem"></property>
+    <property name="IsTeacher" column="IsTeacher"></property>
+    <property name="CongThucTinhDiemTeacher" column="CongThucTinhDiemTeacher"></property>
+    <property name="DieuKienDiemNhanVien" column="DieuKienDiemNhanVien"></property>
+    <property name="DieuKienLoaiDiem" column="DieuKienLoaiDiem"></property>
+    <property name="DieuKienThoiGian" column="DieuKienThoiGian"></property>
+    <property name="DieuKienListThoiGian" column="DieuKienListThoiGian"></property>
+    <property name="GCRecord" column="GCRecord"></property>
+    <property name="TimeDelete" column="TimeDelete"></property>
+    <property name="UserDeleteId" column="UserDeleteId"></property>
+    <property name="LastEditUserId" column="LastEditUserId"></property>
+    <property name="AddUserId" column="AddUserId"></property>
+    <property name="LastEditTime" column="LastEditTime"></property>
+    <property name="AddTime" column="AddTime"></property>
+    <many-to-one name="BoTieuChi" class="HRMWebApp.KPI.DB.Entities.ABC_BoTieuChi" column="BoTieuChiId" />
+    <many-to-one name="Parent" class="HRMWebApp.KPI.DB.Entities.ABC_TieuChi" column="ParentId" />
+    <bag name="Childrens" table="ABC_TieuChi" cascade="none" inverse="true" >
+      <key column="ParentId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.ABC_TieuChi"/>
+    </bag>
+  </class>
+</hibernate-mapping>

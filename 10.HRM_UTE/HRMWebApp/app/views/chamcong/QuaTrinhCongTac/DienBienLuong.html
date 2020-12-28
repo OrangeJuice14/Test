@@ -1,0 +1,38 @@
+﻿<html>
+<head runat="server">
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="100%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 40px;">
+                    <th style="width: 90px" class="textToCenter">Từ ngày</th>
+                    <!--<th style="width: 90px" class="textToCenter">Đến ngày</th>-->
+                    <th class="textToCenter">Mã ngạch</th>
+                    <th class="textToCenter">Bậc lương</th>
+                    <th class="textToCenter">Hệ số lương</th>
+                    <!--<th class="textToCenter">HSPC Chức vụ</th>
+                    <th class="textToCenter">HSPC khác</th>
+                    <th class="textToCenter">HSPC Vượt khung</th>
+                    <th class="textToCenter">Hệ số thâm niên</th>-->
+                </tr>
+                <tbody data-bind="foreach: DanhSach_DienBienLuong">
+                    <tr>
+                        <td data-bind="text: TuNgay == null ? '' : formatDate(new Date(TuNgay))" class="textToCenter"></td>
+                        <!--<td data-bind="text: DenNgay == null ? '' : formatDate(new Date(DenNgay))" class="textToCenter"></td>-->
+                        <td data-bind="text: NgachLuong" class="textToCenter"></td>
+                        <td data-bind="text: BacLuong" class="textToCenter"></td>
+                        <td data-bind="text: HeSoLuong" class="textToCenter"></td>
+                        <!--<td data-bind="text: HSPCChucVu" class="textToCenter"></td>
+                        <td data-bind="text: HSPCKhac" class="textToCenter"></td>
+                        <td data-bind="text: VuotKhung" class="textToCenter"></td>
+                        <td data-bind="text: ThamNien" class="textToCenter"></td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

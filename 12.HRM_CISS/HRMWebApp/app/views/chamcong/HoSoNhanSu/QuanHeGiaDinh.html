@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+</head>
+<body>
+    <div>
+        <div class="hrm_clear">
+        </div>
+        <div class="hrm_content" style="width: 900px !important">
+            <table width="110%" border="1" style="border-collapse: collapse">
+                <tr class="backGroundTitle" style="height: 40px;">
+                    <th style="width: 120px" class="textToCenter"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.TEN_NGUOI_THAN">Tên người thân</span></th>
+                    <th class="textToCenter" style="width:  80px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.NAM_SINH">Năm sinh</span></th>
+                    <th class="textToCenter" style="width:  80px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.QUAN_HE">Quan hệ</span></th>
+                    <th class="textToCenter" style="width:  200px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.NOI_O_HIEN_NAY">Nơi ở hiện nay</span></th>
+                    <th class="textToCenter" style="width:  150px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.NGHE_NGHIEP">Nghề nghiệp</span></th>
+                    <th class="textToCenter" style="width:  150px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.NOI_LAM_VIEC">Nơi làm việc</span></th>
+                    <th class="textToCenter" style="width:  80px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.TINH_TRANG">Tình trạng</span></th>
+                    <th class="textToCenter" style="width:  100px"><span data-i18n="HO_SO_NHAN_SU.QUAN_HE_GIA_DINH.DIEN_THOAI">Điện thoại</span></th>
+                </tr>
+                <tbody data-bind="foreach: DanhSach_QuanHeGiaDinh">
+                    <tr>
+                        <td data-bind="text: HoTen"></td>
+                        <td data-bind="text: NamSinh" class="textToCenter"></td>
+                        <td data-bind="text: QuanHe" class="textToCenter"></td>
+                        <td data-bind="text: NoiOHienNay" class="textToCenter"></td>
+                        <td data-bind="text: NgheNghiep" class="textToCenter"></td>
+                        <td data-bind="text: NoiLamViec" class="textToCenter"></td>
+                        <td data-bind="text: TinhTrang" class="textToCenter"></td>
+                        <td data-bind="text: DienThoaiDiDong" class="textToCenter"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

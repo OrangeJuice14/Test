@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ProfessorCriterion, HRMWebApp.KPI.DB" table="KPI_ProfessorCriterion">
+    <id name="Id" column="ID"></id>
+    <property name="Name" column="Name"></property>
+    <property name="ManageCode" column="ManageCode"></property>
+    <property name="NumberOfHour" column="NumberOfHour"></property>
+    <property name="Record" column="Record"></property>
+    <property name="OrderNumber" column="OrderNumber"></property>
+    <property name="Tooltip" column="Tooltip"></property>
+    <many-to-one name="TargetGroupDetail" class="HRMWebApp.KPI.DB.Entities.TargetGroupDetail" column="TargetGroupDetailId" />
+    <many-to-one name="CriterionType" class="HRMWebApp.KPI.DB.Entities.CriterionType" column="CriterionTypeId"/>
+    <bag name="CriterionDictionaries" table="KPI_CriterionDictionary" cascade="none" inverse="true" >
+      <key column="ProfessorCriterionId"></key>
+      <one-to-many class="HRMWebApp.KPI.DB.Entities.CriterionDictionary"/>
+    </bag>
+  </class>
+</hibernate-mapping>

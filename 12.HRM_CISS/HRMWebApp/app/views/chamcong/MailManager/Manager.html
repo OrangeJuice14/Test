@@ -1,0 +1,223 @@
+﻿
+<script type="text/javascript">
+    function ViewModel(datagrid) {
+        var session = {};
+        var self = this;
+        self.UserId = ko.observable(null);
+        self.WebGroupId = ko.observable();
+        self.IsAdmin = ko.observable();
+        //
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+                self.UserId(session.UserId);
+                self.WebGroupId(session.WebGroupId);
+            }
+        });
+
+        if (self.WebGroupId() == "00000000-0000-0000-0000-000000000001"
+            || self.WebGroupId() == "00000000-0000-0000-0000-000000000009")
+            self.IsAdmin(true);
+
+        //
+        $("#jqxTuNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        $("#jqxDenNgay").jqxDateTimeInput({ width: '150px', height: '25px' });
+        //
+
+        //
+
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var currentDay = day + '/' + month + '/' + year;
+        //
+        self.returnData = [];
+        self.datagrid = datagrid;
+        //
+        self.source =
+        {
+            datatype: "json",
+            datafields: [
+            { name: 'Oid', type: 'string' },
+            { name: 'Title', type: 'string' },
+            { name: 'Contents', type: 'string' },
+            { name: 'SendEmail', type: 'string' },
+            { name: 'ReceiverEmail', type: 'string' },
+            { name: 'SendDate', type: 'date', format: 'dd-MM-yyyy' },
+            ],
+            id: 'Oid',
+            //async:false,
+            //pagesize: 10,
+            sortcolumn: 'Name',
+            sortdirection: 'asc',
+            url: "/WebServices/QuanLyGuiEmail_Find",
+            //sort: function (value, row) {
+            //    self.datagrid.jqxGrid('updatebounddata');
+            //},
+            formatdata: function (data) {
+                var date = $('#jqxTuNgay').jqxDateTimeInput('getDate');
+                var tuNgay = $.jqx.dataFormat.formatdate(date, 'd');
+                var date = $('#jqxDenNgay').jqxDateTimeInput('getDate');
+                var denNgay = $.jqx.dataFormat.formatdate(date, 'd');
+
+                //
+                return {
+                    tungay: tuNgay,
+                    denngay: denNgay,
+                    userid: self.UserId()
+                };
+            },
+            beforeprocessing: function (result) {
+                self.returnData = result;
+                return self.returnData;
+            }
+        };
+        self.dataAdapter = new $.jqx.dataAdapter(self.source, { contentType: 'application/json; charset=utf-8' });
+        self.datagrid.jqxGrid(
+        {
+            source: self.dataAdapter,
+            width: '100%',
+            //editable: true,
+            selectionmode: 'checkbox',
+            //virtualmode: true,
+            pageable: true,
+            pagesize: 10,
+            sortable: true,
+            filterable: true,
+            //rowsheight: 40,
+            autoheight: true,
+            autorowheight: true,
+            theme: "darkBlue",
+            //rendergridrows: function (args) {
+            //    return args.data;
+            //},
+            columns: [
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.STT"), columntype: 'number', width: 45, editable: false, cellsrenderer: function (row, column, value) {
+                      return "<div class='jqx-grid-cell-child'>" + (value + 1) + "</div>";
+                  }
+              },
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.TIEU_DE"), datafield: 'Title', width: 200, align: 'center'
+              },
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.NOI_DUNG"), datafield: 'Contents', width: 500, align: 'center'
+              },
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.EMAIL_GUI"), datafield: 'SendEmail', width: 160, align: 'center'
+              },
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.EMAIL_NHAN"), datafield: 'ReceiverEmail', width: 160, align: 'center'
+              },
+              {
+                  text: dataLocalize("QUAN_LY_GUI_MAIL.TABLE.NGAY_GUI"), datafield: 'SendDate', width: 100, align: 'center', cellsalign: "middle", cellsformat: 'dd/MM/yyyy'
+              }
+            ]
+        });
+        self.datagrid.jqxGrid('rendered', function () {
+            self.datagrid.jqxGrid('localizestrings', jqxLocalization());
+        });
+    }
+
+    ViewModel.prototype = {
+        //
+        search: function () {
+            var self = this;
+            //
+            self.datagrid.jqxGrid('updatebounddata');
+        },
+        remove: function () {
+            var self = this;
+            var rows = self.datagrid.jqxGrid('selectedrowindexes');
+            if (rows.length == 0) {
+                alert(dataLocalize("QUAN_LY_GUI_MAIL.ALERT.CHUA_CO_DONG_NAO_DUOC_CHON"));
+                return;
+            }
+            var r = confirm(dataLocalize("QUAN_LY_GUI_MAIL.CONFIRM.BAN_CO_CHAC_CHAN_XOA_HAY_KHONG"));
+            if (r == true) {
+                var selectedRecords = new Array();
+                for (var i = 0, l = rows.length; i < l ; i++) {
+                    var row = self.datagrid.jqxGrid('getrowdata', rows[i]);
+
+                    selectedRecords.push({
+                        Oid: row.Oid
+                    });
+                }
+                if (selectedRecords.length > 0) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/WebServices/QuanLyGuiEmail_Delete',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        data: ko.toJSON({
+                            list: selectedRecords
+                        }),
+                        success: function (result) {
+                            var obj = result;
+                            if (obj.message == 'success') {
+                                alert(dataLocalize("QUAN_LY_GUI_MAIL.ALERT.XOA_THANH_CONG"));
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                            else {
+                                alert(dataLocalize("QUAN_LY_GUI_MAIL.ALERT.XOA_THAT_BAI"));
+                                self.datagrid.jqxGrid('updatebounddata');
+                                self.datagrid.jqxGrid('clearselection');
+                            }
+                        }
+                    });
+
+                }
+            } else {
+                return;
+            }
+        }
+    };
+
+    //
+    $(function () {
+        var model = new ViewModel($("#jqxgrid"));
+        ko.applyBindings(model, $("#quanlyguimail")[0]);
+
+    });
+
+</script>
+<div id="quanlyguimail" style="text-align:left">
+    <div class="alert alert-info" style="height:36px; background-color:#00234e; border-color:#000000"><h4><span data-i18n="QUAN_LY_GUI_MAIL.QUAN_LY_GUI_MAIL">QUẢN LÝ GỬI MAIL</span></h4></div>
+    <div class="row" style="padding-bottom:10px">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" style="padding-top:3px;text-align:right"><span data-i18n="QUAN_LY_GUI_MAIL.TU_NGAY">Từ ngày:</span></label>
+            <div class="col-sm-7">
+                <div id='jqxTuNgay'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" style="padding-top:3px;text-align:right"><span data-i18n="QUAN_LY_GUI_MAIL.DEN_NGAY">Đến ngày:</span></label>
+            <div class="col-sm-7">
+                <div id='jqxDenNgay'></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" style="padding-top:2px;padding-bottom:2px"></label>
+            <div class="col-sm-3" style="padding-top:10px;padding-bottom:10px">
+                <span data-bind="if:IsAdmin">
+                    <input type="button"data-i18n="[value]QUAN_LY_GUI_MAIL.XOA" value="Xóa" data-bind="click: remove" style="width: 60px;height:32px;" />
+                </span>
+                <span >
+                    <input type="button"data-i18n="[value]QUAN_LY_GUI_MAIL.TIM" value="Tìm" data-bind="click: search" style="width: 60px;height:32px;" />
+                </span>
+            </div>
+        </div>
+        <br>
+        <div style="padding: 0px 0px 0px 0px">
+            <div id="jqxgrid"></div>
+        </div>
+    </div>

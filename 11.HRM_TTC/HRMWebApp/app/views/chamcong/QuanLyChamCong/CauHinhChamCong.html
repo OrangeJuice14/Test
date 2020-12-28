@@ -1,0 +1,480 @@
+﻿
+<script type="text/javascript">
+
+    function viewModel() {
+        var self = this;
+        //
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var currentDay = day + '/' + month + '/' + year;
+        //
+        self.Oid = ko.observable("");
+        self.EmailSender = ko.observable();
+        self.PassSender = ko.observable();
+        self.Host = ko.observable();
+        self.Port = ko.observable();
+        self.SoNgayNghiPhep = ko.observable("0");
+        self.SoNgayHieuTruongDuyet = ko.observable("0");
+        self.SoNgayDangKyNgoaiGio = ko.observable("0");
+        self.SoNgayPhepTangThem = ko.observable();
+        self.ThoiGianTangSoNgayPhep = ko.observable();
+        self.TruongDonViKhongDuyet = ko.observable();
+        self.TuNgay_Doc = ko.observable(currentDay);
+        self.DenNgay_Doc = ko.observable(currentDay);
+        self.TuNgay_Chot = ko.observable(currentDay);
+        self.DenNgay_Chot = ko.observable(currentDay);
+        self.NhanVienList = ko.observableArray();
+        self.SelectedNhanVien = ko.observable(null);
+        self.company = ko.observableArray();
+        self.companySelected = ko.observable(null);
+        //
+
+        $("#jqxCauHinhChamCongNgayXoaPhepCu").jqxDateTimeInput({ width: '210px', height: '25px', formatString: 'dd/MM/yyyy' });
+
+        var session = {};
+        $.ajax({
+            type: 'POST',
+            url: '/Authentication/GetUserSessionInfo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                session = result;
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/QuanLyChamCong_GetCompanyListOfUser_New',
+            contentType: "application/json; charset=utf-8",
+            data: ko.toJSON({ userId: session.UserId }),
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var obj = result;
+                self.company(obj);
+                if (obj[0] != null)
+                    self.companySelected(obj[0].Oid);
+            }
+        });
+        function GetCauHinhChamCong() {
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/CauHinhChamCong_Find',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj == null) return;
+                    self.Oid = obj.Oid,
+                    self.EmailSender(obj.EmailSender);
+                    self.PassSender(obj.PassSender);
+                    self.Host(obj.Host);
+                    self.Port(obj.Port);
+                    self.SoNgayNghiPhep(obj.SoNgayNghiPhep);
+                    self.SoNgayHieuTruongDuyet(obj.SoNgayHieuTruongDuyet);
+                    self.SoNgayDangKyNgoaiGio(obj.SoNgayDangKyNgoaiGio);
+                    $("#jqxCauHinhChamCongNgayXoaPhepCu").jqxDateTimeInput('setDate', obj.NgayXoaPhepCu);
+                    self.SoNgayPhepTangThem(obj.SoNgayPhepTangThem);
+                    self.ThoiGianTangSoNgayPhep(obj.ThoiGianTangSoNgayPhep);
+                    self.TruongDonViKhongDuyet(obj.TruongDonViKhongDuyet);
+                }
+            });
+        }
+        GetCauHinhChamCong();
+        self.companySelected.subscribe(function (value) {
+            if (value != null) {
+                GetCauHinhChamCong();
+            }
+        });
+
+        //Lấy danh sách nhân viên đã chấm công trong tháng
+        $.ajax({
+            type: 'POST',
+            url: '/WebServices/GetList_HoSoNhanVienCoIDChamCong',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var nhanVienList = result;
+                //
+                self.NhanVienList(nhanVienList);
+            }
+        });
+
+        //Gán dữ liệu vào combobox
+        //var serializedArr = JSON.stringify(eval("(" + self.NhanVienList() + ")"));
+        var dataSource = self.NhanVienList();
+
+        //// create ComboBox from input HTML element
+        $("#comboboxNhanVien").kendoComboBox({
+            dataTextField: "HoTen",
+            dataValueField: "Oid",
+            dataSource: dataSource,
+            filter: "contains",
+            suggest: true,
+            select: onSelectNhanVien
+        });
+        function onSelectNhanVien(e) {
+            var dataItem = this.dataItem(e.item.index());
+            self.SelectedNhanVien = dataItem.Oid;
+        };
+
+    }
+    viewModel.prototype = {
+        validate: function () {
+            var self = this;
+            //Kiểm tra email nhận
+            if (self.EmailSender() != null && self.EmailSender() != undefined && !isEmail(self.EmailSender())) {
+                alert('Email không hợp lệ.');
+                $('#EmailSender').focus();
+                return true;
+            }
+            //
+            return false;
+        },
+        save: function () {
+            var self = this;
+
+            if (self.validate()) {
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/CauHinhChamCong_Save',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    oid: self.Oid,
+                    emailsender: self.EmailSender,
+                    passsender: self.PassSender,
+                    host: self.Host,
+                    port: self.Port,
+                    songaynghiphep: self.SoNgayNghiPhep,
+                    sogdkhoiduyet: self.SoNgayHieuTruongDuyet,
+                    sodkngoaigio: self.SoNgayDangKyNgoaiGio,
+                    ngayXoaPhepCu: $('#jqxCauHinhChamCongNgayXoaPhepCu').jqxDateTimeInput('getDate'),
+                    soNgayPhepTangThem: self.SoNgayPhepTangThem,
+                    thoiGianTangSoNgayPhep: self.ThoiGianTangSoNgayPhep,
+                    truongDonViKhongDuyet: self.TruongDonViKhongDuyet,
+                    congTy: self.companySelected()
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert("Lưu thành công !!");
+                    }
+                    else {
+                        alert("Lưu thất bại !!");
+                    }
+                }
+            });
+        },
+        getdata: function () {
+
+            var self = this;
+
+            if (self.TuNgay_Doc == '' || self.DenNgay_Doc == '') {
+                alert('Thời gian không hợp lệ. Vui lòng kiểm tra lại.');
+                return;
+            }
+            //
+            var tungayArray = self.TuNgay_Doc().split("/");
+            var tungay = tungayArray[1] + '/' + tungayArray[0] + '/' + tungayArray[2];
+            //
+            var denngayArray = self.DenNgay_Doc().split("/");
+            var denngay = denngayArray[1] + '/' + denngayArray[0] + '/' + denngayArray[2];
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/GetDuLieuTuMayChamCong',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    tungay: tungay,
+                    denngay: denngay
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert("Lấy dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Lấy dữ liệu thất bại !!");
+                    }
+                }
+            });
+
+        },
+        clockdata: function () {
+            var self = this;
+
+            if (self.TuNgay_Chot == '' || self.DenNgay_Chot == '') {
+                alert('Thời gian không hợp lệ. Vui lòng kiểm tra lại.');
+                return;
+            }
+            //
+            var tungayArray = self.TuNgay_Chot().split("/");
+            var tungay = tungayArray[1] + '/' + tungayArray[0] + '/' + tungayArray[2];
+            //
+            var denngayArray = self.DenNgay_Chot().split("/");
+            var denngay = denngayArray[1] + '/' + denngayArray[0] + '/' + denngayArray[2];
+            //
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotDuLieuTuMayChamCongTuNgay_DenNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nhanvien: self.SelectedNhanVien,
+                    tungay: tungay,
+                    denngay: denngay,
+                    type: 1 // Chạy chốt
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert("Chốt dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Chốt dữ liệu thất bại !!");
+                    }
+                }
+            });
+        },
+        removedata: function () {
+            var self = this;
+            //
+            if (self.TuNgay_Chot == '' || self.DenNgay_Chot == '') {
+                alert('Thời gian không hợp lệ. Vui lòng kiểm tra lại.');
+                return;
+            }
+            //
+            var tungayArray = self.TuNgay_Chot().split("/");
+            var tungay = tungayArray[1] + '/' + tungayArray[0] + '/' + tungayArray[2];
+            //
+            var denngayArray = self.DenNgay_Chot().split("/");
+            var denngay = denngayArray[1] + '/' + denngayArray[0] + '/' + denngayArray[2];
+
+            $.ajax({
+                type: 'POST',
+                url: '/WebServices/ChotDuLieuTuMayChamCongTuNgay_DenNgay',
+                contentType: "application/json; charset=utf-8",
+                data: ko.toJSON({
+                    nhanvien: self.SelectedNhanVien,
+                    tungay: tungay,
+                    denngay: denngay,
+                    type: 0 // Hủy chốt
+                }),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    var obj = result;
+                    if (obj.message == 'success') {
+                        alert("Hủy chốt dữ liệu thành công !!");
+                    }
+                    else {
+                        alert("Hủy chốt dữ liệu thất bại !!");
+                    }
+                }
+            });
+        }
+    };
+    $(function () {
+        var view = new viewModel();
+        ko.applyBindings(view, $("#cauhinhchamcong")[0]);
+    });
+
+    //Định dạng ngày
+    $(function () {
+        $("#tungay_doc").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    $(function () {
+        $("#denngay_doc").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    $(function () {
+        $("#tungay_chot").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    $(function () {
+        $("#denngay_chot").datepicker({
+            //showOn: "button",
+            //buttonImage: "~/Content/Images/icons/calendar.gif",
+            //buttonImageOnly: true,
+            dateFormat: 'dd/mm/yy'
+        });
+    });
+    //
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+</script>
+
+<div id="cauhinhchamcong">
+
+    <div class="col-lg-12 col-xs-12 col-sm-12">
+        <div class="form-horizontal form-bordered">
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">CẤU HÌNH CHẤM CÔNG</div>
+            <!-- ko if: company().length > 1 -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Trường:</label>
+                <div class="col-sm-7">
+                    <select style="width: 350px" data-bind="options: company, optionsText: function (type) { return type.STT + '. ' + type.TenBoPhan }, optionsValue: 'Oid', value: companySelected"></select>
+                </div>
+            </div>
+            <!-- /ko -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Số ngày nghỉ phép:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: SoNgayNghiPhep" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">HT duyệt khi nghỉ trên ... ngày:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: SoNgayHieuTruongDuyet" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đăng ký ngoài giờ trước:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: SoNgayDangKyNgoaiGio" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Ngày xóa phép cũ:</label>
+                <div class="col-sm-7">
+                    <div id="jqxCauHinhChamCongNgayXoaPhepCu" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Số ngày phép tăng thêm (ngày):</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: SoNgayPhepTangThem" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Thời gian tăng số ngày phép (năm):</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: ThoiGianTangSoNgayPhep" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Trưởng đơn vị không duyệt phép:</label>
+                <div class="col-sm-7">
+                    <input type="checkbox" data-bind="checked: TruongDonViKhongDuyet" style="padding:5px;" />
+                </div>
+            </div>
+
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; 
+                        text-align: center; border-top: 1px solid cadetblue; padding: 5px;">CẤU HÌNH GỬI EMAIL</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">eMail:</label>
+                <div class="col-sm-7">
+                    <input type="text" id="EmailSender" data-bind="value: EmailSender" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Pass:</label>
+                <div class="col-sm-7">
+                    <input type="password" data-bind="value: PassSender" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Host:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: Host" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Port:</label>
+                <div class="col-sm-7">
+                    <input type="text" data-bind="value: Port" style="width: 200px; padding:5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: save">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lưu
+                    </a>
+                </div>
+            </div>
+
+            <!--<div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">ĐỌC DỮ LIỆU TỪ MÁY CÔNG</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="tungay_doc" name="tungay_doc" data-bind="value: TuNgay_Doc" style="width: 200px; padding:5px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="denngay_doc" name="denngay_doc" data-bind="value: DenNgay_Doc" style="width: 200px; padding:5px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: getdata">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Lấy dữ liệu
+                    </a>
+                </div>
+            </div>
+            <div style="font-family: sans-serif; font-size: 24px; color: cadetblue; text-align: center;">CHỐT DỮ LIỆU CHẤM CÔNG</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Nhân Viên:</label>
+                <div class="col-sm-7">
+                    <input id="comboboxNhanVien" placeholder="Chọn..." style="width: 300px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Từ ngày:</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="tungay_chot" name="tungay_chot" data-bind="value: TuNgay_Chot" style="width: 200px; padding:5px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">Đến ngày:</label>
+                <div class="col-sm-7">
+                    <input class="form-control" id="denngay_chot" name="denngay_chot" data-bind="value: DenNgay_Chot" style="width: 200px; padding:5px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: clockdata">
+                        <i class="btn-label glyphicon glyphicon-ok"></i>Chốt chấm công
+                    </a>
+                    <a href="#" class="btn btn-info" style="width: 158px;" data-bind="click: removedata">
+                        <i class="btn-label glyphicon glyphicon-upload"></i>Hủy chốt
+                    </a>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

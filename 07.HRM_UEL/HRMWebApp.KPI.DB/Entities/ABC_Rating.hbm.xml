@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="HRMWebApp.KPI.DB" namespace="HRMWebApp.KPI.DB">
+  <class name="HRMWebApp.KPI.DB.Entities.ABC_Rating, HRMWebApp.KPI.DB" table="ABC_Rating">
+    <id name="Id" column="ID"></id>
+    <property name="IsRated" column="IsRated"></property>
+    <property name="IsSupervisorRated" column="IsSupervisorRated"></property>
+    <property name="IsRatingLocked" column="IsRatingLocked"></property>
+    <property name="TotalStaffRecord" column="TotalStaffRecord"></property>
+    <property name="TotalSupervisorRecord" column="TotalSupervisorRecord"></property>
+    <property name="Classification" column="Classification"></property>
+    <property name="ClassificationSecond" column="ClassificationSecond"></property>
+    <property name="NoteSecond" column="NoteSecond"></property>
+    <property name="ClassificationThird" column="ClassificationThird"></property>
+    <property name="NoteThird" column="NoteThird"></property>
+    <many-to-one name="Staff" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffId"  />
+    <many-to-one name="StaffRating" class="HRMWebApp.KPI.DB.Entities.Staff" column="StaffRatingId"  />
+    <many-to-one name="Department" class="HRMWebApp.KPI.DB.Entities.Department" column="DepartmentId"  />
+    <many-to-one name="ABC_EvaluationBoard" class="HRMWebApp.KPI.DB.Entities.ABC_EvaluationBoard" column="EvaluationBoardId"  />
+    <property name="DateRated" column="DateRated"></property>
+    <property name="DateSupervisorRated" column="DateSupervisorRated"></property>
+    <many-to-one name="ABC_Title" class="HRMWebApp.KPI.DB.Entities.ABC_Title" column="ABC_Title" />
+    <many-to-one name="ABC_TitleSecond" class="HRMWebApp.KPI.DB.Entities.ABC_Title" column="ABC_TitleSecond" />
+  </class>
+</hibernate-mapping>
